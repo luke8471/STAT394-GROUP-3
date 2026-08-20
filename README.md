@@ -1,4 +1,15 @@
 # STAT394-GROUP-3
+## Project Structure
+
+- Data/CSV, Data/TXT — raw data files
+- Figures/PDF, Figures/DrawIO — diagrams and figures
+- Images/RAW, PNG, JPG — image assets by format
+- Code/R, C, Matlab — analysis scripts by language
+- Outputs/Tests, Results — test outputs and final results
+- Text/Common — shared references.bib
+- Text/Reports, Articles — written drafts
+
+## Project objective
 Group 4: Underwater Artefacts from Gela’s Archaeological Site
 
 Your report must contain, at least, the following elements with proper analyses
