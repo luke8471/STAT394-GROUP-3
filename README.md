@@ -1,13 +1,27 @@
-# STAT394-GROUP-3
-## Project Structure
+## STAT394 Group 3 Project
 
-- Data/CSV, Data/TXT — raw data files
-- Figures/PDF, Figures/DrawIO — diagrams and figures
-- Images/RAW, PNG, JPG — image assets by format
-- Code/R, C, Matlab — analysis scripts by language
-- Outputs/Tests, Results — test outputs and final results
-- Text/Common — shared references.bib
-- Text/Reports, Articles — written drafts
+## Project Structure
+- **Data/** — raw and processed data files
+  - `CSV/` — data in CSV format
+  - `TXT/` — data in TXT format
+- **Figures/** — visual outputs and diagrams
+  - `PDF/` — finalized figures exported as PDF
+  - `DrawIO/` — editable DrawIO diagram files
+- **Images/** — image assets
+  - `RAW/` — unedited/original images
+  - `PNG/` — processed images in PNG format
+  - `JPG/` — processed images in JPG format
+- **Code/** — analysis scripts, organized by language
+  - `R/` — R scripts
+  - `C/` — C scripts
+  - `Matlab/` — Matlab scripts
+- **Outputs/** — generated results
+  - `Tests/` — test outputs
+  - `Results/` — final results (tables, figures, etc.)
+- **Text/** — written content
+  - `Common/` — shared resources (e.g. `references.bib`)
+  - `Reports/` — report drafts and final versions
+  - `Articles/` — article drafts and final versions
 
 ## Project objective
 Group 4: Underwater Artefacts from Gela’s Archaeological Site
