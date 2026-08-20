@@ -3,7 +3,7 @@
 ## Project Structure
 Structure used from Figure 5 of "A Badging System for Reproducibility"
 - **Data/** — raw and processed data files
-  - `CSV/` — data in CSV format
+  - `CSV/` — data in CSV format (e.g. `STAT394 Group 3 data.csv`)
   - `TXT/` — data in TXT format
 - **Figures/** — visual outputs and diagrams
   - `PDF/` — finalized figures exported as PDF
@@ -13,14 +13,14 @@ Structure used from Figure 5 of "A Badging System for Reproducibility"
   - `PNG/` — processed images in PNG format
   - `JPG/` — processed images in JPG format
 - **Code/** — analysis scripts, organized by language
-  - `R/` — R scripts
+  - `R/` — R scripts (e.g. `PDF to R 1.R`)
   - `C/` — C scripts
   - `Matlab/` — Matlab scripts
 - **Outputs/** — generated results
   - `Tests/` — test outputs
   - `Results/` — final results (tables, figures, etc.)
 - **Text/** — written content
-  - `Common/` — shared resources (e.g. `references.bib`)
+  - `Common/` — shared resources (e.g. `references.bib`, `A multivariate approach....site.pdf`)
   - `Reports/` — report drafts and final versions
   - `Articles/` — article drafts and final versions
 
