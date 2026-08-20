@@ -1,6 +1,7 @@
 ## STAT394 Group 3 Project
 
 ## Project Structure
+Structure used from Figure 5 of "A Badging System for Reproducibility"
 - **Data/** — raw and processed data files
   - `CSV/` — data in CSV format
   - `TXT/` — data in TXT format
