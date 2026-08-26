@@ -9,19 +9,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Packages to install:
+## Packages to load/install:
 ```{r packages, include=FALSE}
-install.packages("tabulapdf")
-install.packages("dplyr")
-install.packages("tidyr")
-install.packages("pdftools")
-install.packages("ggcorrplot")
 
 library(tabulapdf)
 library(dplyr)
 library(tidyr)
 library(pdftools)
 library(ggcorrplot)
+library(mvtnorm)
+install.packages("GGally")
+library(GGally)
+
 
 ```
 
@@ -29,7 +28,7 @@ library(ggcorrplot)
 ```{r reading pdf, echo=TRUE}
 
 #Heres how to load it you will have to write a path to where you keep the pdf on your computer:
-ingots <- pdf_text("C:/Users/smith/OneDrive/Desktop/A multivariate approach to the study of orichalcum ingots from the underwater Gela's archaeological site.pdf")
+ingots <- pdf_text("C:/Users/smith/Desktop/STAT394/Group Project/A multivariate approach to the study of orichalcum ingots from the underwater Gela's archaeological site.pdf")
 
 #check you have all the pages
 length(ingots) #should out put 8
@@ -101,23 +100,45 @@ summary(Ingots.table)
 
 ```
 
-##  Correlation plot:
+##  Correlation table:
+```{r correlation table}
+cor(Ingots.table[,-1])
+```
 
+##  Correlation plot:
 ```{r correlation plot, echo=TRUE}
-ggcorrplot(cor(Ingots.table[ ,-1]),
+ggcorrplot(cor(Ingots.table[ ,c(-1,-23)]),
            method = "circle",
            hc.order = TRUE,
            type = "lower")
 
 ```
 
+##  Boxplot: (taking the log)
+```{r boxplot, echo=TRUE}
+boxplot(log(Ingots.table[,c(-1,-23)]), notch = TRUE, col="green")
+
+```
+
+##  looking closer at the at the correlation between V and CR:
+```{r V and CR, echo=TRUE}
+mu1 <- colMeans(Ingots.table[,18:19])
+sigma1 <- var(Ingots.table[,18:19])
+
+n <-38
+x <- seq(mu1[1]-3*sqrt(sigma1[1,1]), mu1[1]+3*sqrt(sigma1[1,1]), len=n)
+y <- seq(mu1[2]-3*sqrt(sigma1[2,2]), mu1[2]+3*sqrt(sigma1[2,2]), len=n)
+xy <- expand.grid(x=x, y=x)
+z <- dmvnorm(xy, mu1, sigma1)
+SurfGauss2D <- matrix(z, nrow = n)
+persp(x, y, SurfGauss2D)
+
+```
+
+## ggpairs:
+```{r ggpairs, echo=TRUE}
+ggpairs(cov(Ingots.table[,2:5]))
 
 
-
-
-
-
-
-
-
+```
 
