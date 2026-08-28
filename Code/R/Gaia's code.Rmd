@@ -18,7 +18,6 @@ library(tidyr)
 library(pdftools)
 library(ggcorrplot)
 library(mvtnorm)
-install.packages("GGally")
 library(GGally)
 
 
@@ -87,13 +86,16 @@ View(table1)
 Ingots.table<- table1[-1, ] #this just gets rid of the extra row of names so now we just have one, and renames our table
 
 ### at this point I noticed the data was all in a list rather then numeric so here's how to make it numeric:
-Ingots.table[-1] <- lapply(Ingots.table[-1], as.numeric)
+Ingots.table <- sapply(Ingots.table, as.numeric)
 
 View(Ingots.table)
 
+
 ```
 
-## Summary of the data:
+typeof(Ingots.table)
+
+##  Summary of the data:
 ```{r summary of table, echo=TRUE}
 #summary of the table:
 summary(Ingots.table)
@@ -107,16 +109,31 @@ cor(Ingots.table[,-1])
 
 ##  Correlation plot:
 ```{r correlation plot, echo=TRUE}
-ggcorrplot(cor(Ingots.table[ ,c(-1,-23)]),
+ggcorrplot(cor(Ingots.table[ ,-1]),
            method = "circle",
            hc.order = TRUE,
            type = "lower")
 
 ```
 
+##  QQ-normal plots:
+```{r qqnormal, echo=TRUE}
+
+qqnorm(log(Ingots.table), col="blue")
+qqline(log(Ingots.table), col="red")
+
+```
+
+
+
+
 ##  Boxplot: (taking the log)
 ```{r boxplot, echo=TRUE}
 boxplot(log(Ingots.table[,c(-1,-23)]), notch = TRUE, col="green")
+
+boxplot(mad(Ingots.table))
+
+
 
 ```
 
@@ -130,15 +147,14 @@ x <- seq(mu1[1]-3*sqrt(sigma1[1,1]), mu1[1]+3*sqrt(sigma1[1,1]), len=n)
 y <- seq(mu1[2]-3*sqrt(sigma1[2,2]), mu1[2]+3*sqrt(sigma1[2,2]), len=n)
 xy <- expand.grid(x=x, y=x)
 z <- dmvnorm(xy, mu1, sigma1)
-SurfGauss2D <- matrix(z, nrow = n)
-persp(x, y, SurfGauss2D)
+V.and.CR <- matrix(z, nrow = n)
+persp(x, y, V.and.CR)
 
 ```
 
 ## ggpairs:
 ```{r ggpairs, echo=TRUE}
-ggpairs(cov(Ingots.table[,2:5]))
-
+ggpairs(cor(Ingots.table[,c(2:4,12)]))
 
 ```
 
