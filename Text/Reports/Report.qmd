@@ -1,0 +1,75 @@
+---
+title: "A Review of A Multivariate Approach to the Study of Orichalcum ingots from the Underwater Gela's Archaeological Site"
+format: html
+editor: visual
+---
+
+## Introduction
+
+Motivation, problem statement, approach, results, conclusions.
+
+Why do we care about the problem and the results?
+
+Because it could lead to further impressive archaeological finds
+
+What is the scope of the work and what problem is this paper trying to solve?
+
+Determine whether or not any of the ingots could be grouped. The scope is mapping orichalcum origin.
+
+What was done to solve this problem?
+
+More destructive testing to determine trace elements.
+
+What implications does the answer imply?
+
+Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 28 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2017.
+
+## Methodology
+
+Data obtained from table containing the main component & trace element concentrations, as well as Cu/Zn weight ratio obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques.
+
+Brief summary of lab techniques used.
+
+Multivariate analysis.
+
+Why multivariate analysis?
+
+What tests did we use?
+
+Why did we use those tests?
+
+## Results
+
+Quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at \~20mg.
+
+The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.
+
+## Discussion
+
+This paper was a further analysis on the paper (insert paper and brief summary here smile), first two authors are the same.
+
+In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer was used. This study includes that data and further investigates the composition of each ingot. A micro-well was drilled into each ingot and the extracted alloy was
+
+Solved the mystery of the 2 missing ingots, they were on loan to a museum for display purposes.
+
+What makes this discovery so important?
+
+There has never been a discovery of this many ingots in one place. There was evidence of consistent casting processes and 3 distinct groupings of ingots were defined from this veritable hoard. This, again, is important because it provides evidence of multiple ingots of a scarce and highly prized alloy being manufactured in one place at one time.
+
+What is Orichalcum?
+
+Defined as a copper alloy with zinc content as the principal components, and containing a widely varying quantity of lead and tin among other trace elements. There is no consistent proportion to the amount of copper and zinc found, but the overall composition and relative amounts of principal elemental components can be used to deduce the rough date and origin of a sample. The modern equivalent is brass.
+
+What were the limitations of this study?
+
+A study on a sample group this large has never been done before. Also, this dataset is not very large. - love this sentence 10/10.
+
+Why did they wait to do further testing that would provide more information on the composition and provide more accurate data?
+
+long story short, this is a historical find and it would have taken time to gain approval to do any invasive testing that would harm or alter the ingots in any way. XRF is a portable, non-invasive method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.
+
+What further research could be done? Different statistical analysis?
+
+The paper proposes further research aimed to verify locations of ores and workshops where these, and other orichalcum, were manufactured. Providing a more fleshed out history of ancient metallurgy and possibly leading to more significant archaeological finds.
+
+Other studies (find the papers, idiot) have classified groupings to orichalcum artifacts by their shape, composition, etc. Which has provided a map of manufacturing locations from Greece to the Caucus.
