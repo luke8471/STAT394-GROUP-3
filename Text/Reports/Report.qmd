@@ -26,11 +26,15 @@ Our goal is to create and present a comprehensive, comprehensible, reproducible,
 
 ## Methodology
 
-Data obtained from table containing the main component & trace element concentrations, as well as Cu/Zn weight ratio obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques.
-
 Brief summary of lab techniques used.
 
+Data obtained from table containing the main component & trace element concentrations, as well as Cu/Zn weight ratio obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques.
+
+
+
 Multivariate analysis.
+
+MAD used because it is more robust to outliers. A log transformation would fix the skew and pull the outliers in, but not eliminate their mathematical influence.
 
 Why multivariate analysis?
 
@@ -73,3 +77,9 @@ What further research could be done? Different statistical analysis?
 The paper proposes further research aimed to verify locations of ores and workshops where these, and other orichalcum, were manufactured. Providing a more fleshed out history of ancient metallurgy and possibly leading to more significant archaeological finds.
 
 Other studies (find the papers, idiot) have classified groupings to orichalcum artifacts by their shape, composition, etc. Which has provided a map of manufacturing locations from Greece to the Caucus.
+
+Findings were dated to ~600BCE, the approximate age of the ship, and by the pottery also found in the wreck. 
+
+Overall similarities suggest a rudimentary mold production, likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggestd cast-diverse technologies. Impurities are atttributed to a separation process that occured during the fusion (CITATION) of metals to create the alloy.
+
+Three distinctive families of ingots characterised by the graphical location of the furnace, stages of technology, and raw materials used in the smelting process.
