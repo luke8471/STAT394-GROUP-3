@@ -114,9 +114,57 @@ Cu_Zn <- as.numeric(table1$Cu_Zn[-1])
 
 Ingots_Frame <- data.frame (Sample = c("S1","S2","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","S13","S14","S15","S16","S17","S18","S19","S20","S21","S22","S23","S24","S25","S26","S27","S28","S29","S30","S31","S32","S33","S34","S35","S36","S37","S38"),Cu, Zn, Pb, Fe, Ni, Ag, Sb, As, Co, Cd, Sn, Te, Bi, Mn, Li, Al, V, Cr, Rb, Sr, Ba, Cu_Zn)
 
-Ingots_Frame
+View(Ingots_Frame)
 
 ```
+
+##  Summary of the raw data (no transformations)
+```{r basic summary, echo=TRUE}
+
+#Summary of the Data Frame:
+summary(Ingots_Frame)
+
+
+#Basic boxplot of the raw data: (no transformations)
+boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
+
+
+#Covariance table of the data:
+var(Ingots_Frame[-1,-1])
+
+
+#Correlation table of the data:
+cor(Ingots_Frame[-1,-1])
+
+
+#Correlation plot:
+ggcorrplot(cor(Ingots_Frame[,-1]),
+           method = "circle",
+           hc.order = TRUE,
+           type = "lower")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ##  Playing with the Data (you can ignore this):
 ```{r playing, echo=TRUE}
@@ -124,6 +172,9 @@ Ingots_Frame
 #summary of the Data Frame:
 summary(Ingots_Frame)
 
+print(summary(Ingots_Frame))
+
+cor(Ingots_Frame[-1,-1])
 
 #Correlation plot
 ggcorrplot(cor(Ingots_Frame[,-1]),
@@ -134,7 +185,8 @@ ggcorrplot(cor(Ingots_Frame[,-1]),
 #Basic boxplot (taking the log):
 boxplot(log(Ingots_Frame[,-1]), notch = TRUE, col="green")
 
-boxplot(mad(Ingots_Frame[,-1]), notch = TRUE, col="purple")
+
+boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
 
 boxplot(mad(Ingots_Frame[,-1], center = median(Ingots_Frame[,-1]), constant = 1.4826, na.rm = FALSE, low = FALSE, high = FALSE))
 
@@ -142,6 +194,7 @@ boxplot(sapply(Ingots_Frame[,-1], mad, na.rm = TRUE))
 
 
 boxplot(mad(Ingots_Frame$Cu), mad(Ingots_Frame$Zn))
+
 
 ```
 
@@ -158,11 +211,8 @@ print(Cov_Ingots)
 
 Maha_Ingots <- mahalanobis(Ingots_Frame[,-1], colMeans(Ingots_Frame[,-1]), var(Ingots_Frame[,-1]))
 
-print(Maha_Ingots)
+pchisq(Maha_Ingots, df=22) #using 22 df as we have 22 concentrations minus (Cn/Zn)
 
-pchisq(Maha_Ingots, df=22)
-
-plot(Maha_Ingots)
 
 #Mahalanobis plot:
 
@@ -186,9 +236,19 @@ ylab("Histogram and density")
 
 
 #QQ plot:
-qqplot(qchisq(ppoints(1000), df=22), Maha_Ingots, main = expression("Q-Q Plot of Mahalanobis"* ~Maha_Ingots^2* "vs. quantiles of" * ~ chi[1]^2))
+qqplot(qchisq(ppoints(1000), df=22), log(Maha_Ingots), main = expression("Q-Q Plot of Mahalanobis"* ~Maha_Ingots^2* "vs. quantiles of" * ~ chi[1]^2))
 abline(0,1, col="red")
 ```
+
+
+## QQ normal plot
+```{r normal, echo=TRUE}
+qqnorm(as.data.frame(Ingots_Frame[-1,-1]))
+
+
+
+```
+
 
 ##  Transformations:
 ```{r transformations, echo=TRUE}
@@ -198,6 +258,16 @@ Tran_Ingots <- sapply(Ingots_Frame[,-1],mad)
 print(Tran_Ingots)
 
 #using Mad instead of 
+
+
+#log of our data set:
+ggplot(Ingots_Frame) +
+   geom_boxplot()
+
+ggplot(log(Ingots_Frame[,-1]), aes(x = c(), y = Sample))
+       geom_boxplot()
+
+
 
 
 ```
