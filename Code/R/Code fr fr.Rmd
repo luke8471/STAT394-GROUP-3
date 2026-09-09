@@ -5,13 +5,14 @@ date: "2026-08-31"
 output:
   pdf_document: default
   html_document: default
+output: output=github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
+testing
 ##  Packages to load/install:
 ```{r packages, include=FALSE}
 
