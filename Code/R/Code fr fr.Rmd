@@ -120,8 +120,61 @@ View(Ingots_Frame)
 
 ```
 
+<<<<<<< HEAD
 *Note:*
 Had to do this as R was having a hard time working from the table 1
+=======
+##  Summary of the raw data (no transformations)
+```{r basic summary, echo=TRUE}
+
+#Summary of the Data Frame:
+summary(Ingots_Frame)
+
+
+#Basic boxplot of the raw data: (no transformations)
+boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
+
+
+#Covariance table of the data:
+var(Ingots_Frame[-1,-1])
+
+
+#Correlation table of the data:
+cor(Ingots_Frame[-1,-1])
+
+
+#Correlation plot:
+ggcorrplot(cor(Ingots_Frame[,-1]),
+           method = "circle",
+           hc.order = TRUE,
+           type = "lower")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##  Playing with the Data (you can ignore this):
+```{r playing, echo=TRUE}
+>>>>>>> 023f10788811bde61fd4c6fba27f95bf5ce6c2a8
 
 ##  Summary of the raw data & Basic boxplot (no transformations)
 ```{r basic summary & boxplot, echo=TRUE}
@@ -129,8 +182,14 @@ Had to do this as R was having a hard time working from the table 1
 #Summary of the Data Frame:
 summary(Ingots_Frame)
 
+<<<<<<< HEAD
 #Basic boxplot of the raw data: (no transformations)
 boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
+=======
+print(summary(Ingots_Frame))
+
+cor(Ingots_Frame[-1,-1])
+>>>>>>> 023f10788811bde61fd4c6fba27f95bf5ce6c2a8
 
 ```
 
@@ -226,10 +285,15 @@ ggcorrplot(cor(Ingots_Frame[,-1]),
            type = "lower")
 
 
+<<<<<<< HEAD
 ```
 *Notes:*
 Correlation plot some things to highlight: 
 ___*Strong positive association between V and Cr (0.95547839) as well as between Li and Cr (0.830284850). 
+=======
+
+boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
+>>>>>>> 023f10788811bde61fd4c6fba27f95bf5ce6c2a8
 
 ___*Strong negative association between Cu/Zn and Zn (0.93177327) which makes sense due to Cu/Zn being a ratio that includes Zn. Due to this we will mostly be removing Cu/Zn to keep independence??? (Alice knows more about this)
 
@@ -266,6 +330,7 @@ dp <- c(dmvnorm(c(p05, p05), mean=mu1, sigma = sigma1),
 ggplot(q.samp, aes(x=x1, y=y1, z=prob)) + 
   geom_contour(breaks=dp) +
   coord_fixed(xlim = c(mu1[1]-4*sqrt(sigma1[1,1]), mu1[1]+4*sqrt(sigma1[1,1])), ylim = c(mu1[2]-4*sqrt(sigma1[2,2]), mu1[2]+4*sqrt(sigma1[2,2]))) 
+
 
 
 
@@ -325,11 +390,8 @@ ggpairs(log(Ingots_Frame[,c(2,3,4,12)]))
 
 Maha_Ingots <- mahalanobis(Ingots_Frame[,-1], colMeans(Ingots_Frame[,-1]), var(Ingots_Frame[,-1]))
 
-print(Maha_Ingots)
+pchisq(Maha_Ingots, df=22) #using 22 df as we have 22 concentrations minus (Cn/Zn)
 
-pchisq(Maha_Ingots, df=22)
-
-plot(Maha_Ingots)
 
 #Mahalanobis plot:
 
@@ -352,11 +414,31 @@ col="red", linewidth=1) + xlab("Mahalanobis distances and cut points") +
 ylab("Histogram and density")
 
 
+<<<<<<< HEAD
 #QQ plot: with Malabouls distance
 qqplot(qchisq(ppoints(1000), df=22), Maha_Ingots, main = expression("Q-Q Plot of Mahalanobis"* ~Maha_Ingots^2* "vs. quantiles of" * ~ chi[1]^2))
 abline(0,1, col="red")
 ```
 
+=======
+#QQ plot:
+qqplot(qchisq(ppoints(1000), df=22), log(Maha_Ingots), main = expression("Q-Q Plot of Mahalanobis"* ~Maha_Ingots^2* "vs. quantiles of" * ~ chi[1]^2))
+abline(0,1, col="red")
+```
+
+
+## QQ normal plot
+```{r normal, echo=TRUE}
+qqnorm(as.data.frame(Ingots_Frame[-1,-1]))
+
+
+
+```
+
+
+##  Transformations:
+```{r transformations, echo=TRUE}
+>>>>>>> 023f10788811bde61fd4c6fba27f95bf5ce6c2a8
 
 
 
@@ -384,5 +466,15 @@ boxplot(sapply(Ingots_Frame[,-1], mad, na.rm = TRUE))
 
 
 boxplot(mad(Ingots_Frame$Cu), mad(Ingots_Frame$Zn))
+
+#log of our data set:
+ggplot(Ingots_Frame) +
+   geom_boxplot()
+
+ggplot(log(Ingots_Frame[,-1]), aes(x = c(), y = Sample))
+       geom_boxplot()
+
+
+
 
 ```
