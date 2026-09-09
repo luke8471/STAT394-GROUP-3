@@ -2,7 +2,9 @@
 title: "Re do"
 author: "Gaia Smith"
 date: "2026-08-31"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -114,9 +116,138 @@ Cu_Zn <- as.numeric(table1$Cu_Zn[-1])
 
 Ingots_Frame <- data.frame (Sample = c("S1","S2","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","S13","S14","S15","S16","S17","S18","S19","S20","S21","S22","S23","S24","S25","S26","S27","S28","S29","S30","S31","S32","S33","S34","S35","S36","S37","S38"),Cu, Zn, Pb, Fe, Ni, Ag, Sb, As, Co, Cd, Sn, Te, Bi, Mn, Li, Al, V, Cr, Rb, Sr, Ba, Cu_Zn)
 
-Ingots_Frame
+View(Ingots_Frame)
 
 ```
+
+##  Summary of the raw data & Basic boxplot (no transformations)
+```{r basic summary & boxplot, echo=TRUE}
+
+#Summary of the Data Frame:
+summary(Ingots_Frame)
+
+max(Ingots_Frame[,-1])
+
+#Basic boxplot of the raw data: (no transformations)
+boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
+
+```
+Notes:
+Our raw data of concentrations produced a summary and simple box plots from above some things to note are Ni (nikel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
+looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
+
+We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something}
+
+## Deeper summary and box plot of Cu, Zn, Pb and Sn:
+```{r basic summary & boxplot, echo=TRUE}
+
+#Summary of the Data Frame:
+summary(Ingots_Frame[,c(2,3,4,12)])
+
+
+#Basic boxplot of the raw data: (no transformations)
+boxplot(Ingots_Frame[,c(2,3,4,12)], notch = TRUE, col="lightblue")
+
+```
+From the these boxplots we can more clearly see differences between spreads between our main elements, Lead and Zinc have a slight spread where as Copper and tine have a larger spread, Tin also has some outliers, particularly 65.8 from sample 17, as well as 42 from sample 22. Again Transformations will give us a better picture to show the relationships between the variable 
+
+##  QQ-normal plots: (taking the log)
+```{r qqnormal, echo=TRUE}
+
+
+#no transformations
+qqnorm(as.matrix(Ingots_Frame[-1,-1]), col="lightgray")
+qqline(as.matrix(Ingots_Frame[-1,-1]), col="red")
+
+#taking the log
+qqnorm(log(as.matrix(Ingots_Frame[-1,-1])), col="darkgray")
+qqline(log(as.matrix(Ingots_Frame[-1,-1])), col="red")
+
+```
+
+##: Getting MAD to work:
+```{r transformations, echo=TRUE}
+#Try one:
+Mad_Ingots <- sapply(Ingots_Frame[,-1],mad)
+
+print(Mad_Ingots)
+
+#try two:
+#Calculate medians and MADs for each column:
+medians<- apply(Ingots_Frame[,-1], 2, median)
+mads<- apply(Ingots_Frame[,-1], 2, mad)
+
+medians
+mads
+
+
+#Compute the robust z-scores:
+robust_z <- scale(Ingots_Frame[,-1], center = medians, scale = mads)
+
+#Flag observations where any variable exceeds the threshold (e.g., 3)
+outliers <- apply(abs(robust_z) > 3, 1, any)
+
+# View the rows flagged as outliers
+Ingots_Frame[outliers, ]
+
+boxplot(robust_z)
+
+
+qqnorm((robust_z), col="gray")
+qqline((robust_z), col="red")
+
+
+```
+
+
+
+## Correlation and Covariance tables:
+```{r basic correlation, echo=TRUE}
+
+#Covariance table of the data:
+var(Ingots_Frame[-1,-1])
+
+
+#Correlation table of the data:
+cor(Ingots_Frame[-1,-1])
+
+
+#Correlation plot:
+ggcorrplot(cor(Ingots_Frame[,-1]),
+           method = "circle",
+           hc.order = TRUE,
+           type = "lower")
+
+
+```
+
+
+## Pairwise plot between Cu, Zn, Pb, and Sn:
+```{r pairwise, echo=TRUE}
+
+ggpairs(log(Ingots_Frame[,c(2,3,4,12)]))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ##  Playing with the Data (you can ignore this):
 ```{r playing, echo=TRUE}
@@ -185,23 +316,9 @@ col="red", linewidth=1) + xlab("Mahalanobis distances and cut points") +
 ylab("Histogram and density")
 
 
-#QQ plot:
+#QQ plot: with Malabouls distance
 qqplot(qchisq(ppoints(1000), df=22), Maha_Ingots, main = expression("Q-Q Plot of Mahalanobis"* ~Maha_Ingots^2* "vs. quantiles of" * ~ chi[1]^2))
 abline(0,1, col="red")
 ```
-
-##  Transformations:
-```{r transformations, echo=TRUE}
-
-Tran_Ingots <- sapply(Ingots_Frame[,-1],mad)
-
-print(Tran_Ingots)
-
-#using Mad instead of 
-
-
-```
-
-
 
 
