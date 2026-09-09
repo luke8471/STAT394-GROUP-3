@@ -25,7 +25,7 @@ library(GGally)
 
 
 ```
-##  Reading the pdf:
+##  Reading the pdf: - pdftools package code
 ```{r reading pdf, echo=TRUE}
 
 #Heres how to load it you will have to write a path to where you keep the pdf on your computer:
@@ -41,7 +41,7 @@ cat(ingots[[3]])
 
 ```
 
-##  Extracting the table from the pdf:
+##  Extracting the table from the pdf: - tabulapdf package codes
 ```{r extracting the table, echo=TRUE}
 
 ingots2 <- extract_tables("C:/Users/smith/OneDrive/Desktop/A multivariate approach to the study of orichalcum ingots from the underwater Gela's archaeological site.pdf", pages=3)
@@ -59,7 +59,7 @@ View(table1)
 
 ```
 
-##  Cleaning the table:
+##  Cleaning the table: - DATA202 codes
 ```{r cleaning the table, echo=TRUE}
 table1 <- table1 %>%
   separate(
@@ -120,25 +120,27 @@ View(Ingots_Frame)
 
 ```
 
+*Note:*
+Had to do this as R was having a hard time working from the table 1
+
 ##  Summary of the raw data & Basic boxplot (no transformations)
 ```{r basic summary & boxplot, echo=TRUE}
 
 #Summary of the Data Frame:
 summary(Ingots_Frame)
 
-max(Ingots_Frame[,-1])
-
 #Basic boxplot of the raw data: (no transformations)
 boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
 
 ```
-Notes:
+
+*Notes:*
 Our raw data of concentrations produced a summary and simple box plots from above some things to note are Ni (nikel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
 looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
 
-We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something}
+We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
 
-## Deeper summary and box plot of Cu, Zn, Pb and Sn:
+##  Deeper summary and box plot of Cu, Zn, Pb and Sn:
 ```{r basic summary & boxplot, echo=TRUE}
 
 #Summary of the Data Frame:
@@ -149,23 +151,31 @@ summary(Ingots_Frame[,c(2,3,4,12)])
 boxplot(Ingots_Frame[,c(2,3,4,12)], notch = TRUE, col="lightblue")
 
 ```
+*Notes:*
 From the these boxplots we can more clearly see differences between spreads between our main elements, Lead and Zinc have a slight spread where as Copper and tine have a larger spread, Tin also has some outliers, particularly 65.8 from sample 17, as well as 42 from sample 22. Again Transformations will give us a better picture to show the relationships between the variable 
 
-##  QQ-normal plots: (taking the log)
+##  QQ-normal plots: (taking the log) - code from STAT292
 ```{r qqnormal, echo=TRUE}
 
 
 #no transformations
-qqnorm(as.matrix(Ingots_Frame[-1,-1]), col="lightgray")
+qqnorm(as.matrix(Ingots_Frame[-1,-1]), col="lightblue")
 qqline(as.matrix(Ingots_Frame[-1,-1]), col="red")
 
 #taking the log
-qqnorm(log(as.matrix(Ingots_Frame[-1,-1])), col="darkgray")
+qqnorm(log(as.matrix(Ingots_Frame[-1,-1])), col="blue")
 qqline(log(as.matrix(Ingots_Frame[-1,-1])), col="red")
 
 ```
+*Notes:*
+Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. 
 
-##: Getting MAD to work:
+Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data  normality assumption holds.
+
+
+
+
+##  Getting MAD to work: - code from somewhere online (https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/mad and https://www.geeksforgeeks.org/r-language/calculate-the-median-absolute-deviation-in-r-programming-mad-function/)
 ```{r transformations, echo=TRUE}
 #Try one:
 Mad_Ingots <- sapply(Ingots_Frame[,-1],mad)
@@ -199,9 +209,7 @@ qqline((robust_z), col="red")
 
 ```
 
-
-
-## Correlation and Covariance tables:
+##  Correlation and Covariance tables: - STAT394 inference pdf
 ```{r basic correlation, echo=TRUE}
 
 #Covariance table of the data:
@@ -211,7 +219,6 @@ var(Ingots_Frame[-1,-1])
 #Correlation table of the data:
 cor(Ingots_Frame[-1,-1])
 
-
 #Correlation plot:
 ggcorrplot(cor(Ingots_Frame[,-1]),
            method = "circle",
@@ -220,71 +227,100 @@ ggcorrplot(cor(Ingots_Frame[,-1]),
 
 
 ```
+*Notes:*
+Correlation plot some things to highlight: 
+___*Strong positive association between V and Cr (0.95547839) as well as between Li and Cr (0.830284850). 
+
+___*Strong negative association between Cu/Zn and Zn (0.93177327) which makes sense due to Cu/Zn being a ratio that includes Zn. Due to this we will mostly be removing Cu/Zn to keep independence??? (Alice knows more about this)
+
+##  looking closer at the at the strong positive correlation between V and Cr: - STAT394 inference pdf
+```{r V and CR, echo=TRUE}
+#3D static version of the density between V and Cr
+mu1 <- colMeans(Ingots_Frame[,18:19])
+sigma1 <- var(Ingots_Frame[,18:19])
+
+n <-38
+x <- seq(mu1[1]-3*sqrt(sigma1[1,1]), mu1[1]+3*sqrt(sigma1[1,1]), len=n)
+y <- seq(mu1[2]-3*sqrt(sigma1[2,2]), mu1[2]+3*sqrt(sigma1[2,2]), len=n)
+xy <- expand.grid(x=x, y=x)
+z <- dmvnorm(xy, mu1, sigma1)
+V.and.CR <- matrix(z, nrow = n)
+persp(x, y, V.and.CR)
+
+#contour curves for V and Cr:
+n1 <- 100
+x1 <- seq(mu1[1]-4*sqrt(sigma1[1,1]), mu1[1]+4*sqrt(sigma1[1,1]), len=n)
+y1 <- seq(mu1[2]-4*sqrt(sigma1[2,2]), mu1[2]+4*sqrt(sigma1[2,2]), len=n)
+xy1 <- expand.grid(x=x1, y=y1)
+q.samp <- cbind(xy1, prob=dmvnorm(xy1, mean = mu1, sigma = sigma1))
+
+p05 <- qmvnorm(0.5, mean=mu1, sigma = sigma1, tail = "both")$quantile
+p09 <- qmvnorm(0.9, mean=mu1, sigma = sigma1, tail = "both")$quantile
+p095 <- qmvnorm(0.95, mean=mu1, sigma = sigma1, tail = "both")$quantile
+p099 <- qmvnorm(0.99, mean=mu1, sigma = sigma1, tail = "both")$quantile
+
+dp <- c(dmvnorm(c(p05, p05), mean=mu1, sigma = sigma1),
+        dmvnorm(c(p09, p09), mean=mu1, sigma = sigma1),
+        dmvnorm(c(p095, p095), mean=mu1, sigma = sigma1),
+        dmvnorm(c(p099, p099), mean=mu1, sigma = sigma1))
+ggplot(q.samp, aes(x=x1, y=y1, z=prob)) + 
+  geom_contour(breaks=dp) +
+  coord_fixed(xlim = c(mu1[1]-4*sqrt(sigma1[1,1]), mu1[1]+4*sqrt(sigma1[1,1])), ylim = c(mu1[2]-4*sqrt(sigma1[2,2]), mu1[2]+4*sqrt(sigma1[2,2]))) 
 
 
-## Pairwise plot between Cu, Zn, Pb, and Sn:
+
+
+```
+
+##  looking closer at the at the strong negtive association between Cu/Zn and Zn: - STAT394 inference pdf
+```{r Cu/Zn and Zn, echo=TRUE}
+mu2 <- colMeans(Ingots_Frame[,c(2,23)])
+sigma2 <- var(Ingots_Frame[,c(2,23)])
+
+n <-38
+v <- seq(mu2[1]-3*sqrt(sigma2[1,1]), mu2[1]+3*sqrt(sigma2[1,1]), len=n)
+w <- seq(mu2[2]-3*sqrt(sigma2[2,2]), mu2[2]+3*sqrt(sigma2[2,2]), len=n)
+vw <- expand.grid(x=v, y=w)
+q <- dmvnorm(vw, mu2, sigma2)
+Cu_Zn.and.Zn <- matrix(q, nrow = n)
+persp(x, y, Cu_Zn.and.Zn)
+
+#contour curves for V and Cr:
+n2 <- 100
+x2 <- seq(mu2[1]-4*sqrt(sigma2[1,1]), mu2[1]+4*sqrt(sigma2[1,1]), len=n)
+y2 <- seq(mu2[2]-4*sqrt(sigma2[2,2]), mu2[2]+4*sqrt(sigma2[2,2]), len=n)
+xy2 <- expand.grid(x=x2, y=y2)
+q.samp_2 <- cbind(xy2, prob=dmvnorm(xy2, mean = mu2, sigma = sigma2))
+
+p05_2 <- qmvnorm(0.5, mean=mu2, sigma = sigma2, tail = "both")$quantile
+p09_2 <- qmvnorm(0.9, mean=mu2, sigma = sigma2, tail = "both")$quantile
+p095_2 <- qmvnorm(0.95, mean=mu2, sigma = sigma2, tail = "both")$quantile
+p099_2 <- qmvnorm(0.99, mean=mu2, sigma = sigma2, tail = "both")$quantile
+
+dp_2 <- c(dmvnorm(c(p05_2, p05_2), mean=mu2, sigma = sigma2),
+        dmvnorm(c(p09_2, p09_2), mean=mu2, sigma = sigma2),
+        dmvnorm(c(p095_2, p095_2), mean=mu2, sigma = sigma2),
+        dmvnorm(c(p099_2, p099_2), mean=mu2, sigma = sigma2))
+ggplot(q.samp_2, aes(x=x2, y=y2, z=prob)) + 
+  geom_contour(breaks=dp_2) +
+  coord_fixed(
+    xlim = c(mu2[1]-4*sqrt(sigma2[1,1]), mu2[1]+4*sqrt(sigma2[1,1])),
+    ylim = c(mu2[2]-4*sqrt(sigma2[2,2]), mu2[2]+4*sqrt(sigma2[2,2]))) 
+
+
+
+```
+
+
+
+##  Pairwise plot between Cu, Zn, Pb, and Sn: - STAT394 inference pdf
 ```{r pairwise, echo=TRUE}
 
 ggpairs(log(Ingots_Frame[,c(2,3,4,12)]))
 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##  Playing with the Data (you can ignore this):
-```{r playing, echo=TRUE}
-
-#summary of the Data Frame:
-summary(Ingots_Frame)
-
-
-#Correlation plot
-ggcorrplot(cor(Ingots_Frame[,-1]),
-           method = "circle",
-           hc.order = TRUE,
-           type = "lower")
-
-#Basic boxplot (taking the log):
-boxplot(log(Ingots_Frame[,-1]), notch = TRUE, col="green")
-
-boxplot(mad(Ingots_Frame[,-1]), notch = TRUE, col="purple")
-
-boxplot(mad(Ingots_Frame[,-1], center = median(Ingots_Frame[,-1]), constant = 1.4826, na.rm = FALSE, low = FALSE, high = FALSE))
-
-boxplot(sapply(Ingots_Frame[,-1], mad, na.rm = TRUE))
-
-
-boxplot(mad(Ingots_Frame$Cu), mad(Ingots_Frame$Zn))
-
-```
-
-##  Covariance matrix
-```{r covariance matrix, echo=TRUE}
-Cov_Ingots<-cov(Ingots_Frame[,-1])
-print(Cov_Ingots)
-
-```
-
-
-## Mahalanobis distance stuff, and QQ plot:
+##  Mahalanobis distance stuff, and QQ plot: - STAT394 inference pdf
 ```{r Maha, echo=TRUE}
 
 Maha_Ingots <- mahalanobis(Ingots_Frame[,-1], colMeans(Ingots_Frame[,-1]), var(Ingots_Frame[,-1]))
@@ -322,3 +358,31 @@ abline(0,1, col="red")
 ```
 
 
+
+
+##  Playing with the Data (you can ignore this): - Gaia
+```{r playing, echo=TRUE}
+
+#summary of the Data Frame:
+summary(Ingots_Frame)
+
+
+#Correlation plot
+ggcorrplot(cor(Ingots_Frame[,-1]),
+           method = "circle",
+           hc.order = TRUE,
+           type = "lower")
+
+#Basic boxplot (taking the log):
+boxplot(log(Ingots_Frame[,-1]), notch = TRUE, col="green")
+
+boxplot(mad(Ingots_Frame[,-1]), notch = TRUE, col="purple")
+
+boxplot(mad(Ingots_Frame[,-1], center = median(Ingots_Frame[,-1]), constant = 1.4826, na.rm = FALSE, low = FALSE, high = FALSE))
+
+boxplot(sapply(Ingots_Frame[,-1], mad, na.rm = TRUE))
+
+
+boxplot(mad(Ingots_Frame$Cu), mad(Ingots_Frame$Zn))
+
+```
