@@ -11,8 +11,6 @@ output: output=github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-testing
 ##  Packages to load/install:
 ```{r packages, include=FALSE}
 
@@ -153,52 +151,14 @@ ggcorrplot(cor(Ingots_Frame[,-1]),
 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##  Playing with the Data (you can ignore this):
-```{r playing, echo=TRUE}
->>>>>>> 023f10788811bde61fd4c6fba27f95bf5ce6c2a8
-
-##  Summary of the raw data & Basic boxplot (no transformations)
-```{r basic summary & boxplot, echo=TRUE}
-
-#Summary of the Data Frame:
-summary(Ingots_Frame)
-
-<<<<<<< HEAD
-#Basic boxplot of the raw data: (no transformations)
-boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
-=======
-print(summary(Ingots_Frame))
-
-cor(Ingots_Frame[-1,-1])
->>>>>>> 023f10788811bde61fd4c6fba27f95bf5ce6c2a8
-
-```
-
 *Notes:*
 Our raw data of concentrations produced a summary and simple box plots from above some things to note are Ni (nikel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
 looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
 
 We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
+
+
+
 
 ##  Deeper summary and box plot of Cu, Zn, Pb and Sn:
 ```{r basic summary & boxplot, echo=TRUE}
@@ -479,3 +439,4 @@ ggplot(log(Ingots_Frame[,-1]), aes(x = c(), y = Sample))
 
 
 ```
+
