@@ -2,25 +2,36 @@
 title: "A Review of A Multivariate Approach to the Study of Orichalcum ingots from the Underwater Gela's Archaeological Site"
 format: html
 editor: visual
+output: output=github_document
 ---
 
 ## Introduction
+
+In 2015, of the coast of Gela Italy, a veritable hoard of 40 Orichalcum ingots were dredged up. There has never been a find of this magnitude....
+
+Determining the elemental composition of each ingot gives vital information for geomapping the origin of each piece. This information maps the history of this ancient alloy (give locations), and informs further methodologies for discovering ore sources, processing refineries, more orichalcum, and an insight into manufacturing processes....
+
+The importance of elemental composition something about a history of various alloys being empirically called "orichalcum" without the data to back it up.
+
+Multivariate analysis of the chemometric analysis gives x distinct groupings of ingots
+
+Findings were dated to \~600BCE, the approximate age of the ship, and by the pottery also found in the wreck.
 
 Motivation, problem statement, approach, results, conclusions.
 
 Why do we care about the problem and the results?
 
-Because it could lead to further impressive archaeological finds
+Because it could lead to further impressive archaeological finds and helps locate ancient refineries.
 
 What is the scope of the work and what problem is this paper trying to solve?
 
-Determine whether or not any of the ingots could be grouped. The scope is mapping orichalcum origin.
+Determine whether or not any of the ingots could be grouped. The scope is mapping orichalcum ingot origin.
 
 What was done to solve this problem?
 
-More destructive testing to determine trace elements.
+More destructive testing to determine trace elements. Initial testing was non-invasive until
 
-What implications does the answer imply?
+What are the implications?
 
 Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 28 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2017.
 
@@ -29,8 +40,6 @@ Our goal is to create and present a comprehensive, comprehensible, reproducible,
 Brief summary of lab techniques used.
 
 Data obtained from table containing the main component & trace element concentrations, as well as Cu/Zn weight ratio obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques.
-
-
 
 Multivariate analysis.
 
@@ -78,8 +87,6 @@ The paper proposes further research aimed to verify locations of ores and worksh
 
 Other studies (find the papers, idiot) have classified groupings to orichalcum artifacts by their shape, composition, etc. Which has provided a map of manufacturing locations from Greece to the Caucus.
 
-Findings were dated to ~600BCE, the approximate age of the ship, and by the pottery also found in the wreck. 
-
-Overall similarities suggest a rudimentary mold production, likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggestd cast-diverse technologies. Impurities are atttributed to a separation process that occured during the fusion (CITATION) of metals to create the alloy.
+Overall similarities suggest a rudimentary mold production, likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggestd cast-diverse technologies. Impurities are atttributed to a separation process that occured during the fusion (Caponetti et. al. 2017) of metals to create the alloy.
 
 Three distinctive families of ingots characterised by the graphical location of the furnace, stages of technology, and raw materials used in the smelting process.
