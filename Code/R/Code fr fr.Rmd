@@ -27,7 +27,7 @@ library(GGally)
 ```{r reading pdf, echo=TRUE}
 
 #Heres how to load it you will have to write a path to where you keep the pdf on your computer:
-ingots <- pdf_text("C:\Users\lukeh\Downloads\School\STAT394 Group project\GitHub\STAT394-GROUP-3\Text\Articles\.gitkeep")
+ingots <- pdf_text("Text/Articles/caponetti et al.pdf")
 
 #check you have all the pages
 length(ingots) #should out put 8
@@ -42,7 +42,7 @@ cat(ingots[[3]])
 ##  Extracting the table from the pdf: - tabulapdf package codes
 ```{r extracting the table, echo=TRUE}
 
-ingots2 <- extract_tables("C:\Users\lukeh\Downloads\School\STAT394 Group project\GitHub\STAT394-GROUP-3\Text\Articles\.gitkeep", pages=3)
+ingots2 <- extract_tables("Text/Articles/caponetti et al.pdf", pages=3)
 
 head(ingots2)
 
