@@ -5,7 +5,6 @@ date: "2026-08-31"
 output:
   pdf_document: default
   html_document: default
-output: output=github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -28,7 +27,7 @@ library(GGally)
 ```{r reading pdf, echo=TRUE}
 
 #Heres how to load it you will have to write a path to where you keep the pdf on your computer:
-ingots <- pdf_text("C:/Users/smith/Desktop/STAT394/Group Project/A multivariate approach to the study of orichalcum ingots from the underwater Gela's archaeological site.pdf")
+ingots <- pdf_text("C:\Users\lukeh\Downloads\School\STAT394 Group project\GitHub\STAT394-GROUP-3\Text\Articles\.gitkeep")
 
 #check you have all the pages
 length(ingots) #should out put 8
@@ -43,7 +42,7 @@ cat(ingots[[3]])
 ##  Extracting the table from the pdf: - tabulapdf package codes
 ```{r extracting the table, echo=TRUE}
 
-ingots2 <- extract_tables("C:/Users/smith/OneDrive/Desktop/A multivariate approach to the study of orichalcum ingots from the underwater Gela's archaeological site.pdf", pages=3)
+ingots2 <- extract_tables("C:\Users\lukeh\Downloads\School\STAT394 Group project\GitHub\STAT394-GROUP-3\Text\Articles\.gitkeep", pages=3)
 
 head(ingots2)
 
@@ -196,7 +195,7 @@ Performing log transformations on the data produces the QQ-plot with blue points
 
 
 ##  Getting MAD to work: - code from somewhere online (https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/mad and https://www.geeksforgeeks.org/r-language/calculate-the-median-absolute-deviation-in-r-programming-mad-function/)
-```{r transformations, echo=TRUE}
+```{r transformations-mad, echo=TRUE}
 #Try one:
 Mad_Ingots <- sapply(Ingots_Frame[,-1],mad)
 
