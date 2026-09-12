@@ -29,7 +29,7 @@ library(httr)
 ##  Reading the pdf: - pdftools package code
 ```{r reading pdf, echo=TRUE}
 
-#Heres how to load it you will have to write a path to where you keep the pdf on your computer:
+#Load paper by caponnetti et. al from repository and store locally temporarily
 
 url <- "https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/02d02760e329f00dd8cc8cc8543327ffeccd00a6/Text/Articles/caponetti%20et%20al.pdf"
 
@@ -63,7 +63,7 @@ print(ingots2)
 
 table1 <- ingots2[[1]]
 
-#when I fist this this you couldn't view Ni, Ag and Sb separately they all went under concentration
+#when I first did this this you couldn't view Ni, Ag and Sb separately they all went under concentration
 View(table1)
 
 ```
@@ -72,7 +72,7 @@ View(table1)
 ```{r cleaning the table, echo=TRUE}
 table1 <- table1 %>%
   separate(
-    `Concentration in PPM`,
+    'Concentration in PPM',
     into = c("Ni", "Ag", "Sb"),
     sep = " "
   )
@@ -129,7 +129,6 @@ View(Ingots_Frame)
 
 ```
 
-<<<<<<< HEAD
 *Note:*
 Had to do this as R was having a hard time working from the table 1
 =======
@@ -162,7 +161,7 @@ ggcorrplot(cor(Ingots_Frame[,-1]),
 ```
 
 *Notes:*
-Our raw data of concentrations produced a summary and simple box plots from above some things to note are Ni (nikel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
+Our raw data of concentrations produced a summary and simple box plots from above some things to note are Ni (nickel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
 looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
 
 We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
@@ -171,6 +170,7 @@ We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {somethin
 
 
 ##  Deeper summary and box plot of Cu, Zn, Pb and Sn:
+
 ```{r basic summary & boxplot, echo=TRUE}
 
 #Summary of the Data Frame:
@@ -181,21 +181,33 @@ summary(Ingots_Frame[,c(2,3,4,12)])
 boxplot(Ingots_Frame[,c(2,3,4,12)], notch = TRUE, col="lightblue")
 
 ```
+
 *Notes:*
 From the these boxplots we can more clearly see differences between spreads between our main elements, Lead and Zinc have a slight spread where as Copper and tine have a larger spread, Tin also has some outliers, particularly 65.8 from sample 17, as well as 42 from sample 22. Again Transformations will give us a better picture to show the relationships between the variable 
 
 ##  QQ-normal plots: (taking the log) - code from STAT292
 ```{r qqnormal, echo=TRUE}
-
-
 #no transformations
+
 qqnorm(as.matrix(Ingots_Frame[-1,-1]), col="lightblue")
 qqline(as.matrix(Ingots_Frame[-1,-1]), col="red")
 
-#taking the log
-qqnorm(log(as.matrix(Ingots_Frame[-1,-1])), col="blue")
-qqline(log(as.matrix(Ingots_Frame[-1,-1])), col="red")
+#log transform data
 
+logIngots <- log(as.matrix(Ingots_Frame[-1,-1]))
+summary(logIngots)
+
+#NOTE: we return a lot of negative values after a log transformation. Either need
+#to add a constant to keep values non-negative or normalise data another way.
+#This is where I start considering removing the massive outliers from the data set.
+
+#taking the log
+
+qqnorm(logIngots, col = "blue");
+qqline(logIngots, col = "red")
+
+#steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be
+#the answer. Very robust to outliers.
 ```
 *Notes:*
 Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. 
