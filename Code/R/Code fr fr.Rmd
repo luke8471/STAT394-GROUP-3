@@ -250,7 +250,7 @@ Ingots_Frame[outliers,]
 boxplot(robust_z)
 
 
-qqnorm((robust_z), col="gray")
+qqnorm((robust_z), col="gray");
 qqline((robust_z), col="red")
 
 #The QQ plot shows very skewed data (expected)
@@ -263,7 +263,6 @@ qqline((robust_z), col="red")
 ```{r}
 #next should be Mahalanobis, it functions better with multivariate than MAD and 
 #can be used in conjunction.
-
 
 
 
