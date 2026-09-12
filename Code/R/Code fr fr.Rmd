@@ -24,7 +24,6 @@ library(here)
 library(tinytex)
 library(httr)
 
-
 ```
 ##  Reading the pdf: - pdftools package code
 ```{r reading pdf, echo=TRUE}
@@ -201,7 +200,7 @@ summary(logIngots)
 #to add a constant to keep values non-negative or normalise data another way.
 #This is where I start considering removing the massive outliers from the data set.
 
-#taking the log
+#taking the log anyway, for giggles.
 
 qqnorm(logIngots, col = "blue");
 qqline(logIngots, col = "red")
@@ -220,27 +219,33 @@ Performing log transformations on the data produces the QQ-plot with blue points
 ##  Getting MAD to work: - code from somewhere online (https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/mad and https://www.geeksforgeeks.org/r-language/calculate-the-median-absolute-deviation-in-r-programming-mad-function/)
 ```{r transformations-mad, echo=TRUE}
 #Try one:
-Mad_Ingots <- sapply(Ingots_Frame[,-1],mad)
+#Mad_Ingots <- sapply(Ingots_Frame[,-1],mad)
 
-print(Mad_Ingots)
+#print(Mad_Ingots)
 
 #try two:
 #Calculate medians and MADs for each column:
-medians<- apply(Ingots_Frame[,-1], 2, median)
-mads<- apply(Ingots_Frame[,-1], 2, mad)
+medians <- apply(Ingots_Frame[,-1], 2, median)
+mads <- apply(Ingots_Frame[,-1], 2, mad)
 
 medians
 mads
+
+#looking at this we can see some MASSIVE deviations, as expected. Now use the
+#robust Z score to identify outiers that are candidates for removal.
+
+#In univariate statistics, the Median Absolute Deviation is the most robust dispersion/scale measure in presence of outliers, and hence we strongly recommend the median plus or minus 2.5 times the MAD method for outlier detection. (Leys et al 2013)
 
 
 #Compute the robust z-scores:
 robust_z <- scale(Ingots_Frame[,-1], center = medians, scale = mads)
 
-#Flag observations where any variable exceeds the threshold (e.g., 3)
-outliers <- apply(abs(robust_z) > 3, 1, any)
+#Flag observations where any variable exceeds the threshold
+outliers <- apply(abs(robust_z) > 2.5, 1, any)
+
 
 # View the rows flagged as outliers
-Ingots_Frame[outliers, ]
+Ingots_Frame[outliers,]
 
 boxplot(robust_z)
 
@@ -248,8 +253,27 @@ boxplot(robust_z)
 qqnorm((robust_z), col="gray")
 qqline((robust_z), col="red")
 
+#The QQ plot shows very skewed data (expected)
+
 
 ```
+
+## Mahalanobis
+
+```{r}
+#next should be Mahalanobis, it functions better with multivariate than MAD and 
+#can be used in conjunction.
+
+
+
+
+
+
+
+```
+
+
+
 
 ##  Correlation and Covariance tables: - STAT394 inference pdf
 ```{r basic correlation, echo=TRUE}
@@ -268,8 +292,8 @@ ggcorrplot(cor(Ingots_Frame[,-1]),
            type = "lower")
 
 
-<<<<<<< HEAD
 ```
+
 *Notes:*
 Correlation plot some things to highlight: 
 ___*Strong positive association between V and Cr (0.95547839) as well as between Li and Cr (0.830284850). 
