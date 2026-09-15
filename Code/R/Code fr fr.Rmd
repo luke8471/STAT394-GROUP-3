@@ -2,9 +2,7 @@
 title: "Re do"
 author: "Gaia Smith"
 date: "2026-08-31"
-output:
-  pdf_document: default
-  html_document: default
+output: github_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +21,7 @@ library(GGally)
 library(here)
 library(tinytex)
 library(httr)
-
+library(MVN)
 ```
 ##  Reading the pdf: - pdftools package code
 ```{r reading pdf, echo=TRUE}
@@ -206,7 +204,14 @@ qqnorm(logIngots, col = "blue");
 qqline(logIngots, col = "red")
 
 #steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be
-#the answer. Very robust to outliers.
+#the answer. Very robust to outliers. AMENDMENT best option fo sho
+
+#HZ test on OG data, which also rejects null.
+
+HZoriginal <- mvn(data = Ingots_Frame, mvn_test = "hz")
+cat("Henze_Zirkler Test Results:\n")
+print(HZoriginal$multivariate_normality)
+
 ```
 *Notes:*
 Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. 
@@ -228,34 +233,88 @@ Performing log transformations on the data produces the QQ-plot with blue points
 medians <- apply(Ingots_Frame[,-1], 2, median)
 mads <- apply(Ingots_Frame[,-1], 2, mad)
 
-medians
+print(medians/mads)
 mads
 
 #looking at this we can see some MASSIVE deviations, as expected. Now use the
-#robust Z score to identify outiers that are candidates for removal.
+#robust Z score to identify outliers that are candidates for removal.
 
 #In univariate statistics, the Median Absolute Deviation is the most robust dispersion/scale measure in presence of outliers, and hence we strongly recommend the median plus or minus 2.5 times the MAD method for outlier detection. (Leys et al 2013)
 
 
 #Compute the robust z-scores:
-robust_z <- scale(Ingots_Frame[,-1], center = medians, scale = mads)
+z <- scale(Ingots_Frame[,-1], center = medians, scale = mads)
 
 #Flag observations where any variable exceeds the threshold
-outliers <- apply(abs(robust_z) > 2.5, 1, any)
+outliers <- apply(abs(z) > 2.5, 1, any)
 
+list(outliers)
 
 # View the rows flagged as outliers
-Ingots_Frame[outliers,]
-
-boxplot(robust_z)
-
-
-qqnorm((robust_z), col="gray");
-qqline((robust_z), col="red")
+summary(Ingots_Frame[outliers,])
 
 #The QQ plot shows very skewed data (expected)
 
+qqnorm((z), col="gray");
+qqline((z), col="red")
 
+
+#sorry this is an absolute mess, was trying a few methods. Need to tidy up
+
+num_cols <- sapply(Ingots_Frame, is.numeric)
+z_scores <- as.data.frame(scale(Ingots_Frame[, num_cols]))
+
+summary(z_scores)
+
+ol <- Ingots_Frame[rowSums(abs(z_scores) > 3) > 0, ]
+
+print(ol)
+
+Ingots_clean <- Ingots_Frame[rowSums(abs(z_scores) > 3) == 0, ]
+
+summary(Ingots_clean)
+
+boxplot(Ingots_clean[,-1], notch = TRUE, col="lightblue")
+
+#still getting negative values (even with elevated magnitude cutoff) in here so 
+#log transforming may not be appropriate.
+
+logIngotsClean <- log(as.matrix(Ingots_clean[-1,-1]))
+summary(logIngotsClean)
+
+
+#making the dataframe numeric so it can be manipulated.
+
+num_vars <- sapply(Ingots_clean, is.numeric)
+
+#We COULD do this for every variable, and maybe should for primary components.
+
+ggplot(Ingots_clean, aes(sample = Cu)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  theme_minimal()
+
+#Henze-Zirkler test on cleaned data?
+#Non-negative functional distance that measures between two distribution functions. If data
+#is MVN, the test statistic HZ is approximately lognormally distributed. It calculates mean,
+#variance, and smoothness parameter. Mean and variance are then log-normalised and p-value
+#is estimated.
+#@MISC{noauthor_undated-de,
+#  howpublished = "\url{https://www.rdocumentation.org/packages/MVN/versions/5.8/topics/hzTest}",
+#  note         = "Accessed: 2026-9-15"
+#}
+
+HZ <- mvn(data = Ingots_clean, mvn_test = "hz")
+
+cat("Henze_Zirkler Test Results:\n")
+print(HZ$multivariate_normality)
+
+#Reject null and conclude that at pvalue=0.05, this dataset deviates from multivariate normality
+
+
+#I think at this point we reject MVN for the WHOLE dataset.
+
+#consider log transforming the trace elements..
 ```
 
 ## Mahalanobis
@@ -265,6 +324,7 @@ qqline((robust_z), col="red")
 #can be used in conjunction.
 
 
+#Amendment: skip entirely and go to PCA.
 
 
 
@@ -290,6 +350,21 @@ ggcorrplot(cor(Ingots_Frame[,-1]),
            hc.order = TRUE,
            type = "lower")
 
+#performed for tidied data too
+
+
+var(Ingots_clean[-1,-1])
+
+cor(Ingots_clean[-1,-1])
+
+ggcorrplot(cor(Ingots_clean[,-1]),
+           method = "circle",
+           hc.order = TRUE,
+           type = "lower")
+
+
+#seeing a lot more correlation in the data with the massive outliers removed.
+#worth keeping and commenting on?
 
 ```
 
@@ -304,6 +379,7 @@ boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
 ___*Strong negative association between Cu/Zn and Zn (0.93177327) which makes sense due to Cu/Zn being a ratio that includes Zn. Due to this we will mostly be removing Cu/Zn to keep independence??? (Alice knows more about this)
 
 ##  looking closer at the at the strong positive correlation between V and Cr: - STAT394 inference pdf
+(this is supported by the correlation plots)
 ```{r V and CR, echo=TRUE}
 #3D static version of the density between V and Cr
 mu1 <- colMeans(Ingots_Frame[,18:19])
@@ -343,7 +419,7 @@ ggplot(q.samp, aes(x=x1, y=y1, z=prob)) +
 
 ```
 
-##  looking closer at the at the strong negtive association between Cu/Zn and Zn: - STAT394 inference pdf
+##  looking closer at the at the strong negative association between Cu/Zn and Zn: - STAT394 inference pdf
 ```{r Cu/Zn and Zn, echo=TRUE}
 mu2 <- colMeans(Ingots_Frame[,c(2,23)])
 sigma2 <- var(Ingots_Frame[,c(2,23)])
@@ -389,6 +465,9 @@ ggplot(q.samp_2, aes(x=x2, y=y2, z=prob)) +
 
 ggpairs(log(Ingots_Frame[,c(2,3,4,12)]))
 
+#Also done to reflect the traditional primary components that make up orichalcum,
+#Zn, Cu, 
+
 ```
 
 ##  Mahalanobis distance stuff, and QQ plot: - STAT394 inference pdf
@@ -420,7 +499,6 @@ col="red", linewidth=1) + xlab("Mahalanobis distances and cut points") +
 ylab("Histogram and density")
 
 
-<<<<<<< HEAD
 #QQ plot: with Malabouls distance
 qqplot(qchisq(ppoints(1000), df=22), Maha_Ingots, main = expression("Q-Q Plot of Mahalanobis"* ~Maha_Ingots^2* "vs. quantiles of" * ~ chi[1]^2))
 abline(0,1, col="red")
@@ -444,8 +522,6 @@ qqnorm(as.data.frame(Ingots_Frame[-1,-1]))
 
 ##  Transformations:
 ```{r transformations, echo=TRUE}
->>>>>>> 023f10788811bde61fd4c6fba27f95bf5ce6c2a8
-
 
 
 ##  Playing with the Data (you can ignore this): - Gaia
@@ -484,4 +560,26 @@ ggplot(log(Ingots_Frame[,-1]), aes(x = c(), y = Sample))
 
 
 ```
+
+
+```{r}
+#Playing around with some ideas for PCA with common components in orichalcum.
+#Tomorrow I will do some more research into the primary elements becauase it seems
+#like it will be more useful. These make up common markers for origin etc. when
+#archaeometallurgists are trying to identify casting method / intentional impurities / 
+#where ores were mines from etc. 
+
+#I think a good way to interpret and present this dataset is to segregate it in a
+#way that makes sense to the people who will read and use this data for its 
+#intended purpose, which is to compare it to known combinations of metals to try
+#and find the ore source and how/where it was cast.
+
+pca_data <- Ingots_clean[, c("Cu", "Zn", "Pb", "Fe", "Ni", "Ag", "Sb", "As")]
+
+pca <- prcomp(pca_data, center = TRUE, scale. = TRUE)
+
+
+biplot(pca)
+```
+
 
