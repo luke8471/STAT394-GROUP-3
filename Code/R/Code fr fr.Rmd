@@ -515,13 +515,7 @@ abline(0,1, col="red")
 ```{r normal, echo=TRUE}
 qqnorm(as.data.frame(Ingots_Frame[-1,-1]))
 
-
-
 ```
-
-
-##  Transformations:
-```{r transformations, echo=TRUE}
 
 
 ##  Playing with the Data (you can ignore this): - Gaia
@@ -561,8 +555,8 @@ ggplot(log(Ingots_Frame[,-1]), aes(x = c(), y = Sample))
 
 ```
 
-
-```{r}
+##  PCA stuff:
+```{r PCA, echo=TRUE}
 #Playing around with some ideas for PCA with common components in orichalcum.
 #Tomorrow I will do some more research into the primary elements becauase it seems
 #like it will be more useful. These make up common markers for origin etc. when
