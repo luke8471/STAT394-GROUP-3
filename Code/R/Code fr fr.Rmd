@@ -616,13 +616,6 @@ qqplot(qchisq(ppoints(1000), df=22), Maha_Ingots, main = expression("Q-Q Plot of
 abline(0,1, col="red")
 ```
 
-
-#QQ plot:
-qqplot(qchisq(ppoints(1000), df=22), log(Maha_Ingots), main = expression("Q-Q Plot of Mahalanobis"* ~Maha_Ingots^2* "vs. quantiles of" * ~ chi[1]^2))
-abline(0,1, col="red")
-```
-
-
 ## QQ normal plot
 ```{r normal, echo=TRUE}
 qqnorm(as.data.frame(Ingots_Frame[-1,-1]))
@@ -661,8 +654,6 @@ ggplot(Ingots_Frame) +
 
 ggplot(log(Ingots_Frame[,-1]), aes(x = c(), y = Sample))
        geom_boxplot()
-
-
 
 
 ```
