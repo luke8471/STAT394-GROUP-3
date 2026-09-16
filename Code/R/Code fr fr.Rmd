@@ -695,7 +695,9 @@ biplot(pca_1)
 
 wards <- hclust(dist(Ingots_clean), method = "ward.D")
 plot(wards)
+rect.hclust(wards, 5, border = 2:6)
 
+#based on Alice's PAM we are using k = 5
 
 ```
 
