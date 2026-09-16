@@ -535,6 +535,8 @@ ___*Strong negative association between Cu/Zn and Zn (0.93177327) which makes se
 
 ##  looking closer at the at the strong positive correlation between V and Cr: - STAT394 inference pdf
 (this is supported by the correlation plots)
+
+
 ```{r V and CR, echo=TRUE}
 #3D static version of the density between V and Cr
 mu1 <- colMeans(Ingots_Frame[,18:19])
@@ -600,7 +602,7 @@ ggplot(df, aes(x=V, y=Cr)) +
 
 medians_1 <- apply(Ingots_clean[,-1], 2, median)
 
-#View(medians_1)
+View(medians_1)
 
 
 #3D static version of the density between V and Cr
