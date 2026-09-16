@@ -26,6 +26,7 @@ library(ggplot2)
 library(cluster)
 library(factoextra)
 library(hexbin)
+library(matrixStats)
 ```
 ##  Reading the pdf: - pdftools package code
 ```{r reading pdf, echo=TRUE}
@@ -235,6 +236,7 @@ qqline(as.matrix(Ingots_Frame[-1,-1]), col="red")
 #log transform data
 
 logIngots <- log(as.matrix(Ingots_Frame[-1,-1]))
+print(logIngots)
 summary(logIngots)
 
 #NOTE: we return a lot of negative values after a log transformation. Either need
@@ -264,8 +266,8 @@ qqline(as.matrix(Ingots_F_no_Cu_zn[-1,-1]), col="red")
 
 #log transform data
 
-logIngots_no <- log(as.matrix(Ingots_F_no_Cu_zn[-1,-1]))
-summary(logIngots_no)
+#logIngots_no <- log(as.matrix(Ingots_F_no_Cu_zn[-1,-1]))
+#summary(logIngots_no)
 
 
 qqnorm(logIngots_no, col = "#2E8B57");
@@ -529,7 +531,7 @@ print(HZ_no$multivariate_normality)
 #can be used in conjunction.
 
 
-#Amendment: skip entirely and go to PCA.
+#Amendment: skip entirely and go to LDA.
 
 ```
 
@@ -598,10 +600,15 @@ ___*Strong negative association between Cu/Zn and Zn (0.93177327) which makes se
 
 ##  looking closer at the at the strong positive correlation between V and Cr: - STAT394 inference pdf
 (this is supported by the correlation plots)
+
+
 ```{r V and CR, echo=TRUE}
 #3D static version of the density between V and Cr
-mu1 <- colMeans(Ingots_Frame[,18:19])
-sigma1 <- var(Ingots_Frame[,18:19])
+
+MedMat <- sapply(Ingots_clean_no[,-1], as.matrix)
+
+mu1 <- colMedians(MedMat[,18:19])
+sigma1 <- var(MedMat[,18:19])
 
 n <-38
 x <- seq(mu1[1]-3*sqrt(sigma1[1,1]), mu1[1]+3*sqrt(sigma1[1,1]), len=n)
@@ -655,7 +662,6 @@ ggplot(df, aes(x=V, y=Cr)) +
     y = "Cr"
   ) 
 
-
 ```
 ##  Using the clean_ingots data - looking closer at the at the strong positive correlation between V and Cr: - STAT394 inference pdf
 (this is supported by the correlation plots)
@@ -663,15 +669,17 @@ ggplot(df, aes(x=V, y=Cr)) +
 
 medians_1 <- apply(Ingots_clean[,-1], 2, median)
 
-#View(medians_1)
+View(medians_1)
 
 
 #3D static version of the density between V and Cr
-
 MedMat <- sapply(Ingots_clean_no[,-1], as.matrix)
 
 mu1 <- colMedians(MedMat[,18:19])
 sigma1 <- var(MedMat[,18:19])
+
+mu2 <- colMedians(medians_1[,18:19])
+sigma2 <- var(medians_1[,18:19])
 
 n <-38
 x <- seq(mu1[1]-3*sqrt(sigma1[1,1]), mu1[1]+3*sqrt(sigma1[1,1]), len=n)
@@ -855,7 +863,7 @@ biplot(pca_1)
 ```{r LDA, echo=TRUE}
 #PAM (Partitioning Around Medoids) analysis 
 #Trying with both OG and clean data
-#Manhattan or Eucledian?
+#Manhattan or Eucledian? Manhattan more robust to outliers.
 
 #Ingots_clean
 #Ingots_clean_no (no CU/Zn)

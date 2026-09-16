@@ -14,6 +14,8 @@ Their motivation was to create a starting point for giving insight into archaeom
 
 Our study also has the same motivations. We aim to provide a high level data analysis to provide a detailed, and logical, path to a linkage analysis.
 
+Historically, discoveries of orichalcum have had questionable identification methods. A common
+
 Motivation, problem statement, approach, results, conclusions.
 
 Why do we care about the problem and the results?
