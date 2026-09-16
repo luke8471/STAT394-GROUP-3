@@ -145,8 +145,26 @@ Had to do this as R was having a hard time working from the table 1
 summary(Ingots_Frame)
 
 
-#Basic boxplot of the raw data: (no transformations)
-boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
+#OLD Basic boxplot of the raw data: (no transformations)
+#boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
+
+#Nicer box plot of the initial data: (no transformations) using ggplot:
+#start by turing the data into long format:
+Ingots_long <- Ingots_Frame[,-1] |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Elements",
+    values_to = "Concentrations")
+
+
+
+ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
+  geom_boxplot(notch = FALSE, fill ="#79CDCD") +
+  theme_minimal()+
+  labs(title = "Intial boxplot of the raw data (no transformations)")
+
+
+
 
 #boxplot(Ingots_F_no_Cu_zn[,-1], notch = TRUE, col="lightgreen")
 
@@ -160,15 +178,25 @@ cor(Ingots_Frame[-1,-1])
 
 #Correlation plot:
 ggcorrplot(cor(Ingots_Frame[,-1]),
-           method = "circle",
            hc.order = TRUE,
-           type = "lower")
+           type = "lower",
+           lab = TRUE,
+           lab_size = 2,
+           ggtheme = theme_minimal(),
+           colors = c("#FF6A6A", "white", "#87CEFA"),
+           tl.col = "gray30",
+           title = "Correlation plot of the raw data (no transformations)")
+
 
 ggcorrplot(cor(Ingots_F_no_Cu_zn[,-1]),
-           method = "circle",
            hc.order = TRUE,
-           type = "lower")
-
+           type = "lower",
+           lab = TRUE,
+           lab_size = 2,
+           ggtheme = theme_minimal(),
+           colors = c("#FF6A6A", "white", "#87CEFA"),
+           tl.col = "gray30",
+           title = "Correlation plot of the raw data exluding Cu/Zn (no transformations)")
 
 ```
 
@@ -191,6 +219,7 @@ summary(Ingots_Frame[,c(2,3,4,12)])
 
 #Basic boxplot of the raw data: (no transformations)
 boxplot(Ingots_Frame[,c(2,3,4,12)], notch = TRUE, col="lightblue")
+
 
 ```
 
@@ -215,7 +244,7 @@ summary(logIngots)
 
 #taking the log anyway, for giggles.
 
-qqnorm(logIngots, col = "blue");
+qqnorm(logIngots, col = "#4169E1");
 qqline(logIngots, col = "red")
 
 #steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be
@@ -240,7 +269,7 @@ logIngots_no <- log(as.matrix(Ingots_F_no_Cu_zn[-1,-1]))
 summary(logIngots_no)
 
 
-qqnorm(logIngots_no, col = "green");
+qqnorm(logIngots_no, col = "#2E8B57");
 qqline(logIngots_no, col = "red")
 
 #steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be
@@ -320,7 +349,23 @@ Ingots_clean <- Ingots_F_no_Cu_zn[rowSums(abs(z_scores) > 3) == 0, ]
 
 summary(Ingots_clean)
 
-boxplot(Ingots_clean[,-1], notch = TRUE, col="lightblue")
+#old boxplot:
+#boxplot(Ingots_clean[,-1], notch = TRUE, col="lightblue")
+
+#New boxplot:
+Ingots_clean_long <- Ingots_clean[,-1] |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Elements",
+    values_to = "Concentrations")
+
+
+
+ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
+  geom_boxplot(notch = FALSE, fill ="#79CDCD") +
+  theme_minimal()+
+  labs(title = "Boxplot of the clean data")
+
 
 #still getting negative values (even with elevated magnitude cutoff) in here so 
 #log transforming may not be appropriate.
@@ -403,7 +448,23 @@ Ingots_clean_no <- Ingots_F_no_Cu_zn[rowSums(abs(z_scores) > 3) == 0, ]
 
 summary(Ingots_clean_no)
 
-boxplot(Ingots_clean_no[,-1], notch = TRUE, col="lightgreen")
+#old box plot
+#boxplot(Ingots_clean_no[,-1], notch = TRUE, col="lightgreen")
+
+
+#New boxplot:
+Ingots_clean_no_long <- Ingots_clean_no[,-1] |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Elements",
+    values_to = "Concentrations")
+
+
+
+ggplot(Ingots_clean_no_long, aes(x= Elements, y= Concentrations)) +
+  geom_boxplot(notch = FALSE, fill ="#43CD80") +
+  theme_minimal()+
+  labs(title = "Boxplot of the clean data excluding Cr/Zn")
 
 #still getting negative values (even with elevated magnitude cutoff) in here so 
 #log transforming may not be appropriate.
@@ -604,16 +665,19 @@ medians_1 <- apply(Ingots_clean[,-1], 2, median)
 
 
 #3D static version of the density between V and Cr
-mu2 <- colMeans(medians_1[,18:19])
-sigma2 <- var(medians_1[,18:19])
+
+MedMat <- sapply(Ingots_clean_no[,-1], as.matrix)
+
+mu1 <- colMedians(MedMat[,18:19])
+sigma1 <- var(MedMat[,18:19])
 
 n <-38
-x2 <- seq(mu2[1]-3*sqrt(sigma2[1,1]), mu2[1]+3*sqrt(sigma2[1,1]), len=n)
-y2 <- seq(mu2[2]-3*sqrt(sigma2[2,2]), mu2[2]+3*sqrt(sigma2[2,2]), len=n)
-xy2 <- expand.grid(x = x2, y = y2)
-z2 <- dmvnorm(xy2, mu2, sigma2)
-V.and.CR1 <- matrix(z2, nrow = n)
-persp(x2, y2, V.and.CR1)
+x <- seq(mu1[1]-3*sqrt(sigma1[1,1]), mu1[1]+3*sqrt(sigma1[1,1]), len=n)
+y <- seq(mu1[2]-3*sqrt(sigma1[2,2]), mu1[2]+3*sqrt(sigma1[2,2]), len=n)
+xy <- expand.grid(x=x, y=x)
+z <- dmvnorm(xy, mu1, sigma1)
+V.and.CR <- matrix(z, nrow = n)
+persp(x, y, V.and.CR)
 
 #contour curves for V and Cr:
 n2 <- 100
@@ -731,9 +795,9 @@ ggcorrplot(cor(Ingots_Frame[,-1]),
 #Basic boxplot (taking the log):
 boxplot(log(Ingots_Frame[,-1]), notch = TRUE, col="green")
 
-boxplot(mad(Ingots_Frame[,-1]), notch = TRUE, col="purple")
+#boxplot(mad(Ingots_Frame[,-1]), notch = TRUE, col="purple")
 
-boxplot(mad(Ingots_Frame[,-1], center = median(Ingots_Frame[,-1]), constant = 1.4826, na.rm = FALSE, low = FALSE, high = FALSE))
+#boxplot(mad(Ingots_Frame[,-1], center = median(Ingots_Frame[,-1]), constant = 1.4826, na.rm = FALSE, low = FALSE, high = FALSE))
 
 boxplot(sapply(Ingots_Frame[,-1], mad, na.rm = TRUE))
 
