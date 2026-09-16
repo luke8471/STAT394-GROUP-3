@@ -210,7 +210,6 @@ We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {somethin
 
 
 ##  Deeper summary and box plot of Cu, Zn, Pb and Sn:
-
 ```{r basic summary & boxplot, echo=TRUE}
 
 #Summary of the Data Frame:
@@ -525,7 +524,6 @@ print(HZ_no$multivariate_normality)
 ```
 
 ## Mahalanobis
-
 ```{r}
 #next should be Mahalanobis, it functions better with multivariate than MAD and 
 #can be used in conjunction.
@@ -549,14 +547,18 @@ var(Ingots_F_no_Cu_zn[-1,-1])
 cor(Ingots_F_no_Cu_zn[-1,-1])
 
 #Correlation plot:
+#same code 
 ggcorrplot(cor(Ingots_F_no_Cu_zn[,-1]),
-           method = "square",
            hc.order = TRUE,
            type = "lower",
            lab = TRUE,
-           lab_size = 2.5,
-           outline.color = "darkgrey"
-           )
+           lab_size = 2,
+           ggtheme = theme_minimal(),
+           colors = c("#FF6A6A", "white", "#87CEFA"),
+           tl.col = "gray30",
+           title = "Correlation plot of the raw data exluding Cu/Zn (no transformations)")
+
+
 
 #performed for tidied data too
 
