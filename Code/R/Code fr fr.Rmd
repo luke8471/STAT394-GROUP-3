@@ -691,20 +691,9 @@ biplot(pca_1)
 
 ```
 
-##  Hcluster: trying
-```{r hclustering, echo=TRUE}
-
-wards <- hclust(dist(Ingots_clean), method = "ward.D")
-plot(wards)
-rect.hclust(wards, 5, border = 2:6)
-
-#based on Alice's PAM we are using k = 5
-
-```
-
 ## LDA
 
-```{r}
+```{r LDA, echo=TRUE}
 #PAM (Partitioning Around Medoids) analysis 
 #Trying with both OG and clean data
 #Manhattan or Eucledian?
@@ -789,6 +778,17 @@ data.frame(k = 2:26, avg_silhouette = sil_avg)
 
 ```
 
+
+##  Hcluster: trying
+```{r hclustering, echo=TRUE}
+
+wards <- hclust(dist(Ingots_clean), method = "ward.D")
+plot(wards)
+rect.hclust(wards, 5, border = 2:6)
+
+#based on Alice's PAM we are using k = 5
+
+```
 
 
 
