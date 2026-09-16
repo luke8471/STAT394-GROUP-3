@@ -22,6 +22,7 @@ library(here)
 library(tinytex)
 library(httr)
 library(MVN)
+library(ggplot2)
 ```
 ##  Reading the pdf: - pdftools package code
 ```{r reading pdf, echo=TRUE}
@@ -615,7 +616,7 @@ qqplot(qchisq(ppoints(1000), df=22), Maha_Ingots, main = expression("Q-Q Plot of
 abline(0,1, col="red")
 ```
 
-=======
+
 #QQ plot:
 qqplot(qchisq(ppoints(1000), df=22), log(Maha_Ingots), main = expression("Q-Q Plot of Mahalanobis"* ~Maha_Ingots^2* "vs. quantiles of" * ~ chi[1]^2))
 abline(0,1, col="red")
@@ -685,5 +686,16 @@ pca <- prcomp(pca_data, center = TRUE, scale. = TRUE)
 
 
 biplot(pca)
+
+#trying to see how it looks with all of them:
+
+pca_all <- Ingots_clean[-1,-1]
+#View(pca_all)
+pca_1 <- prcomp(pca_all, center = TRUE, scale = TRUE)
+
+
+biplot(pca_1)
+
+
 ```
 
