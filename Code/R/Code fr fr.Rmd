@@ -690,3 +690,12 @@ biplot(pca_1)
 
 ```
 
+##  Hcluster: trying
+```{r hclustering, echo=TRUE}
+
+wards <- hclust(dist(Ingots_clean), method = "ward.D")
+plot(wards)
+
+
+```
+
