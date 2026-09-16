@@ -266,7 +266,7 @@ z_scores <- as.data.frame(scale(Ingots_Frame[, num_cols]))
 
 summary(z_scores)
 
-ol <- Ingots_Frame[rowSums(abs(z_scores) > 3) > 0, ]
+ol <- Ingots_Frame[rowSums(abs(z_scores) > 4) > 0, ]
 
 print(ol)
 
@@ -374,7 +374,7 @@ ___*Strong positive association between V and Cr (0.95547839) as well as between
 =======
 
 boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
->>>>>>> 023f10788811bde61fd4c6fba27f95bf5ce6c2a8
+
 
 ___*Strong negative association between Cu/Zn and Zn (0.93177327) which makes sense due to Cu/Zn being a ratio that includes Zn. Due to this we will mostly be removing Cu/Zn to keep independence??? (Alice knows more about this)
 
