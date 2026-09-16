@@ -274,8 +274,8 @@ Performing log transformations on the data produces the QQ-plot with blue points
 
 #try two:
 #Calculate medians and MADs for each column:
-medians <- apply(Ingots_Frame[,-1], 2, median)
-mads <- apply(Ingots_Frame[,-1], 2, mad)
+medians <- apply(Ingots_F_no_Cu_zn[,-1], 2, median)
+mads <- apply(Ingots_F_no_Cu_zn[,-1], 2, mad)
 
 print(medians/mads)
 mads
@@ -287,7 +287,7 @@ mads
 
 
 #Compute the robust z-scores:
-z <- scale(Ingots_Frame[,-1], center = medians, scale = mads)
+z <- scale(Ingots_F_no_Cu_zn[,-1], center = medians, scale = mads)
 
 #Flag observations where any variable exceeds the threshold
 outliers <- apply(abs(z) > 2.5, 1, any)
@@ -295,7 +295,7 @@ outliers <- apply(abs(z) > 2.5, 1, any)
 list(outliers)
 
 # View the rows flagged as outliers
-summary(Ingots_Frame[outliers,])
+summary(Ingots_F_no_Cu_zn[outliers,])
 
 #The QQ plot shows very skewed data (expected)
 
@@ -305,16 +305,16 @@ qqline((z), col="red")
 
 #sorry this is an absolute mess, was trying a few methods. Need to tidy up
 
-num_cols <- sapply(Ingots_Frame, is.numeric)
-z_scores <- as.data.frame(scale(Ingots_Frame[, num_cols]))
+num_cols <- sapply(Ingots_F_no_Cu_zn, is.numeric)
+z_scores <- as.data.frame(scale(Ingots_F_no_Cu_zn[, num_cols]))
 
 summary(z_scores)
 
-ol <- Ingots_Frame[rowSums(abs(z_scores) > 4) > 0, ]
+ol <- Ingots_F_no_Cu_zn[rowSums(abs(z_scores) > 4) > 0, ]
 
 print(ol)
 
-Ingots_clean <- Ingots_Frame[rowSums(abs(z_scores) > 3) == 0, ]
+Ingots_clean <- Ingots_F_no_Cu_zn[rowSums(abs(z_scores) > 3) == 0, ]
 
 summary(Ingots_clean)
 
@@ -421,6 +421,36 @@ ggplot(Ingots_clean_no, aes(sample = Cu)) +
   stat_qq_line(color = "red") +
   theme_minimal()
 
+ggplot(Ingots_clean_no, aes(sample = Zn)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  theme_minimal()
+
+ggplot(Ingots_clean_no, aes(sample = Sn)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  theme_minimal()
+
+ggplot(Ingots_clean_no, aes(sample = Sb)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  theme_minimal()
+
+ggplot(Ingots_clean_no, aes(sample = Ni)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  theme_minimal()
+
+ggplot(Ingots_clean_no, aes(sample = Ag)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  theme_minimal()
+
+ggplot(Ingots_clean_no, aes(sample = As)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  theme_minimal()
+
 
 HZ_no <- mvn(data = Ingots_clean_no, mvn_test = "hz")
 
@@ -440,9 +470,6 @@ print(HZ_no$multivariate_normality)
 
 #Amendment: skip entirely and go to PCA.
 
-
-
-
 ```
 
 
@@ -452,29 +479,41 @@ print(HZ_no$multivariate_normality)
 ```{r basic correlation, echo=TRUE}
 
 #Covariance table of the data:
-var(Ingots_Frame[-1,-1])
+var(Ingots_F_no_Cu_zn[-1,-1])
 
 
 #Correlation table of the data:
-cor(Ingots_Frame[-1,-1])
+cor(Ingots_F_no_Cu_zn[-1,-1])
 
 #Correlation plot:
-ggcorrplot(cor(Ingots_Frame[,-1]),
-           method = "circle",
+ggcorrplot(cor(Ingots_F_no_Cu_zn[,-1]),
+           method = "square",
            hc.order = TRUE,
-           type = "lower")
+           type = "lower",
+           lab = TRUE,
+           lab_size = 2.5,
+           outline.color = "darkgrey"
+           )
 
 #performed for tidied data too
 
 
-var(Ingots_clean[-1,-1])
+var(Ingots_clean_no[-1,-1])
 
-cor(Ingots_clean[-1,-1])
+cor(Ingots_clean_no[-1,-1])
 
-ggcorrplot(cor(Ingots_clean[,-1]),
-           method = "circle",
+ggcorrplot(cor(Ingots_clean_no[,-1]),
+           method = "square",
            hc.order = TRUE,
-           type = "lower")
+           type = "lower",
+           lab = TRUE,
+           lab_size = 2.5,
+           lab_col = "white",
+           outline.color = "darkgrey") +
+  theme(
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_text(size = 10),
+             )
 
 
 #seeing a lot more correlation in the data with the massive outliers removed.
@@ -577,7 +616,7 @@ ggplot(q.samp_2, aes(x=x2, y=y2, z=prob)) +
 ##  Pairwise plot between Cu, Zn, Pb, and Sn: - STAT394 inference pdf
 ```{r pairwise, echo=TRUE}
 
-ggpairs(log(Ingots_Frame[,c(2,3,4,12)]))
+ggpairs(Ingots_Frame[,c(2,3,4,12)])
 
 #Also done to reflect the traditional primary components that make up orichalcum,
 #Zn, Cu, 
@@ -689,6 +728,8 @@ pca_1 <- prcomp(pca_all, center = TRUE, scale = TRUE)
 
 biplot(pca_1)
 
+#ggbiplot(pca_all, obs.scale = 1, var.scale = 1,groups = Sample$Group,elipse = TRUE,)
+
 
 ```
 
@@ -789,7 +830,7 @@ data.frame(k = 2:26, avg_silhouette = sil_avg)
 
 pam <- pam(Ingots_clean_no[,-1], k = 5)
 
-pam$medoids
+cluster <- pam$clustering
 
 summary(pam)
 
@@ -798,7 +839,60 @@ fviz_silhouette(pam)
 ```
 
 
+## Trying stuff
 
+```{r}
+library(umap)
+
+k <- umap(scaled1)
+
+plot <- data.frame(
+  UMAP1 = k$layout[,1],
+  UMAP2 = k$layout[,2],
+  Cluster = factor(PamMan$cluster)
+  )
+
+print(plot)
+
+ggplot(plot,
+       aes(UMAP1, UMAP2,
+           colour = Cluster)) +
+  geom_point(size = 5) +
+  stat_ellipse(level = 0.95
+              )
+
+umap <- umap(scaled1, metric = "manhattan")
+
+head(umap)
+
+PamMan <- pam(scaled1, k = 5, metric = "manhattan")
+
+plotPamMan <- data.frame(
+  UMAP1 = umap$layout[,1],
+  UMAP2 = umap$layout[,2],
+  Cluster = factor(PamMan$cluster)
+  )
+
+ggplot(plotPamMan, 
+       aes(UMAP1, UMAP2, color = cluster, size = medoid)) +
+  geom_point(size = 5) +
+  theme_classic()
+               
+```
+
+## more test
+
+```{r}
+#manhattan distance instead. More robust to outrliers than Eucledian. We have big boi
+#outliers and our clustering looks awful tbh lol.
+
+dist <- dist(scaled1, method = "manhattan")
+
+HiMan <- hclust(dist, method = "average")
+
+plot(HiMan)
+
+```
 
 
 
