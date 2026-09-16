@@ -6,6 +6,14 @@ editor: visual
 
 ## Introduction
 
+Caponetti et al were doing a study to determine major & trace elements of the orichalcum ingots. They used that data to find a correlation between the observed different features and the composition.
+
+Our analysis includes only a chemometric analysis of the ingots. It does not include the data about physical appearance of the ingots or any correlation analysis of those variables.
+
+Their motivation was to create a starting point for giving insight into archaeometric study of the orichalcum ingots regarding their origin and manufacture technologies.
+
+Our study also has the same motivations. We aim to provide a high level data analysis to provide a detailed, and logical, path to a linkage analysis.
+
 Motivation, problem statement, approach, results, conclusions.
 
 Why do we care about the problem and the results?

@@ -24,6 +24,7 @@ library(httr)
 library(MVN)
 library(ggplot2)
 library(cluster)
+library(factoextra)
 ```
 ##  Reading the pdf: - pdftools package code
 ```{r reading pdf, echo=TRUE}
@@ -775,6 +776,13 @@ data.frame(k = 2:26, avg_silhouette = sil_avg)
 #suggested average silhoutte. Stick with 5. ***6 is also very close
 
 
+pam <- pam(Ingots_clean_no[,-1], k = 5)
+
+pam$medoids
+
+summary(pam)
+
+fviz_silhouette(pam)
 
 ```
 
