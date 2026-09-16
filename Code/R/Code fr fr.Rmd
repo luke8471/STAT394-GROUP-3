@@ -733,20 +733,9 @@ biplot(pca_1)
 
 ```
 
-##  Hcluster: trying
-```{r hclustering, echo=TRUE}
-
-wards <- hclust(dist(Ingots_clean), method = "ward.D")
-plot(wards)
-rect.hclust(wards, 5, border = 2:6)
-
-#based on Alice's PAM we are using k = 5
-
-```
-
 ## LDA
 
-```{r}
+```{r LDA, echo=TRUE}
 #PAM (Partitioning Around Medoids) analysis 
 #Trying with both OG and clean data
 #Manhattan or Eucledian?
@@ -838,6 +827,37 @@ fviz_silhouette(pam)
 
 ```
 
+##  Cluster plot of the LDA stuff: - using code from the STAT394 cluster analysis notes (09, in NUKU)
+```{r cluster plot, echo=TRUE}
+
+result <- kmeans(ICN1, 
+                 algorithm = "MacQueen",
+                 centers = 5, iter.max = 100, nstart = 50)
+
+print(result)
+
+#trying to do the clusterplot
+factoextra::fviz_cluster(result, data = ICN1,
+                         palette = c("#2E9FDF", "#00AFBB", "#E7B800", "#FC4E07","#CD69C9"),
+                         ellipse.type = "euclid", # Concentration ellipse
+                         star.plot = TRUE, # Add segments from centroids to items
+                         repel = TRUE, # Avoid label overplotting
+                         ggtheme = theme_minimal())
+
+
+```
+
+
+##  Hcluster: trying
+```{r hclustering, echo=TRUE}
+
+wards <- hclust(dist(Ingots_clean), method = "ward.D")
+plot(wards)
+rect.hclust(wards, 5, border = 2:6)
+
+#based on Alice's PAM we are using k = 5
+
+```
 
 ## Trying stuff
 
