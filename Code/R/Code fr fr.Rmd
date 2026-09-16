@@ -776,9 +776,9 @@ data.frame(k = 2:26, avg_silhouette = sil_avg)
 #nrow(Ingots_Frame[,-1])
 
 #for (k in 2:26) {
-  PAM_fit <- pam(scaled, k)
-  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
-    }
+  #PAM_fit <- pam(scaled, k)
+  #sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
+   # }
 
 #data.frame(k = 2:26, avg_silhouette = sil_avg)
 
