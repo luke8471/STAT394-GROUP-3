@@ -944,7 +944,10 @@ cluster <- pam$clustering
 
 summary(pam)
 
-fviz_silhouette(pam)
+fviz_silhouette(pam)+
+  scale_fill_manual( values = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))+
+  scale_colour_manual( values = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
+  
 
 ```
 
