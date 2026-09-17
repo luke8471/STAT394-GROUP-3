@@ -26,6 +26,8 @@ library(ggplot2)
 library(cluster)
 library(factoextra)
 library(hexbin)
+library(matrixStats)
+library(fclust)
 ```
 ##  Reading the pdf: - pdftools package code
 ```{r reading pdf, echo=TRUE}
@@ -45,7 +47,7 @@ ingots <- pdftools::pdf_text(tmp)
 length(ingots) #should out put 8
 
 #prints page 3 which has the table on:
-cat(ingots[[3]])
+#cat(ingots[[3]])
 
 #this works if we want to view the pdf! not extract the data
 
@@ -58,15 +60,11 @@ ingots2 <- extract_tables(url, pages=3)
 
 head(ingots2)
 
-print(ingots2)
-
 #lets store it in a table:
 
 table1 <- ingots2[[1]]
 
 #when I first did this this you couldn't view Ni, Ag and Sb separately they all went under concentration
-View(table1)
-
 ```
 
 ##  Cleaning the table: - DATA202 codes
@@ -78,12 +76,8 @@ table1 <- table1 %>%
     sep = " "
   )
 
-#how to check:
-table1[1:3, ] |> 
-  print(width = Inf)
-
 #this should now have all the columns separate :)
-View(table1)
+#View(table1)
 
 #making sure all the columns are named correctly:
 names(table1) <- c(
@@ -93,8 +87,7 @@ names(table1) <- c(
   "Rb", "Sr", "Ba", "Cu_Zn"
 )
 
-View(table1)
-
+head(table1)
 ```
 
 
@@ -126,12 +119,12 @@ Cu_Zn <- as.numeric(table1$Cu_Zn[-1])
 
 Ingots_Frame <- data.frame (Sample = c("S1","S2","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","S13","S14","S15","S16","S17","S18","S19","S20","S21","S22","S23","S24","S25","S26","S27","S28","S29","S30","S31","S32","S33","S34","S35","S36","S37","S38"),Cu, Zn, Pb, Fe, Ni, Ag, Sb, As, Co, Cd, Sn, Te, Bi, Mn, Li, Al, V, Cr, Rb, Sr, Ba, Cu_Zn)
 
-View(Ingots_Frame)
+head(Ingots_Frame)
 
-# Removing Cu/Zn from the table to see if it changes stuff mostly for independence and just to see what happens
-Ingots_F_no_Cu_zn <- Ingots_Frame[,1:22]
+# Removing Cu/Zn from the table
+Ingots_F_no <- Ingots_Frame[,1:22]
 
-View(Ingots_F_no_Cu_zn)
+head(Ingots_F_no)
 
 ```
 
@@ -142,7 +135,7 @@ Had to do this as R was having a hard time working from the table 1
 ```{r basic summary, echo=TRUE}
 
 #Summary of the Data Frame:
-summary(Ingots_Frame)
+summary(Ingots_F_no)
 
 
 #OLD Basic boxplot of the raw data: (no transformations)
@@ -150,7 +143,7 @@ summary(Ingots_Frame)
 
 #Nicer box plot of the initial data: (no transformations) using ggplot:
 #start by turing the data into long format:
-Ingots_long <- Ingots_Frame[,-1] |>
+Ingots_long <- Ingots_F_no[,-1] |>
   pivot_longer(
     cols = everything(),
     names_to = "Elements",
@@ -169,15 +162,15 @@ ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
 #boxplot(Ingots_F_no_Cu_zn[,-1], notch = TRUE, col="lightgreen")
 
 #Covariance table of the data:
-var(Ingots_Frame[-1,-1])
+var(Ingots_F_no[-1,-1])
 
 
 #Correlation table of the data:
-cor(Ingots_Frame[-1,-1])
+cor(Ingots_F_no[-1,-1])
 
 
 #Correlation plot:
-ggcorrplot(cor(Ingots_Frame[,-1]),
+ggcorrplot(cor(Ingots_F_no[,-1]),
            hc.order = TRUE,
            type = "lower",
            lab = TRUE,
@@ -186,17 +179,6 @@ ggcorrplot(cor(Ingots_Frame[,-1]),
            colors = c("#5D3A9B", "white","#E66100"),
            tl.col = "gray30",
            title = "Correlation plot of the raw data (no transformations)")
-
-
-ggcorrplot(cor(Ingots_F_no_Cu_zn[,-1]),
-           hc.order = TRUE,
-           type = "lower",
-           lab = TRUE,
-           lab_size = 2,
-           ggtheme = theme_minimal(),
-           colors = c("#5D3A9B", "white","#E66100"),
-           tl.col = "gray30",
-           title = "Correlation plot of the raw data exluding Cu/Zn (no transformations)")
 
 ```
 
@@ -213,11 +195,11 @@ We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {somethin
 ```{r basic summary & boxplot, echo=TRUE}
 
 #Summary of the Data Frame:
-summary(Ingots_Frame[,c(2,3,4,12)])
+summary(Ingots_F_no[,c(2,3,4,12)])
 
 
 #Basic boxplot of the raw data: (no transformations)
-boxplot(Ingots_Frame[,c(2,3,4,12)], notch = TRUE, col="lightblue")
+boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue")
 
 
 ```
@@ -229,12 +211,12 @@ From the these boxplots we can more clearly see differences between spreads betw
 ```{r qqnormal, echo=TRUE}
 #no transformations
 
-qqnorm(as.matrix(Ingots_Frame[-1,-1]), col="lightblue")
-qqline(as.matrix(Ingots_Frame[-1,-1]), col="red")
+qqnorm(as.matrix(Ingots_F_no[-1,-1]), col="lightblue")
+qqline(as.matrix(Ingots_F_no[-1,-1]), col="red")
 
 #log transform data
 
-logIngots <- log(as.matrix(Ingots_Frame[-1,-1]))
+logIngots <- log(as.matrix(Ingots_F_no[-1,-1]))
 summary(logIngots)
 
 #NOTE: we return a lot of negative values after a log transformation. Either need
@@ -251,39 +233,12 @@ qqline(logIngots, col = "red")
 
 #HZ test on OG data, which also rejects null.
 
-HZoriginal <- mvn(data = Ingots_Frame, mvn_test = "hz")
+HZoriginal <- mvn(data = Ingots_F_no, mvn_test = "hz")
 cat("Henze_Zirkler Test Results:\n")
 print(HZoriginal$multivariate_normality)
 
-
-
-
-#all of the above but without Cu/Zn:
-qqnorm(as.matrix(Ingots_F_no_Cu_zn[-1,-1]), col="lightgreen")
-qqline(as.matrix(Ingots_F_no_Cu_zn[-1,-1]), col="red")
-
-#log transform data
-
-logIngots_no <- log(as.matrix(Ingots_F_no_Cu_zn[-1,-1]))
-summary(logIngots_no)
-
-
-qqnorm(logIngots_no, col = "#2E8B57");
-qqline(logIngots_no, col = "red")
-
 #steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be
 #the answer. Very robust to outliers. AMENDMENT best option fo sho
-
-#HZ test on OG data, which also rejects null.
-
-HZoriginal_no <- mvn(data = Ingots_F_no_Cu_zn, mvn_test = "hz")
-cat("Henze_Zirkler Test Results:\n")
-print(HZoriginal_no$multivariate_normality)
-
-
-
-
-
 
 ```
 *Notes:*
@@ -292,23 +247,16 @@ Looking at the QQ-plot with the light blue points (no transformation) we can see
 Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data  normality assumption holds.
 
 
-
-
 ##  Getting MAD to work: - code from somewhere online (https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/mad and https://www.geeksforgeeks.org/r-language/calculate-the-median-absolute-deviation-in-r-programming-mad-function/)
 ```{r transformations-mad, echo=TRUE}
-#Try one:
-#Mad_Ingots <- sapply(Ingots_Frame[,-1],mad)
 
-#print(Mad_Ingots)
-
-#try two:
-#Calculate medians and MADs for each column:
-medians <- apply(Ingots_F_no_Cu_zn[,-1], 2, median)
-mads <- apply(Ingots_F_no_Cu_zn[,-1], 2, mad)
+#Calculate medians and MAD for each column:
+median <- apply(Ingots_F_no[,-1], 2, median)
+mad <- apply(Ingots_F_no[,-1], 2, mad)
 
 
-print(medians/mads)
-mads
+print(median/mad)
+mad
 
 #looking at this we can see some MASSIVE deviations, as expected. Now use the
 #robust Z score to identify outliers that are candidates for removal.
@@ -317,7 +265,7 @@ mads
 
 
 #Compute the robust z-scores:
-z <- scale(Ingots_F_no_Cu_zn[,-1], center = medians, scale = mads)
+z <- scale(Ingots_F_no[,-1], center = median, scale = mad)
 
 #Flag observations where any variable exceeds the threshold
 outliers <- apply(abs(z) > 2.5, 1, any)
@@ -325,26 +273,23 @@ outliers <- apply(abs(z) > 2.5, 1, any)
 list(outliers)
 
 # View the rows flagged as outliers
-summary(Ingots_F_no_Cu_zn[outliers,])
+summary(Ingots_F_no[outliers,])
 
 #The QQ plot shows very skewed data (expected)
 
 qqnorm((z), col="gray");
 qqline((z), col="red")
 
-
-#sorry this is an absolute mess, was trying a few methods. Need to tidy up
-
-num_cols <- sapply(Ingots_F_no_Cu_zn, is.numeric)
-z_scores <- as.data.frame(scale(Ingots_F_no_Cu_zn[, num_cols]))
+num_cols <- sapply(Ingots_F_no, is.numeric)
+z_scores <- as.data.frame(scale(Ingots_F_no[, num_cols]))
 
 summary(z_scores)
 
-ol <- Ingots_F_no_Cu_zn[rowSums(abs(z_scores) > 4) > 0, ]
+ol <- Ingots_F_no[rowSums(abs(z_scores) > 4) > 0, ]
 
 print(ol)
 
-Ingots_clean <- Ingots_F_no_Cu_zn[rowSums(abs(z_scores) > 3) == 0, ]
+Ingots_clean <- Ingots_F_no[rowSums(abs(z_scores) > 3) == 0, ]
 
 summary(Ingots_clean)
 
@@ -372,12 +317,16 @@ ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
 logIngotsClean <- log(as.matrix(Ingots_clean[-1,-1]))
 summary(logIngotsClean)
 
+View(logIngotsClean)
+
 
 #making the dataframe numeric so it can be manipulated.
 
 num_vars <- sapply(Ingots_clean, is.numeric)
 
 #We COULD do this for every variable, and maybe should for primary components.
+
+#PAIRWISE COMPARISON?
 
 ggplot(Ingots_clean, aes(sample = Cu)) +
   stat_qq() +
@@ -406,172 +355,60 @@ print(HZ$multivariate_normality)
 
 #consider log transforming the trace elements..
 
-
-##all of the above but without Cu/Zn:
-medians_no <- apply(Ingots_F_no_Cu_zn[,-1], 2, median)
-mads_no <- apply(Ingots_F_no_Cu_zn[,-1], 2, mad)
-
-print(medians_no/mads_no)
-mads_no
-
-
-#Compute the robust z-scores:
-z_no <- scale(Ingots_F_no_Cu_zn[,-1], center = medians_no, scale = mads_no)
-
-#Flag observations where any variable exceeds the threshold
-outliers_no <- apply(abs(z) > 2.5, 1, any)
-
-list(outliers_no)
-
-# View the rows flagged as outliers
-summary(Ingots_F_no_Cu_zn[outliers,])
-
-#The QQ plot shows very skewed data (expected)
-
-qqnorm((z), col="gray");
-qqline((z), col="red")
-
-
-#sorry this is an absolute mess, was trying a few methods. Need to tidy up
-
-num_cols_no <- sapply(Ingots_F_no_Cu_zn, is.numeric)
-z_scores_no <- as.data.frame(scale(Ingots_F_no_Cu_zn[, num_cols_no]))
-
-summary(z_scores)
-
-ol_no <- Ingots_F_no_Cu_zn[rowSums(abs(z_scores) > 3) > 0, ]
-
-print(ol_no)
-
-Ingots_clean_no <- Ingots_F_no_Cu_zn[rowSums(abs(z_scores) > 3) == 0, ]
-
-summary(Ingots_clean_no)
-
-#old box plot
-#boxplot(Ingots_clean_no[,-1], notch = TRUE, col="lightgreen")
-
-
-#New boxplot:
-Ingots_clean_no_long <- Ingots_clean_no[,-1] |>
-  pivot_longer(
-    cols = everything(),
-    names_to = "Elements",
-    values_to = "Concentrations")
-
-
-
-ggplot(Ingots_clean_no_long, aes(x= Elements, y= Concentrations)) +
-  geom_boxplot(notch = FALSE, fill ="#40B0A6") +
-  theme_minimal()+
-  labs(title = "Boxplot of the clean data excluding Cr/Zn")
-
-#still getting negative values (even with elevated magnitude cutoff) in here so 
-#log transforming may not be appropriate.
-
-logIngotsClean_no <- log(as.matrix(Ingots_clean_no[-1,-1]))
-summary(logIngotsClean_no)
-
-
-#making the dataframe numeric so it can be manipulated.
-
-num_vars_no <- sapply(Ingots_clean_no, is.numeric)
-
 #We COULD do this for every variable, and maybe should for primary components.
 
-ggplot(Ingots_clean_no, aes(sample = Cu)) +
+ggplot(Ingots_clean, aes(sample = Cu)) +
   stat_qq() +
   stat_qq_line(color = "red") +
   theme_minimal()
 
-ggplot(Ingots_clean_no, aes(sample = Zn)) +
+ggplot(Ingots_clean, aes(sample = Zn)) +
   stat_qq() +
   stat_qq_line(color = "red") +
   theme_minimal()
 
-ggplot(Ingots_clean_no, aes(sample = Sn)) +
+ggplot(Ingots_clean, aes(sample = Sn)) +
   stat_qq() +
   stat_qq_line(color = "red") +
   theme_minimal()
 
-ggplot(Ingots_clean_no, aes(sample = Sb)) +
+ggplot(Ingots_clean, aes(sample = Sb)) +
   stat_qq() +
   stat_qq_line(color = "red") +
   theme_minimal()
 
-ggplot(Ingots_clean_no, aes(sample = Ni)) +
+ggplot(Ingots_clean, aes(sample = Ni)) +
   stat_qq() +
   stat_qq_line(color = "red") +
   theme_minimal()
 
-ggplot(Ingots_clean_no, aes(sample = Ag)) +
+ggplot(Ingots_clean, aes(sample = Ag)) +
   stat_qq() +
   stat_qq_line(color = "red") +
   theme_minimal()
 
-ggplot(Ingots_clean_no, aes(sample = As)) +
+ggplot(Ingots_clean, aes(sample = As)) +
   stat_qq() +
   stat_qq_line(color = "red") +
   theme_minimal()
-
-
-HZ_no <- mvn(data = Ingots_clean_no, mvn_test = "hz")
-
-cat("Henze_Zirkler Test Results:\n")
-print(HZ_no$multivariate_normality)
-
-
 
 ```
-
-## Mahalanobis
-```{r}
-#next should be Mahalanobis, it functions better with multivariate than MAD and 
-#can be used in conjunction.
-
-
-#Amendment: skip entirely and go to PCA.
-
-```
-
-
-
 
 ##  Correlation and Covariance tables: - STAT394 inference pdf
-```{r basic correlation, echo=TRUE}
-
-#Covariance table of the data:
-var(Ingots_F_no_Cu_zn[-1,-1])
-
-
-#Correlation table of the data:
-cor(Ingots_F_no_Cu_zn[-1,-1])
-
-#Correlation plot:
-#same code from above:
-ggcorrplot(cor(Ingots_F_no_Cu_zn[,-1]),
-           hc.order = TRUE,
-           type = "lower",
-           lab = TRUE,
-           lab_size = 2,
-           ggtheme = theme_minimal(),
-           colors = c("#5D3A9B", "white","#E66100"),
-           tl.col = "gray30",
-           title = "Correlation plot of the raw data exluding Cu/Zn (no transformations)")
-
-
+```{r correlation/covariance clean data, echo=TRUE}
 
 #performed for tidied data too
 
 
-var(Ingots_clean_no[-1,-1])
+var(Ingots_clean[-1,-1])
 
-cor(Ingots_clean_no[-1,-1])
+cor(Ingots_clean[-1,-1])
 
-ggcorrplot(cor(Ingots_clean_no[,-1]),
+ggcorrplot(cor(Ingots_clean[,-1]),
            hc.order = TRUE,
            type = "lower",
            lab = TRUE,
-           lab_size = 2,
+           lab_size = 1.5,
            ggtheme = theme_minimal(),
            colors = c("#5D3A9B", "white","#E66100"),
            tl.col = "gray30",
@@ -593,139 +430,6 @@ boxplot(Ingots_Frame[,-1], notch = TRUE, col="lightblue")
 
 ___*Strong negative association between Cu/Zn and Zn (0.93177327) which makes sense due to Cu/Zn being a ratio that includes Zn. Due to this we will mostly be removing Cu/Zn to keep independence??? (Alice knows more about this)
 
-##  looking closer at the at the strong positive correlation between V and Cr: - STAT394 inference pdf
-(this is supported by the correlation plots)
-```{r V and CR, echo=TRUE}
-#3D static version of the density between V and Cr
-mu1 <- colMeans(Ingots_Frame[,18:19])
-sigma1 <- var(Ingots_Frame[,18:19])
-
-n <-38
-x <- seq(mu1[1]-3*sqrt(sigma1[1,1]), mu1[1]+3*sqrt(sigma1[1,1]), len=n)
-y <- seq(mu1[2]-3*sqrt(sigma1[2,2]), mu1[2]+3*sqrt(sigma1[2,2]), len=n)
-xy <- expand.grid(x=x, y=x)
-z <- dmvnorm(xy, mu1, sigma1)
-V.and.CR <- matrix(z, nrow = n)
-persp(x, y, V.and.CR)
-
-#contour curves for V and Cr:
-n1 <- 100
-x1 <- seq(mu1[1]-4*sqrt(sigma1[1,1]), mu1[1]+4*sqrt(sigma1[1,1]), length.out=n1)
-y1 <- seq(mu1[2]-4*sqrt(sigma1[2,2]), mu1[2]+4*sqrt(sigma1[2,2]), length.out=n1)
-xy1 <- expand.grid(x=x1, y=y1)
-q.samp <- cbind(xy1, prob=dmvnorm(xy1, mean = mu1, sigma = sigma1))
-
-p05 <- qmvnorm(0.5, mean=mu1, sigma = sigma1, tail = "both")$quantile
-p09 <- qmvnorm(0.9, mean=mu1, sigma = sigma1, tail = "both")$quantile
-p095 <- qmvnorm(0.95, mean=mu1, sigma = sigma1, tail = "both")$quantile
-p099 <- qmvnorm(0.99, mean=mu1, sigma = sigma1, tail = "both")$quantile
-
-dp <- c(dmvnorm(c(p05, p05), mean=mu1, sigma = sigma1),
-        dmvnorm(c(p09, p09), mean=mu1, sigma = sigma1),
-        dmvnorm(c(p095, p095), mean=mu1, sigma = sigma1),
-        dmvnorm(c(p099, p099), mean=mu1, sigma = sigma1))
-
-ggplot(q.samp, aes(x=x, y=y, z=prob)) + 
-  geom_contour(breaks = dp) +
-  coord_fixed()
-
-df <- Ingots_Frame[,18:19]
-
-ggplot(df, aes(x=V, y=Cr)) +
-  geom_hex() +
-  coord_fixed()
-
-
-#combining both:
-
-ggplot(df, aes(x=V, y=Cr)) +
-  geom_hex() +
-  geom_contour(
-    data = q.samp,
-    aes(x=x, y=y, z=prob),
-    breaks = dp,
-    inherit.aes = FALSE) +
-  coord_fixed() +
-  labs(
-    title = "Closer look at the correlation between V and Cr",
-    x = "V",
-    y = "Cr"
-  ) 
-
-
-```
-##  Using the clean_ingots data - looking closer at the at the strong positive correlation between V and Cr: - STAT394 inference pdf
-(this is supported by the correlation plots)
-```{r V and CR clean data, echo=TRUE}
-
-medians_1 <- apply(Ingots_clean[,-1], 2, median)
-
-#View(medians_1)
-
-
-#3D static version of the density between V and Cr
-
-MedMat <- sapply(Ingots_clean_no[,-1], as.matrix)
-
-mu1 <- colMedians(MedMat[,18:19])
-sigma1 <- var(MedMat[,18:19])
-
-n <-38
-x <- seq(mu1[1]-3*sqrt(sigma1[1,1]), mu1[1]+3*sqrt(sigma1[1,1]), len=n)
-y <- seq(mu1[2]-3*sqrt(sigma1[2,2]), mu1[2]+3*sqrt(sigma1[2,2]), len=n)
-xy <- expand.grid(x=x, y=x)
-z <- dmvnorm(xy, mu1, sigma1)
-V.and.CR <- matrix(z, nrow = n)
-persp(x, y, V.and.CR)
-
-#contour curves for V and Cr:
-n2 <- 100
-x3 <- seq(mu2[1]-4*sqrt(sigma2[1,1]), mu2[1]+4*sqrt(sigma2[1,1]), length.out=n2)
-y3 <- seq(mu2[2]-4*sqrt(sigma2[2,2]), mu2[2]+4*sqrt(sigma2[2,2]), length.out=n2)
-xy3 <- expand.grid(x=x3, y=y3)
-q.samp1 <- cbind(xy3, prob1=dmvnorm(xy3, mean = mu2, sigma = sigma2))
-
-p05_1 <- qmvnorm(0.5, mean=mu2, sigma = sigma2, tail = "both")$quantile
-p09_1 <- qmvnorm(0.9, mean=mu2, sigma = sigma2, tail = "both")$quantile
-p095_1 <- qmvnorm(0.95, mean=mu2, sigma = sigma2, tail = "both")$quantile
-p099_1 <- qmvnorm(0.99, mean=mu2, sigma = sigma2, tail = "both")$quantile
-
-dp1 <- c(dmvnorm(c(p05_1, p05_1), mean=mu2, sigma = sigma2),
-        dmvnorm(c(p09_1, p09_1), mean=mu2, sigma = sigma2),
-        dmvnorm(c(p095_1, p095_1), mean=mu2, sigma = sigma2),
-        dmvnorm(c(p099_1, p099_1), mean=mu2, sigma = sigma2))
-
-ggplot(q.samp1, aes(x=x, y=y, z=prob1)) + 
-  geom_contour(breaks = dp1) +
-  coord_fixed()
-
-df1 <- Ingots_clean[,18:19]
-
-ggplot(df1, aes(x=V, y=Cr)) +
-  geom_hex() +
-  coord_fixed()
-
-
-#combining both:
-
-ggplot(df1, aes(x=V, y=Cr)) +
-  geom_hex() +
-  geom_contour(
-    data = q.samp1,
-    aes(x=x, y=y, z=prob1),
-    breaks = dp1,
-    inherit.aes = FALSE) +
-  coord_fixed() +
-  labs(
-    title = "Closer look at the correlation between V and Cr using MAD",
-    x = "V",
-    y = "Cr"
-  ) 
-
-View(medians)
-
-```
-
 
 ##  Pairwise plot between Cu, Zn, Pb, and Sn: - STAT394 inference pdf
 ```{r pairwise, echo=TRUE}
@@ -741,82 +445,6 @@ ggpairs(Ingots_clean, columns = c(2,3,4,12),
 
 #Also done to reflect the traditional primary components that make up orichalcum,
 #Zn, Cu, 
-
-```
-
-##  Mahalanobis distance stuff, and QQ plot: - STAT394 inference pdf
-```{r Maha, echo=TRUE}
-
-Maha_Ingots <- mahalanobis(Ingots_Frame[,-1], colMeans(Ingots_Frame[,-1]), var(Ingots_Frame[,-1]))
-
-pchisq(Maha_Ingots, df=22) #using 22 df as we have 22 concentrations minus (Cn/Zn)
-
-
-#Mahalanobis plot:
-
-Maha_Ingots2 <- mahalanobis(Ingots_Frame[,-1], colMeans(Ingots_Frame[,-1]), cov(Ingots_Frame[,-1]))
-
-upper.quantiles <- qchisq(c(.9, .95, .99), df=22)
-density.at.quantiles <- dchisq(x=upper.quantiles, df=22)
-cut.points <- data.frame(upper.quantiles, density.at.quantiles)
-
-ggplot(data.frame(Maha_Ingots2), aes(x=Maha_Ingots2)) +
-  geom_histogram(aes(y=after_stat(density)), bins=nclass.FD(Maha_Ingots2),
-fill="white", col="black") +
-  stat_function(fun=dchisq, args = list(df=13),
-col="blue", linewidth=2, alpha=.7, xlim=c(0,65)) +
-  geom_point(aes(x=Maha_Ingots, y=0), size=3, col="red") +
-  geom_segment(data=cut.points,
-aes(x=upper.quantiles, xend=upper.quantiles,
-y=rep(0,3), yend=density.at.quantiles),
-col="red", linewidth=1) + xlab("Mahalanobis distances and cut points") +
-ylab("Histogram and density")
-
-
-#QQ plot: with Malabouls distance
-qqplot(qchisq(ppoints(1000), df=22), Maha_Ingots, main = expression("Q-Q Plot of Mahalanobis"* ~Maha_Ingots^2* "vs. quantiles of" * ~ chi[1]^2))
-abline(0,1, col="red")
-```
-
-## QQ normal plot
-```{r normal, echo=TRUE}
-qqnorm(as.data.frame(Ingots_Frame[-1,-1]))
-
-```
-
-
-##  Playing with the Data (you can ignore this): - Gaia
-```{r playing, echo=TRUE}
-
-#summary of the Data Frame:
-summary(Ingots_Frame)
-
-
-#Correlation plot
-ggcorrplot(cor(Ingots_Frame[,-1]),
-           method = "circle",
-           hc.order = TRUE,
-           type = "lower")
-
-#Basic boxplot (taking the log):
-boxplot(log(Ingots_Frame[,-1]), notch = TRUE, col="green")
-
-#boxplot(mad(Ingots_Frame[,-1]), notch = TRUE, col="purple")
-
-#boxplot(mad(Ingots_Frame[,-1], center = median(Ingots_Frame[,-1]), constant = 1.4826, na.rm = FALSE, low = FALSE, high = FALSE))
-
-boxplot(sapply(Ingots_Frame[,-1], mad, na.rm = TRUE))
-
-
-boxplot(mad(Ingots_Frame$Cu), mad(Ingots_Frame$Zn))
-
-#log of our data set:
-ggplot(Ingots_Frame) +
-   geom_boxplot()
-
-ggplot(log(Ingots_Frame[,-1]), aes(x = c(), y = Sample))
-       geom_boxplot()
-
 
 ```
 
@@ -865,7 +493,7 @@ biplot(pca_1, main = "PCA of all elements in the clean data")
 #Ingots_clean_no (no CU/Zn)
 #Ingots_Frame
 
-ICN <- sapply(Ingots_clean_no[,-1], as.numeric)
+ICN <- sapply(Ingots_clean[,-1], as.numeric)
 
 scaled <- scale(ICN)
 
@@ -873,13 +501,9 @@ scaled
 
 head(scaled, n = 3)
 
-#pam <- pam(scaled, k = 6)
-
 #need to find optimal silhouette width
 
-sil_avg <- nrow(Ingots_clean_no[,-1])
-
-#sil_avg <- numeric(6)
+sil_avg <- nrow(Ingots_clean[,-1])
 
 for (k in 2:26) {
   PAM_fit <- pam(scaled, k)
@@ -913,32 +537,12 @@ for (k in 2:26) {
 
 data.frame(k = 2:26, avg_silhouette = sil_avg)
 
-#no change using cu/zn included clean data
-
-#stuff below is kinda not working, later problem.
-
-#ICN2 <- sapply(Ingots_Frame[,-1], as.numeric)
-
-#scaled2 <- scale(ICN2)
-
-#head(scaled2, n = 3)
-
-#sil_avg2 <- nrow(Ingots_Frame[,-1])
-
-#nrow(Ingots_Frame[,-1])
-
-#for (k in 2:26) {
-  #PAM_fit <- pam(scaled, k)
-  #sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
-   # }
-
-#data.frame(k = 2:26, avg_silhouette = sil_avg)
 
 #using complete dataset or any of the other variations does not affect the
 #suggested average silhoutte. Stick with 5. ***6 is also very close
 
 
-pam <- pam(Ingots_clean_no[,-1], k = 5)
+pam <- pam(Ingots_clean[,-1], k = 5)
 
 cluster <- pam$clustering
 
@@ -954,14 +558,16 @@ fviz_silhouette(pam)+
 ##  Cluster plot of the LDA stuff: - using code from the STAT394 cluster analysis notes (09, in NUKU)
 ```{r cluster plot, echo=TRUE}
 
-result <- kmeans(ICN1, 
+
+
+result <- kmeans(ICN, 
                  algorithm = "MacQueen",
                  centers = 5, iter.max = 100, nstart = 50)
 
 print(result)
 
 #trying to do the clusterplot
-factoextra::fviz_cluster(result, data = ICN1,
+factoextra::fviz_cluster(result, data = ICN,
                          palette = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"),
                          ellipse.type = "euclid", 
                          star.plot = TRUE,
@@ -975,7 +581,7 @@ factoextra::fviz_cluster(result, data = ICN1,
 ##  Hcluster: trying
 ```{r hclustering, echo=TRUE}
 
-wards <- hclust(dist(Ingots_clean), method = "ward.D")
+wards <- hclust(dist(scaled), method = "ward.D")
 plot(wards)
 rect.hclust(wards, 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
 
@@ -988,15 +594,15 @@ rect.hclust(wards, 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FF
 ```{r}
 library(umap)
 
-k <- umap(scaled1)
+k <- umap(scaled)
 
-plot <- data.frame(
+UMAP_plot <- data.frame(
   UMAP1 = k$layout[,1],
   UMAP2 = k$layout[,2],
   Cluster = factor(PamMan$cluster)
   )
 
-print(plot)
+print(UMAP_plot)
 
 ggplot(plot,
        aes(UMAP1, UMAP2,
@@ -1006,11 +612,11 @@ ggplot(plot,
   scale_colour_manual( values = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))+
   labs(title = "Clustering of the clean data")
 
-umap <- umap(scaled1, metric = "manhattan")
+UMAP <- umap(scaled, metric = "manhattan")
 
-head(umap)
+head(UMAP)
 
-PamMan <- pam(scaled1, k = 5, metric = "manhattan")
+PamMan <- pam(scaled, k = 5, metric = "manhattan")
 
 plotPamMan <- data.frame(
   UMAP1 = umap$layout[,1],
@@ -1022,25 +628,54 @@ ggplot(plotPamMan,
        aes(UMAP1, UMAP2, color = cluster, size = medoid)) +
   geom_point(size = 5) +
   theme_classic() +
-  labs(title = "Heat wave of the clustering of the raw data")
+  labs(title = "UMAP of Data Using Manhattan Distance")
                
 ```
 
 ## more test
 
 ```{r}
-#manhattan distance instead. More robust to outrliers than Eucledian. We have big boi
+#manhattan distance instead. More robust to outliers than Eucledian. We have big boi
 #outliers and our clustering looks awful tbh lol.
 
-dist <- dist(scaled1, method = "manhattan")
+dist <- dist(scaled, method = "manhattan")
 
 HiMan <- hclust(dist, method = "average")
 
 plot(HiMan)
 
+rect.hclust(HiMan , 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
+
 ```
 
 
+## Fuzzy Analysis
+
+```{r}
+
+#scaled1
+
+#k-medoids for Fuzzy
+
+Fuzzy_k <- FKM.med(scaled, k = 6, m = 2)
+
+#silhouettes
+
+print(Fuzzy_k$U)
+
+Fuzzy_Sil <- SIL.F(scaled1, Fuzzy_k$U)
+
+Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
+
+table(Fuzzy_Clust)
+
+plot(Fuzzy_Clust, pch = 15, 
+     col = apply(Fuzzy_k$U, 1, which.max),
+     xlab = "Obs",
+     ylab = "Silhouette Width",
+     main = "Fuzzy Silhouette Plot Using k-Medoids")
+
+```
 
 
 
