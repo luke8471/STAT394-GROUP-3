@@ -26,7 +26,6 @@ library(ggplot2)
 library(cluster)
 library(factoextra)
 library(hexbin)
-library(matrixStats)
 ```
 ##  Reading the pdf: - pdftools package code
 ```{r reading pdf, echo=TRUE}
@@ -160,7 +159,7 @@ Ingots_long <- Ingots_Frame[,-1] |>
 
 
 ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
-  geom_boxplot(notch = FALSE, fill ="#79CDCD") +
+  geom_boxplot(notch = FALSE, fill ="#40B0A6") +
   theme_minimal()+
   labs(title = "Intial boxplot of the raw data (no transformations)")
 
@@ -184,7 +183,7 @@ ggcorrplot(cor(Ingots_Frame[,-1]),
            lab = TRUE,
            lab_size = 2,
            ggtheme = theme_minimal(),
-           colors = c("#FF6A6A", "white", "#87CEFA"),
+           colors = c("#5D3A9B", "white","#E66100"),
            tl.col = "gray30",
            title = "Correlation plot of the raw data (no transformations)")
 
@@ -195,7 +194,7 @@ ggcorrplot(cor(Ingots_F_no_Cu_zn[,-1]),
            lab = TRUE,
            lab_size = 2,
            ggtheme = theme_minimal(),
-           colors = c("#FF6A6A", "white", "#87CEFA"),
+           colors = c("#5D3A9B", "white","#E66100"),
            tl.col = "gray30",
            title = "Correlation plot of the raw data exluding Cu/Zn (no transformations)")
 
@@ -236,7 +235,6 @@ qqline(as.matrix(Ingots_Frame[-1,-1]), col="red")
 #log transform data
 
 logIngots <- log(as.matrix(Ingots_Frame[-1,-1]))
-print(logIngots)
 summary(logIngots)
 
 #NOTE: we return a lot of negative values after a log transformation. Either need
@@ -266,8 +264,8 @@ qqline(as.matrix(Ingots_F_no_Cu_zn[-1,-1]), col="red")
 
 #log transform data
 
-#logIngots_no <- log(as.matrix(Ingots_F_no_Cu_zn[-1,-1]))
-#summary(logIngots_no)
+logIngots_no <- log(as.matrix(Ingots_F_no_Cu_zn[-1,-1]))
+summary(logIngots_no)
 
 
 qqnorm(logIngots_no, col = "#2E8B57");
@@ -363,7 +361,7 @@ Ingots_clean_long <- Ingots_clean[,-1] |>
 
 
 ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
-  geom_boxplot(notch = FALSE, fill ="#79CDCD") +
+  geom_boxplot(notch = FALSE, fill ="#40B0A6") +
   theme_minimal()+
   labs(title = "Boxplot of the clean data")
 
@@ -463,7 +461,7 @@ Ingots_clean_no_long <- Ingots_clean_no[,-1] |>
 
 
 ggplot(Ingots_clean_no_long, aes(x= Elements, y= Concentrations)) +
-  geom_boxplot(notch = FALSE, fill ="#43CD80") +
+  geom_boxplot(notch = FALSE, fill ="#40B0A6") +
   theme_minimal()+
   labs(title = "Boxplot of the clean data excluding Cr/Zn")
 
@@ -531,7 +529,7 @@ print(HZ_no$multivariate_normality)
 #can be used in conjunction.
 
 
-#Amendment: skip entirely and go to LDA.
+#Amendment: skip entirely and go to PCA.
 
 ```
 
@@ -549,14 +547,14 @@ var(Ingots_F_no_Cu_zn[-1,-1])
 cor(Ingots_F_no_Cu_zn[-1,-1])
 
 #Correlation plot:
-#same code 
+#same code from above:
 ggcorrplot(cor(Ingots_F_no_Cu_zn[,-1]),
            hc.order = TRUE,
            type = "lower",
            lab = TRUE,
            lab_size = 2,
            ggtheme = theme_minimal(),
-           colors = c("#FF6A6A", "white", "#87CEFA"),
+           colors = c("#5D3A9B", "white","#E66100"),
            tl.col = "gray30",
            title = "Correlation plot of the raw data exluding Cu/Zn (no transformations)")
 
@@ -570,17 +568,14 @@ var(Ingots_clean_no[-1,-1])
 cor(Ingots_clean_no[-1,-1])
 
 ggcorrplot(cor(Ingots_clean_no[,-1]),
-           method = "square",
            hc.order = TRUE,
            type = "lower",
            lab = TRUE,
-           lab_size = 2.5,
-           lab_col = "white",
-           outline.color = "darkgrey") +
-  theme(
-    axis.text.x = element_text(size = 10),
-    axis.text.y = element_text(size = 10),
-             )
+           lab_size = 2,
+           ggtheme = theme_minimal(),
+           colors = c("#5D3A9B", "white","#E66100"),
+           tl.col = "gray30",
+           title = "Correlation plot of the clean data exluding Cu/Zn")
 
 
 #seeing a lot more correlation in the data with the massive outliers removed.
@@ -600,15 +595,10 @@ ___*Strong negative association between Cu/Zn and Zn (0.93177327) which makes se
 
 ##  looking closer at the at the strong positive correlation between V and Cr: - STAT394 inference pdf
 (this is supported by the correlation plots)
-
-
 ```{r V and CR, echo=TRUE}
 #3D static version of the density between V and Cr
-
-MedMat <- sapply(Ingots_clean_no[,-1], as.matrix)
-
-mu1 <- colMedians(MedMat[,18:19])
-sigma1 <- var(MedMat[,18:19])
+mu1 <- colMeans(Ingots_Frame[,18:19])
+sigma1 <- var(Ingots_Frame[,18:19])
 
 n <-38
 x <- seq(mu1[1]-3*sqrt(sigma1[1,1]), mu1[1]+3*sqrt(sigma1[1,1]), len=n)
@@ -662,6 +652,7 @@ ggplot(df, aes(x=V, y=Cr)) +
     y = "Cr"
   ) 
 
+
 ```
 ##  Using the clean_ingots data - looking closer at the at the strong positive correlation between V and Cr: - STAT394 inference pdf
 (this is supported by the correlation plots)
@@ -669,17 +660,15 @@ ggplot(df, aes(x=V, y=Cr)) +
 
 medians_1 <- apply(Ingots_clean[,-1], 2, median)
 
-View(medians_1)
+#View(medians_1)
 
 
 #3D static version of the density between V and Cr
+
 MedMat <- sapply(Ingots_clean_no[,-1], as.matrix)
 
 mu1 <- colMedians(MedMat[,18:19])
 sigma1 <- var(MedMat[,18:19])
-
-mu2 <- colMedians(medians_1[,18:19])
-sigma2 <- var(medians_1[,18:19])
 
 n <-38
 x <- seq(mu1[1]-3*sqrt(sigma1[1,1]), mu1[1]+3*sqrt(sigma1[1,1]), len=n)
@@ -728,7 +717,7 @@ ggplot(df1, aes(x=V, y=Cr)) +
     inherit.aes = FALSE) +
   coord_fixed() +
   labs(
-    title = "Closer look at the correlation between V and Cr using the clean ingots data",
+    title = "Closer look at the correlation between V and Cr using MAD",
     x = "V",
     y = "Cr"
   ) 
@@ -740,8 +729,15 @@ View(medians)
 
 ##  Pairwise plot between Cu, Zn, Pb, and Sn: - STAT394 inference pdf
 ```{r pairwise, echo=TRUE}
+#old graph: using the raw data
+#ggpairs(Ingots_Frame[,c(2,3,4,12)])
 
-ggpairs(Ingots_Frame[,c(2,3,4,12)])
+#new graph: using the clean data
+ggpairs(Ingots_clean, columns = c(2,3,4,12),
+        lower = list(continuous = wrap("points", alpha = 0.6, size = 1.5, color = "#006CD1")),
+        upper = list(continuous = wrap("cor", size = 4, color = "#005AB5")),
+        diag = list(continuous = wrap("densityDiag", alpha = 0.5, color = "#40B0A6")))
+
 
 #Also done to reflect the traditional primary components that make up orichalcum,
 #Zn, Cu, 
@@ -842,7 +838,7 @@ pca_data <- Ingots_clean[, c("Cu", "Zn", "Pb", "Fe", "Ni", "Ag", "Sb", "As")]
 pca <- prcomp(pca_data, center = TRUE, scale. = TRUE)
 
 
-biplot(pca)
+biplot(pca, main = "PCA of only a few elements from the clean data")
 
 #trying to see how it looks with all of them:
 
@@ -851,7 +847,7 @@ pca_all <- Ingots_clean[-1,-1]
 pca_1 <- prcomp(pca_all, center = TRUE, scale = TRUE)
 
 
-biplot(pca_1)
+biplot(pca_1, main = "PCA of all elements in the clean data")
 
 #ggbiplot(pca_all, obs.scale = 1, var.scale = 1,groups = Sample$Group,elipse = TRUE,)
 
@@ -863,7 +859,7 @@ biplot(pca_1)
 ```{r LDA, echo=TRUE}
 #PAM (Partitioning Around Medoids) analysis 
 #Trying with both OG and clean data
-#Manhattan or Eucledian? Manhattan more robust to outliers.
+#Manhattan or Eucledian?
 
 #Ingots_clean
 #Ingots_clean_no (no CU/Zn)
@@ -963,10 +959,10 @@ print(result)
 
 #trying to do the clusterplot
 factoextra::fviz_cluster(result, data = ICN1,
-                         palette = c("#2E9FDF", "#00AFBB", "#E7B800", "#FC4E07","#CD69C9"),
-                         ellipse.type = "euclid", # Concentration ellipse
-                         star.plot = TRUE, # Add segments from centroids to items
-                         repel = TRUE, # Avoid label overplotting
+                         palette = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"),
+                         ellipse.type = "euclid", 
+                         star.plot = TRUE,
+                         repel = TRUE, 
                          ggtheme = theme_minimal())
 
 
@@ -978,7 +974,7 @@ factoextra::fviz_cluster(result, data = ICN1,
 
 wards <- hclust(dist(Ingots_clean), method = "ward.D")
 plot(wards)
-rect.hclust(wards, 5, border = 2:6)
+rect.hclust(wards, 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
 
 #based on Alice's PAM we are using k = 5
 
@@ -1003,8 +999,9 @@ ggplot(plot,
        aes(UMAP1, UMAP2,
            colour = Cluster)) +
   geom_point(size = 5) +
-  stat_ellipse(level = 0.95
-              )
+  stat_ellipse(level = 0.95)+
+  scale_colour_manual( values = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))+
+  labs(title = "Clustering of the clean data")
 
 umap <- umap(scaled1, metric = "manhattan")
 
@@ -1021,7 +1018,8 @@ plotPamMan <- data.frame(
 ggplot(plotPamMan, 
        aes(UMAP1, UMAP2, color = cluster, size = medoid)) +
   geom_point(size = 5) +
-  theme_classic()
+  theme_classic() +
+  labs(title = "Heat wave of the clustering of the raw data")
                
 ```
 
