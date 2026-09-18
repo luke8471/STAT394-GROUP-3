@@ -220,7 +220,7 @@ invisible(summary(logIngots))
 
 #taking the log.
 
-qqnorm(logIngots, col = "#4169E1", main = "Normal QQ- Plot of the non-transformed data")
+qqnorm(logIngots, col = "#4169E1", main = "Normal QQ- Plot of the log-transformed data")
 qqline(logIngots, col = "red")
 
 ```
@@ -266,9 +266,9 @@ outliers <- apply(abs(z) > 2.5, 1, any)
 # View the rows flagged as outliers
 invisible(summary(Ingots_F_no[outliers,]))
 
-#The QQ plot shows very skewed data (expected)
+#The QQ plot of the mad transformed data:
 
-qqnorm((z), col="gray");
+qqnorm((z), col="gray", main = "Normal QQ- Plot of the Mad-transformed data")
 qqline((z), col="red")
 
 num_cols <- sapply(Ingots_F_no, is.numeric)
@@ -276,9 +276,9 @@ z_scores <- as.data.frame(scale(Ingots_F_no[, num_cols]))
 
 #summary(z_scores)
 
-ol <- Ingots_F_no[rowSums(abs(z_scores) > 4) > 0, ]
+ol <- Ingots_F_no[rowSums(abs(z_scores) > 4) > 0, ] #ALICE STUFF
 
-print(ol)
+print(ol) # ALICE STUFF
 
 Ingots_clean <- Ingots_F_no[rowSums(abs(z_scores) > 3) == 0, ]
 
@@ -296,7 +296,7 @@ Ingots_clean_long <- Ingots_clean[,-1] |>
 ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
   geom_boxplot(notch = FALSE, fill ="#40B0A6") +
   theme_minimal()+
-  labs(title = "Boxplot of the clean data")
+  labs(title = "Boxplot of the clean data (Mad Transformed with major sample outliers removed)")
 
 
 #still getting negative values (even with elevated magnitude cutoff) in here so 
@@ -313,14 +313,14 @@ invisible(summary(logIngotsClean))
 num_vars <- sapply(Ingots_clean, is.numeric)
 
 ```
-
+The QQ plot shows very skewed data which we would expected...
 
 **2.4 Multivariate normal distribution**
 
 
 What tests did we use? Henze Zirkler
 
-Why did we use those tests?
+Why did we use those tests? #ALICE STUFF
 
 ```{R Henze Zirkler, echo=FALSE, warning = FALSE}
 
@@ -344,11 +344,6 @@ HZ <- mvn(data = Ingots_clean, mvn_test = "hz")
 
 cat("Henze_Zirkler Test Results:\n")
 print(HZ$multivariate_normality)
-
-#Reject null and conclude that at pvalue=0.05, this dataset deviates from multivariate normality
-
-
-#I think at this point we reject MVN for the WHOLE dataset.
 ```
 
 
