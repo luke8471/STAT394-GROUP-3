@@ -4,6 +4,43 @@ format: html
 editor: visual
 ---
 
+```{r packages and set up, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tabulapdf)
+library(dplyr)
+library(tidyr)
+library(pdftools)
+library(ggcorrplot)
+library(mvtnorm)
+library(GGally)
+library(here)
+library(tinytex)
+library(httr)
+library(MVN)
+library(ggplot2)
+library(cluster)
+library(factoextra)
+library(hexbin)
+library(matrixStats)
+library(fclust)
+library(knitr)
+
+##  Reading the pdf: - pdftools package code:
+
+#Load paper by caponnetti et. al from repository and store locally temporarily
+
+url <- "https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/02d02760e329f00dd8cc8cc8543327ffeccd00a6/Text/Articles/caponetti%20et%20al.pdf"
+
+tmp <- tempfile(fileext = ".pdf")
+
+pdf <- httr::GET(url, write_disk(tmp, overwrite = TRUE))
+
+ingots <- pdftools::pdf_text(tmp)
+
+```
+
 ## 1. Introduction
 
 **1.1 Brief description of Orichalcum ingots study Capometti et al, study**
@@ -21,6 +58,68 @@ Historically, discoveries of orichalcum have had questionable identification met
 Motivation, problem statement, approach, results, conclusions.
 
 **1.2 Table of the Raw data**
+
+```{r extracting the table, echo=FALSE}
+##  Extracting the table from the pdf: - tabulapdf package codes:
+ingots2 <- suppressMessages(extract_tables(url, pages=3))
+
+#lets store it in a table:
+
+table1 <- suppressMessages(ingots2[[1]])
+
+#when I first did this this you couldn't view Ni, Ag and Sb separately they all went under concentration
+##  Cleaning the table: - DATA202 codes
+table1 <- suppressMessages(table1 %>%
+  separate(
+    'Concentration in PPM',
+    into = c("Ni", "Ag", "Sb"),
+    sep = " "
+  ))
+
+#this should now have all the columns separate :)
+
+#making sure all the columns are named correctly:
+suppressMessages(names(table1) <- c(
+  "Sample", "Cu", "Zn", "Pb", "Fe",
+  "Ni", "Ag", "Sb", "As", "Co", "Cd", "Sn",
+  "Te", "Bi", "Mn", "Li", "Al", "V", "Cr",
+  "Rb", "Sr", "Ba", "Cu_Zn"
+))
+
+#as R was having a hard time using the table above we created a Data Frame of the Concentrations:
+
+Cu <- as.numeric(table1$Cu[-1])
+Zn <- as.numeric(table1$Zn[-1])
+Pb <- as.numeric(table1$Pb[-1])
+Fe <- as.numeric(table1$Fe[-1])
+Ni <- as.numeric(table1$Ni[-1])
+Ag <- as.numeric(table1$Ag[-1])
+Sb <- as.numeric(table1$Sb[-1])
+As <- as.numeric(table1$As[-1])
+Co <- as.numeric(table1$Co[-1])
+Cd <- as.numeric(table1$Cd[-1])
+Sn <- as.numeric(table1$Sn[-1])
+Te <- as.numeric(table1$Te[-1])
+Bi <- as.numeric(table1$Bi[-1])
+Mn <- as.numeric(table1$Mn[-1])
+Li <- as.numeric(table1$Li[-1])
+Al <- as.numeric(table1$Al[-1])
+V <- as.numeric(table1$V[-1])
+Cr <- as.numeric(table1$Cr[-1])
+Rb <- as.numeric(table1$Rb[-1])
+Sr <- as.numeric(table1$Sr[-1])
+Ba <- as.numeric(table1$Ba[-1])
+Cu_Zn <- as.numeric(table1$Cu_Zn[-1])
+
+Ingots_Frame <- data.frame (Sample = c("S1","S2","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","S13","S14","S15","S16","S17","S18","S19","S20","S21","S22","S23","S24","S25","S26","S27","S28","S29","S30","S31","S32","S33","S34","S35","S36","S37","S38"),Cu, Zn, Pb, Fe, Ni, Ag, Sb, As, Co, Cd, Sn, Te, Bi, Mn, Li, Al, V, Cr, Rb, Sr, Ba, Cu_Zn)
+
+knitr::kable(Ingots_Frame,
+             caption = "Table 1: The main components and trace elements from Caponetti et al study",
+             format = "pipe")
+
+# Removing Cu/Zn from the table
+Ingots_F_no <- Ingots_Frame[,1:22]
+```
 
 **1.3 Our Aim**
 
