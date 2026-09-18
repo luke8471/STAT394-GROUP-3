@@ -217,7 +217,7 @@ An interesting/surprising observation of the raw data is that the percentages of
 main_com <- Ingots_Frame[c(1:5)]
 
 #adding the sum of the main components:
-main_com$percentage_toal <- rowSums(main_com[c(2:5)])
+main_com$percentage_total <- rowSums(main_com[c(2:5)])
 
 #table of the main components:
 knitr::kable(main_com,
