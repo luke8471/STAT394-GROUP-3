@@ -149,19 +149,21 @@ Our goal is to create and present a comprehensive, comprehensible, reproducible,
 
 Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition. 
 
-For the analysis of our report we will be considering all the main components and trace element concentrations exuding the Cu/Zn ratio as...
+For the analysis of our report we will be considering all the main components and trace element concentrations exuding the Cu/Zn ratio as... 
 
 **2.2 Brief summary of the data**
 
-We started by performing a simple summary of the data
+We started by performing a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to highlight is that the main elements (Cu, Zn, Pb and Fe) are all in percentages, where as the concentrations of the trace elements are in PPM (parts per a million)
+
 ```{r basic summary, echo=FALSE}
 
 #Summary of the Data Frame:
 invisible(summary(Ingots_F_no))
 
 #code to make the summary into a table
-skim(Ingots_F_no)
-
+skim(Ingots_F_no[,-1]) |>
+  select(-n_missing, -complete_rate)
+  
 
 #box plot of the initial data: (no transformations) using ggplot:
 #start by turing the data into long format:
@@ -176,11 +178,14 @@ Ingots_long <- Ingots_F_no[,-1] |>
 ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
   geom_boxplot(notch = FALSE, fill ="#40B0A6") +
   theme_minimal()+
-  labs(title = "Intial boxplot of the raw data (no transformations)")
+  labs(title = "Intial boxplot of the table 1 excluding the Cu/Zn ratio")
 
 ```
 
+Ni (nickel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
+looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
 
+We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
 
 
 **2.3 Transformations**

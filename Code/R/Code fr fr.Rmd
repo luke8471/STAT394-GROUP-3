@@ -28,6 +28,8 @@ library(factoextra)
 library(hexbin)
 library(matrixStats)
 library(fclust)
+library(tidyverse)
+library(skimr)
 ```
 ##  Reading the pdf: - pdftools package code
 ```{r reading pdf, echo=TRUE}
@@ -136,6 +138,21 @@ Had to do this as R was having a hard time working from the table 1
 
 #Summary of the Data Frame:
 summary(Ingots_F_no)
+
+#another type of summary:
+skim(Ingots_F_no)
+
+skim(Ingots_F_no) |>
+  select(
+    ,
+    mean,
+    sd,
+    p0,
+    p50,
+    p100
+  )
+
+
 
 
 #OLD Basic boxplot of the raw data: (no transformations)
