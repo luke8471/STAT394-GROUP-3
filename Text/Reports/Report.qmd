@@ -425,7 +425,7 @@ biplot(pca_1, main = "PCA of all elements in the clean data")
 ```
 unfortunately as our data isn't a multivariate normal distribution it is best that we don't cotine performing a PCA analysis and instead focus on a LDA analysis (based on this article: https://medium.com/@seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9)
 
-**3.2 LDA**
+**3.2 LDA and PAM**
 we started by performing a PAM (Partitioning Around Medoids) analysis 
 ```{r LDA, echo=FALSE}
 
