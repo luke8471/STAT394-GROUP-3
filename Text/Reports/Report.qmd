@@ -151,6 +151,8 @@ Something cool and cleaver
 
 Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition. 
 
+This is the largest sample of its kind however it is still not a large sample.
+
 For the analysis of our report we will be considering all the main components and trace element concentrations exuding the Cu/Zn ratio as... 
 
 **2.2 Brief summary of the data**
@@ -184,11 +186,12 @@ ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
 
 ```
 
-Ni (nickel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
-looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
+Ni (nickel) has the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, driven enlarge by sample 13. Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
+looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (antimony), which the original paper noted as well.
 We will need to perform transformations on the data as we have a combination of percentages, PPM, major outliers.
 
-But first we will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
+But first we will be taking a deeper dive into Copper, Zinc, Lead and Tin as they are the four alloying elements that define orichalcum (probably need a reference for this) we won't be considering Fe due to it being a impurity. 
+
 ```{r basic summary & boxplot, echo=FALSE}
 
 #Summary of the Data Frame:
@@ -204,6 +207,31 @@ boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue", main = "Boxplo
 
 
 ```
+Important to note that Cu, Zn, and Pb are still percentages whereas Sn is PPM, not that there is more tin than lead.
+
+***2.2.1 the percentages don't add up***
+
+An interesting/surprising observation of the raw data is that the percentages of the main components (Cu, Zn, Pb, and Fe) don't add up to 100% for each of the samples as shown in the table below
+```{r suprising, echo=FALSE}
+
+main_com <- Ingots_Frame[c(1:5)]
+
+#adding the sum of the main components:
+main_com$percentage_toal <- rowSums(main_com[c(2:5)])
+
+#table of the main components:
+knitr::kable(main_com,
+             caption = "Table 3: Deeper dive into the main components",
+             format = "pipe")
+
+#summary of the main components:
+skim(main_com[,6])|>
+  dplyr::select(-n_missing, -complete_rate)
+
+```
+
+Notice a mean of 104.4%, range 93.17% to 113.71% 
+
 
 **2.3 Transformations**
 to start of we had a look at the qq-normal plots of the original data and compared it to the log transformed data also to get idea if normality is met and to help gather evidence if our data follows a multivariate normal distribution.
@@ -252,7 +280,7 @@ knitr::kable(med_mad_table,
 
 ```
 
-Notice from this table we can see some massive deviations, as expected. Now use the robust Z score to identify outliers that are candidates for removal. In univariate statistics, the Median Absolute Deviation is the most robust dispersion/scale measure in presence of outliers, and hence we strongly recommend the median plus or minus 2.5 times the MAD method for outlier detection. (Leys et al 2013).
+Notice from this table we can see some massive deviations, as expected. Now use the robust Z score to identify outliers that are candidates for removal. leys et al. (2013) argue the MAD is the most robust scale measure under contamination and recommend a median plus or minus 2.5 time MAD rule for outlier detection.
 
 ```{r outliers, echo=FALSE}
 #Compute the robust z-scores:
@@ -314,6 +342,18 @@ num_vars <- sapply(Ingots_clean, is.numeric)
 
 ```
 The QQ plot shows very skewed data which we would expected...
+
+
+***2.3.1 pairwise between CU, Zn, Pb, and Sn using the clean data***
+```{r pairwise, echo=FALSE}
+
+ggpairs(Ingots_clean, columns = c(2,3,4,12),
+        lower = list(continuous = wrap("points", alpha = 0.6, size = 1.5, color = "#006CD1")),
+        upper = list(continuous = wrap("cor", size = 4, color = "#005AB5")),
+        diag = list(continuous = wrap("densityDiag", alpha = 0.5, color = "#40B0A6")))
+
+```
+Also done to reflect the traditional primary components that make up orichalcum, showing the relationship between these four elements.
 
 **2.4 Multivariate normal distribution**
 
