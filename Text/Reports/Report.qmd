@@ -139,7 +139,7 @@ More destructive testing to determine trace elements.
 
 What implications does the answer imply?
 
-Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 28 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2017.
+Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.
 
 **1.4 Our hypothesis**
 
@@ -153,7 +153,7 @@ Data obtained for the table above containing the main component, trace element c
 
 This is the largest sample of its kind however it is still not a large sample.
 
-For the analysis of our report we will be considering all the main components and trace element concentrations exuding the Cu/Zn ratio as... 
+For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as... 
 
 **2.2 Brief summary of the data**
 
@@ -281,6 +281,7 @@ knitr::kable(med_mad_table,
 ```
 
 Notice from this table we can see some massive deviations, as expected. Now use the robust Z score to identify outliers that are candidates for removal. leys et al. (2013) argue the MAD is the most robust scale measure under contamination and recommend a median plus or minus 2.5 time MAD rule for outlier detection.
+. 
 
 ```{r outliers, echo=FALSE}
 #Compute the robust z-scores:
@@ -343,6 +344,11 @@ num_vars <- sapply(Ingots_clean, is.numeric)
 ```
 The QQ plot shows very skewed data which we would expected...
 
+What is after we have "cleaned" up the outliers our |z| > 3 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al. set aside as their G4 group.
+
+
+{should probably explain why cutting out 11 samples will be good for the rest of our analysis, something along the line of outliers, terrible samples and low sample quality}
+
 
 ***2.3.1 pairwise between CU, Zn, Pb, and Sn using the clean data***
 ```{r pairwise, echo=FALSE}
@@ -387,7 +393,7 @@ print(HZ$multivariate_normality)
 ```
 
 
-Due to our Henze Zirkler test for both the un-transfromed data (p-value <0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a muiltivariate normal distribution.
+Due to our Henze Zirkler test for both the un-transformed data (p-value <0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a multivariate normal distribution.
 
 As our data isn't multivariate it isn't appropriate to perform a mahalanobis distance.
 
@@ -434,7 +440,7 @@ ggcorrplot(cor(Ingots_clean[,-1]),
 ```
 Seeing a lot more correlation in the data with the massive outliers removed. worth keeping and commenting on? Correlation plot some things to highlight; is that the strong positive association between V and Cr for the un-transformed data is also strongly positively association in the transformed data. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
 
-the transformation didn't just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co. This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
+The transformation didn't just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co. This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
 
 
 ## 3. LDA and Cluster analysis
