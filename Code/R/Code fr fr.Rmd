@@ -140,18 +140,8 @@ Had to do this as R was having a hard time working from the table 1
 summary(Ingots_F_no)
 
 #another type of summary:
-skim(Ingots_F_no)
-
 skim(Ingots_F_no) |>
-  select(
-    ,
-    mean,
-    sd,
-    p0,
-    p50,
-    p100
-  )
-
+  dplyr::select(-n_missing, -complete_rate)
 
 
 

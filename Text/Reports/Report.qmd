@@ -116,7 +116,7 @@ Cu_Zn <- as.numeric(table1$Cu_Zn[-1])
 Ingots_Frame <- data.frame (Sample = c("S1","S2","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","S13","S14","S15","S16","S17","S18","S19","S20","S21","S22","S23","S24","S25","S26","S27","S28","S29","S30","S31","S32","S33","S34","S35","S36","S37","S38"),Cu, Zn, Pb, Fe, Ni, Ag, Sb, As, Co, Cd, Sn, Te, Bi, Mn, Li, Al, V, Cr, Rb, Sr, Ba, Cu_Zn)
 
 knitr::kable(Ingots_Frame,
-             caption = "Table 1: The main components and trace elements from Caponetti et al study",
+             caption = "Figure 1: Table 1 The main components and trace elements from Caponetti et al study",
              format = "pipe")
 
 # Removing Cu/Zn from the table
@@ -184,21 +184,166 @@ ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
 
 Ni (nickel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
 looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
+We will need to perform transformations on the data as we have a combination of percentages, PPM, major outliers.
 
-We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
+But first we will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
+```{r basic summary & boxplot, echo=FALSE}
 
+#Summary of the Data Frame:
+invisible(summary(Ingots_F_no[,c(2,3,4,12)]))
+
+skim(Ingots_F_no[,c(2,3,4,12)]) |>
+  dplyr::select(-n_missing, -complete_rate)
+
+
+
+#Basic boxplot of the raw data: (no transformations)
+boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue", main = "Boxplot of Cu, Zn, Pb and Sn (no transformations)")
+
+
+```
 
 **2.3 Transformations**
+to start of we had a look at the qq-normal plots of the original data and compared it to the log transformed data also to get idea if normality is met and to help gather evidence if our data follows a multivariate normal distribution.
+```{r qqnormal, echo=FALSE}
+#no transformations
 
+qqnorm(as.matrix(Ingots_F_no[-1,-1]), col="lightblue", main = "Normal QQ- Plot of the non-transformed data")
+qqline(as.matrix(Ingots_F_no[-1,-1]), col="red")
+
+#log transform data
+
+logIngots <- log(as.matrix(Ingots_F_no[-1,-1]))
+invisible(summary(logIngots))
+
+#taking the log.
+
+qqnorm(logIngots, col = "#4169E1", main = "Normal QQ- Plot of the non-transformed data")
+qqline(logIngots, col = "red")
+
+```
+
+Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data  normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.
+
+***2.3.1 Mad Transformation***
 MAD used because it is more robust to outliers. A log transformation would fix the skew and pull the outliers in, but not eliminate their mathematical influence.
+```{r transformations-mad, echo=FALSE}
 
-**2.4 Correlation plots after the transformation**
+#Calculate medians and MAD for each column:
+median <- apply(Ingots_F_no[,-1], 2, median)
+mad <- apply(Ingots_F_no[,-1], 2, mad)
 
-Why multivariate analysis?
 
-What tests did we use?
+print(median/mad)
+mad
+
+#looking at this we can see some MASSIVE deviations, as expected. Now use the
+#robust Z score to identify outliers that are candidates for removal.
+
+#In univariate statistics, the Median Absolute Deviation is the most robust dispersion/scale measure in presence of outliers, and hence we strongly recommend the median plus or minus 2.5 times the MAD method for outlier detection. (Leys et al 2013)
+
+
+#Compute the robust z-scores:
+z <- scale(Ingots_F_no[,-1], center = median, scale = mad)
+
+#Flag observations where any variable exceeds the threshold
+outliers <- apply(abs(z) > 2.5, 1, any)
+
+list(outliers)
+
+# View the rows flagged as outliers
+summary(Ingots_F_no[outliers,])
+
+#The QQ plot shows very skewed data (expected)
+
+qqnorm((z), col="gray");
+qqline((z), col="red")
+
+num_cols <- sapply(Ingots_F_no, is.numeric)
+z_scores <- as.data.frame(scale(Ingots_F_no[, num_cols]))
+
+summary(z_scores)
+
+ol <- Ingots_F_no[rowSums(abs(z_scores) > 4) > 0, ]
+
+print(ol)
+
+Ingots_clean <- Ingots_F_no[rowSums(abs(z_scores) > 3) == 0, ]
+
+summary(Ingots_clean)
+
+#old boxplot:
+#boxplot(Ingots_clean[,-1], notch = TRUE, col="lightblue")
+
+#New boxplot:
+Ingots_clean_long <- Ingots_clean[,-1] |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Elements",
+    values_to = "Concentrations")
+
+
+
+ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
+  geom_boxplot(notch = FALSE, fill ="#40B0A6") +
+  theme_minimal()+
+  labs(title = "Boxplot of the clean data")
+
+
+#still getting negative values (even with elevated magnitude cutoff) in here so 
+#log transforming may not be appropriate.
+
+logIngotsClean <- log(as.matrix(Ingots_clean[-1,-1]))
+summary(logIngotsClean)
+
+View(logIngotsClean)
+
+
+#making the dataframe numeric so it can be manipulated.
+
+num_vars <- sapply(Ingots_clean, is.numeric)
+
+
+#Henze-Zirkler test on cleaned data?
+#Non-negative functional distance that measures between two distribution functions. If data
+#is MVN, the test statistic HZ is approximately lognormally distributed. It calculates mean,
+#variance, and smoothness parameter. Mean and variance are then log-normalised and p-value
+#is estimated.
+#@MISC{noauthor_undated-de,
+#  howpublished = "\url{https://www.rdocumentation.org/packages/MVN/versions/5.8/topics/hzTest}",
+#  note         = "Accessed: 2026-9-15"
+#}
+
+HZ <- mvn(data = Ingots_clean, mvn_test = "hz")
+
+cat("Henze_Zirkler Test Results:\n")
+print(HZ$multivariate_normality)
+
+#Reject null and conclude that at pvalue=0.05, this dataset deviates from multivariate normality
+
+
+#I think at this point we reject MVN for the WHOLE dataset.
+
+#consider log transforming the trace elements..
+
+#We COULD do this for every variable, and maybe should for primary components.
+
+```
+
+
+**2.4 Multivariate normal distribution**
+
+
+What tests did we use? Henze Zirkler
 
 Why did we use those tests?
+
+Quick note about Mahalanobis distance isn't approptate as our data isn't muiltvariante.
+
+**2.5 Correlation plots after the transformation**
+
+
+
 
 ## 3. LDA and Cluster analysis
 
