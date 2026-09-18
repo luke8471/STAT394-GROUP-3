@@ -1100,7 +1100,7 @@ ul.task-list li input[type="checkbox"] {
 <p>What implications does the answer imply?</p>
 <p>Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.</p>
 <p><strong>1.4 Our hypothesis</strong></p>
-<p>Something cool and cleaver</p>
+<p>one of our hypotheses questions is whether our data follows a multivariate normal distribution. probably some hypotheses around the clusterings.</p>
 </section>
 <section id="eda" class="level2">
 <h2 class="anchored" data-anchor-id="eda">2. EDA</h2>
@@ -1954,6 +1954,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn’t hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.</p>
+<p>{this maybe wrong as our data is a combination of percentages and PPM - will need to have another look at}</p>
 <p><strong><em>2.3.1 Mad Transformation</em></strong></p>
 <p>MAD used because it is more robust to outliers. A log transformation would fix the skew and pull the outliers in, but not eliminate their mathematical influence.</p>
 <div class="cell">
@@ -2162,7 +2163,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>Due to our Henze Zirkler test for both the un-transformed data (p-value &lt;0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a multivariate normal distribution.</p>
-<p>As our data isn’t multivariate it isn’t appropriate to perform a mahalanobis distance.</p>
+<p>As our data isn’t multivariate it isn’t appropriate to perform a mahalanobis distance. {could potentially do need to research tho}</p>
 <p><strong>2.5 Correlation plots before and after the transformation</strong></p>
 <div class="cell">
 <div class="cell-output-display">
