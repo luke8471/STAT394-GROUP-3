@@ -230,7 +230,7 @@ skim(main_com[,6])|>
 
 ```
 
-Notice a mean of 104.4%, range 93.17% to 113.71% 
+Notice that these samples have a mean of 104.4% with a range 93.17% to 113.71%. Where 33 of the 38 samples exceed over 100% the worse being samples 8 and 38 which the original paper where we got our table 1 data from Caponetti et al. study reasoning it is different from 100 is due to errors in low quantity of the available sample. 
 
 
 **2.3 Transformations**
@@ -432,7 +432,9 @@ ggcorrplot(cor(Ingots_clean[,-1]),
 
 
 ```
-Seeing a lot more correlation in the data with the massive outliers removed. worth keeping and commenting on? Correlation plot some things to highlight; is that the strong positive association between V and Cr for the un-transformed data is also strongly positively association in the transformed data. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negtive association between Zn and Te becomes more stronger in the transformed data
+Seeing a lot more correlation in the data with the massive outliers removed. worth keeping and commenting on? Correlation plot some things to highlight; is that the strong positive association between V and Cr for the un-transformed data is also strongly positively association in the transformed data. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
+
+the transformation didn't just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co. This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
 
 
 ## 3. LDA and Cluster analysis
