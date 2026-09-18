@@ -43,6 +43,8 @@ ingots <- pdftools::pdf_text(tmp)
 
 ```
 
+*Gaia Smith, Alice Thompson and Luke Harkness*
+
 ## 1. Introduction
 
 **1.1 Brief description of Orichalcum ingots study Capometti et al, study**
