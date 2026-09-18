@@ -600,12 +600,13 @@ rect.hclust(wards, 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FF
 
 ```
 
-## Trying stuff
+## Trying stuff - Note Gaia couldn't get this to work ALICE
 
-```{r}
+```{r manhattan cluster, echo=TRUE}
 library(umap)
 
 k <- umap(scaled)
+PamMan <- pam(scaled, k = 5, metric = "manhattan")
 
 UMAP_plot <- data.frame(
   UMAP1 = k$layout[,1],
@@ -626,8 +627,6 @@ ggplot(plot,
 UMAP <- umap(scaled, metric = "manhattan")
 
 head(UMAP)
-
-PamMan <- pam(scaled, k = 5, metric = "manhattan")
 
 plotPamMan <- data.frame(
   UMAP1 = umap$layout[,1],
@@ -678,7 +677,7 @@ Fuzzy_Sil <- SIL.F(scaled1, Fuzzy_k$U)
 
 Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
 
-table(Fuzzy_Clust)
+#table(Fuzzy_Clust)
 
 plot(Fuzzy_Clust, pch = 15, 
      col = apply(Fuzzy_k$U, 1, which.max),

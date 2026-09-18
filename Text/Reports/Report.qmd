@@ -351,12 +351,207 @@ Due to our Henze Zirkler test for both the un-transfromed data (p-value <0.001) 
 
 As our data isn't multivariate it isn't appropriate to perform a mahalanobis distance.
 
-**2.5 Correlation plots after the transformation**
+**2.5 Correlation plots before and after the transformation**
+```{r correlations, echo=FALSE}
+
+#Covariance table of the data:
+invisible(var(Ingots_F_no[-1,-1]))
 
 
+#Correlation table of the data:
+invisible(cor(Ingots_F_no[-1,-1]))
+
+
+#Correlation plot:
+ggcorrplot(cor(Ingots_F_no[,-1]),
+           hc.order = TRUE,
+           type = "lower",
+           lab = TRUE,
+           lab_size = 2,
+           ggtheme = theme_minimal(),
+           colors = c("#5D3A9B", "white","#E66100"),
+           tl.col = "gray30",
+           title = "Correlation plot of the raw data (no transformations)")
+
+
+#performed for clean data:
+invisible(var(Ingots_clean[-1,-1]))
+
+invisible(cor(Ingots_clean[-1,-1]))
+
+ggcorrplot(cor(Ingots_clean[,-1]),
+           hc.order = TRUE,
+           type = "lower",
+           lab = TRUE,
+           lab_size = 1.5,
+           ggtheme = theme_minimal(),
+           colors = c("#5D3A9B", "white","#E66100"),
+           tl.col = "gray30",
+           title = "Correlation plot of the clean data exluding Cu/Zn")
+
+
+
+```
+Seeing a lot more correlation in the data with the massive outliers removed. worth keeping and commenting on? Correlation plot some things to highlight; is that the strong positive association between V and Cr for the un-transformed data is also strongly positively association in the transformed data. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negtive association between Zn and Te becomes more stronger in the transformed data
 
 
 ## 3. LDA and Cluster analysis
+
+**3.1 PCA**
+
+```{r PCA, echo=FALSE}
+#Playing around with some ideas for PCA with common components in orichalcum. Tomorrow I will do some more research into the primary elements becauase it seems like it will be more useful. These make up common markers for origin etc. when archaeometallurgists are trying to identify casting method / intentional impurities / where ores were mines from etc. 
+
+#I think a good way to interpret and present this dataset is to segregate it in away that makes sense to the people who will read and use this data for its intended purpose, which is to compare it to known combinations of metals to try and find the ore source and how/where it was cast.
+
+pca_data <- Ingots_clean[, c("Cu", "Zn", "Pb", "Fe", "Ni", "Ag", "Sb", "As")]
+
+pca <- prcomp(pca_data, center = TRUE, scale. = TRUE)
+
+
+biplot(pca, main = "PCA of only a few elements from the clean data")
+
+#trying to see how it looks with all of them:
+
+pca_all <- Ingots_clean[-1,-1]
+#View(pca_all)
+pca_1 <- prcomp(pca_all, center = TRUE, scale = TRUE)
+
+
+biplot(pca_1, main = "PCA of all elements in the clean data")
+
+#ggbiplot(pca_all, obs.scale = 1, var.scale = 1,groups = Sample$Group,elipse = TRUE,)
+
+```
+unfortunately as our data isn't a multivariate normal distribution it is best that we don't cotine performing a PCA analysis and instead focus on a LDA analysis (based on this article: https://medium.com/@seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9)
+
+**3.2 LDA**
+we started by performing a PAM (Partitioning Around Medoids) analysis 
+```{r LDA, echo=FALSE}
+
+ICN <- sapply(Ingots_clean[,-1], as.numeric)
+
+scaled <- scale(ICN)
+
+#head(scaled, n = 3)
+
+#need to find optimal silhouette width
+
+sil_avg <- nrow(Ingots_clean[,-1])
+
+for (k in 2:26) {
+  PAM_fit <- pam(scaled, k)
+  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
+    }
+
+LDA_K <- data.frame(k = 2:26, avg_silhouette = sil_avg)
+
+knitr::kable(LDA_K,
+             caption = "Figure 8: Table contain the k scaled values",
+             format = "pipe")
+
+
+pam <- pam(Ingots_clean[,-1], k = 5)
+
+cluster <- pam$clustering
+
+ICN1 <- sapply(Ingots_clean[,-1], as.numeric)
+
+scaled1 <- scale(ICN1)
+
+sil_avg1 <- nrow(Ingots_clean[,-1])
+
+for (k in 2:26) {
+  PAM_fit <- pam(scaled, k)
+  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
+    }
+
+LDA_K1 <- data.frame(k = 2:26, avg_silhouette = sil_avg)
+
+#summary(pam) ---- Not sure if we would like to include this or not
+
+fviz_silhouette(pam)+
+  scale_fill_manual( values = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))+
+  scale_colour_manual( values = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
+  
+
+```
+The silhouette value/metric is a measurement of the quality of a clustering. between -1 and 1
+
+Reports optimal silhouette width as 5 with 0.31014624, indicating some weak clustering. Using complete data set or any of the other variations does not affect the suggested average silhouette. Stick with 5. ***6 is also very close.
+
+**3.3 Cluster Anaylsis**
+```{r cluster plot, echo=FALSE}
+
+
+
+result <- invisible(kmeans(ICN, 
+                 algorithm = "MacQueen",
+                 centers = 5, iter.max = 100, nstart = 50))
+
+#trying to do the clusterplot:
+factoextra::fviz_cluster(result, data = ICN,
+                         palette = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"),
+                         ellipse.type = "euclid", 
+                         star.plot = TRUE,
+                         repel = TRUE, 
+                         ggtheme = theme_minimal())
+
+
+```
+
+
+for the clusting below based on the PAM we wil be taking k = 5
+```{r ward hclustering, echo=FALSE}
+
+wards <- hclust(dist(scaled), method = "ward.D")
+plot(wards, main = "Ward. D Cluster Dendrogram")
+rect.hclust(wards, 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
+```
+
+However we may not want to use wards method as .... {ALICE} ... hence Manhatten distance cluster may be a better cluster to consider as it more robust to outliers then Eucledian.
+```{r manhatten cluster, echo=FALSE}
+dist <- dist(scaled, method = "manhattan")
+
+HiMan <- hclust(dist, method = "average")
+
+plot(HiMan)
+
+rect.hclust(HiMan , 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
+
+```
+
+Something interesting top note is that for both cluster options they both cluster sample's 15, 10, and 22 this could be because of ...
+
+**3.4 Fuzzy Analysis**
+lastly we decided to perform a Fuzzy analysis of the clean data as another form of clustering ... {ALICE}
+
+```{r fuzzy, echo=FALSE}
+
+#scaled1
+
+#k-medoids for Fuzzy
+
+Fuzzy_k <- FKM.med(scaled, k = 6, m = 2)
+
+#silhouettes
+
+#print(Fuzzy_k$U)
+
+Fuzzy_Sil <- SIL.F(scaled1, Fuzzy_k$U)
+
+Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
+
+#table(Fuzzy_Clust)
+
+plot(Fuzzy_Clust, pch = 15, 
+     col = apply(Fuzzy_k$U, 1, which.max),
+     xlab = "Obs",
+     ylab = "Silhouette Width",
+     main = "Fuzzy Silhouette Plot Using k-Medoids")
+
+```
+
 
 ## 4. Results
 
