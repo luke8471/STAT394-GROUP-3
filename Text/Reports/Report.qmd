@@ -143,6 +143,8 @@ Our goal is to create and present a comprehensive, comprehensible, reproducible,
 
 **1.4 Our hypothesis**
 
+Something cool and cleaver
+
 ## 2. EDA
 
 **2.1 Brief summary of lab techniques used to gather the the data**
@@ -226,6 +228,7 @@ qqline(logIngots, col = "red")
 Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data  normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.
 
 ***2.3.1 Mad Transformation***
+
 MAD used because it is more robust to outliers. A log transformation would fix the skew and pull the outliers in, but not eliminate their mathematical influence.
 ```{r transformations-mad, echo=FALSE}
 
@@ -234,25 +237,34 @@ median <- apply(Ingots_F_no[,-1], 2, median)
 mad <- apply(Ingots_F_no[,-1], 2, mad)
 
 
-print(median/mad)
-mad
+#print(median/mad)
+#mad
 
-#looking at this we can see some MASSIVE deviations, as expected. Now use the
-#robust Z score to identify outliers that are candidates for removal.
+med_mad_table <- data.frame(
+  Median = median,
+  Mad = mad,
+  Median_over_Mad = median/mad
+)
 
-#In univariate statistics, the Median Absolute Deviation is the most robust dispersion/scale measure in presence of outliers, and hence we strongly recommend the median plus or minus 2.5 times the MAD method for outlier detection. (Leys et al 2013)
+knitr::kable(med_mad_table,
+             caption = "Figure something: table of Medians over Mads",
+             format = "pipe")
 
+```
 
+Notice from this table we can see some massive deviations, as expected. Now use the robust Z score to identify outliers that are candidates for removal. In univariate statistics, the Median Absolute Deviation is the most robust dispersion/scale measure in presence of outliers, and hence we strongly recommend the median plus or minus 2.5 times the MAD method for outlier detection. (Leys et al 2013).
+
+```{r outliers, echo=FALSE}
 #Compute the robust z-scores:
 z <- scale(Ingots_F_no[,-1], center = median, scale = mad)
 
 #Flag observations where any variable exceeds the threshold
 outliers <- apply(abs(z) > 2.5, 1, any)
 
-list(outliers)
+#list(outliers)
 
 # View the rows flagged as outliers
-summary(Ingots_F_no[outliers,])
+invisible(summary(Ingots_F_no[outliers,]))
 
 #The QQ plot shows very skewed data (expected)
 
@@ -262,7 +274,7 @@ qqline((z), col="red")
 num_cols <- sapply(Ingots_F_no, is.numeric)
 z_scores <- as.data.frame(scale(Ingots_F_no[, num_cols]))
 
-summary(z_scores)
+#summary(z_scores)
 
 ol <- Ingots_F_no[rowSums(abs(z_scores) > 4) > 0, ]
 
@@ -270,10 +282,7 @@ print(ol)
 
 Ingots_clean <- Ingots_F_no[rowSums(abs(z_scores) > 3) == 0, ]
 
-summary(Ingots_clean)
-
-#old boxplot:
-#boxplot(Ingots_clean[,-1], notch = TRUE, col="lightblue")
+#summary(Ingots_clean)
 
 #New boxplot:
 Ingots_clean_long <- Ingots_clean[,-1] |>
@@ -293,16 +302,33 @@ ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
 #still getting negative values (even with elevated magnitude cutoff) in here so 
 #log transforming may not be appropriate.
 
-logIngotsClean <- log(as.matrix(Ingots_clean[-1,-1]))
-summary(logIngotsClean)
+logIngotsClean <- invisible(log(as.matrix(Ingots_clean[-1,-1])))
+invisible(summary(logIngotsClean))
 
-View(logIngotsClean)
+#View(logIngotsClean)
 
 
 #making the dataframe numeric so it can be manipulated.
 
 num_vars <- sapply(Ingots_clean, is.numeric)
 
+```
+
+
+**2.4 Multivariate normal distribution**
+
+
+What tests did we use? Henze Zirkler
+
+Why did we use those tests?
+
+```{R Henze Zirkler, echo=FALSE, warning = FALSE}
+
+#HZ test on OG data, which also rejects null.
+
+HZoriginal <- mvn(data = Ingots_F_no, mvn_test = "hz")
+cat("Henze_Zirkler Test Results:\n")
+print(HZoriginal$multivariate_normality)
 
 #Henze-Zirkler test on cleaned data?
 #Non-negative functional distance that measures between two distribution functions. If data
@@ -323,22 +349,12 @@ print(HZ$multivariate_normality)
 
 
 #I think at this point we reject MVN for the WHOLE dataset.
-
-#consider log transforming the trace elements..
-
-#We COULD do this for every variable, and maybe should for primary components.
-
 ```
 
 
-**2.4 Multivariate normal distribution**
+Due to our Henze Zirkler test for both the un-transfromed data (p-value <0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a muiltivariate normal distribution.
 
-
-What tests did we use? Henze Zirkler
-
-Why did we use those tests?
-
-Quick note about Mahalanobis distance isn't approptate as our data isn't muiltvariante.
+As our data isn't multivariate it isn't appropriate to perform a mahalanobis distance.
 
 **2.5 Correlation plots after the transformation**
 

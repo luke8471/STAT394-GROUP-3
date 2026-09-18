@@ -1100,6 +1100,7 @@ ul.task-list li input[type="checkbox"] {
 <p>What implications does the answer imply?</p>
 <p>Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 28 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2017.</p>
 <p><strong>1.4 Our hypothesis</strong></p>
+<p>Something cool and cleaver</p>
 </section>
 <section id="eda" class="level2">
 <h2 class="anchored" data-anchor-id="eda">2. EDA</h2>
@@ -1546,125 +1547,159 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn’t hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.</p>
+<p><strong><em>2.3.1 Mad Transformation</em></strong></p>
 <p>MAD used because it is more robust to outliers. A log transformation would fix the skew and pull the outliers in, but not eliminate their mathematical influence.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>       Cu        Zn        Pb        Fe        Ni        Ag        Sb        As 
-14.838797  8.993210  5.619173  2.143917  7.881690  6.051146  2.009545  1.266429 
-       Co        Cd        Sn        Te        Bi        Mn        Li        Al 
- 1.281277  1.709756  1.986904  5.161321  2.177202  3.126463  1.087616  1.548396 
-        V        Cr        Rb        Sr        Ba 
- 2.239088  1.909944  3.035208  1.011736  2.182176 </code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Figure something: table of Medians over Mads</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Mad</th>
+<th style="text-align: right;">Median_over_Mad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cu</td>
+<td style="text-align: right;">77.000</td>
+<td style="text-align: right;">5.189100</td>
+<td style="text-align: right;">14.838797</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Zn</td>
+<td style="text-align: right;">20.000</td>
+<td style="text-align: right;">2.223900</td>
+<td style="text-align: right;">8.993210</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pb</td>
+<td style="text-align: right;">5.915</td>
+<td style="text-align: right;">1.052646</td>
+<td style="text-align: right;">5.619173</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fe</td>
+<td style="text-align: right;">0.445</td>
+<td style="text-align: right;">0.207564</td>
+<td style="text-align: right;">2.143917</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ni</td>
+<td style="text-align: right;">520.000</td>
+<td style="text-align: right;">65.975700</td>
+<td style="text-align: right;">7.881690</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ag</td>
+<td style="text-align: right;">157.000</td>
+<td style="text-align: right;">25.945500</td>
+<td style="text-align: right;">6.051146</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sb</td>
+<td style="text-align: right;">101.000</td>
+<td style="text-align: right;">50.260140</td>
+<td style="text-align: right;">2.009545</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">As</td>
+<td style="text-align: right;">20.250</td>
+<td style="text-align: right;">15.989841</td>
+<td style="text-align: right;">1.266429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Co</td>
+<td style="text-align: right;">5.015</td>
+<td style="text-align: right;">3.914064</td>
+<td style="text-align: right;">1.281277</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cd</td>
+<td style="text-align: right;">16.350</td>
+<td style="text-align: right;">9.562770</td>
+<td style="text-align: right;">1.709756</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sn</td>
+<td style="text-align: right;">7.335</td>
+<td style="text-align: right;">3.691674</td>
+<td style="text-align: right;">1.986903</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Te</td>
+<td style="text-align: right;">0.880</td>
+<td style="text-align: right;">0.170499</td>
+<td style="text-align: right;">5.161321</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bi</td>
+<td style="text-align: right;">56.650</td>
+<td style="text-align: right;">26.019630</td>
+<td style="text-align: right;">2.177202</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mn</td>
+<td style="text-align: right;">19.700</td>
+<td style="text-align: right;">6.301050</td>
+<td style="text-align: right;">3.126463</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Li</td>
+<td style="text-align: right;">0.645</td>
+<td style="text-align: right;">0.593040</td>
+<td style="text-align: right;">1.087616</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Al</td>
+<td style="text-align: right;">5.280</td>
+<td style="text-align: right;">3.409980</td>
+<td style="text-align: right;">1.548396</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">V</td>
+<td style="text-align: right;">2.025</td>
+<td style="text-align: right;">0.904386</td>
+<td style="text-align: right;">2.239088</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cr</td>
+<td style="text-align: right;">1.430</td>
+<td style="text-align: right;">0.748713</td>
+<td style="text-align: right;">1.909944</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rb</td>
+<td style="text-align: right;">0.090</td>
+<td style="text-align: right;">0.029652</td>
+<td style="text-align: right;">3.035208</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sr</td>
+<td style="text-align: right;">0.420</td>
+<td style="text-align: right;">0.415128</td>
+<td style="text-align: right;">1.011736</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ba</td>
+<td style="text-align: right;">0.275</td>
+<td style="text-align: right;">0.126021</td>
+<td style="text-align: right;">2.182176</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       Cu        Zn        Pb        Fe        Ni        Ag        Sb        As 
- 5.189100  2.223900  1.052646  0.207564 65.975700 25.945500 50.260140 15.989841 
-       Co        Cd        Sn        Te        Bi        Mn        Li        Al 
- 3.914064  9.562770  3.691674  0.170499 26.019630  6.301050  0.593040  3.409980 
-        V        Cr        Rb        Sr        Ba 
- 0.904386  0.748713  0.029652  0.415128  0.126021 </code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]
- [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE
-[13]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE
-[25]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
-[37]  TRUE  TRUE</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       Sample         Cu              Zn              Pb       
- Length   :26   Min.   :69.00   Min.   :16.00   Min.   :1.050  
- N.unique :26   1st Qu.:73.00   1st Qu.:20.00   1st Qu.:4.705  
- N.blank  : 0   Median :75.50   Median :21.00   Median :5.910  
- Min.nchar: 2   Mean   :76.62   Mean   :21.73   Mean   :5.366  
- Max.nchar: 3   3rd Qu.:79.50   3rd Qu.:22.75   3rd Qu.:6.473  
-                Max.   :90.00   Max.   :28.00   Max.   :7.220  
-       Fe               Ni              Ag              Sb        
- Min.   :0.1600   Min.   :400.0   Min.   : 80.0   Min.   : 32.20  
- 1st Qu.:0.3950   1st Qu.:461.8   1st Qu.:130.2   1st Qu.: 66.25  
- Median :0.5150   Median :506.5   Median :144.0   Median :102.00  
- Mean   :0.5642   Mean   :515.2   Mean   :142.6   Mean   :113.50  
- 3rd Qu.:0.7575   3rd Qu.:558.8   3rd Qu.:162.0   3rd Qu.:124.25  
- Max.   :1.0600   Max.   :657.0   Max.   :199.0   Max.   :549.00  
-       As               Co               Cd              Sn        
- Min.   :  7.51   Min.   : 0.340   Min.   : 5.00   Min.   : 1.890  
- 1st Qu.: 13.95   1st Qu.: 3.355   1st Qu.:11.30   1st Qu.: 4.025  
- Median : 22.80   Median : 5.085   Median :16.90   Median : 7.915  
- Mean   : 45.63   Mean   : 5.669   Mean   :19.06   Mean   :11.792  
- 3rd Qu.: 45.58   3rd Qu.: 8.402   3rd Qu.:22.43   3rd Qu.: 9.682  
- Max.   :211.00   Max.   :15.030   Max.   :54.70   Max.   :65.800  
-       Te               Bi               Mn              Li        
- Min.   :0.5600   Min.   : 25.30   Min.   : 5.80   Min.   :0.1000  
- 1st Qu.:0.6650   1st Qu.: 30.07   1st Qu.:15.70   1st Qu.:0.4125  
- Median :0.8150   Median : 48.05   Median :21.15   Median :0.7600  
- Mean   :0.8265   Mean   : 55.84   Mean   :24.86   Mean   :1.4877  
- 3rd Qu.:0.9100   3rd Qu.: 60.20   3rd Qu.:25.12   3rd Qu.:1.7000  
- Max.   :1.7500   Max.   :181.00   Max.   :86.60   Max.   :6.1600  
-       Al               V               Cr              Rb        
- Min.   : 2.490   Min.   :0.930   Min.   :0.590   Min.   :0.0700  
- 1st Qu.: 4.150   1st Qu.:1.690   1st Qu.:1.100   1st Qu.:0.0800  
- Median : 5.910   Median :2.225   Median :1.550   Median :0.1000  
- Mean   : 7.377   Mean   :2.443   Mean   :1.795   Mean   :0.1062  
- 3rd Qu.: 9.203   3rd Qu.:2.800   3rd Qu.:2.220   3rd Qu.:0.1200  
- Max.   :21.200   Max.   :6.080   Max.   :4.910   Max.   :0.2200  
-       Sr               Ba        
- Min.   : 0.140   Min.   :0.1200  
- 1st Qu.: 0.230   1st Qu.:0.2425  
- Median : 0.805   Median :0.3150  
- Mean   : 2.829   Mean   :0.7585  
- 3rd Qu.: 3.783   3rd Qu.:0.4425  
- Max.   :15.100   Max.   :4.5900  </code></pre>
-</div>
+<p>Notice from this table we can see some massive deviations, as expected. Now use the robust Z score to identify outliers that are candidates for removal. In univariate statistics, the Median Absolute Deviation is the most robust dispersion/scale measure in presence of outliers, and hence we strongly recommend the median plus or minus 2.5 times the MAD method for outlier detection. (Leys et al 2013).</p>
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/transformations-mad-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Report_files/figure-html/outliers-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       Cu                 Zn                Pb                Fe         
- Min.   :-1.69130   Min.   :-1.5202   Min.   :-3.3145   Min.   :-1.5452  
- 1st Qu.:-0.68709   1st Qu.:-0.5984   1st Qu.:-0.5913   1st Qu.:-0.7249  
- Median :-0.08456   Median :-0.2911   Median : 0.3102   Median :-0.2284  
- Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
- 3rd Qu.: 0.66859   3rd Qu.: 0.3234   3rd Qu.: 0.7255   3rd Qu.: 0.9590  
- Max.   : 2.52638   Max.   : 2.1670   Max.   : 1.6475   Max.   : 2.4269  
-       Ni                 Ag                Sb                 As          
- Min.   :-1.79780   Min.   :-2.3343   Min.   :-0.88673   Min.   :-0.57970  
- 1st Qu.:-0.80942   1st Qu.:-0.5600   1st Qu.:-0.53154   1st Qu.:-0.51890  
- Median :-0.07264   Median : 0.2680   Median :-0.05057   Median :-0.32246  
- Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.00000   Mean   : 0.00000  
- 3rd Qu.: 0.48444   3rd Qu.: 0.7411   3rd Qu.: 0.18947   3rd Qu.: 0.01102  
- Max.   : 2.27070   Max.   : 1.6874   Max.   : 5.39423   Max.   : 3.39205  
-       Co                 Cd                Sn                 Te         
- Min.   :-1.50371   Min.   :-1.1257   Min.   :-0.66589   Min.   :-1.4113  
- 1st Qu.:-0.79126   1st Qu.:-0.7194   1st Qu.:-0.48525   1st Qu.:-0.7001  
- Median :-0.06495   Median :-0.1285   Median :-0.22777   Median : 0.1061  
- Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.00000   Mean   : 0.0000  
- 3rd Qu.: 0.77753   3rd Qu.: 0.4052   3rd Qu.:-0.04894   3rd Qu.: 0.6040  
- Max.   : 3.01722   Max.   : 3.2406   Max.   : 4.47647   Max.   : 4.2315  
-       Bi                Mn                 Li                Al         
- Min.   :-1.0793   Min.   :-1.07927   Min.   :-0.7864   Min.   :-1.0610  
- 1st Qu.:-0.6483   1st Qu.:-0.52156   1st Qu.:-0.5775   1st Qu.:-0.7529  
- Median :-0.1178   Median :-0.18307   Median :-0.4068   Median :-0.3014  
- Mean   : 0.0000   Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.0000  
- 3rd Qu.: 0.4098   3rd Qu.: 0.05387   3rd Qu.: 0.2129   3rd Qu.: 0.5112  
- Max.   : 3.6960   Max.   : 4.13026   Max.   : 3.4337   Max.   : 3.4079  
-       V                 Cr                Rb                Sr           
- Min.   :-1.2370   Min.   :-1.1152   Min.   :-1.1941   Min.   :-0.560478  
- 1st Qu.:-0.6703   1st Qu.:-0.6359   1st Qu.:-0.8082   1st Qu.:-0.531265  
- Median :-0.1911   Median :-0.1836   Median :-0.2681   Median :-0.463577  
- Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.000000  
- 3rd Qu.: 0.4102   3rd Qu.: 0.3824   3rd Qu.: 0.5808   3rd Qu.:-0.009713  
- Max.   : 3.5455   Max.   : 3.5862   Max.   : 3.7446   Max.   : 3.720244  
-       Ba         
- Min.   :-0.4759  
- 1st Qu.:-0.3907  
- Median :-0.3204  
- Mean   : 0.0000  
- 3rd Qu.:-0.1976  
- Max.   : 4.0077  </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Sample Cu Zn   Pb   Fe  Ni  Ag  Sb    As   Co   Cd    Sn   Te    Bi   Mn
@@ -1678,111 +1713,24 @@ ul.task-list li input[type="checkbox"] {
 28 0.41 6.32 2.03 1.60 0.09 4.00 4.59
 38 0.40 8.97 3.95 2.34 0.22 2.20 0.42</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       Sample         Cu              Zn              Pb       
- Length   :27   Min.   :69.00   Min.   :16.00   Min.   :3.870  
- N.unique :27   1st Qu.:73.50   1st Qu.:19.00   1st Qu.:4.790  
- N.blank  : 0   Median :76.00   Median :20.00   Median :5.920  
- Min.nchar: 2   Mean   :77.04   Mean   :21.22   Mean   :5.677  
- Max.nchar: 3   3rd Qu.:80.50   3rd Qu.:23.50   3rd Qu.:6.485  
-                Max.   :87.00   Max.   :28.00   Max.   :7.710  
-       Fe               Ni              Ag              Sb        
- Min.   :0.1400   Min.   :400.0   Min.   : 80.0   Min.   : 50.10  
- 1st Qu.:0.3200   1st Qu.:467.5   1st Qu.:126.0   1st Qu.: 58.85  
- Median :0.4400   Median :515.0   Median :141.0   Median : 75.40  
- Mean   :0.4548   Mean   :520.3   Mean   :144.5   Mean   : 86.64  
- 3rd Qu.:0.5400   3rd Qu.:548.5   3rd Qu.:168.5   3rd Qu.:110.00  
- Max.   :0.8100   Max.   :683.0   Max.   :199.0   Max.   :158.00  
-       As               Co               Cd              Sn        
- Min.   : 7.040   Min.   : 1.060   Min.   : 5.30   Min.   : 1.980  
- 1st Qu.: 9.465   1st Qu.: 3.270   1st Qu.: 9.00   1st Qu.: 4.380  
- Median :14.600   Median : 5.090   Median :16.20   Median : 6.700  
- Mean   :18.256   Mean   : 5.244   Mean   :15.55   Mean   : 6.483  
- 3rd Qu.:23.650   3rd Qu.: 7.065   3rd Qu.:20.15   3rd Qu.: 8.290  
- Max.   :38.100   Max.   :10.400   Max.   :30.50   Max.   :10.400  
-       Te              Bi              Mn              Li       
- Min.   :0.580   Min.   :25.30   Min.   :12.00   Min.   :0.100  
- 1st Qu.:0.710   1st Qu.:36.85   1st Qu.:14.90   1st Qu.:0.335  
- Median :0.890   Median :58.50   Median :18.70   Median :0.620  
- Mean   :0.847   Mean   :57.09   Mean   :19.46   Mean   :1.036  
- 3rd Qu.:0.990   3rd Qu.:73.50   3rd Qu.:22.90   3rd Qu.:1.360  
- Max.   :1.020   Max.   :92.00   Max.   :32.60   Max.   :4.000  
-       Al               V               Cr              Rb        
- Min.   : 2.020   Min.   :0.890   Min.   :0.570   Min.   :0.0600  
- 1st Qu.: 2.980   1st Qu.:1.365   1st Qu.:0.855   1st Qu.:0.0700  
- Median : 4.360   Median :1.690   Median :1.100   Median :0.0900  
- Mean   : 5.491   Mean   :1.971   Mean   :1.361   Mean   :0.0937  
- 3rd Qu.: 6.670   3rd Qu.:2.505   3rd Qu.:1.665   3rd Qu.:0.1100  
- Max.   :14.600   Max.   :4.380   Max.   :3.690   Max.   :0.1600  
-       Sr               Ba        
- Min.   : 0.080   Min.   :0.1200  
- 1st Qu.: 0.160   1st Qu.:0.1900  
- Median : 0.420   Median :0.2400  
- Mean   : 1.718   Mean   :0.3863  
- 3rd Qu.: 1.190   3rd Qu.:0.3250  
- Max.   :11.800   Max.   :3.3700  </code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/transformations-mad-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Report_files/figure-html/outliers-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
+</div>
+<p><strong>2.4 Multivariate normal distribution</strong></p>
+<p>What tests did we use? Henze Zirkler</p>
+<p>Why did we use those tests?</p>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>       Cu              Zn              Pb              Fe         
- Min.   :4.234   Min.   :2.773   Min.   :1.353   Min.   :-1.9661  
- 1st Qu.:4.294   1st Qu.:2.944   1st Qu.:1.598   1st Qu.:-1.1556  
- Median :4.331   Median :2.996   Median :1.779   Median :-0.8210  
- Mean   :4.338   Mean   :3.051   Mean   :1.732   Mean   :-0.8914  
- 3rd Qu.:4.382   3rd Qu.:3.167   3rd Qu.:1.870   3rd Qu.:-0.6217  
- Max.   :4.454   Max.   :3.332   Max.   :2.043   Max.   :-0.2107  
-       Ni              Ag              Sb              As       
- Min.   :5.991   Min.   :4.382   Min.   :3.914   Min.   :1.952  
- 1st Qu.:6.147   1st Qu.:4.816   1st Qu.:4.062   1st Qu.:2.246  
- Median :6.242   Median :4.945   Median :4.271   Median :2.678  
- Mean   :6.244   Mean   :4.932   Mean   :4.383   Mean   :2.739  
- 3rd Qu.:6.308   3rd Qu.:5.103   3rd Qu.:4.687   3rd Qu.:3.149  
- Max.   :6.526   Max.   :5.278   Max.   :5.063   Max.   :3.640  
-       Co                Cd              Sn               Te          
- Min.   :0.05827   Min.   :1.668   Min.   :0.6831   Min.   :-0.54473  
- 1st Qu.:1.17226   1st Qu.:2.192   1st Qu.:1.4606   1st Qu.:-0.34249  
- Median :1.62629   Median :2.618   Median :1.9226   Median :-0.12790  
- Mean   :1.49395   Mean   :2.613   Mean   :1.7838   Mean   :-0.18988  
- 3rd Qu.:1.85640   3rd Qu.:3.004   3rd Qu.:2.1150   3rd Qu.:-0.01515  
- Max.   :2.34181   Max.   :3.418   Max.   :2.3418   Max.   : 0.01980  
-       Bi              Mn              Li                Al        
- Min.   :3.231   Min.   :2.485   Min.   :-2.3026   Min.   :0.7031  
- 1st Qu.:3.559   1st Qu.:2.691   1st Qu.:-1.1338   1st Qu.:1.0799  
- Median :4.056   Median :2.920   Median :-0.5565   Median :1.4393  
- Mean   :3.951   Mean   :2.930   Mean   :-0.4774   Mean   :1.5426  
- 3rd Qu.:4.294   3rd Qu.:3.140   3rd Qu.: 0.2008   3rd Qu.:1.9050  
- Max.   :4.522   Max.   :3.484   Max.   : 1.3863   Max.   :2.6810  
-       V                 Cr                 Rb               Sr         
- Min.   :-0.1165   Min.   :-0.56212   Min.   :-2.813   Min.   :-2.5257  
- 1st Qu.: 0.3018   1st Qu.:-0.15959   1st Qu.:-2.659   1st Qu.:-1.7442  
- Median : 0.5306   Median : 0.09531   Median :-2.355   Median :-0.8675  
- Mean   : 0.6021   Mean   : 0.18962   Mean   :-2.394   Mean   :-0.5866  
- 3rd Qu.: 0.9213   3rd Qu.: 0.54202   3rd Qu.:-2.207   3rd Qu.: 0.2605  
- Max.   : 1.4770   Max.   : 1.30563   Max.   :-1.833   Max.   : 2.4681  
-       Ba        
- Min.   :-2.120  
- 1st Qu.:-1.648  
- Median :-1.407  
- Mean   :-1.278  
- 3rd Qu.:-1.088  
- Max.   : 1.215  </code></pre>
+<pre><code>Henze_Zirkler Test Results:</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in hz(data, use_population = use_population, tol = tol, bootstrap =
-bootstrap, : Dropping non-numeric columns: Sample</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in test_univariate_normality(data, test = "AD"): Dropping non-numeric
-columns: Sample</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in descriptives(data): Dropping non-numeric columns: Sample</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Test Statistic p.value     Method          MVN
+1 Henze-Zirkler     1.001  &lt;0.001 asymptotic ✗ Not normal</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Henze_Zirkler Test Results:</code></pre>
@@ -1792,10 +1740,8 @@ columns: Sample</code></pre>
 1 Henze-Zirkler         1   0.046 asymptotic ✗ Not normal</code></pre>
 </div>
 </div>
-<p><strong>2.4 Multivariate normal distribution</strong></p>
-<p>What tests did we use? Henze Zirkler</p>
-<p>Why did we use those tests?</p>
-<p>Quick note about Mahalanobis distance isn’t approptate as our data isn’t muiltvariante.</p>
+<p>Due to our Henze Zirkler test for both the un-transfromed data (p-value &lt;0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a muiltivariate normal distribution.</p>
+<p>As our data isn’t multivariate it isn’t appropriate to perform a mahalanobis distance.</p>
 <p><strong>2.5 Correlation plots after the transformation</strong></p>
 </section>
 <section id="lda-and-cluster-analysis" class="level2">

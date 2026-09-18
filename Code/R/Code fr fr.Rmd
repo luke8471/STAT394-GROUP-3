@@ -204,6 +204,10 @@ We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {somethin
 #Summary of the Data Frame:
 summary(Ingots_F_no[,c(2,3,4,12)])
 
+skim(Ingots_F_no[,c(2,3,4,12)]) |>
+  dplyr::select(-n_missing, -complete_rate)
+
+
 
 #Basic boxplot of the raw data: (no transformations)
 boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue")
@@ -263,7 +267,7 @@ mad <- apply(Ingots_F_no[,-1], 2, mad)
 
 
 print(median/mad)
-mad
+#mad
 
 #looking at this we can see some MASSIVE deviations, as expected. Now use the
 #robust Z score to identify outliers that are candidates for removal.
