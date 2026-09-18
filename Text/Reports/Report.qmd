@@ -594,3 +594,9 @@ Findings were dated to \~600BCE, the approximate age of the ship, and by the pot
 Overall similarities suggest a rudimentary mold production, likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggestd cast-diverse technologies. Impurities are atttributed to a separation process that occured during the fusion (CITATION) of metals to create the alloy.
 
 Three distinctive families of ingots characterised by the graphical location of the furnace, stages of technology, and raw materials used in the smelting process.
+
+## 6. References
+- caponetti et al
+- https://medium.com/@seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9
+- all of Alices other references
+
