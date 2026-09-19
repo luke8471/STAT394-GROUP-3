@@ -26,7 +26,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="Report_files/libs/clipboard/clipboard.min.js"></script>
@@ -42,12 +62,14 @@ ul.task-list li input[type="checkbox"] {
 <link href="Report_files/libs/bootstrap/bootstrap-215b371544c282197b31c8aa00ce3677.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
+<link rel="stylesheet" href="style.css">
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Report.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -72,9 +94,10 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Gaia Smith, Alice Thompson and Luke Harkness</em></p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
-<p><strong>1.1 Brief description of Orichalcum ingots study Capometti et al, study</strong></p>
+<p><strong>1.1 Brief description of Orichalcum ingots study Caponetti et al, study</strong></p>
+<p>a shipwreck off the coast of Gela, Italy has continued, and continuous, to provide archaeological finds to this day. A discovery dating back to 1980 , where it was first stumbled upon by divers near Bulala beach. It has been a constant stream of ancient marvels over the decades. We are exploring one of the most significant finds. A veritable hoard of fabled metal; Orichalcum.</p>
 <p>Caponetti et al were doing a study to determine major &amp; trace elements of the orichalcum ingots. They used that data to find a correlation between the observed different features and the composition.</p>
-<p>Our analysis includes only a chemometric analysis of the ingots. It does not include the data about physical appearance of the ingots or any correlation analysis of those variables.</p>
+<p>Our analysis includes the data from a chemometric analysis using ICP-OES and ICP-MS of 38 orichalcum ingots. This is an extension from the same Caponetti et al, where they performed a less invasive XRF (X-Ray Fluorescence) spectroscopy of the ingots. It does not include the data about physical appearance of the ingots or any correlation analysis of those variables.</p>
 <p>Their motivation was to create a starting point for giving insight into archaeometric study of the orichalcum ingots regarding their origin and manufacture technologies.</p>
 <p>Our study also has the same motivations. We aim to provide a high level data analysis to provide a detailed, and logical, path to a linkage analysis.</p>
 <p>Historically, discoveries of orichalcum have had questionable identification methods. A common</p>
@@ -2204,7 +2227,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>unfortunately as our data isn’t a multivariate normal distribution it is best that we don’t cotine performing a PCA analysis and instead focus on a LDA analysis (based on this article: https://medium.com/<span class="citation" data-cites="seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9">@seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9</span>)</p>
+<p>unfortunately as our data isn’t a multivariate normal distribution it is best that we don’t cotine performing a PCA analysis and instead focus on a LDA analysis (based on this article: https://medium.com/<span class="citation" data-cites="seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9">(<a href="#ref-seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9" role="doc-biblioref"><strong>seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9?</strong></a>)</span>)</p>
 <p><strong>3.2 LDA and PAM</strong> we started by performing a PAM (Partitioning Around Medoids) analysis</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -2410,11 +2433,29 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">6. References</h2>
-<ul>
-<li>caponetti et al</li>
-<li>https://medium.com/<span class="citation" data-cites="seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9">@seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9</span></li>
-<li>all of Alices other references</li>
-</ul>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-Angelucci2026" class="csl-entry" role="listitem">
+Angelucci, O. (2026). <em><span>T</span>he <span>S</span>unken <span>S</span>hip of <span>G</span>ela: <span>T</span>he <span>A</span>ncient <span>S</span>ecret of the <span>S</span>icilian <span>S</span>ea — medium.com</em>. <a href="https://medium.com/ash-and-devotion/the-sunken-ship-of-gela-the-ancient-secret-of-the-sicilian-sea-796f56d2dcc6" class="uri">https://medium.com/ash-and-devotion/the-sunken-ship-of-gela-the-ancient-secret-of-the-sicilian-sea-796f56d2dcc6</a>.
+</div>
+<div id="ref-722f3324-e1f8-35af-a68a-e191baa52ba6" class="csl-entry" role="listitem">
+Caley, E. R. (1967). Investigations on the origin and manufacture of orichalcum. In <em>Archaeological chemistry: A symposium</em> (pp. 59–74). University of Pennsylvania Press. <a href="http://www.jstor.org/stable/j.ctv512vfn.7">http://www.jstor.org/stable/j.ctv512vfn.7</a>
+</div>
+<div id="ref-Caponetti2017-fd" class="csl-entry" role="listitem">
+Caponetti, E., Armetta, F., Brusca, L., Chillura Martino, D., Saladino, M. L., Ridolfi, S., Chirco, G., Berrettoni, M., Conti, P., Bruno, N., &amp; Tusa, S. (2017). A multivariate approach to the study of orichalcum ingots from the underwater gela’s archaeological site. <em>Microchem. J.</em>, <em>135</em>, 163–170.
+</div>
+<div id="ref-Caponetti2017-sc" class="csl-entry" role="listitem">
+Caponetti, E., Armetta, F., Martino, D. C., Saladino, M. L., Ridolfi, S., Chirco, G., Berrettoni, M., Conti, P., Bruno, N., &amp; Tusa, S. (2017). <em>First discovery of orichalcum ingots from the remains of a 6Th century <span>BC</span> shipwreck near gela (sicily) seabed</em>.
+</div>
+<div id="ref-Frery2020-ex" class="csl-entry" role="listitem">
+Frery, A. C., Gomez, L., &amp; Medeiros, A. C. (2020). A badging system for reproducibility and replicability in remote sensing research. <em>IEEE J. Sel. Top. Appl. Earth Obs. Remote Sens.</em>, <em>13</em>, 4988–4995.
+</div>
+<div id="ref-Leys2013-cr" class="csl-entry" role="listitem">
+Leys, C., Ley, C., Klein, O., Bernard, P., &amp; Licata, L. (2013). Detecting outliers: Do not use standard deviation around the mean, use absolute deviation around the median. <em>J. Exp. Soc. Psychol.</em>, <em>49</em>(4), 764–766.
+</div>
+<div id="ref-davidmathlogicColoringColorblindness" class="csl-entry" role="listitem">
+Nichols, D. <em><span>C</span>oloring for <span>C</span>olorblindness — davidmathlogic.com</em>. <a href="https://davidmathlogic.com/colorblind/#%23{D}81{B}60-%231{E}88{E}5-%23{F}{F}{C}107-%23004{D}40-%2324e9fb" class="uri">https://davidmathlogic.com/colorblind/#%23{D}81{B}60-%231{E}88{E}5-%23{F}{F}{C}107-%23004{D}40-%2324e9fb</a>.
+</div>
+</div>
 </section>
 
 </main>

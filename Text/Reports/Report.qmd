@@ -1,7 +1,18 @@
 ---
 title: "A Review of A Multivariate Approach to the Study of Orichalcum ingots from the Underwater Gela's Archaeological Site"
-format: html
+format: 
+  html:
+    css: style.css
+  pdf:
+    include-in-header:
+      text: |
+        \usepackage{setspace}
+        \doublespacing
 editor: visual
+bibliography: ../Common/CITATIONS.bib
+csl: ../Common/apa.csl
+nocite: |
+  @*
 ---
 
 ```{r packages and set up, include=FALSE}
@@ -28,6 +39,7 @@ library(fclust)
 library(knitr)
 library(tidyverse)
 library(skimr)
+library(bibtex)
 
 ##  Reading the pdf: - pdftools package code:
 
@@ -47,11 +59,15 @@ ingots <- pdftools::pdf_text(tmp)
 
 ## 1. Introduction
 
-**1.1 Brief description of Orichalcum ingots study Capometti et al, study**
+**1.1 Brief description of Orichalcum ingots study Caponetti et al, study**
 
-Caponetti et al were doing a study to determine major & trace elements of the orichalcum ingots. They used that data to find a correlation between the observed different features and the composition.
+a shipwreck off the coast of Gela, Italy has continued, and continuous, to provide archaeological finds to this day. A discovery dating back to 1980 [@Angelucci2026], where it was first stumbled upon by divers near Bulala beach. It has been a constant stream of ancient marvels over the decades. We are exploring one of the most significant finds. A veritable hoard of fabled metal; Orichalcum.
 
-Our analysis includes only a chemometric analysis of the ingots. It does not include the data about physical appearance of the ingots or any correlation analysis of those variables.
+@Caponetti2017-fd did a study to determine major & trace elements of the orichalcum ingots. They used this data to find a correlation between the observed different features and the composition.
+
+Our analysis includes the data from their chemometric analysis using ICP-OES and ICP-MS of 38 orichalcum ingots. This is an extension from a fledgling study by the same author, where they performed a less invasive XRF (X-Ray Fluorescence) spectroscopy of the ingots, a non-distructive test that can be performed in the field.
+
+This multivariate analysis does not include the data about physical appearance of the ingots or any correlation analysis of those variables.
 
 Their motivation was to create a starting point for giving insight into archaeometric study of the orichalcum ingots regarding their origin and manufacture technologies.
 
@@ -151,15 +167,19 @@ one of our hypotheses questions is whether our data follows a multivariate norma
 
 **2.1 Brief summary of lab techniques used to gather the the data**
 
-Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition. 
+Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.
 
 This is the largest sample of its kind however it is still not a large sample.
 
-For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as... 
+For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as...
 
 **2.2 Brief summary of the data**
 
-We started by performing a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to highlight is that the main elements (Cu, Zn, Pb and Fe) are all in percentages, where as the concentrations of the trace elements are in PPM (parts per a million)
+@Caponetti2017-fd determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at \~20mg.
+
+The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.
+
+We started by performing a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to highlight is that the main elements (Cu, Zn, Pb and Fe) are all in percentages, where as the concentrations of the trace elements are in PPM (parts per a million).
 
 ```{r basic summary, echo=FALSE}
 
@@ -188,11 +208,9 @@ ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
 
 ```
 
-Ni (nickel) has the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, driven enlarge by sample 13. Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
-looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (antimony), which the original paper noted as well.
-We will need to perform transformations on the data as we have a combination of percentages, PPM, major outliers.
+Ni (nickel) has the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, driven enlarge by sample 13. Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06PPM for Rb and a max of 683PPM for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. looking at the raw data we also noticed some interesting outliers. Particularly, sample 13 for Sb (antimony), which is 549PPM, magnitudes larger than the other samples. We will need to perform transformations on the data as we have a combination of percentages, PPM, major outliers.
 
-But first we will be taking a deeper dive into Copper, Zinc, Lead and Tin as they are the four alloying elements that define orichalcum (probably need a reference for this) we won't be considering Fe due to it being a impurity. 
+But first we will be taking a deeper dive into Copper, Zinc, Lead and Tin as they are the four alloying elements that define orichalcum (probably need a reference for this) we won't be considering Fe due to it being a impurity.
 
 ```{r basic summary & boxplot, echo=FALSE}
 
@@ -209,11 +227,13 @@ boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue", main = "Boxplo
 
 
 ```
+
 Important to note that Cu, Zn, and Pb are still percentages whereas Sn is PPM, not that there is more tin than lead.
 
 ***2.2.1 the percentages don't add up***
 
 An interesting/surprising observation of the raw data is that the percentages of the main components (Cu, Zn, Pb, and Fe) don't add up to 100% for each of the samples as shown in the table below
+
 ```{r suprising, echo=FALSE}
 
 main_com <- Ingots_Frame[c(1:5)]
@@ -232,11 +252,10 @@ skim(main_com[,6])|>
 
 ```
 
-Notice that these samples have a mean of 104.4% with a range 93.17% to 113.71%. Where 33 of the 38 samples exceed over 100% the worse being samples 8 and 38 which the original paper where we got our table 1 data from Caponetti et al. study reasoning it is different from 100 is due to errors in low quantity of the available sample. 
+Notice that these samples have a mean of 104.4% with a range 93.17% to 113.71%. Where 33 of the 38 samples exceed over 100% the worse being samples 8 and 38 which the original paper where we got our table 1 data from Caponetti et al. study reasoning it is different from 100 is due to errors in low quantity of the available sample.
 
+**2.3 Transformations** to start of we had a look at the qq-normal plots of the original data and compared it to the log transformed data also to get idea if normality is met and to help gather evidence if our data follows a multivariate normal distribution.
 
-**2.3 Transformations**
-to start of we had a look at the qq-normal plots of the original data and compared it to the log transformed data also to get idea if normality is met and to help gather evidence if our data follows a multivariate normal distribution.
 ```{r qqnormal, echo=FALSE}
 #no transformations
 
@@ -255,13 +274,14 @@ qqline(logIngots, col = "red")
 
 ```
 
-Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data  normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.
+Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.
 
 {this maybe wrong as our data is a combination of percentages and PPM - will need to have another look at}
 
 ***2.3.1 Mad Transformation***
 
 MAD used because it is more robust to outliers. A log transformation would fix the skew and pull the outliers in, but not eliminate their mathematical influence.
+
 ```{r transformations-mad, echo=FALSE}
 
 #Calculate medians and MAD for each column:
@@ -284,8 +304,7 @@ knitr::kable(med_mad_table,
 
 ```
 
-Notice from this table we can see some massive deviations, as expected. Now use the robust Z score to identify outliers that are candidates for removal. leys et al. (2013) argue the MAD is the most robust scale measure under contamination and recommend a median plus or minus 2.5 time MAD rule for outlier detection.
-. 
+Notice from this table we can see some massive deviations, as expected. Now use the robust Z score to identify outliers that are candidates for removal. leys et al. (2013) argue the MAD is the most robust scale measure under contamination and recommend a median plus or minus 2.5 time MAD rule for outlier detection. .
 
 ```{r outliers, echo=FALSE}
 #Compute the robust z-scores:
@@ -346,15 +365,15 @@ invisible(summary(logIngotsClean))
 num_vars <- sapply(Ingots_clean, is.numeric)
 
 ```
+
 The QQ plot shows very skewed data which we would expected...
 
-What is after we have "cleaned" up the outliers our |z| > 3 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al. set aside as their G4 group.
-
+What is after we have "cleaned" up the outliers our \|z\| \> 3 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al. set aside as their G4 group.
 
 {should probably explain why cutting out 11 samples will be good for the rest of our analysis, something along the line of outliers, terrible samples and low sample quality}
 
-
 ***2.3.1 pairwise between CU, Zn, Pb, and Sn using the clean data***
+
 ```{r pairwise, echo=FALSE}
 
 ggpairs(Ingots_clean, columns = c(2,3,4,12),
@@ -363,10 +382,10 @@ ggpairs(Ingots_clean, columns = c(2,3,4,12),
         diag = list(continuous = wrap("densityDiag", alpha = 0.5, color = "#40B0A6")))
 
 ```
+
 Also done to reflect the traditional primary components that make up orichalcum, showing the relationship between these four elements.
 
 **2.4 Multivariate normal distribution**
-
 
 What tests did we use? Henze Zirkler
 
@@ -396,12 +415,12 @@ cat("Henze_Zirkler Test Results:\n")
 print(HZ$multivariate_normality)
 ```
 
-
-Due to our Henze Zirkler test for both the un-transformed data (p-value <0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a multivariate normal distribution.
+Due to our Henze Zirkler test for both the un-transformed data (p-value \<0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a multivariate normal distribution.
 
 As our data isn't multivariate it isn't appropriate to perform a mahalanobis distance. {could potentially do need to research tho}
 
 **2.5 Correlation plots before and after the transformation**
+
 ```{r correlations, echo=FALSE}
 
 #Covariance table of the data:
@@ -442,10 +461,10 @@ ggcorrplot(cor(Ingots_clean[,-1]),
 
 
 ```
+
 Seeing a lot more correlation in the data with the massive outliers removed. worth keeping and commenting on? Correlation plot some things to highlight; is that the strong positive association between V and Cr for the un-transformed data is also strongly positively association in the transformed data. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
 
 The transformation didn't just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co. This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
-
 
 ## 3. LDA and Cluster analysis
 
@@ -475,10 +494,11 @@ biplot(pca_1, main = "PCA of all elements in the clean data")
 #ggbiplot(pca_all, obs.scale = 1, var.scale = 1,groups = Sample$Group,elipse = TRUE,)
 
 ```
-unfortunately as our data isn't a multivariate normal distribution it is best that we don't cotine performing a PCA analysis and instead focus on a LDA analysis (based on this article: https://medium.com/@seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9)
 
-**3.2 LDA and PAM**
-we started by performing a PAM (Partitioning Around Medoids) analysis 
+unfortunately as our data isn't a multivariate normal distribution it is best that we don't cotine performing a PCA analysis and instead focus on a LDA analysis [@Seshu2023]
+
+**3.2 LDA and PAM** we started by performing a PAM (Partitioning Around Medoids) analysis
+
 ```{r LDA, echo=FALSE}
 
 ICN <- sapply(Ingots_clean[,-1], as.numeric)
@@ -528,11 +548,15 @@ fviz_silhouette(pam)+
   
 
 ```
+
 The silhouette value/metric is a measurement of the quality of a clustering. between -1 and 1
 
-Reports optimal silhouette width as 5 with 0.31014624, indicating some weak clustering. Using complete data set or any of the other variations does not affect the suggested average silhouette. Stick with 5. ***6 is also very close.
+Reports optimal silhouette width as 5 with 0.31014624, indicating some weak clustering. Using complete data set or any of the other variations does not affect the suggested average silhouette. Stick with 5. \*\*\*6 is also very close.
+
+Due to the weak clustering, we opted to perform more cluster analyses to determine if this was a good fit.
 
 **3.3 Cluster Anaylsis**
+
 ```{r cluster plot, echo=FALSE}
 
 
@@ -552,8 +576,8 @@ factoextra::fviz_cluster(result, data = ICN,
 
 ```
 
-
 for the clusting below based on the PAM we wil be taking k = 5
+
 ```{r ward hclustering, echo=FALSE}
 
 wards <- hclust(dist(scaled), method = "ward.D")
@@ -562,6 +586,7 @@ rect.hclust(wards, 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FF
 ```
 
 However we may not want to use wards method as .... {ALICE} ... hence Manhatten distance cluster may be a better cluster to consider as it more robust to outliers then Eucledian.
+
 ```{r manhatten cluster, echo=FALSE}
 dist <- dist(scaled, method = "manhattan")
 
@@ -575,8 +600,7 @@ rect.hclust(HiMan , 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#F
 
 Something interesting top note is that for both cluster options they both cluster sample's 15, 10, and 22 this could be because of ...
 
-**3.4 Fuzzy Analysis**
-lastly we decided to perform a Fuzzy analysis of the clean data as another form of clustering ... {ALICE}
+**3.4 Fuzzy Analysis** lastly we decided to perform a Fuzzy analysis of the clean data as another form of clustering ... {ALICE}
 
 ```{r fuzzy, echo=FALSE}
 
@@ -604,12 +628,7 @@ plot(Fuzzy_Clust, pch = 15,
 
 ```
 
-
 ## 4. Results
-
-Quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at \~20mg.
-
-The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.
 
 ## 5. Discussion
 
@@ -647,8 +666,7 @@ Overall similarities suggest a rudimentary mold production, likely a hole dug in
 
 Three distinctive families of ingots characterised by the graphical location of the furnace, stages of technology, and raw materials used in the smelting process.
 
-## 6. References
-- caponetti et al
-- https://medium.com/@seshu8hachi/pca-vs-lda-no-more-confusion-fc21fb8d06e9
-- all of Alices other references
+## 6. Refrences
 
+::: {#refs}
+:::
