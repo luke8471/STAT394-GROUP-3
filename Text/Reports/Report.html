@@ -1979,6 +1979,13 @@ div.csl-indent {
 </figure>
 </div>
 </div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Report_files/figure-html/qqnormal-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn’t hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.</p>
 <p>{this maybe wrong as our data is a combination of percentages and PPM - will need to have another look at}</p>
@@ -2222,13 +2229,6 @@ div.csl-indent {
 </figure>
 </div>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/PCA-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
 </div>
 <p>unfortunately as our data isn’t a multivariate normal distribution it is best that we don’t cotine performing a PCA analysis and instead focus on a LDA analysis <span class="citation" data-cites="Seshu2023">(<a href="#ref-Seshu2023" role="doc-biblioref">Vungarala, 2023</a>)</span></p>
 <p><strong>3.2 LDA and PAM</strong> we started by performing a PAM (Partitioning Around Medoids) analysis</p>
@@ -2424,66 +2424,66 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Obj 1</td>
-<td style="text-align: right;">0.2037894</td>
-<td style="text-align: right;">0.1660860</td>
-<td style="text-align: right;">0.1936696</td>
-<td style="text-align: right;">0.1632514</td>
-<td style="text-align: right;">0.1215690</td>
-<td style="text-align: right;">0.1516346</td>
+<td style="text-align: right;">0.2124615</td>
+<td style="text-align: right;">0.1267423</td>
+<td style="text-align: right;">0.2019111</td>
+<td style="text-align: right;">0.1363281</td>
+<td style="text-align: right;">0.1580874</td>
+<td style="text-align: right;">0.1644696</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 2</td>
-<td style="text-align: right;">0.2047286</td>
-<td style="text-align: right;">0.1754801</td>
-<td style="text-align: right;">0.1415277</td>
-<td style="text-align: right;">0.1128666</td>
-<td style="text-align: right;">0.1964157</td>
-<td style="text-align: right;">0.1689813</td>
+<td style="text-align: right;">0.1961775</td>
+<td style="text-align: right;">0.1882117</td>
+<td style="text-align: right;">0.1356164</td>
+<td style="text-align: right;">0.1641707</td>
+<td style="text-align: right;">0.1619233</td>
+<td style="text-align: right;">0.1539004</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 3</td>
-<td style="text-align: right;">0.2014478</td>
-<td style="text-align: right;">0.2068598</td>
-<td style="text-align: right;">0.1330449</td>
-<td style="text-align: right;">0.1165182</td>
-<td style="text-align: right;">0.2080251</td>
-<td style="text-align: right;">0.1341042</td>
+<td style="text-align: right;">0.2022772</td>
+<td style="text-align: right;">0.2088816</td>
+<td style="text-align: right;">0.1335927</td>
+<td style="text-align: right;">0.1366102</td>
+<td style="text-align: right;">0.1346564</td>
+<td style="text-align: right;">0.1839819</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 4</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.2506355</td>
+<td style="text-align: right;">0.1703986</td>
+<td style="text-align: right;">0.1862242</td>
+<td style="text-align: right;">0.1360560</td>
+<td style="text-align: right;">0.1409746</td>
+<td style="text-align: right;">0.1157111</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 5</td>
-<td style="text-align: right;">0.1887871</td>
-<td style="text-align: right;">0.2747125</td>
-<td style="text-align: right;">0.1162842</td>
-<td style="text-align: right;">0.1153200</td>
-<td style="text-align: right;">0.1860047</td>
-<td style="text-align: right;">0.1188915</td>
+<td style="text-align: right;">0.1959304</td>
+<td style="text-align: right;">0.1930427</td>
+<td style="text-align: right;">0.1206842</td>
+<td style="text-align: right;">0.1263402</td>
+<td style="text-align: right;">0.1233901</td>
+<td style="text-align: right;">0.2406124</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 6</td>
-<td style="text-align: right;">0.2035970</td>
-<td style="text-align: right;">0.1748979</td>
-<td style="text-align: right;">0.1726654</td>
-<td style="text-align: right;">0.1510441</td>
-<td style="text-align: right;">0.1426473</td>
-<td style="text-align: right;">0.1551483</td>
+<td style="text-align: right;">0.1995767</td>
+<td style="text-align: right;">0.1398305</td>
+<td style="text-align: right;">0.1692558</td>
+<td style="text-align: right;">0.1360837</td>
+<td style="text-align: right;">0.1520846</td>
+<td style="text-align: right;">0.2031688</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 7</td>
-<td style="text-align: right;">0.2289400</td>
-<td style="text-align: right;">0.1299144</td>
-<td style="text-align: right;">0.1546035</td>
-<td style="text-align: right;">0.1071791</td>
-<td style="text-align: right;">0.2221655</td>
-<td style="text-align: right;">0.1571975</td>
+<td style="text-align: right;">0.1985988</td>
+<td style="text-align: right;">0.1927221</td>
+<td style="text-align: right;">0.1341140</td>
+<td style="text-align: right;">0.1843230</td>
+<td style="text-align: right;">0.1363643</td>
+<td style="text-align: right;">0.1538777</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 8</td>
@@ -2496,48 +2496,48 @@ div.csl-indent {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 9</td>
-<td style="text-align: right;">0.2225778</td>
-<td style="text-align: right;">0.1009447</td>
-<td style="text-align: right;">0.1885292</td>
-<td style="text-align: right;">0.1166318</td>
-<td style="text-align: right;">0.1397118</td>
-<td style="text-align: right;">0.2316047</td>
+<td style="text-align: right;">0.2319734</td>
+<td style="text-align: right;">0.1456094</td>
+<td style="text-align: right;">0.1964875</td>
+<td style="text-align: right;">0.0994079</td>
+<td style="text-align: right;">0.2413814</td>
+<td style="text-align: right;">0.0851404</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 10</td>
-<td style="text-align: right;">0.1970235</td>
-<td style="text-align: right;">0.1462796</td>
-<td style="text-align: right;">0.1549659</td>
-<td style="text-align: right;">0.1132268</td>
-<td style="text-align: right;">0.2222945</td>
-<td style="text-align: right;">0.1662097</td>
+<td style="text-align: right;">0.1676131</td>
+<td style="text-align: right;">0.1891117</td>
+<td style="text-align: right;">0.1318336</td>
+<td style="text-align: right;">0.1980384</td>
+<td style="text-align: right;">0.1413989</td>
+<td style="text-align: right;">0.1720043</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 11</td>
-<td style="text-align: right;">0.1688309</td>
-<td style="text-align: right;">0.1878127</td>
-<td style="text-align: right;">0.1789507</td>
-<td style="text-align: right;">0.2258635</td>
-<td style="text-align: right;">0.1092406</td>
-<td style="text-align: right;">0.1293017</td>
+<td style="text-align: right;">0.2023208</td>
+<td style="text-align: right;">0.1309100</td>
+<td style="text-align: right;">0.2144480</td>
+<td style="text-align: right;">0.1698852</td>
+<td style="text-align: right;">0.1549505</td>
+<td style="text-align: right;">0.1274854</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 12</td>
-<td style="text-align: right;">0.1741045</td>
-<td style="text-align: right;">0.1489797</td>
-<td style="text-align: right;">0.1673281</td>
-<td style="text-align: right;">0.1584971</td>
-<td style="text-align: right;">0.1222580</td>
-<td style="text-align: right;">0.2288326</td>
+<td style="text-align: right;">0.1747439</td>
+<td style="text-align: right;">0.1227069</td>
+<td style="text-align: right;">0.1679426</td>
+<td style="text-align: right;">0.1600620</td>
+<td style="text-align: right;">0.2296729</td>
+<td style="text-align: right;">0.1448716</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 13</td>
-<td style="text-align: right;">0.1946633</td>
-<td style="text-align: right;">0.1737040</td>
-<td style="text-align: right;">0.1532756</td>
-<td style="text-align: right;">0.1264908</td>
-<td style="text-align: right;">0.1892854</td>
-<td style="text-align: right;">0.1625809</td>
+<td style="text-align: right;">0.1913264</td>
+<td style="text-align: right;">0.1860407</td>
+<td style="text-align: right;">0.1506482</td>
+<td style="text-align: right;">0.1541137</td>
+<td style="text-align: right;">0.1597940</td>
+<td style="text-align: right;">0.1580770</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 14</td>
@@ -2550,39 +2550,39 @@ div.csl-indent {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 15</td>
-<td style="text-align: right;">0.1924038</td>
-<td style="text-align: right;">0.1175657</td>
-<td style="text-align: right;">0.2106717</td>
-<td style="text-align: right;">0.1295377</td>
-<td style="text-align: right;">0.1470027</td>
-<td style="text-align: right;">0.2028184</td>
+<td style="text-align: right;">0.1657603</td>
+<td style="text-align: right;">0.1266462</td>
+<td style="text-align: right;">0.1814984</td>
+<td style="text-align: right;">0.2046588</td>
+<td style="text-align: right;">0.1747327</td>
+<td style="text-align: right;">0.1467036</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 16</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obj 17</td>
+<td style="text-align: right;">0.1981568</td>
+<td style="text-align: right;">0.1103074</td>
+<td style="text-align: right;">0.3017093</td>
+<td style="text-align: right;">0.0992451</td>
+<td style="text-align: right;">0.1839415</td>
+<td style="text-align: right;">0.1066398</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obj 18</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Obj 17</td>
-<td style="text-align: right;">0.1095857</td>
-<td style="text-align: right;">0.1015470</td>
-<td style="text-align: right;">0.1668528</td>
-<td style="text-align: right;">0.4592874</td>
-<td style="text-align: right;">0.0610028</td>
-<td style="text-align: right;">0.1017243</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Obj 18</td>
-<td style="text-align: right;">0.2503901</td>
-<td style="text-align: right;">0.1209237</td>
-<td style="text-align: right;">0.1746207</td>
-<td style="text-align: right;">0.1320250</td>
-<td style="text-align: right;">0.1550292</td>
-<td style="text-align: right;">0.1670114</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 19</td>
@@ -2590,80 +2590,80 @@ div.csl-indent {
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 20</td>
-<td style="text-align: right;">0.2039080</td>
-<td style="text-align: right;">0.1367266</td>
-<td style="text-align: right;">0.1464976</td>
-<td style="text-align: right;">0.1132420</td>
-<td style="text-align: right;">0.2352965</td>
-<td style="text-align: right;">0.1643292</td>
+<td style="text-align: right;">0.1877523</td>
+<td style="text-align: right;">0.2166540</td>
+<td style="text-align: right;">0.1348906</td>
+<td style="text-align: right;">0.1564451</td>
+<td style="text-align: right;">0.1513094</td>
+<td style="text-align: right;">0.1529486</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 21</td>
-<td style="text-align: right;">0.1945560</td>
-<td style="text-align: right;">0.1408990</td>
-<td style="text-align: right;">0.2017693</td>
-<td style="text-align: right;">0.1744784</td>
-<td style="text-align: right;">0.1220454</td>
-<td style="text-align: right;">0.1662518</td>
+<td style="text-align: right;">0.1958238</td>
+<td style="text-align: right;">0.1228406</td>
+<td style="text-align: right;">0.2030840</td>
+<td style="text-align: right;">0.1518865</td>
+<td style="text-align: right;">0.1673351</td>
+<td style="text-align: right;">0.1590300</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 22</td>
-<td style="text-align: right;">0.1992975</td>
-<td style="text-align: right;">0.1330414</td>
-<td style="text-align: right;">0.1727532</td>
-<td style="text-align: right;">0.1246690</td>
-<td style="text-align: right;">0.1876547</td>
-<td style="text-align: right;">0.1825843</td>
+<td style="text-align: right;">0.1706119</td>
+<td style="text-align: right;">0.1606449</td>
+<td style="text-align: right;">0.1478882</td>
+<td style="text-align: right;">0.1916702</td>
+<td style="text-align: right;">0.1563043</td>
+<td style="text-align: right;">0.1728805</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 23</td>
-<td style="text-align: right;">0.1748468</td>
-<td style="text-align: right;">0.1341121</td>
-<td style="text-align: right;">0.2128839</td>
-<td style="text-align: right;">0.1929053</td>
-<td style="text-align: right;">0.1108003</td>
-<td style="text-align: right;">0.1744515</td>
+<td style="text-align: right;">0.1790660</td>
+<td style="text-align: right;">0.1134740</td>
+<td style="text-align: right;">0.2180210</td>
+<td style="text-align: right;">0.1611346</td>
+<td style="text-align: right;">0.1786612</td>
+<td style="text-align: right;">0.1496433</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 24</td>
-<td style="text-align: right;">0.1954228</td>
-<td style="text-align: right;">0.1242396</td>
-<td style="text-align: right;">0.2257235</td>
-<td style="text-align: right;">0.1807569</td>
-<td style="text-align: right;">0.1072488</td>
-<td style="text-align: right;">0.1666084</td>
+<td style="text-align: right;">0.1987759</td>
+<td style="text-align: right;">0.1090890</td>
+<td style="text-align: right;">0.2295966</td>
+<td style="text-align: right;">0.1493673</td>
+<td style="text-align: right;">0.1694671</td>
+<td style="text-align: right;">0.1437041</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 25</td>
+<td style="text-align: right;">0.1912735</td>
+<td style="text-align: right;">0.0879772</td>
+<td style="text-align: right;">0.3364110</td>
+<td style="text-align: right;">0.1219076</td>
+<td style="text-align: right;">0.1712125</td>
+<td style="text-align: right;">0.0912183</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obj 26</td>
+<td style="text-align: right;">0.2075886</td>
+<td style="text-align: right;">0.1758185</td>
+<td style="text-align: right;">0.1843405</td>
+<td style="text-align: right;">0.1407682</td>
+<td style="text-align: right;">0.1621721</td>
+<td style="text-align: right;">0.1293123</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obj 27</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Obj 26</td>
-<td style="text-align: right;">0.1529568</td>
-<td style="text-align: right;">0.2766021</td>
-<td style="text-align: right;">0.1358269</td>
-<td style="text-align: right;">0.1855739</td>
-<td style="text-align: right;">0.1295477</td>
-<td style="text-align: right;">0.1194926</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Obj 27</td>
-<td style="text-align: right;">0.1971848</td>
-<td style="text-align: right;">0.1093341</td>
-<td style="text-align: right;">0.1805499</td>
-<td style="text-align: right;">0.1356772</td>
-<td style="text-align: right;">0.1690239</td>
-<td style="text-align: right;">0.2082300</td>
 </tr>
 </tbody>
 </table>

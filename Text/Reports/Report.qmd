@@ -257,10 +257,17 @@ Notice that these samples have a mean of 104.4% with a range 93.17% to 113.71%. 
 **2.3 Transformations** to start of we had a look at the qq-normal plots of the original data and compared it to the log transformed data also to get idea if normality is met and to help gather evidence if our data follows a multivariate normal distribution.
 
 ```{r qqnormal, echo=FALSE}
-#no transformations
 
-qqnorm(as.matrix(Ingots_F_no[-1,-1]), col="lightblue", main = "Normal QQ- Plot of the non-transformed data")
-qqline(as.matrix(Ingots_F_no[-1,-1]), col="red")
+#no transformations: elements in percentages:
+
+qqnorm(as.matrix(Ingots_F_no[-1,2:5]), col="#648FFF", main = "Normal QQ- Plot of the non-transformed data", sub =  "Using all elements that were recored in percentages (Cu, Zn, Pb and Fe)")
+qqline(as.matrix(Ingots_F_no[-1,2:5]), col="red")
+
+#no transformations: elements in PPM:
+
+qqnorm(as.matrix(Ingots_F_no[-1,6:22]), col="#648FFF", main = "Normal QQ- Plot of the non-transformed data", sub = "Using all elements that were recored in PPM")
+qqline(as.matrix(Ingots_F_no[-1,6:22]), col="red")
+
 
 #log transform data
 
@@ -269,8 +276,9 @@ invisible(summary(logIngots))
 
 #taking the log.
 
-qqnorm(logIngots, col = "#4169E1", main = "Normal QQ- Plot of the log-transformed data")
+qqnorm(logIngots, col = "#785EF0", main = "Normal QQ- Plot of the log-transformed data (all elements)")
 qqline(logIngots, col = "red")
+
 
 ```
 
@@ -320,7 +328,7 @@ invisible(summary(Ingots_F_no[outliers,]))
 
 #The QQ plot of the mad transformed data:
 
-qqnorm((z), col="gray", main = "Normal QQ- Plot of the Mad-transformed data")
+qqnorm((z), col="#785EF0", main = "Normal QQ- Plot of the Mad-transformed data")
 qqline((z), col="red")
 
 num_cols <- sapply(Ingots_F_no, is.numeric)
@@ -458,11 +466,9 @@ ggcorrplot(cor(Ingots_clean[,-1]),
            tl.col = "gray30",
            title = "Correlation plot of the clean data exluding Cu/Zn")
 
-
-
 ```
 
-Seeing a lot more correlation in the data with the massive outliers removed. worth keeping and commenting on? Correlation plot some things to highlight; is that the strong positive association between V and Cr for the un-transformed data is also strongly positively association in the transformed data. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
+Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr for the un-transformed data is also strongly positively association in the transformed data. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
 
 The transformation didn't just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co. This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
 
@@ -475,12 +481,14 @@ The transformation didn't just strength some of the associations it also happene
 
 #I think a good way to interpret and present this dataset is to segregate it in away that makes sense to the people who will read and use this data for its intended purpose, which is to compare it to known combinations of metals to try and find the ore source and how/where it was cast.
 
+par(mfrow = c(1,2))
+
 pca_data <- Ingots_clean[, c("Cu", "Zn", "Pb", "Fe", "Ni", "Ag", "Sb", "As")]
 
 pca <- prcomp(pca_data, center = TRUE, scale. = TRUE)
 
 
-biplot(pca, main = "PCA of only a few elements from the clean data")
+biplot(pca, main = "PCA of only a few elements")
 
 #trying to see how it looks with all of them:
 
@@ -489,9 +497,12 @@ pca_all <- Ingots_clean[-1,-1]
 pca_1 <- prcomp(pca_all, center = TRUE, scale = TRUE)
 
 
-biplot(pca_1, main = "PCA of all elements in the clean data")
+biplot(pca_1, main = "PCA of all elements")
 
 #ggbiplot(pca_all, obs.scale = 1, var.scale = 1,groups = Sample$Group,elipse = TRUE,)
+
+par(mfrow = c(1,1))
+
 
 ```
 
@@ -592,8 +603,7 @@ dist <- dist(scaled, method = "manhattan")
 
 HiMan <- hclust(dist, method = "average")
 
-plot(HiMan)
-
+plot(HiMan, main = "Manhatten Cluster Dendrogram")
 rect.hclust(HiMan , 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
 
 ```
