@@ -243,7 +243,7 @@ main_com$percentage_total <- rowSums(main_com[c(2:5)])
 
 #table of the main components:
 knitr::kable(main_com,
-             caption = "Table 3: Deeper dive into the main components",
+             caption = "Deeper dive into the main components",
              format = "pipe")
 
 #summary of the main components:
@@ -299,7 +299,7 @@ med_mad_table <- data.frame(
 )
 
 knitr::kable(med_mad_table,
-             caption = "Figure something: table of Medians over Mads",
+             caption = "Table of Medians over Mads",
              format = "pipe")
 
 ```
@@ -614,11 +614,16 @@ Fuzzy_k <- FKM.med(scaled, k = 6, m = 2)
 
 #print(Fuzzy_k$U)
 
+#Table of Fuzzy_K$U:
+knitr::kable(Fuzzy_k$U,
+             caption = "Fuzzy K Silhouettes Clusterings",
+             format = "pipe")
+
+
+
 Fuzzy_Sil <- SIL.F(scaled1, Fuzzy_k$U)
 
 Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
-
-#table(Fuzzy_Clust)
 
 plot(Fuzzy_Clust, pch = 15, 
      col = apply(Fuzzy_k$U, 1, which.max),
