@@ -590,21 +590,43 @@ factoextra::fviz_cluster(result, data = ICN,
 for the clusting below based on the PAM we wil be taking k = 5
 
 ```{r ward hclustering, echo=FALSE}
+old_par <- par(no.readonly = TRUE) #stuff to help make the legend
+
+par(mar = c(6,5,4,6.5)) #stuff to help make the legend
 
 wards <- hclust(dist(scaled), method = "ward.D")
+
 plot(wards, main = "Ward. D Cluster Dendrogram")
 rect.hclust(wards, 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
+legend("topright",
+       inset = c(-0.10,0),
+       legend = c("1", "2", "3", "4", "5"),
+       fill = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"), xpd = TRUE)
+
+on.exit((par(old_par))) #stuff to help make the legend
+
 ```
 
 However we may not want to use wards method as .... {ALICE} ... hence Manhatten distance cluster may be a better cluster to consider as it more robust to outliers then Eucledian.
 
 ```{r manhatten cluster, echo=FALSE}
+old_par <- par(no.readonly = TRUE) #stuff to help make the legend
+
 dist <- dist(scaled, method = "manhattan")
 
 HiMan <- hclust(dist, method = "average")
 
+par(mar = c(6,5,4,6.5)) #stuff to help make the legend
+
 plot(HiMan, main = "Manhatten Cluster Dendrogram")
 rect.hclust(HiMan , 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
+legend("topright",
+       inset = c(-0.10,0),
+       legend = c("1", "2", "3", "4", "5"),
+       fill = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"), xpd = TRUE)
+
+on.exit((par(old_par))) #stuff to help make the legend
+
 
 ```
 
@@ -613,6 +635,8 @@ Something interesting top note is that for both cluster options they both cluste
 **3.4 Fuzzy Analysis** lastly we decided to perform a Fuzzy analysis of the clean data as another form of clustering ... {ALICE}
 
 ```{r fuzzy, echo=FALSE}
+
+old_par <- par(no.readonly = TRUE) #stuff to help make the legend
 
 #scaled1
 
@@ -635,11 +659,22 @@ Fuzzy_Sil <- SIL.F(scaled1, Fuzzy_k$U)
 
 Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
 
+par(mar = c(6,5,4,6.5)) #stuff to help make the legend
+
+
+my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000","#F0E442")
+
 plot(Fuzzy_Clust, pch = 15, 
-     col = apply(Fuzzy_k$U, 1, which.max),
+     col = my_col[apply(Fuzzy_k$U, 1, which.max)],
      xlab = "Obs",
      ylab = "Silhouette Width",
      main = "Fuzzy Silhouette Plot Using k-Medoids")
+legend("topright",
+       inset = c(-0.15,0),
+       legend = c("1", "2", "3", "4", "5","6"),
+       fill = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000","#F0E442"), xpd = TRUE)
+
+on.exit((par(old_par))) #stuff to help make the legend
 
 ```
 
