@@ -61,6 +61,35 @@ div.csl-indent {
 <link href="Report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Report_files/libs/bootstrap/bootstrap-215b371544c282197b31c8aa00ce3677.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -92,18 +121,49 @@ div.csl-indent {
 
 
 <p><em>Gaia Smith, Alice Thompson and Luke Harkness</em></p>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">1. Abstract</h2>
+<p>General Background</p>
+<p>A shipwreck off the coast of Gela, Italy has been the source of a historical find of 40 orichalcum ingots. A scarce, fabled metal that has the modern equivalen of brass.</p>
+<p>sPECIFIC BACKGROUND</p>
+<p>Knowledge gap</p>
+<p>Here we show…</p>
+<p>After performing a trilogy of cluster analyses, we show that were the clusters accurate were we able to etermine a good fit?</p>
+<p>Results</p>
+<p>Implications</p>
+<p>They had different origins. Can possibly be linked to geological locations by ore analysis, collected from different regions, etc.</p>
+<p>Why did they wait to do further testing that would provide more information on the composition and provide more accurate data?</p>
+<p>The groupings from the <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> study appears to have data incorrectly manipulated. By taking the log at any point in this anylysis would have resulted in multiple zero-values and artificially inflating</p>
+<p>Is the cluster analysis consistent with different distances and linkages?</p>
+</section>
 <section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
+<h2 class="anchored" data-anchor-id="introduction">2. Introduction</h2>
 <p><strong>1.1 Brief description of Orichalcum ingots study Caponetti et al, study</strong></p>
-<p>A shipwreck off the coast of Gela, Italy has continued to provide significant archaeological finds to this day. A discovery dating back to 1988 <span class="citation" data-cites="nuttersworldGelaWreck">(<a href="#ref-nuttersworldGelaWreck" role="doc-biblioref">Nutter, 2025</a>)</span>, where it was first stumbled upon by divers near Bulala beach. The ancient city of Gela was strategically positioned at the crux of major maritime trade routes making it a populous and successful trading port.</p>
-<p>It has been a constant stream of ancient marvels over the decades. We are exploring one of the most significant finds. A veritable hoard of fabled metal; Orichalcum.</p>
-<p>Orichalcum is the</p>
-<p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> chemoanalysed to determine major &amp; trace elements of these orichalcum ingots. Using this data, they determined correlation between the observed different features and the composition to group the ingots into their appropriate cluster. This is an extension from a fledgling study by the same author, where they performed a less invasive XRF (X-Ray Fluorescence) spectroscopy of the ingots, a non-distructive test that can be performed in the field.</p>
-<p>Their motivation was to create a starting point for giving insight into archaeometric study of the orichalcum ingots regarding their origin and manufacture technologies.</p>
-<p>Our study also has the same motivations. We aim to provide a high level data analysis to provide a detailed, and logical, path to a linkage analysis.</p>
-<p>Historically, discoveries of orichalcum have had questionable identification methods. A common</p>
-<p>Motivation, problem statement, approach, results, conclusions.</p>
-<p><strong>1.2 Table of the Raw data</strong></p>
+<p><strong>1.3 Our Aim</strong></p>
+<p>Why do we care about the problem and the results?</p>
+<p>Because it could lead to further impressive archaeological finds</p>
+<p>What is the scope of the work and what problem is this paper trying to solve?</p>
+<p>Determine whether or not any of the ingots could be grouped. The scope is mapping orichalcum origin.</p>
+<p>What was done to solve this problem?</p>
+<p>More destructive testing to determine trace elements.</p>
+<p>What implications does the answer imply?</p>
+<p>Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.</p>
+<p><strong>1.4 Our hypothesis</strong></p>
+<p>one of our hypotheses questions is whether our data follows a multivariate normal distribution. probably some hypotheses around the clusterings.</p>
+</section>
+<section id="eda" class="level2">
+<h2 class="anchored" data-anchor-id="eda">3. EDA</h2>
+<p><strong>2.1 Brief summary of lab techniques used to gather the the data</strong></p>
+<p>Our analysis includes the data from their chemometric analysis to determine the trace elements using ICP-OES and ICP-MS of 38 orichalcum ingots. This multivariate analysis does not include the data about physical appearance of the ingots or any correlation analysis of those variables.</p>
+<p>Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.</p>
+<p>This is the largest sample of its kind however it is still not a large sample.</p>
+<p>For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as…</p>
+<p>Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.</p>
+<p>This is the largest sample of its kind however it is still not a large sample.</p>
+<p>For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as…</p>
+<p><strong>2.2 Brief summary of the data</strong></p>
+<p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at ~20mg.</p>
+<p>The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1115,31 +1175,6 @@ div.csl-indent {
 </table>
 </div>
 </div>
-<p><strong>1.3 Our Aim</strong></p>
-<p>Why do we care about the problem and the results?</p>
-<p>Because it could lead to further impressive archaeological finds</p>
-<p>What is the scope of the work and what problem is this paper trying to solve?</p>
-<p>Determine whether or not any of the ingots could be grouped. The scope is mapping orichalcum origin.</p>
-<p>What was done to solve this problem?</p>
-<p>More destructive testing to determine trace elements.</p>
-<p>What implications does the answer imply?</p>
-<p>Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.</p>
-<p><strong>1.4 Our hypothesis</strong></p>
-<p>one of our hypotheses questions is whether our data follows a multivariate normal distribution. probably some hypotheses around the clusterings.</p>
-</section>
-<section id="eda" class="level2">
-<h2 class="anchored" data-anchor-id="eda">2. EDA</h2>
-<p><strong>2.1 Brief summary of lab techniques used to gather the the data</strong></p>
-<p>Our analysis includes the data from their chemometric analysis to determine the trace elements using ICP-OES and ICP-MS of 38 orichalcum ingots. This multivariate analysis does not include the data about physical appearance of the ingots or any correlation analysis of those variables.</p>
-<p>Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.</p>
-<p>This is the largest sample of its kind however it is still not a large sample.</p>
-<p>For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as…</p>
-<p>Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.</p>
-<p>This is the largest sample of its kind however it is still not a large sample.</p>
-<p>For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as…</p>
-<p><strong>2.2 Brief summary of the data</strong></p>
-<p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at ~20mg.</p>
-<p>The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.</p>
 <p>We started by performing a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to highlight is that the main elements (Cu, Zn, Pb and Fe) are all in percentages, where as the concentrations of the trace elements are in PPM (parts per a million).</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1991,6 +2026,14 @@ div.csl-indent {
 </div>
 </div>
 </div>
+<p>The HZ test stipulates</p>
+<span class="math display">\[\begin{aligned}
+\mathcal{H}_0 :&amp;
+\text{ The data follow a multivariate normal distribution},
+\\
+\mathcal{H}_1 :&amp;
+\text{ The data do not follow a multivariate normal distribution}.
+\end{aligned}\]</span>
 <p>Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn’t hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.</p>
 <p>{this maybe wrong as our data is a combination of percentages and PPM - will need to have another look at}</p>
 <p><strong><em>2.3.1 Mad Transformation</em></strong></p>
@@ -2223,8 +2266,8 @@ div.csl-indent {
 <p>The transformation didn’t just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co.&nbsp;This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.</p>
 </section>
 <section id="lda-and-cluster-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="lda-and-cluster-analysis">3. LDA and Cluster analysis</h2>
-<p><strong>3.1 PCA</strong></p>
+<h2 class="anchored" data-anchor-id="lda-and-cluster-analysis">4. LDA and Cluster analysis</h2>
+<p><strong>4.1 PCA</strong></p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2428,66 +2471,66 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Obj 1</td>
-<td style="text-align: right;">0.2106324</td>
-<td style="text-align: right;">0.2001728</td>
-<td style="text-align: right;">0.1256511</td>
-<td style="text-align: right;">0.1716630</td>
-<td style="text-align: right;">0.1567263</td>
-<td style="text-align: right;">0.1351545</td>
+<td style="text-align: right;">0.2091045</td>
+<td style="text-align: right;">0.1987208</td>
+<td style="text-align: right;">0.1555895</td>
+<td style="text-align: right;">0.1247397</td>
+<td style="text-align: right;">0.1675092</td>
+<td style="text-align: right;">0.1443364</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 2</td>
-<td style="text-align: right;">0.1934212</td>
-<td style="text-align: right;">0.1337110</td>
-<td style="text-align: right;">0.1855674</td>
-<td style="text-align: right;">0.1657881</td>
-<td style="text-align: right;">0.1596483</td>
-<td style="text-align: right;">0.1618641</td>
+<td style="text-align: right;">0.1646330</td>
+<td style="text-align: right;">0.1138099</td>
+<td style="text-align: right;">0.1358867</td>
+<td style="text-align: right;">0.1579481</td>
+<td style="text-align: right;">0.0907620</td>
+<td style="text-align: right;">0.3369602</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 3</td>
-<td style="text-align: right;">0.1975886</td>
-<td style="text-align: right;">0.1304961</td>
-<td style="text-align: right;">0.2040398</td>
-<td style="text-align: right;">0.2028968</td>
-<td style="text-align: right;">0.1315351</td>
-<td style="text-align: right;">0.1334436</td>
+<td style="text-align: right;">0.2042144</td>
+<td style="text-align: right;">0.1348720</td>
+<td style="text-align: right;">0.1359459</td>
+<td style="text-align: right;">0.2108820</td>
+<td style="text-align: right;">0.1181184</td>
+<td style="text-align: right;">0.1959674</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 4</td>
+<td style="text-align: right;">0.2418146</td>
+<td style="text-align: right;">0.1796703</td>
+<td style="text-align: right;">0.1360131</td>
+<td style="text-align: right;">0.1644016</td>
+<td style="text-align: right;">0.2176435</td>
+<td style="text-align: right;">0.0604569</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obj 5</td>
+<td style="text-align: right;">0.2268266</td>
+<td style="text-align: right;">0.1397148</td>
+<td style="text-align: right;">0.1428474</td>
+<td style="text-align: right;">0.2234835</td>
+<td style="text-align: right;">0.1385564</td>
+<td style="text-align: right;">0.1285714</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obj 6</td>
+<td style="text-align: right;">0.2091030</td>
+<td style="text-align: right;">0.1773348</td>
+<td style="text-align: right;">0.1593441</td>
+<td style="text-align: right;">0.1465050</td>
+<td style="text-align: right;">0.1551289</td>
+<td style="text-align: right;">0.1525842</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obj 7</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Obj 5</td>
-<td style="text-align: right;">0.1875839</td>
-<td style="text-align: right;">0.1155431</td>
-<td style="text-align: right;">0.1848192</td>
-<td style="text-align: right;">0.2729618</td>
-<td style="text-align: right;">0.1181338</td>
-<td style="text-align: right;">0.1209582</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Obj 6</td>
-<td style="text-align: right;">0.2061156</td>
-<td style="text-align: right;">0.1748013</td>
-<td style="text-align: right;">0.1444119</td>
-<td style="text-align: right;">0.1770614</td>
-<td style="text-align: right;">0.1570675</td>
-<td style="text-align: right;">0.1405423</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Obj 7</td>
-<td style="text-align: right;">0.2071285</td>
-<td style="text-align: right;">0.1398742</td>
-<td style="text-align: right;">0.2009994</td>
-<td style="text-align: right;">0.1175372</td>
-<td style="text-align: right;">0.1422210</td>
-<td style="text-align: right;">0.1922396</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 8</td>
@@ -2500,48 +2543,48 @@ div.csl-indent {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 9</td>
-<td style="text-align: right;">0.2274103</td>
-<td style="text-align: right;">0.1926225</td>
-<td style="text-align: right;">0.1427452</td>
-<td style="text-align: right;">0.1031363</td>
-<td style="text-align: right;">0.2366333</td>
-<td style="text-align: right;">0.0974525</td>
+<td style="text-align: right;">0.2352924</td>
+<td style="text-align: right;">0.1992988</td>
+<td style="text-align: right;">0.2448350</td>
+<td style="text-align: right;">0.1476927</td>
+<td style="text-align: right;">0.1232943</td>
+<td style="text-align: right;">0.0495869</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 10</td>
-<td style="text-align: right;">0.1759829</td>
-<td style="text-align: right;">0.1384167</td>
-<td style="text-align: right;">0.1985551</td>
-<td style="text-align: right;">0.1306581</td>
-<td style="text-align: right;">0.1484597</td>
-<td style="text-align: right;">0.2079275</td>
+<td style="text-align: right;">0.1615204</td>
+<td style="text-align: right;">0.1270414</td>
+<td style="text-align: right;">0.1362591</td>
+<td style="text-align: right;">0.1822376</td>
+<td style="text-align: right;">0.0928236</td>
+<td style="text-align: right;">0.3001179</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 11</td>
-<td style="text-align: right;">0.1843331</td>
-<td style="text-align: right;">0.1953822</td>
-<td style="text-align: right;">0.1192712</td>
-<td style="text-align: right;">0.2050579</td>
-<td style="text-align: right;">0.1411744</td>
-<td style="text-align: right;">0.1547813</td>
+<td style="text-align: right;">0.1913005</td>
+<td style="text-align: right;">0.2027672</td>
+<td style="text-align: right;">0.1465104</td>
+<td style="text-align: right;">0.1237793</td>
+<td style="text-align: right;">0.2559236</td>
+<td style="text-align: right;">0.0797189</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 12</td>
-<td style="text-align: right;">0.1739342</td>
-<td style="text-align: right;">0.1671644</td>
-<td style="text-align: right;">0.1221384</td>
-<td style="text-align: right;">0.1488339</td>
-<td style="text-align: right;">0.2286087</td>
-<td style="text-align: right;">0.1593204</td>
+<td style="text-align: right;">0.1790465</td>
+<td style="text-align: right;">0.1720778</td>
+<td style="text-align: right;">0.2353280</td>
+<td style="text-align: right;">0.1257283</td>
+<td style="text-align: right;">0.1629961</td>
+<td style="text-align: right;">0.1248234</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 13</td>
-<td style="text-align: right;">0.1889365</td>
-<td style="text-align: right;">0.1487664</td>
-<td style="text-align: right;">0.1837168</td>
-<td style="text-align: right;">0.1685938</td>
-<td style="text-align: right;">0.1577979</td>
-<td style="text-align: right;">0.1521886</td>
+<td style="text-align: right;">0.1728764</td>
+<td style="text-align: right;">0.1361209</td>
+<td style="text-align: right;">0.1443848</td>
+<td style="text-align: right;">0.1681005</td>
+<td style="text-align: right;">0.1123339</td>
+<td style="text-align: right;">0.2661835</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 14</td>
@@ -2554,120 +2597,120 @@ div.csl-indent {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 15</td>
-<td style="text-align: right;">0.1736470</td>
-<td style="text-align: right;">0.1901340</td>
-<td style="text-align: right;">0.1326719</td>
-<td style="text-align: right;">0.1061046</td>
-<td style="text-align: right;">0.1830463</td>
-<td style="text-align: right;">0.2143963</td>
+<td style="text-align: right;">0.1786125</td>
+<td style="text-align: right;">0.1955709</td>
+<td style="text-align: right;">0.1882806</td>
+<td style="text-align: right;">0.1364657</td>
+<td style="text-align: right;">0.1202525</td>
+<td style="text-align: right;">0.1808178</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 16</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 17</td>
-<td style="text-align: right;">0.1839928</td>
-<td style="text-align: right;">0.2801435</td>
-<td style="text-align: right;">0.1024228</td>
-<td style="text-align: right;">0.1704960</td>
-<td style="text-align: right;">0.1707936</td>
-<td style="text-align: right;">0.0921512</td>
+<td style="text-align: right;">0.1191765</td>
+<td style="text-align: right;">0.1814555</td>
+<td style="text-align: right;">0.1106270</td>
+<td style="text-align: right;">0.0663417</td>
+<td style="text-align: right;">0.4994835</td>
+<td style="text-align: right;">0.0229159</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 18</td>
-<td style="text-align: right;">0.2520676</td>
-<td style="text-align: right;">0.1757906</td>
-<td style="text-align: right;">0.1560678</td>
-<td style="text-align: right;">0.1217338</td>
-<td style="text-align: right;">0.1681302</td>
-<td style="text-align: right;">0.1262101</td>
+<td style="text-align: right;">0.2585365</td>
+<td style="text-align: right;">0.1803020</td>
+<td style="text-align: right;">0.1724451</td>
+<td style="text-align: right;">0.1600730</td>
+<td style="text-align: right;">0.1363204</td>
+<td style="text-align: right;">0.0923231</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 19</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 20</td>
-<td style="text-align: right;">0.1929732</td>
-<td style="text-align: right;">0.1386415</td>
-<td style="text-align: right;">0.2226785</td>
-<td style="text-align: right;">0.1293945</td>
-<td style="text-align: right;">0.1555169</td>
-<td style="text-align: right;">0.1607954</td>
+<td style="text-align: right;">0.1086233</td>
+<td style="text-align: right;">0.0780404</td>
+<td style="text-align: right;">0.0875395</td>
+<td style="text-align: right;">0.1253443</td>
+<td style="text-align: right;">0.0603249</td>
+<td style="text-align: right;">0.5401276</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 21</td>
-<td style="text-align: right;">0.1992535</td>
-<td style="text-align: right;">0.2066409</td>
-<td style="text-align: right;">0.1249921</td>
-<td style="text-align: right;">0.1443009</td>
-<td style="text-align: right;">0.1702659</td>
-<td style="text-align: right;">0.1545467</td>
+<td style="text-align: right;">0.1902434</td>
+<td style="text-align: right;">0.1972968</td>
+<td style="text-align: right;">0.1625666</td>
+<td style="text-align: right;">0.1193400</td>
+<td style="text-align: right;">0.1706108</td>
+<td style="text-align: right;">0.1599425</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 22</td>
-<td style="text-align: right;">0.1813069</td>
-<td style="text-align: right;">0.1571587</td>
-<td style="text-align: right;">0.1707151</td>
-<td style="text-align: right;">0.1210317</td>
-<td style="text-align: right;">0.1661024</td>
-<td style="text-align: right;">0.2036852</td>
+<td style="text-align: right;">0.1388219</td>
+<td style="text-align: right;">0.1203323</td>
+<td style="text-align: right;">0.1271803</td>
+<td style="text-align: right;">0.1307121</td>
+<td style="text-align: right;">0.0868390</td>
+<td style="text-align: right;">0.3961144</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 23</td>
-<td style="text-align: right;">0.1812950</td>
-<td style="text-align: right;">0.2207349</td>
-<td style="text-align: right;">0.1148865</td>
-<td style="text-align: right;">0.1390581</td>
-<td style="text-align: right;">0.1808851</td>
-<td style="text-align: right;">0.1631404</td>
+<td style="text-align: right;">0.1781324</td>
+<td style="text-align: right;">0.2168842</td>
+<td style="text-align: right;">0.1777296</td>
+<td style="text-align: right;">0.1128823</td>
+<td style="text-align: right;">0.1965302</td>
+<td style="text-align: right;">0.1178413</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 24</td>
-<td style="text-align: right;">0.2022820</td>
-<td style="text-align: right;">0.2336463</td>
-<td style="text-align: right;">0.1110132</td>
-<td style="text-align: right;">0.1286003</td>
-<td style="text-align: right;">0.1724563</td>
-<td style="text-align: right;">0.1520019</td>
+<td style="text-align: right;">0.1952605</td>
+<td style="text-align: right;">0.2255361</td>
+<td style="text-align: right;">0.1664700</td>
+<td style="text-align: right;">0.1071598</td>
+<td style="text-align: right;">0.1806068</td>
+<td style="text-align: right;">0.1249669</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 25</td>
-<td style="text-align: right;">0.1784831</td>
-<td style="text-align: right;">0.3139153</td>
-<td style="text-align: right;">0.0820942</td>
-<td style="text-align: right;">0.1519882</td>
-<td style="text-align: right;">0.1597635</td>
-<td style="text-align: right;">0.1137556</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Obj 26</td>
-<td style="text-align: right;">0.1665927</td>
-<td style="text-align: right;">0.1479358</td>
-<td style="text-align: right;">0.1410968</td>
-<td style="text-align: right;">0.3012610</td>
-<td style="text-align: right;">0.1301453</td>
-<td style="text-align: right;">0.1129684</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Obj 27</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Obj 26</td>
+<td style="text-align: right;">0.1993913</td>
+<td style="text-align: right;">0.1770612</td>
+<td style="text-align: right;">0.1557682</td>
+<td style="text-align: right;">0.1688757</td>
+<td style="text-align: right;">0.2419104</td>
+<td style="text-align: right;">0.0569931</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obj 27</td>
+<td style="text-align: right;">0.2026514</td>
+<td style="text-align: right;">0.1855553</td>
+<td style="text-align: right;">0.2140028</td>
+<td style="text-align: right;">0.1737097</td>
+<td style="text-align: right;">0.1394386</td>
+<td style="text-align: right;">0.0846423</td>
 </tr>
 </tbody>
 </table>
@@ -2685,30 +2728,30 @@ div.csl-indent {
 </div>
 </section>
 <section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">4. Results</h2>
+<h2 class="anchored" data-anchor-id="results">5. Results</h2>
 </section>
 <section id="discussion" class="level2">
-<h2 class="anchored" data-anchor-id="discussion">5. Discussion</h2>
-<p>This paper was a further analysis on the paper (insert paper and brief summary here smile), first two authors are the same.</p>
-<p>In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer was used. This study includes that data and further investigates the composition of each ingot. A micro-well was drilled into each ingot and the extracted alloy was</p>
-<p>Solved the mystery of the 2 missing ingots, they were on loan to a museum for display purposes.</p>
-<p>What makes this discovery so important?</p>
-<p>There has never been a discovery of this many ingots in one place. There was evidence of consistent casting processes and 3 distinct groupings of ingots were defined from this veritable hoard. This, again, is important because it provides evidence of multiple ingots of a scarce and highly prized alloy being manufactured in one place at one time.</p>
-<p>What is Orichalcum?</p>
-<p>Defined as a copper alloy with zinc content as the principal components, and containing a widely varying quantity of lead and tin among other trace elements. There is no consistent proportion to the amount of copper and zinc found, but the overall composition and relative amounts of principal elemental components can be used to deduce the rough date and origin of a sample. The modern equivalent is brass.</p>
-<p>What were the limitations of this study?</p>
+<h2 class="anchored" data-anchor-id="discussion">6. Discussion</h2>
+<p>The historic Gela, Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port <span class="citation" data-cites="Angelucci2026">(<a href="#ref-Angelucci2026" role="doc-biblioref">Angelucci, 2026</a>)</span>. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled to and from Gela for centuries.</p>
+<p>A shipwreck off the coast of Gela, Italy continues to provide significant archaeological finds to this day. A discovery dating back to 1988 <span class="citation" data-cites="nuttersworldGelaWreck">(<a href="#ref-nuttersworldGelaWreck" role="doc-biblioref">Nutter, 2025</a>)</span>, where it was first stumbled upon by divers near Bulala beach. We are exploring one of the most significant finds from this wreck; A veritable hoard of the fabled metal, Orichalcum.</p>
+<p>The discovery of 40 orichalcum ingots in 2017 was a monumental one. There has never been a discovery of this many ingots in one place. There was also evidence of consistent casting processes, with overall similarities suggest a rudimentary mold production, likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggested cast-diverse technologies.</p>
+<p>with <span class="citation" data-cites="Caponetti2017-sc">Caponetti, Armetta, Martino, et al. (<a href="#ref-Caponetti2017-sc" role="doc-biblioref">2017</a>)</span> determining 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time</p>
+<p>The initial analysis was performed by non-invasive XRF, a method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.</p>
+<p>The find was dated to ~600BCE, the approximate age of the ship, and by the pottery also found in the wreck.</p>
 <p>A study on a sample group this large has never been done before. Also, this dataset is not very large. - love this sentence 10/10.</p>
-<p>Why did they wait to do further testing that would provide more information on the composition and provide more accurate data?</p>
-<p>long story short, this is a historical find and it would have taken time to gain approval to do any invasive testing that would harm or alter the ingots in any way. XRF is a portable, non-invasive method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.</p>
+<p>XRF is a portable, non-invasive method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.</p>
+<p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> performed chemoanalysis to determine the trace elements of these orichalcum ingots. Using this data, they determined correlation between the observed different features and the composition to group the ingots into their appropriate cluster. This is an extension from a fledgling study by the same author, where they performed a less invasive XRF (X-Ray Fluorescence) spectroscopy of the ingots, a non-distructive test that can be performed in the field.</p>
+<p>Their motivation was to create a starting point for giving insight into archaeometric study of the orichalcum ingots regarding their origin and manufacture technologies.</p>
+<p>Our study also has the same motivations. We aim to provide a high level data analysis to provide a detailed, and logical, path to a linkage analysis.</p>
+<p>Motivation, problem statement, approach, results, conclusions.</p>
+<p>What makes this discovery so important?</p>
+<p>What is Orichalcum?</p>
+<p>What were the limitations of this study?</p>
 <p>What further research could be done? Different statistical analysis?</p>
-<p>The paper proposes further research aimed to verify locations of ores and workshops where these, and other orichalcum, were manufactured. Providing a more fleshed out history of ancient metallurgy and possibly leading to more significant archaeological finds.</p>
-<p>Other studies (find the papers, idiot) have classified groupings to orichalcum artifacts by their shape, composition, etc. Which has provided a map of manufacturing locations from Greece to the Caucus.</p>
-<p>Findings were dated to ~600BCE, the approximate age of the ship, and by the pottery also found in the wreck.</p>
-<p>Overall similarities suggest a rudimentary mold production, likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggestd cast-diverse technologies. Impurities are atttributed to a separation process that occured during the fusion (CITATION) of metals to create the alloy.</p>
-<p>Three distinctive families of ingots characterised by the graphical location of the furnace, stages of technology, and raw materials used in the smelting process.</p>
+<p>When working with museum quality pieces, that need destructive analyses performed to</p>
 </section>
 <section id="refrences" class="level2">
-<h2 class="anchored" data-anchor-id="refrences">6. Refrences</h2>
+<h2 class="anchored" data-anchor-id="refrences">7. Refrences</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-Angelucci2026" class="csl-entry" role="listitem">
 Angelucci, O. (2026). <em><span>T</span>he <span>S</span>unken <span>S</span>hip of <span>G</span>ela: <span>T</span>he <span>A</span>ncient <span>S</span>ecret of the <span>S</span>icilian <span>S</span>ea — medium.com</em>. <a href="https://medium.com/ash-and-devotion/the-sunken-ship-of-gela-the-ancient-secret-of-the-sicilian-sea-796f56d2dcc6" class="uri">https://medium.com/ash-and-devotion/the-sunken-ship-of-gela-the-ancient-secret-of-the-sicilian-sea-796f56d2dcc6</a>.

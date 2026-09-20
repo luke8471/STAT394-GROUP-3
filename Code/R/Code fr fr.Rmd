@@ -229,24 +229,39 @@ qqline(as.matrix(Ingots_F_no[-1,-1]), col="red")
 
 logIngots <- log(as.matrix(Ingots_F_no[-1,-1]))
 summary(logIngots)
+print(logIngots)
 
-#NOTE: we return a lot of negative values after a log transformation. Either need
+#NOTE: we return several zero-values after a log transformation. Either need
 #to add a constant to keep values non-negative or normalise data another way.
 #This is where I start considering removing the massive outliers from the data set.
 
+#Use log(x + 1) to eliminate zero values. It works
+
+logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
+summary(logIngots1)
+print(logIngots1)
+
 #taking the log anyway, for giggles.
 
-qqnorm(logIngots, col = "#4169E1");
-qqline(logIngots, col = "red")
+qqnorm(logIngots1, col = "#4169E1");
+qqline(logIngots1, col = "red")
 
 #steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be
 #the answer. Very robust to outliers. AMENDMENT best option fo sho
 
-#HZ test on OG data, which also rejects null.
 
-HZoriginal <- mvn(data = Ingots_F_no, mvn_test = "hz")
+
+#HZ test on the log transformed data
+
+[{\cal H}_0:\text{ The data follows a multivariate normal distribution}]
+
+\[{\cal H}_1:\text{ The data does not a multivariate normal distribution}\]
+
+
+HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
 cat("Henze_Zirkler Test Results:\n")
 print(HZoriginal$multivariate_normality)
+
 
 #steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be
 #the answer. Very robust to outliers. AMENDMENT best option fo sho
