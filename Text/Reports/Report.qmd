@@ -207,7 +207,7 @@ knitr::kable(Ingots_Frame,
 Ingots_F_no <- Ingots_Frame[,1:22]
 ```
 
-(INSERT OBSERVATIONS FROM MAIN TABLE HERE)
+looking at the raw data we also noticed some interesting outliers. Particularly, sample 13 for Sb (antimony), which is 549PPM, magnitudes larger than the other samples. (INSERT MORE OBSERVATIONS FROM MAIN TABLE HERE) a large range of concentrates (ranging from a minimum of 0.06PPM for Rb and a max of 683PPM for Ni)
 
 ```{r basic summary, echo=FALSE}
 
@@ -236,9 +236,11 @@ ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
 
 ```
 
-Ni (nickel) has the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, driven enlarge by sample 13. Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06PPM for Rb and a max of 683PPM for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. looking at the raw data we also noticed some interesting outliers. Particularly, sample 13 for Sb (antimony), which is 549PPM, magnitudes larger than the other samples. We will need to perform transformations on the data as we have a combination of percentages, PPM, and major outliers.
+Ni (nickel) had the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, likely driven by sample 13 being magnitudes larger than the other samples.
 
-We took a preliminary look at the Copper (Cu), Zinc (Zn), Lead (Pb), and Tin (Sn) as they are the four alloying elements that are known to define orichalcum and historically have been the primary elemental components used to date and pinpoint origin of other orichalcum artifacts.
+Due to the fact the data has data recorded at different scales (percentage and PPM) and obvious outliers, log transformation and scaling were the next logical steps.
+
+We also took a preliminary look at the Copper (Cu), Zinc (Zn), Lead (Pb), and Tin (Sn) as they are the four alloying elements that are known to define orichalcum and historically have been the primary elemental components used to date and pinpoint origin of other orichalcum artifacts.
 
 ```{r basic summary & boxplot, echo=FALSE}
 
@@ -258,7 +260,7 @@ boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue", main = "Boxplo
 
 Important to note that Cu, Zn, and Pb are still percentages whereas Sn is PPM, not that there is more tin than lead. The data will need to be scaled to report accurately.
 
-(NEED TO ADD OTHER OBSERVATIONS TO THIS BOXPLOT)
+(NEED TO ADD OTHER OBSERVATIONS TO THIS BOXPLOT OR REMOVE IT. ALSO SHOULD CONTRAST WITH LOG(x +1) TRANSFORMATION BOXPLOT OF SAME DATA)
 
 ***3.1.1 Inconsistencies in Percentages***
 
@@ -282,31 +284,33 @@ skim(main_com[,6])|>
 
 ```
 
-Notice that these samples have a mean of \numcal{104.4%} with a range \numcal{93.17%} to \numcal{113.71%}. Where 33 of the 38 samples exceed \numcal{100%}. The most significant deviations are samples 8 and 38. @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of the available sample.
+Notice that these samples have a mean of \numcal{104.4%} with a range \numcal{93.17%} to \numcal{113.71%}. Where 33 of the 38 samples exceed \numcal{100%}. The most significant deviations are samples 8 and 38. @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of available material for sampling for each observation, .
 
 **3.2 Transformations**
 
-We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers.
+We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers and standardisation.
 
 ```{r qqnormal, echo=FALSE}
 
 #no transformations: elements in percentages:
 
-qqnorm(as.matrix(Ingots_F_no[-1,2:5]), col="#648FFF", main = "Normal QQ- Plot of the non-transformed data", sub =  "Using all elements that were recored in percentages (Cu, Zn, Pb and Fe)")
+qqnorm(as.matrix(Ingots_F_no[-1,2:5]), col="#648FFF", main = "Normal QQ-Plot of Table 1", sub =  "Using all elements that were recored in percentages (Cu, Zn, Pb and Fe)")
 qqline(as.matrix(Ingots_F_no[-1,2:5]), col="red")
 
 #no transformations: elements in PPM:
 
-qqnorm(as.matrix(Ingots_F_no[-1,6:22]), col="#648FFF", main = "Normal QQ- Plot of the non-transformed data", sub = "Using all elements that were recored in PPM")
+qqnorm(as.matrix(Ingots_F_no[-1,6:22]), col="#648FFF", main = "Normal QQ-Plot of table 1", sub = "Using all elements that were recored in PPM")
 qqline(as.matrix(Ingots_F_no[-1,6:22]), col="red")
 
 ```
 
-Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.
+As this was before there was any scaling performed, we opted to display the elements measured in percentages and the elements measured in PPM separately to better display their individual influence. (something like that lol)
 
-and to see if there is a visual evidence for normality and to help gather evidence to see if our data follows a multivariate normal distribution.
+Percentages: Shows significant departure from normality.
 
-{this maybe wrong as our data is a combination of percentages and PPM - will need to
+PPM: Shows significant departure from normality.
+
+The QQ-plot of the raw data had some clear deviations in the tails (lower and mostly upper data points), few of the points actually follow the theoretical line (in red), this alone indicated that the normality assumption may not hold. Their are also some slight steps in the points as well as a large jump at (THIS IS ALL NEEDS TO BE REVISED)
 
 ```{r}
 
@@ -325,6 +329,10 @@ qqnorm(logIngots, col = "#785EF0", main = "Normal QQ- Plot of the log-transforme
 qqline(logIngots, col = "red")
 
 ```
+
+The QQ-plot of the log transformed data roughly followed the theoretical line (in red), this is evidence that the normality assumption may hold. The tails are relatively long and flat, indicating that there may be some extreme outliers. There are several steps in the upper and lower tails, which alone is not necessarily a departure from normality, and may be explained by the zero values returned for some variables after the log transformation for some samples.
+
+The observed zero-values for (PUT SAMPLES NUMBERS IN HERE) in (TABLE) in variables(HERE), which while not a large quantity of the samples, still provided some concern as \numcal{log(0)} is undefined and can influence non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
 
 Given these irregularities, tried log transform. This returned some zero-values for (PUT SAMPLES NUMBERS IN HERE), which while not a large quantity of the samples, still provides some concern as \numcal{log(0)} is undefined and can return non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
 
@@ -365,7 +373,7 @@ The Henze-Zirkler test stipulates
 \text{ The data do not follow a multivariate normal distribution}.
 \end{aligned}
 
-We returned a \mathcal{p-value=0.069}, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution, the QQ-plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining multivariate normality.
+This generated a \mathcal{p-value=0.069}, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution. However, the QQ-plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining multivariate normality.
 
 ***2.3.1 MAD Transformation***
 
