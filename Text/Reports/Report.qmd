@@ -87,36 +87,6 @@ The groupings from the @Caponetti2017-fd study appears to have been manipulated 
 
 Is the cluster analysis consistent with different distances and linkages?
 
-------------------------------------------------------------------------
-
-## 2. Introduction
-
-**2.1 Significance of this archaeological find and Gela**
-
-The historic Gela, Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port [@Angelucci2026]. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled to and from Gela for centuries.
-
-A shipwreck off the coast continues to provide significant archaeological finds to this day. This discovery dates back to 1988 [@nuttersworldGelaWreck], where it was first stumbled upon by divers near Bulala beach. We are exploring one of the most significant finds from this wreck; A veritable hoard of the fabled metal, Orichalcum.
-
-The discovery of 40 orichalcum ingots in 2017 was a monumental one. There had never been a discovery of this quantity in one place anywhere in the world. There was also evidence of consistent casting processes, with overall similarities suggesting a rudimentary mold production. This was likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggested cast-diverse technologies.
-
-**2.2 What is orichalcum?**
-
-Orichalcum is defined as a copper alloy with zinc content as the principal components. A widely varying quantity of lead and tin among other trace elements are expected. There is no consistent proportion to the amount of copper and zinc found, but the overall composition and relative amounts of principal elemental components can be used to deduce the rough date and origin of a sample. The modern day equivalent is brass.
-
-**2.3 Summary of Collection Techniques**
-
-In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer [@Caponetti2017-sc] was used. The subject paper includes that data and further investigates the composition of each ingot using more invasive and refined elemental analysis.
-
-To obtain material for further testing, a micro-well was drilled into each ingot and the extracted alloy was taken to determine trace elements using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots.
-
-**2.4 Scope of This Multivariate Analysis**
-
-This multivariate analysis includes manipulations of the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical characteristics of the ingots or any correlation analysis of those variables.
-
-We will be excluding the Cu/Zn ratio variable as we are more interested in the linkage of all elements between each other, not between Cu/Zn ratios and other elements.
-
-We will be considering all the main and trace elements, we will be excluding the variable Cu/Zn ratio as...
-
 **1.4 Hypotheses**
 
 This is the largest sample of its kind however it is still not a large sample.
@@ -141,9 +111,39 @@ one of our hypotheses questions is whether our data follows a multivariate norma
 
 ------------------------------------------------------------------------
 
+## 2. Introduction
+
+**2.1 Significance of this archaeological find and Gela**
+
+The historic Gela, Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port [@Angelucci2026]. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled to and from Gela for centuries.
+
+A shipwreck off the coast continues to provide significant archaeological finds to this day. This discovery dates back to 1988 [@nuttersworldGelaWreck], where it was first stumbled upon by divers near Bulala beach. We are exploring one of the most significant finds from this wreck; A veritable hoard of the fabled metal, Orichalcum.
+
+The discovery of 40 orichalcum ingots in 2017 was a monumental one. There had never been a discovery of this quantity in one place anywhere in the world. There was also evidence of consistent casting processes, with overall similarities suggesting a rudimentary mold production. This was likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggested cast-diverse technologies.
+
+**2.2 What is orichalcum?**
+
+Orichalcum is defined as a copper alloy with zinc content as the principal components. A widely varying quantity of lead and tin among other trace elements are expected. There is no consistent proportion to the amount of copper and zinc found, but the overall composition and relative amounts of principal elemental components can be used to deduce the rough date and origin of a sample. The modern day equivalent is brass.
+
+**2.3 Summary of Collection Techniques**
+
+In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer [@Caponetti2017-sc] was used. The subject paper includes that data and further investigates the composition of each ingot using more invasive and refined elemental analysis.
+
+To obtain material for further testing, a micro-well was drilled into each ingot and the extracted alloy was taken to determine trace elements using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots. (FLESH OUT AND EXPLAIN MORE, TOO VAGUE NOT EXPLAINING WHY)
+
+**2.4 Scope of This Multivariate Analysis**
+
+This multivariate analysis includes manipulations of the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical characteristics of the ingots or any correlation analysis of those variables.
+
+We will be excluding the Cu/Zn ratio variable as we chose to analyse the linkage of all elements between each other, not between Cu/Zn ratios and other elements
+
+------------------------------------------------------------------------
+
 ## 3. EDA
 
 **3.1 Analysing raw data**
+
+We started by performing a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to highlight is that the elements Cu, Zn, Pb, and Fe are all in percentages, where as the concentrations of the trace elements are in PPM (parts per a million). This immediately indicated that scaling was needed.
 
 ```{r extracting the table, echo=FALSE}
 ##  Extracting the table from the pdf: - tabulapdf package codes:
@@ -207,7 +207,7 @@ knitr::kable(Ingots_Frame,
 Ingots_F_no <- Ingots_Frame[,1:22]
 ```
 
-We started by performing a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to highlight is that the main elements (Cu, Zn, Pb and Fe) are all in percentages, where as the concentrations of the trace elements are in PPM (parts per a million).
+(INSERT OBSERVATIONS FROM MAIN TABLE HERE)
 
 ```{r basic summary, echo=FALSE}
 
@@ -238,7 +238,7 @@ ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
 
 Ni (nickel) has the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, driven enlarge by sample 13. Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06PPM for Rb and a max of 683PPM for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. looking at the raw data we also noticed some interesting outliers. Particularly, sample 13 for Sb (antimony), which is 549PPM, magnitudes larger than the other samples. We will need to perform transformations on the data as we have a combination of percentages, PPM, and major outliers.
 
-First we will be taking a preliminary look at the Copper (Cu), Zinc (Zn), Lead (Pb), and Tin (Sn) as they are the four alloying elements that are known to define orichalcum and historically have been the primary elemental components used to date and pinpoint origin of other orichalcum artifacts.
+We took a preliminary look at the Copper (Cu), Zinc (Zn), Lead (Pb), and Tin (Sn) as they are the four alloying elements that are known to define orichalcum and historically have been the primary elemental components used to date and pinpoint origin of other orichalcum artifacts.
 
 ```{r basic summary & boxplot, echo=FALSE}
 
@@ -258,7 +258,9 @@ boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue", main = "Boxplo
 
 Important to note that Cu, Zn, and Pb are still percentages whereas Sn is PPM, not that there is more tin than lead. The data will need to be scaled to report accurately.
 
-***2.2.1 Inconsistencies in Percentages***
+(NEED TO ADD OTHER OBSERVATIONS TO THIS BOXPLOT)
+
+***3.1.1 Inconsistencies in Percentages***
 
 Of note is that the percentages of elements Cu, Zn, Pb, and Fe do not add up to 100% for each sample, as shown in the table below.
 
@@ -282,9 +284,9 @@ skim(main_com[,6])|>
 
 Notice that these samples have a mean of \numcal{104.4%} with a range \numcal{93.17%} to \numcal{113.71%}. Where 33 of the 38 samples exceed \numcal{100%}. The most significant deviations are samples 8 and 38. @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of the available sample.
 
-**2.3 Transformations**
+**3.2 Transformations**
 
-We first compared the qq-normal plots of the original data and compared it to the log transformed data to assess if log transformation would be appropriate also to get idea if normality is met and to help gather evidence if our data follows a multivariate normal distribution.
+We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers.
 
 ```{r qqnormal, echo=FALSE}
 
@@ -302,9 +304,9 @@ qqline(as.matrix(Ingots_F_no[-1,6:22]), col="red")
 
 Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.
 
-{this maybe wrong as our data is a combination of percentages and PPM - will need to
+and to see if there is a visual evidence for normality and to help gather evidence to see if our data follows a multivariate normal distribution.
 
-Given the iiregularities, tried log transform
+{this maybe wrong as our data is a combination of percentages and PPM - will need to
 
 ```{r}
 
@@ -324,7 +326,9 @@ qqline(logIngots, col = "red")
 
 ```
 
-This returned multiple zero-values, which are somewhat concerning. The negative values are not an issue because we will be using distances, which are calculated from coordinate distances, and can handle negative values. Try and combat this by standardising dataset using instead \mathcal{log(x + 1)}.
+Given these irregularities, tried log transform. This returned some zero-values for (PUT SAMPLES NUMBERS IN HERE), which while not a large quantity of the samples, still provides some concern as \numcal{log(0)} is undefined and can return non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
+
+We chose to combat the zero values by standardising the data set using \mathcal{log(x + 1)}, where \mathcal{x} is our data. This, coupled with a Henze-Zirkler test, established if there is preliminary evidence for multivariate normality.
 
 ```{r}
 #log transform data
@@ -349,6 +353,8 @@ print(HZoriginal$multivariate_normality)
 
 ```
 
+As you can see in table 2, our values are now all non-zero.
+
 The Henze-Zirkler test stipulates
 
 \begin{aligned}
@@ -359,9 +365,7 @@ The Henze-Zirkler test stipulates
 \text{ The data do not follow a multivariate normal distribution}.
 \end{aligned}
 
-and while we returned a \mathcal{p-value=0.069}, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution, the QQ plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining multivariate normality.
-
-have another look at}
+We returned a \mathcal{p-value=0.069}, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution, the QQ-plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining multivariate normality.
 
 ***2.3.1 MAD Transformation***
 
