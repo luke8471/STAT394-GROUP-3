@@ -101,17 +101,19 @@ The discovery of 40 orichalcum ingots in 2017 was a monumental one. There had ne
 
 **2.2 What is orichalcum?**
 
-Orichalcum is defined as a copper alloy with zinc content as the principal components. A widely varying quantity of lead and tin among other trace elements are expected. There is no consistent proportion to the amount of copper and zinc found, but the overall composition and relative amounts of principal elemental components can be used to deduce the rough date and origin of a sample. The modern equivalent is brass.
+Orichalcum is defined as a copper alloy with zinc content as the principal components. A widely varying quantity of lead and tin among other trace elements are expected. There is no consistent proportion to the amount of copper and zinc found, but the overall composition and relative amounts of principal elemental components can be used to deduce the rough date and origin of a sample. The modern day equivalent is brass.
 
 **2.3 Summary of Collection Techniques**
 
 In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer [@Caponetti2017-sc] was used. The subject paper includes that data and further investigates the composition of each ingot using more invasive and refined elemental analysis.
 
-To obtain material for testing, a micro-well was drilled into each ingot and the extracted alloy was taken to determine trace elements using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots.
+To obtain material for further testing, a micro-well was drilled into each ingot and the extracted alloy was taken to determine trace elements using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots.
 
 **2.4 Scope of This Multivariate Analysis**
 
-This multivariate analysis includes the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical appearance of the ingots or any correlation analysis of those variables.
+This multivariate analysis includes manipulations of the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical characteristics of the ingots or any correlation analysis of those variables.
+
+We will be excluding the Cu/Zn ratio variable as we are more interested in the linkage of all elements between each other, not between Cu/Zn ratios and other elements.
 
 We will be considering all the main and trace elements, we will be excluding the variable Cu/Zn ratio as...
 
@@ -136,6 +138,8 @@ More destructive testing to determine trace elements.
 What implications does the answer imply?
 
 one of our hypotheses questions is whether our data follows a multivariate normal distribution. probably some hypotheses around the clusterings.
+
+------------------------------------------------------------------------
 
 ## 3. EDA
 
@@ -228,7 +232,7 @@ Ingots_long <- Ingots_F_no[,-1] |>
 ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
   geom_boxplot(notch = FALSE, fill ="#40B0A6") +
   theme_minimal()+
-  labs(title = "Intial boxplot of the table 1 excluding the Cu/Zn ratio")
+  labs(title = "Boxplot the table 1")
 
 ```
 
@@ -252,11 +256,11 @@ boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue", main = "Boxplo
 
 ```
 
-Important to note that Cu, Zn, and Pb are still percentages whereas Sn is PPM, not that there is more tin than lead.
+Important to note that Cu, Zn, and Pb are still percentages whereas Sn is PPM, not that there is more tin than lead. The data will need to be scaled to report accurately.
 
-***2.2.1 the percentages don't add up***
+***2.2.1 Inconsistencies in Percentages***
 
-An interesting/surprising observation of the raw data is that the percentages of the main components (Cu, Zn, Pb, and Fe) don't add up to 100% for each of the samples as shown in the table below
+Of note is that the percentages of elements Cu, Zn, Pb, and Fe do not add up to 100% for each sample, as shown in the table below.
 
 ```{r suprising, echo=FALSE}
 
@@ -276,9 +280,11 @@ skim(main_com[,6])|>
 
 ```
 
-Notice that these samples have a mean of 104.4% with a range 93.17% to 113.71%. Where 33 of the 38 samples exceed over 100% the worse being samples 8 and 38 which the original paper where we got our table 1 data from Caponetti et al. study reasoning it is different from 100 is due to errors in low quantity of the available sample.
+Notice that these samples have a mean of \numcal{104.4%} with a range \numcal{93.17%} to \numcal{113.71%}. Where 33 of the 38 samples exceed \numcal{100%}. The most significant deviations are samples 8 and 38. @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of the available sample.
 
-**2.3 Transformations** to start of we had a look at the qq-normal plots of the original data and compared it to the log transformed data also to get idea if normality is met and to help gather evidence if our data follows a multivariate normal distribution.
+**2.3 Transformations**
+
+We first compared the qq-normal plots of the original data and compared it to the log transformed data to assess if log transformation would be appropriate also to get idea if normality is met and to help gather evidence if our data follows a multivariate normal distribution.
 
 ```{r qqnormal, echo=FALSE}
 
@@ -293,6 +299,10 @@ qqnorm(as.matrix(Ingots_F_no[-1,6:22]), col="#648FFF", main = "Normal QQ- Plot o
 qqline(as.matrix(Ingots_F_no[-1,6:22]), col="red")
 
 ```
+
+Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.
+
+{this maybe wrong as our data is a combination of percentages and PPM - will need to
 
 Given the iiregularities, tried log transform
 
@@ -351,9 +361,7 @@ The Henze-Zirkler test stipulates
 
 and while we returned a \mathcal{p-value=0.069}, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution, the QQ plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining multivariate normality.
 
-Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.
-
-{this maybe wrong as our data is a combination of percentages and PPM - will need to have another look at}
+have another look at}
 
 ***2.3.1 MAD Transformation***
 
@@ -537,47 +545,17 @@ ggcorrplot(cor(Ingots_clean[,-1]),
 
 ```
 
-Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr for the un-transformed data is also strongly positively association in the transformed data. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
+Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr is also strongly positively association in the data with the outlying samples removes.. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
 
 The transformation didn't just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co. This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
 
-## 4. LDA and Cluster analysis
+Given the uncertainty about multivariate normality, a linear data analysis was chosen over a primary component analysis.
 
-**4.1 PCA**
+## 4. LDA
 
-```{r PCA, echo=FALSE}
-#Playing around with some ideas for PCA with common components in orichalcum. Tomorrow I will do some more research into the primary elements becauase it seems like it will be more useful. These make up common markers for origin etc. when archaeometallurgists are trying to identify casting method / intentional impurities / where ores were mines from etc. 
+**4.1 PAM**
 
-#I think a good way to interpret and present this dataset is to segregate it in away that makes sense to the people who will read and use this data for its intended purpose, which is to compare it to known combinations of metals to try and find the ore source and how/where it was cast.
-
-par(mfrow = c(1,2))
-
-pca_data <- Ingots_clean[, c("Cu", "Zn", "Pb", "Fe", "Ni", "Ag", "Sb", "As")]
-
-pca <- prcomp(pca_data, center = TRUE, scale. = TRUE)
-
-
-biplot(pca, main = "PCA of only a few elements")
-
-#trying to see how it looks with all of them:
-
-pca_all <- Ingots_clean[-1,-1]
-#View(pca_all)
-pca_1 <- prcomp(pca_all, center = TRUE, scale = TRUE)
-
-
-biplot(pca_1, main = "PCA of all elements")
-
-#ggbiplot(pca_all, obs.scale = 1, var.scale = 1,groups = Sample$Group,elipse = TRUE,)
-
-par(mfrow = c(1,1))
-
-
-```
-
-unfortunately as our data isn't a multivariate normal distribution it is best that we don't cotinUe performing a PCA analysis and instead focus on a LDA analysis [@Seshu2023]
-
-**3.2 LDA and PAM** we started by performing a PAM (Partitioning Around Medoids) analysis
+We started by performing a PAM (Partitioning Around Medoids) analysis
 
 ```{r LDA, echo=FALSE}
 
@@ -755,7 +733,9 @@ The original study only had access to 38/40 ingots as they were on loan to anoth
 
 ## 6. Discussion
 
-@Caponetti2017-sc determined 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time
+@Caponetti2017-sc determined 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time. This was determined with the added variable of the physical form of the ingots.
+
+Our results
 
 The initial analysis was performed by non-invasive XRF, a method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.
 

@@ -165,11 +165,12 @@ window.Quarto = {
 <p>Large groupings and finds from one source are very hard to come by: lots of data in one place.</p>
 <p>Here we show…</p>
 <p>After performing a trilogy of cluster analyses, we show that were the clusters accurate were we able to determine a good fit?</p>
+<p>Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.</p>
 <p>Results</p>
 <p>Implications</p>
 <p>They had different origins. Can possibly be linked to geological locations by ore analysis, collected from different regions, etc.</p>
 <p>Why did they wait to do further testing that would provide more information on the composition and provide more accurate data?</p>
-<p>The groupings from the <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> study appears to have data incorrectly manipulated. By taking the log at any point in this anylysis would have resulted in multiple zero-values and artificially inflating</p>
+<p>The groupings from the <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> study appears to have been manipulated without compensation of the . By taking the log at any point in this anylysis without standardisation would have resulted in multiple zero-values and artificially inflating</p>
 <p>Is the cluster analysis consistent with different distances and linkages?</p>
 <hr>
 </section>
@@ -197,12 +198,12 @@ window.Quarto = {
 <p>What was done to solve this problem?</p>
 <p>More destructive testing to determine trace elements.</p>
 <p>What implications does the answer imply?</p>
-<p>Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.</p>
 <p>one of our hypotheses questions is whether our data follows a multivariate normal distribution. probably some hypotheses around the clusterings.</p>
+<hr>
 </section>
 <section id="eda" class="level2">
 <h2 class="anchored" data-anchor-id="eda">3. EDA</h2>
-<p><strong>2.2 Brief summary of the data</strong></p>
+<p><strong>3.1 Analysing raw data</strong></p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -2058,6 +2059,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn’t hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.</p>
+<p>{this maybe wrong as our data is a combination of percentages and PPM - will need to</p>
 <p>Given the iiregularities, tried log transform</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#log transform data</span></span>
@@ -4011,10 +4014,9 @@ window.Quarto = {
 \mathcal{H}_1 :&amp;
 \text{ The data do not follow a multivariate normal distribution}.
 \end{aligned}\]</span>
-<p>and while we returned a , suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution, the QQ plot shows enough &lt;flat tails, step, steep, etc&gt; that further testing is warranted.</p>
-<p>Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn’t hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.</p>
-<p>{this maybe wrong as our data is a combination of percentages and PPM - will need to have another look at}</p>
-<p><strong><em>2.3.1 Mad Transformation</em></strong></p>
+<p>and while we returned a , suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution, the QQ plot shows enough &lt;flat tails, step, steep, etc&gt; that further testing is warranted before determining multivariate normality.</p>
+<p>have another look at}</p>
+<p><strong><em>2.3.1 MAD Transformation</em></strong></p>
 <p>MAD used because it is more robust to outliers. A log transformation would fix the skew and pull the outliers in, but not eliminate their mathematical influence.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -4240,7 +4242,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr for the un-transformed data is also strongly positively association in the transformed data. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn’t show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.</p>
+<p>Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr is also strongly positively association in the data with the outlying samples removes.. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn’t show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.</p>
 <p>The transformation didn’t just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co.&nbsp;This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.</p>
 </section>
 <section id="lda-and-cluster-analysis" class="level2">
@@ -4449,48 +4451,48 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Obj 1</td>
-<td style="text-align: right;">0.1565298</td>
-<td style="text-align: right;">0.1487568</td>
-<td style="text-align: right;">0.1164699</td>
-<td style="text-align: right;">0.1211721</td>
-<td style="text-align: right;">0.0933766</td>
-<td style="text-align: right;">0.3636947</td>
+<td style="text-align: right;">0.1554321</td>
+<td style="text-align: right;">0.1477136</td>
+<td style="text-align: right;">0.1203223</td>
+<td style="text-align: right;">0.1156532</td>
+<td style="text-align: right;">0.3611442</td>
+<td style="text-align: right;">0.0997346</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 2</td>
-<td style="text-align: right;">0.1964014</td>
-<td style="text-align: right;">0.1357712</td>
-<td style="text-align: right;">0.1621081</td>
-<td style="text-align: right;">0.1540761</td>
-<td style="text-align: right;">0.1884265</td>
-<td style="text-align: right;">0.1632168</td>
+<td style="text-align: right;">0.2012451</td>
+<td style="text-align: right;">0.1391196</td>
+<td style="text-align: right;">0.1578759</td>
+<td style="text-align: right;">0.1661060</td>
+<td style="text-align: right;">0.1672420</td>
+<td style="text-align: right;">0.1684114</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 3</td>
-<td style="text-align: right;">0.1898074</td>
-<td style="text-align: right;">0.1253571</td>
-<td style="text-align: right;">0.1263552</td>
-<td style="text-align: right;">0.1726400</td>
-<td style="text-align: right;">0.1960047</td>
-<td style="text-align: right;">0.1898357</td>
+<td style="text-align: right;">0.2036159</td>
+<td style="text-align: right;">0.1344768</td>
+<td style="text-align: right;">0.1851995</td>
+<td style="text-align: right;">0.1355475</td>
+<td style="text-align: right;">0.2036462</td>
+<td style="text-align: right;">0.1375142</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 4</td>
-<td style="text-align: right;">0.2653827</td>
-<td style="text-align: right;">0.1971815</td>
-<td style="text-align: right;">0.1492694</td>
-<td style="text-align: right;">0.1225195</td>
-<td style="text-align: right;">0.1804247</td>
-<td style="text-align: right;">0.0852221</td>
+<td style="text-align: right;">0.2753971</td>
+<td style="text-align: right;">0.2046223</td>
+<td style="text-align: right;">0.1271428</td>
+<td style="text-align: right;">0.1549022</td>
+<td style="text-align: right;">0.0884380</td>
+<td style="text-align: right;">0.1494976</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 5</td>
-<td style="text-align: right;">0.1926738</td>
-<td style="text-align: right;">0.1186782</td>
-<td style="text-align: right;">0.1213392</td>
-<td style="text-align: right;">0.2366132</td>
-<td style="text-align: right;">0.1898341</td>
-<td style="text-align: right;">0.1408614</td>
+<td style="text-align: right;">0.2061992</td>
+<td style="text-align: right;">0.1270093</td>
+<td style="text-align: right;">0.2532231</td>
+<td style="text-align: right;">0.1298571</td>
+<td style="text-align: right;">0.1507496</td>
+<td style="text-align: right;">0.1329617</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 6</td>
@@ -4498,17 +4500,17 @@ window.Quarto = {
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 7</td>
-<td style="text-align: right;">0.2115821</td>
-<td style="text-align: right;">0.1428816</td>
-<td style="text-align: right;">0.1452790</td>
-<td style="text-align: right;">0.1639374</td>
-<td style="text-align: right;">0.2053212</td>
-<td style="text-align: right;">0.1309987</td>
+<td style="text-align: right;">0.2134925</td>
+<td style="text-align: right;">0.1441717</td>
+<td style="text-align: right;">0.1654176</td>
+<td style="text-align: right;">0.1465907</td>
+<td style="text-align: right;">0.1321815</td>
+<td style="text-align: right;">0.1981461</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 8</td>
@@ -4521,48 +4523,48 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 9</td>
-<td style="text-align: right;">0.2462303</td>
-<td style="text-align: right;">0.2085635</td>
-<td style="text-align: right;">0.2562165</td>
-<td style="text-align: right;">0.0903731</td>
-<td style="text-align: right;">0.1545585</td>
-<td style="text-align: right;">0.0440582</td>
+<td style="text-align: right;">0.2589284</td>
+<td style="text-align: right;">0.2193191</td>
+<td style="text-align: right;">0.0950336</td>
+<td style="text-align: right;">0.2694296</td>
+<td style="text-align: right;">0.0463303</td>
+<td style="text-align: right;">0.1109590</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 10</td>
-<td style="text-align: right;">0.1689818</td>
-<td style="text-align: right;">0.1329101</td>
-<td style="text-align: right;">0.1425536</td>
-<td style="text-align: right;">0.1734088</td>
-<td style="text-align: right;">0.1906560</td>
-<td style="text-align: right;">0.1914898</td>
+<td style="text-align: right;">0.1674746</td>
+<td style="text-align: right;">0.1317246</td>
+<td style="text-align: right;">0.1718621</td>
+<td style="text-align: right;">0.1412821</td>
+<td style="text-align: right;">0.1897818</td>
+<td style="text-align: right;">0.1978747</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 11</td>
-<td style="text-align: right;">0.1872633</td>
-<td style="text-align: right;">0.1984879</td>
-<td style="text-align: right;">0.1434184</td>
-<td style="text-align: right;">0.1179974</td>
-<td style="text-align: right;">0.1211671</td>
-<td style="text-align: right;">0.2316660</td>
+<td style="text-align: right;">0.1807430</td>
+<td style="text-align: right;">0.1915768</td>
+<td style="text-align: right;">0.1138889</td>
+<td style="text-align: right;">0.1384248</td>
+<td style="text-align: right;">0.2235997</td>
+<td style="text-align: right;">0.1517667</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 12</td>
-<td style="text-align: right;">0.1522093</td>
-<td style="text-align: right;">0.1462850</td>
-<td style="text-align: right;">0.2000547</td>
-<td style="text-align: right;">0.1261893</td>
-<td style="text-align: right;">0.1068829</td>
-<td style="text-align: right;">0.2683788</td>
+<td style="text-align: right;">0.1474128</td>
+<td style="text-align: right;">0.1416752</td>
+<td style="text-align: right;">0.1222127</td>
+<td style="text-align: right;">0.1937505</td>
+<td style="text-align: right;">0.2599215</td>
+<td style="text-align: right;">0.1350273</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 13</td>
-<td style="text-align: right;">0.1915654</td>
-<td style="text-align: right;">0.1508364</td>
-<td style="text-align: right;">0.1599936</td>
-<td style="text-align: right;">0.1582745</td>
-<td style="text-align: right;">0.1862732</td>
-<td style="text-align: right;">0.1530569</td>
+<td style="text-align: right;">0.1978914</td>
+<td style="text-align: right;">0.1558174</td>
+<td style="text-align: right;">0.1635012</td>
+<td style="text-align: right;">0.1652770</td>
+<td style="text-align: right;">0.1581112</td>
+<td style="text-align: right;">0.1594018</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 14</td>
@@ -4575,37 +4577,37 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 15</td>
-<td style="text-align: right;">0.1761548</td>
-<td style="text-align: right;">0.1928798</td>
-<td style="text-align: right;">0.1856898</td>
-<td style="text-align: right;">0.1559031</td>
-<td style="text-align: right;">0.1345879</td>
-<td style="text-align: right;">0.1547845</td>
+<td style="text-align: right;">0.1626688</td>
+<td style="text-align: right;">0.1781134</td>
+<td style="text-align: right;">0.1439675</td>
+<td style="text-align: right;">0.1714739</td>
+<td style="text-align: right;">0.1429346</td>
+<td style="text-align: right;">0.2008418</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 16</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.2485525</td>
+<td style="text-align: right;">0.1479474</td>
+<td style="text-align: right;">0.1519014</td>
+<td style="text-align: right;">0.1690061</td>
+<td style="text-align: right;">0.0672180</td>
+<td style="text-align: right;">0.2153746</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 17</td>
-<td style="text-align: right;">0.2077303</td>
-<td style="text-align: right;">0.3162857</td>
-<td style="text-align: right;">0.1928282</td>
-<td style="text-align: right;">0.1117918</td>
-<td style="text-align: right;">0.1156367</td>
-<td style="text-align: right;">0.0557271</td>
+<td style="text-align: right;">0.2101676</td>
+<td style="text-align: right;">0.3199967</td>
+<td style="text-align: right;">0.1131035</td>
+<td style="text-align: right;">0.1950907</td>
+<td style="text-align: right;">0.0563810</td>
+<td style="text-align: right;">0.1052606</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 18</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
@@ -4613,82 +4615,82 @@ window.Quarto = {
 <td style="text-align: left;">Obj 19</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 20</td>
-<td style="text-align: right;">0.1937999</td>
-<td style="text-align: right;">0.1392355</td>
-<td style="text-align: right;">0.1561832</td>
-<td style="text-align: right;">0.1578751</td>
-<td style="text-align: right;">0.2236325</td>
-<td style="text-align: right;">0.1292737</td>
+<td style="text-align: right;">0.2066424</td>
+<td style="text-align: right;">0.1484621</td>
+<td style="text-align: right;">0.1683370</td>
+<td style="text-align: right;">0.1665329</td>
+<td style="text-align: right;">0.1378402</td>
+<td style="text-align: right;">0.1721853</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 21</td>
-<td style="text-align: right;">0.1649852</td>
-<td style="text-align: right;">0.1711022</td>
-<td style="text-align: right;">0.1409830</td>
-<td style="text-align: right;">0.1339858</td>
-<td style="text-align: right;">0.1034956</td>
-<td style="text-align: right;">0.2854482</td>
+<td style="text-align: right;">0.1610442</td>
+<td style="text-align: right;">0.1670150</td>
+<td style="text-align: right;">0.1307852</td>
+<td style="text-align: right;">0.1376154</td>
+<td style="text-align: right;">0.2786297</td>
+<td style="text-align: right;">0.1249105</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 22</td>
-<td style="text-align: right;">0.1706266</td>
-<td style="text-align: right;">0.1479010</td>
-<td style="text-align: right;">0.1563178</td>
-<td style="text-align: right;">0.1728955</td>
-<td style="text-align: right;">0.1606588</td>
-<td style="text-align: right;">0.1916002</td>
+<td style="text-align: right;">0.1654918</td>
+<td style="text-align: right;">0.1434500</td>
+<td style="text-align: right;">0.1676923</td>
+<td style="text-align: right;">0.1516135</td>
+<td style="text-align: right;">0.1858342</td>
+<td style="text-align: right;">0.1859181</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 23</td>
-<td style="text-align: right;">0.1455383</td>
-<td style="text-align: right;">0.1771994</td>
-<td style="text-align: right;">0.1452092</td>
-<td style="text-align: right;">0.1216245</td>
-<td style="text-align: right;">0.0922275</td>
-<td style="text-align: right;">0.3182011</td>
+<td style="text-align: right;">0.1401108</td>
+<td style="text-align: right;">0.1705913</td>
+<td style="text-align: right;">0.1170889</td>
+<td style="text-align: right;">0.1397940</td>
+<td style="text-align: right;">0.3063347</td>
+<td style="text-align: right;">0.1260803</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 24</td>
-<td style="text-align: right;">0.1745415</td>
-<td style="text-align: right;">0.2016046</td>
-<td style="text-align: right;">0.1488060</td>
-<td style="text-align: right;">0.1261840</td>
-<td style="text-align: right;">0.0957891</td>
-<td style="text-align: right;">0.2530748</td>
+<td style="text-align: right;">0.1685793</td>
+<td style="text-align: right;">0.1947179</td>
+<td style="text-align: right;">0.1218736</td>
+<td style="text-align: right;">0.1437229</td>
+<td style="text-align: right;">0.2444299</td>
+<td style="text-align: right;">0.1266764</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 25</td>
-<td style="text-align: right;">0.2060513</td>
-<td style="text-align: right;">0.3624021</td>
-<td style="text-align: right;">0.1844404</td>
-<td style="text-align: right;">0.0982658</td>
-<td style="text-align: right;">0.0947744</td>
-<td style="text-align: right;">0.0540660</td>
+<td style="text-align: right;">0.1987854</td>
+<td style="text-align: right;">0.3496228</td>
+<td style="text-align: right;">0.0948007</td>
+<td style="text-align: right;">0.1779365</td>
+<td style="text-align: right;">0.0521594</td>
+<td style="text-align: right;">0.1266952</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 26</td>
-<td style="text-align: right;">0.2231491</td>
-<td style="text-align: right;">0.1981583</td>
-<td style="text-align: right;">0.1743282</td>
-<td style="text-align: right;">0.1390053</td>
-<td style="text-align: right;">0.1889975</td>
-<td style="text-align: right;">0.0763616</td>
+<td style="text-align: right;">0.2318860</td>
+<td style="text-align: right;">0.2059168</td>
+<td style="text-align: right;">0.1444477</td>
+<td style="text-align: right;">0.1811536</td>
+<td style="text-align: right;">0.0793514</td>
+<td style="text-align: right;">0.1572445</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 27</td>
-<td style="text-align: right;">0.2184313</td>
-<td style="text-align: right;">0.2000040</td>
-<td style="text-align: right;">0.2306667</td>
-<td style="text-align: right;">0.1067917</td>
-<td style="text-align: right;">0.1872360</td>
-<td style="text-align: right;">0.0568702</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
 </tr>
 </tbody>
 </table>
@@ -4712,7 +4714,8 @@ window.Quarto = {
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">6. Discussion</h2>
-<p><span class="citation" data-cites="Caponetti2017-sc">Caponetti, Armetta, Martino, et al. (<a href="#ref-Caponetti2017-sc" role="doc-biblioref">2017</a>)</span> determined 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time</p>
+<p><span class="citation" data-cites="Caponetti2017-sc">Caponetti, Armetta, Martino, et al. (<a href="#ref-Caponetti2017-sc" role="doc-biblioref">2017</a>)</span> determined 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time. This was determined with the added variable of the physical form of the ingots.</p>
+<p>Our results</p>
 <p>The initial analysis was performed by non-invasive XRF, a method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.</p>
 <p>The find was dated to ~600BCE, the approximate age of the ship, and by the pottery also found in the wreck.</p>
 <p>A study on a sample group this large has never been done before. Also, this dataset is not very large. - love this sentence 10/10.</p>
@@ -4721,8 +4724,6 @@ window.Quarto = {
 <p>Their motivation was to create a starting point for giving insight into archaeometric study of the orichalcum ingots regarding their origin and manufacture technologies.</p>
 <p>Our study also has the same motivations. We aim to provide a high level data analysis to provide a detailed, and logical, path to a linkage analysis.</p>
 <p>Motivation, problem statement, approach, results, conclusions.</p>
-<p>What makes this discovery so important?</p>
-<p>What is Orichalcum?</p>
 <p>What were the limitations of this study?</p>
 <p>What further research could be done? Different statistical analysis?</p>
 <p>When working with museum quality pieces, that need destructive analyses performed to</p>
