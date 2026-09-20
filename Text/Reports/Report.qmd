@@ -675,7 +675,7 @@ on.exit((par(old_par))) #stuff to help make the legend
 
 Something interesting top note is that for both cluster options they both cluster sample's 15, 10, and 22 this could be because of ...
 
-**3.4 Fuzzy Analysis** lastly we decided to perform a Fuzzy analysis of the clean data as another form of clustering ... {ALICE}
+**3.4 Fuzzy Analysis** lastly we decided to perform a Fuzzy analysis of the clean data as another form of clustering .. . {ALICE}
 
 ```{r fuzzy, echo=FALSE}
 
