@@ -61,13 +61,19 @@ ingots <- pdftools::pdf_text(tmp)
 
 **1.1 Brief description of Orichalcum ingots study Caponetti et al, study**
 
-a shipwreck off the coast of Gela, Italy has continued, and continuous, to provide archaeological finds to this day. A discovery dating back to 1980 [@Angelucci2026], where it was first stumbled upon by divers near Bulala beach. It has been a constant stream of ancient marvels over the decades. We are exploring one of the most significant finds. A veritable hoard of fabled metal; Orichalcum.
+The historic Gela, Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port [@Angelucci2026]. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled to and from Gela for centuries.
 
-@Caponetti2017-fd did a study to determine major & trace elements of the orichalcum ingots. They used this data to find a correlation between the observed different features and the composition.
+A shipwreck off the coast of Gela, Italy continues to provide significant archaeological finds to this day. A discovery dating back to 1988 [@nuttersworldGelaWreck], where it was first stumbled upon by divers near Bulala beach. We are exploring one of the most significant finds from this wreck; A veritable hoard of the fabled metal, Orichalcum.
 
-Our analysis includes the data from their chemometric analysis using ICP-OES and ICP-MS of 38 orichalcum ingots. This is an extension from a fledgling study by the same author, where they performed a less invasive XRF (X-Ray Fluorescence) spectroscopy of the ingots, a non-distructive test that can be performed in the field.
+Orichalcum is the Findings were dated to \~600BCE, the approximate age of the ship, and by the pottery also found in the wreck.
 
-This multivariate analysis does not include the data about physical appearance of the ingots or any correlation analysis of those variables.
+A study on a sample group this large has never been done before. Also, this dataset is not very large. - love this sentence 10/10.
+
+There has never been a discovery of this many ingots in one place. There was evidence of consistent casting processes and 3 distinct groupings of ingots were defined from this veritable hoard. This, again, is important because it provides evidence of multiple ingots of a scarce and highly prized alloy being manufactured in one place at one time.
+
+XRF is a portable, non-invasive method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.
+
+@Caponetti2017-fd performed chemoanalysis to determine the trace elements of these orichalcum ingots. Using this data, they determined correlation between the observed different features and the composition to group the ingots into their appropriate cluster. This is an extension from a fledgling study by the same author, where they performed a less invasive XRF (X-Ray Fluorescence) spectroscopy of the ingots, a non-distructive test that can be performed in the field.
 
 Their motivation was to create a starting point for giving insight into archaeometric study of the orichalcum ingots regarding their origin and manufacture technologies.
 
@@ -76,6 +82,10 @@ Our study also has the same motivations. We aim to provide a high level data ana
 Historically, discoveries of orichalcum have had questionable identification methods. A common
 
 Motivation, problem statement, approach, results, conclusions.
+
+Overall similarities suggest a rudimentary mold production, likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggestd cast-diverse technologies. Impurities are atttributed to a separation process that occured during the fusion (CITATION) of metals to create the alloy.
+
+The paper proposes further research aimed to verify locations of ores and workshops where these, and other orichalcum, were manufactured. Providing a more fleshed out history of ancient metallurgy and possibly leading to more significant archaeological finds.
 
 **1.2 Table of the Raw data**
 
@@ -166,6 +176,14 @@ one of our hypotheses questions is whether our data follows a multivariate norma
 ## 2. EDA
 
 **2.1 Brief summary of lab techniques used to gather the the data**
+
+Our analysis includes the data from their chemometric analysis to determine the trace elements using ICP-OES and ICP-MS of 38 orichalcum ingots. This multivariate analysis does not include the data about physical appearance of the ingots or any correlation analysis of those variables.
+
+Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.
+
+This is the largest sample of its kind however it is still not a large sample.
+
+For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as...
 
 Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.
 
@@ -506,7 +524,7 @@ par(mfrow = c(1,1))
 
 ```
 
-unfortunately as our data isn't a multivariate normal distribution it is best that we don't cotine performing a PCA analysis and instead focus on a LDA analysis [@Seshu2023]
+unfortunately as our data isn't a multivariate normal distribution it is best that we don't cotinUe performing a PCA analysis and instead focus on a LDA analysis [@Seshu2023]
 
 **3.2 LDA and PAM** we started by performing a PAM (Partitioning Around Medoids) analysis
 
@@ -682,15 +700,11 @@ on.exit((par(old_par))) #stuff to help make the legend
 
 ## 5. Discussion
 
-This paper was a further analysis on the paper (insert paper and brief summary here smile), first two authors are the same.
-
 In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer was used. This study includes that data and further investigates the composition of each ingot. A micro-well was drilled into each ingot and the extracted alloy was
 
 Solved the mystery of the 2 missing ingots, they were on loan to a museum for display purposes.
 
 What makes this discovery so important?
-
-There has never been a discovery of this many ingots in one place. There was evidence of consistent casting processes and 3 distinct groupings of ingots were defined from this veritable hoard. This, again, is important because it provides evidence of multiple ingots of a scarce and highly prized alloy being manufactured in one place at one time.
 
 What is Orichalcum?
 
@@ -698,21 +712,11 @@ Defined as a copper alloy with zinc content as the principal components, and con
 
 What were the limitations of this study?
 
-A study on a sample group this large has never been done before. Also, this dataset is not very large. - love this sentence 10/10.
-
 Why did they wait to do further testing that would provide more information on the composition and provide more accurate data?
-
-long story short, this is a historical find and it would have taken time to gain approval to do any invasive testing that would harm or alter the ingots in any way. XRF is a portable, non-invasive method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.
 
 What further research could be done? Different statistical analysis?
 
-The paper proposes further research aimed to verify locations of ores and workshops where these, and other orichalcum, were manufactured. Providing a more fleshed out history of ancient metallurgy and possibly leading to more significant archaeological finds.
-
 Other studies (find the papers, idiot) have classified groupings to orichalcum artifacts by their shape, composition, etc. Which has provided a map of manufacturing locations from Greece to the Caucus.
-
-Findings were dated to \~600BCE, the approximate age of the ship, and by the pottery also found in the wreck.
-
-Overall similarities suggest a rudimentary mold production, likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggestd cast-diverse technologies. Impurities are atttributed to a separation process that occured during the fusion (CITATION) of metals to create the alloy.
 
 Three distinctive families of ingots characterised by the graphical location of the furnace, stages of technology, and raw materials used in the smelting process.
 
