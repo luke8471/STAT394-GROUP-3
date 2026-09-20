@@ -73,6 +73,8 @@ Here we show...
 
 After performing a trilogy of cluster analyses, we show that were the clusters accurate were we able to determine a good fit?
 
+Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.
+
 Results
 
 Implications
@@ -81,7 +83,7 @@ They had different origins. Can possibly be linked to geological locations by or
 
 Why did they wait to do further testing that would provide more information on the composition and provide more accurate data?
 
-The groupings from the @Caponetti2017-fd study appears to have data incorrectly manipulated. By taking the log at any point in this anylysis would have resulted in multiple zero-values and artificially inflating
+The groupings from the @Caponetti2017-fd study appears to have been manipulated without compensation of the . By taking the log at any point in this anylysis without standardisation would have resulted in multiple zero-values and artificially inflating
 
 Is the cluster analysis consistent with different distances and linkages?
 
@@ -89,33 +91,35 @@ Is the cluster analysis consistent with different distances and linkages?
 
 ## 2. Introduction
 
-**1.1 Significance of this archaeological find and history**
+**2.1 Significance of this archaeological find and Gela**
 
 The historic Gela, Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port [@Angelucci2026]. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled to and from Gela for centuries.
 
-A shipwreck off the coast of Gela, Italy continues to provide significant archaeological finds to this day. A discovery dating back to 1988 [@nuttersworldGelaWreck], where it was first stumbled upon by divers near Bulala beach. We are exploring one of the most significant finds from this wreck; A veritable hoard of the fabled metal, Orichalcum.
+A shipwreck off the coast continues to provide significant archaeological finds to this day. This discovery dates back to 1988 [@nuttersworldGelaWreck], where it was first stumbled upon by divers near Bulala beach. We are exploring one of the most significant finds from this wreck; A veritable hoard of the fabled metal, Orichalcum.
 
-The discovery of 40 orichalcum ingots in 2017 was a monumental one. There had never been a discovery of this quantity in one place. There was also evidence of consistent casting processes, with overall similarities suggesting a rudimentary mold production, likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggested cast-diverse technologies.
+The discovery of 40 orichalcum ingots in 2017 was a monumental one. There had never been a discovery of this quantity in one place anywhere in the world. There was also evidence of consistent casting processes, with overall similarities suggesting a rudimentary mold production. This was likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggested cast-diverse technologies.
 
-**1.2 Findings of @Caponetti2017-fd**
+**2.2 What is orichalcum?**
 
-**1.3 Summary of lab techniques used**
+Orichalcum is defined as a copper alloy with zinc content as the principal components. A widely varying quantity of lead and tin among other trace elements are expected. There is no consistent proportion to the amount of copper and zinc found, but the overall composition and relative amounts of principal elemental components can be used to deduce the rough date and origin of a sample. The modern equivalent is brass.
 
-Our analysis includes the data from their chemometric analysis to determine the trace elements using ICP-OES and ICP-MS of 38 orichalcum ingots. This multivariate analysis does not include the data about physical appearance of the ingots or any correlation analysis of those variables.
+**2.3 Summary of Collection Techniques**
 
-Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.
+In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer [@Caponetti2017-sc] was used. The subject paper includes that data and further investigates the composition of each ingot using more invasive and refined elemental analysis.
+
+To obtain material for testing, a micro-well was drilled into each ingot and the extracted alloy was taken to determine trace elements using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots.
+
+**2.4 Scope of This Multivariate Analysis**
+
+This multivariate analysis includes the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical appearance of the ingots or any correlation analysis of those variables.
+
+We will be considering all the main and trace elements, we will be excluding the variable Cu/Zn ratio as...
+
+**1.4 Hypotheses**
 
 This is the largest sample of its kind however it is still not a large sample.
 
 For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as...
-
-Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.
-
-This is the largest sample of its kind however it is still not a large sample.
-
-For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as...
-
-**1.3 Our Aim**
 
 Why do we care about the problem and the results?
 
@@ -131,15 +135,11 @@ More destructive testing to determine trace elements.
 
 What implications does the answer imply?
 
-Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.
-
-**1.4 Our hypothesis**
-
 one of our hypotheses questions is whether our data follows a multivariate normal distribution. probably some hypotheses around the clusterings.
 
 ## 3. EDA
 
-**2.2 Brief summary of the data**
+**3.1 Analysing raw data**
 
 ```{r extracting the table, echo=FALSE}
 ##  Extracting the table from the pdf: - tabulapdf package codes:
@@ -232,9 +232,9 @@ ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
 
 ```
 
-Ni (nickel) has the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, driven enlarge by sample 13. Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06PPM for Rb and a max of 683PPM for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. looking at the raw data we also noticed some interesting outliers. Particularly, sample 13 for Sb (antimony), which is 549PPM, magnitudes larger than the other samples. We will need to perform transformations on the data as we have a combination of percentages, PPM, major outliers.
+Ni (nickel) has the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, driven enlarge by sample 13. Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06PPM for Rb and a max of 683PPM for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. looking at the raw data we also noticed some interesting outliers. Particularly, sample 13 for Sb (antimony), which is 549PPM, magnitudes larger than the other samples. We will need to perform transformations on the data as we have a combination of percentages, PPM, and major outliers.
 
-But first we will be taking a deeper dive into Copper, Zinc, Lead and Tin as they are the four alloying elements that define orichalcum (probably need a reference for this) we won't be considering Fe due to it being a impurity.
+First we will be taking a preliminary look at the Copper (Cu), Zinc (Zn), Lead (Pb), and Tin (Sn) as they are the four alloying elements that are known to define orichalcum and historically have been the primary elemental components used to date and pinpoint origin of other orichalcum artifacts.
 
 ```{r basic summary & boxplot, echo=FALSE}
 
@@ -292,22 +292,54 @@ qqline(as.matrix(Ingots_F_no[-1,2:5]), col="red")
 qqnorm(as.matrix(Ingots_F_no[-1,6:22]), col="#648FFF", main = "Normal QQ- Plot of the non-transformed data", sub = "Using all elements that were recored in PPM")
 qqline(as.matrix(Ingots_F_no[-1,6:22]), col="red")
 
+```
+
+Given the iiregularities, tried log transform
+
+```{r}
 
 #log transform data
 
 logIngots <- log(as.matrix(Ingots_F_no[-1,-1]))
-invisible(summary(logIngots))
+#print(logIngots)
+
+knitr::kable(logIngots,
+             caption = "Log Transformed Data",
+             format = "pipe")
 
 #taking the log.
 
 qqnorm(logIngots, col = "#785EF0", main = "Normal QQ- Plot of the log-transformed data (all elements)")
 qqline(logIngots, col = "red")
 
+```
 
+This returned multiple zero-values, which are somewhat concerning. The negative values are not an issue because we will be using distances, which are calculated from coordinate distances, and can handle negative values. Try and combat this by standardising dataset using instead \mathcal{log(x + 1)}.
+
+```{r}
+#log transform data
+
+logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
+
+#print(logIngots)
+
+knitr::kable(logIngots1,
+             caption = "Log Transformed Data",
+             format = "pipe")
+
+#taking the log.
+
+qqnorm(logIngots1, col = "#785EF0", main = "Normal QQ- Plot of the log-transformed data (all elements)")
+qqline(logIngots1, col = "red")
+
+
+HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
+cat("Henze_Zirkler Test Results:\n")
+print(HZoriginal$multivariate_normality)
 
 ```
 
-The HZ test stipulates
+The Henze-Zirkler test stipulates
 
 \begin{aligned}
 \mathcal{H}_0 :& 
@@ -317,11 +349,13 @@ The HZ test stipulates
 \text{ The data do not follow a multivariate normal distribution}.
 \end{aligned}
 
+and while we returned a \mathcal{p-value=0.069}, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution, the QQ plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining multivariate normality.
+
 Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.
 
 {this maybe wrong as our data is a combination of percentages and PPM - will need to have another look at}
 
-***2.3.1 Mad Transformation***
+***2.3.1 MAD Transformation***
 
 MAD used because it is more robust to outliers. A log transformation would fix the skew and pull the outliers in, but not eliminate their mathematical influence.
 
@@ -739,15 +773,13 @@ Our study also has the same motivations. We aim to provide a high level data ana
 
 Motivation, problem statement, approach, results, conclusions.
 
-What makes this discovery so important?
-
-What is Orichalcum?
-
 What were the limitations of this study?
 
 What further research could be done? Different statistical analysis?
 
 When working with museum quality pieces, that need destructive analyses performed to
+
+Data obtained for the (NAME TABLE) containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by ICP-OES and ICP-MS. Collecting samples from 38 ancient ingots to analysis the association between the ingots elemental composition.
 
 ## 7. Refrences
 

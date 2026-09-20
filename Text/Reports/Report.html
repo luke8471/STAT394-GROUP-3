@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -127,19 +162,34 @@ window.Quarto = {
 <p>A shipwreck off the coast of Gela, Italy has been the source of a historical find of 40 orichalcum ingots. A scarce, fabled metal that has the modern equivalen of brass.</p>
 <p>sPECIFIC BACKGROUND</p>
 <p>Knowledge gap</p>
+<p>Large groupings and finds from one source are very hard to come by: lots of data in one place.</p>
 <p>Here we show…</p>
-<p>After performing a trilogy of cluster analyses, we show that were the clusters accurate were we able to etermine a good fit?</p>
+<p>After performing a trilogy of cluster analyses, we show that were the clusters accurate were we able to determine a good fit?</p>
 <p>Results</p>
 <p>Implications</p>
 <p>They had different origins. Can possibly be linked to geological locations by ore analysis, collected from different regions, etc.</p>
 <p>Why did they wait to do further testing that would provide more information on the composition and provide more accurate data?</p>
 <p>The groupings from the <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> study appears to have data incorrectly manipulated. By taking the log at any point in this anylysis would have resulted in multiple zero-values and artificially inflating</p>
 <p>Is the cluster analysis consistent with different distances and linkages?</p>
+<hr>
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">2. Introduction</h2>
-<p><strong>1.1 Brief description of Orichalcum ingots study Caponetti et al, study</strong></p>
-<p><strong>1.3 Our Aim</strong></p>
+<p><strong>2.1 Significance of this archaeological find and Gela</strong></p>
+<p>The historic Gela, Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port <span class="citation" data-cites="Angelucci2026">(<a href="#ref-Angelucci2026" role="doc-biblioref">Angelucci, 2026</a>)</span>. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled to and from Gela for centuries.</p>
+<p>A shipwreck off the coast continues to provide significant archaeological finds to this day. This discovery dates back to 1988 <span class="citation" data-cites="nuttersworldGelaWreck">(<a href="#ref-nuttersworldGelaWreck" role="doc-biblioref">Nutter, 2025</a>)</span>, where it was first stumbled upon by divers near Bulala beach. We are exploring one of the most significant finds from this wreck; A veritable hoard of the fabled metal, Orichalcum.</p>
+<p>The discovery of 40 orichalcum ingots in 2017 was a monumental one. There had never been a discovery of this quantity in one place anywhere in the world. There was also evidence of consistent casting processes, with overall similarities suggesting a rudimentary mold production. This was likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggested cast-diverse technologies.</p>
+<p><strong>2.2 What is orichalcum?</strong></p>
+<p>Orichalcum is defined as a copper alloy with zinc content as the principal components. A widely varying quantity of lead and tin among other trace elements are expected. There is no consistent proportion to the amount of copper and zinc found, but the overall composition and relative amounts of principal elemental components can be used to deduce the rough date and origin of a sample. The modern equivalent is brass.</p>
+<p><strong>2.3 Summary of Collection Techniques</strong></p>
+<p>In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer <span class="citation" data-cites="Caponetti2017-sc">(<a href="#ref-Caponetti2017-sc" role="doc-biblioref">Caponetti, Armetta, Martino, et al., 2017</a>)</span> was used. The subject paper includes that data and further investigates the composition of each ingot using more invasive and refined elemental analysis.</p>
+<p>To obtain material for testing, a micro-well was drilled into each ingot and the extracted alloy was taken to determine trace elements using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots.</p>
+<p><strong>2.4 Scope of This Multivariate Analysis</strong></p>
+<p>This multivariate analysis includes the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical appearance of the ingots or any correlation analysis of those variables.</p>
+<p>We will be considering all the main and trace elements, we will be excluding the variable Cu/Zn ratio as…</p>
+<p><strong>1.4 Hypotheses</strong></p>
+<p>This is the largest sample of its kind however it is still not a large sample.</p>
+<p>For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as…</p>
 <p>Why do we care about the problem and the results?</p>
 <p>Because it could lead to further impressive archaeological finds</p>
 <p>What is the scope of the work and what problem is this paper trying to solve?</p>
@@ -148,22 +198,11 @@ window.Quarto = {
 <p>More destructive testing to determine trace elements.</p>
 <p>What implications does the answer imply?</p>
 <p>Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.</p>
-<p><strong>1.4 Our hypothesis</strong></p>
 <p>one of our hypotheses questions is whether our data follows a multivariate normal distribution. probably some hypotheses around the clusterings.</p>
 </section>
 <section id="eda" class="level2">
 <h2 class="anchored" data-anchor-id="eda">3. EDA</h2>
-<p><strong>2.1 Brief summary of lab techniques used to gather the the data</strong></p>
-<p>Our analysis includes the data from their chemometric analysis to determine the trace elements using ICP-OES and ICP-MS of 38 orichalcum ingots. This multivariate analysis does not include the data about physical appearance of the ingots or any correlation analysis of those variables.</p>
-<p>Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.</p>
-<p>This is the largest sample of its kind however it is still not a large sample.</p>
-<p>For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as…</p>
-<p>Data obtained for the table above containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma mass spectrometry (ICP-MS) techniques (Caponetti et al). Collecting samples from 38 ancient ingots (they originally collected 40) to analysis the association between the ingots composition.</p>
-<p>This is the largest sample of its kind however it is still not a large sample.</p>
-<p>For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as…</p>
 <p><strong>2.2 Brief summary of the data</strong></p>
-<p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at ~20mg.</p>
-<p>The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1484,8 +1523,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Ni (nickel) has the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, driven enlarge by sample 13. Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06PPM for Rb and a max of 683PPM for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. looking at the raw data we also noticed some interesting outliers. Particularly, sample 13 for Sb (antimony), which is 549PPM, magnitudes larger than the other samples. We will need to perform transformations on the data as we have a combination of percentages, PPM, major outliers.</p>
-<p>But first we will be taking a deeper dive into Copper, Zinc, Lead and Tin as they are the four alloying elements that define orichalcum (probably need a reference for this) we won’t be considering Fe due to it being a impurity.</p>
+<p>Ni (nickel) has the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, driven enlarge by sample 13. Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06PPM for Rb and a max of 683PPM for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. looking at the raw data we also noticed some interesting outliers. Particularly, sample 13 for Sb (antimony), which is 549PPM, magnitudes larger than the other samples. We will need to perform transformations on the data as we have a combination of percentages, PPM, and major outliers.</p>
+<p>First we will be taking a preliminary look at the Copper (Cu), Zinc (Zn), Lead (Pb), and Tin (Sn) as they are the four alloying elements that are known to define orichalcum and historically have been the primary elemental components used to date and pinpoint origin of other orichalcum artifacts.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -2018,15 +2057,1953 @@ window.Quarto = {
 </figure>
 </div>
 </div>
+</div>
+<p>Given the iiregularities, tried log transform</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#log transform data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>logIngots <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">as.matrix</span>(Ingots_F_no[<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>]))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#print(logIngots)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(logIngots,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">"Log Transformed Data"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"pipe"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Log Transformed Data</caption>
+<colgroup>
+<col style="width: 1%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Cu</th>
+<th style="text-align: right;">Zn</th>
+<th style="text-align: right;">Pb</th>
+<th style="text-align: right;">Fe</th>
+<th style="text-align: right;">Ni</th>
+<th style="text-align: right;">Ag</th>
+<th style="text-align: right;">Sb</th>
+<th style="text-align: right;">As</th>
+<th style="text-align: right;">Co</th>
+<th style="text-align: right;">Cd</th>
+<th style="text-align: right;">Sn</th>
+<th style="text-align: right;">Te</th>
+<th style="text-align: right;">Bi</th>
+<th style="text-align: right;">Mn</th>
+<th style="text-align: right;">Li</th>
+<th style="text-align: right;">Al</th>
+<th style="text-align: right;">V</th>
+<th style="text-align: right;">Cr</th>
+<th style="text-align: right;">Rb</th>
+<th style="text-align: right;">Sr</th>
+<th style="text-align: right;">Ba</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">4.465908</td>
+<td style="text-align: right;">2.772589</td>
+<td style="text-align: right;">1.4562867</td>
+<td style="text-align: right;">-0.6348783</td>
+<td style="text-align: right;">6.280396</td>
+<td style="text-align: right;">5.293305</td>
+<td style="text-align: right;">4.882802</td>
+<td style="text-align: right;">3.594569</td>
+<td style="text-align: right;">2.1329823</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.5686159</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">4.287716</td>
+<td style="text-align: right;">3.034953</td>
+<td style="text-align: right;">0.7747272</td>
+<td style="text-align: right;">1.4951488</td>
+<td style="text-align: right;">0.4382549</td>
+<td style="text-align: right;">0.2700271</td>
+<td style="text-align: right;">-2.659260</td>
+<td style="text-align: right;">-1.8971200</td>
+<td style="text-align: right;">-1.7147984</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">4.290459</td>
+<td style="text-align: right;">3.332205</td>
+<td style="text-align: right;">1.7766458</td>
+<td style="text-align: right;">-0.2484614</td>
+<td style="text-align: right;">6.111467</td>
+<td style="text-align: right;">4.875197</td>
+<td style="text-align: right;">4.653960</td>
+<td style="text-align: right;">3.169686</td>
+<td style="text-align: right;">2.1365305</td>
+<td style="text-align: right;">2.803360</td>
+<td style="text-align: right;">1.9021075</td>
+<td style="text-align: right;">-0.4462871</td>
+<td style="text-align: right;">3.367296</td>
+<td style="text-align: right;">2.753661</td>
+<td style="text-align: right;">1.3862944</td>
+<td style="text-align: right;">2.1849270</td>
+<td style="text-align: right;">1.2029723</td>
+<td style="text-align: right;">0.9932518</td>
+<td style="text-align: right;">-1.966113</td>
+<td style="text-align: right;">2.1860513</td>
+<td style="text-align: right;">-1.0498221</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">4.382027</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.8196988</td>
+<td style="text-align: right;">-0.9416085</td>
+<td style="text-align: right;">6.324359</td>
+<td style="text-align: right;">5.141664</td>
+<td style="text-align: right;">4.248495</td>
+<td style="text-align: right;">2.406945</td>
+<td style="text-align: right;">1.5748465</td>
+<td style="text-align: right;">2.476538</td>
+<td style="text-align: right;">2.2343063</td>
+<td style="text-align: right;">-0.1984509</td>
+<td style="text-align: right;">4.105944</td>
+<td style="text-align: right;">3.144152</td>
+<td style="text-align: right;">1.8180768</td>
+<td style="text-align: right;">2.6246686</td>
+<td style="text-align: right;">1.8050047</td>
+<td style="text-align: right;">1.5912739</td>
+<td style="text-align: right;">-1.966113</td>
+<td style="text-align: right;">-1.2378744</td>
+<td style="text-align: right;">-0.9416085</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: right;">4.356709</td>
+<td style="text-align: right;">3.091042</td>
+<td style="text-align: right;">1.3532545</td>
+<td style="text-align: right;">-0.5978370</td>
+<td style="text-align: right;">6.240276</td>
+<td style="text-align: right;">5.049856</td>
+<td style="text-align: right;">4.204693</td>
+<td style="text-align: right;">2.674149</td>
+<td style="text-align: right;">1.8702625</td>
+<td style="text-align: right;">1.667707</td>
+<td style="text-align: right;">2.0399208</td>
+<td style="text-align: right;">-0.5447272</td>
+<td style="text-align: right;">4.072440</td>
+<td style="text-align: right;">3.148453</td>
+<td style="text-align: right;">1.3532545</td>
+<td style="text-align: right;">2.4510051</td>
+<td style="text-align: right;">1.4770487</td>
+<td style="text-align: right;">1.3056265</td>
+<td style="text-align: right;">-2.120264</td>
+<td style="text-align: right;">-0.0943107</td>
+<td style="text-align: right;">-0.7985077</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">6</td>
+<td style="text-align: right;">4.394449</td>
+<td style="text-align: right;">3.091042</td>
+<td style="text-align: right;">1.8733395</td>
+<td style="text-align: right;">-1.6607312</td>
+<td style="text-align: right;">6.361302</td>
+<td style="text-align: right;">5.068904</td>
+<td style="text-align: right;">4.099332</td>
+<td style="text-align: right;">2.118662</td>
+<td style="text-align: right;">0.6312718</td>
+<td style="text-align: right;">2.261763</td>
+<td style="text-align: right;">2.1447610</td>
+<td style="text-align: right;">-0.0408220</td>
+<td style="text-align: right;">4.117410</td>
+<td style="text-align: right;">2.753661</td>
+<td style="text-align: right;">0.7514161</td>
+<td style="text-align: right;">1.4724721</td>
+<td style="text-align: right;">0.8285518</td>
+<td style="text-align: right;">0.6418539</td>
+<td style="text-align: right;">-2.207275</td>
+<td style="text-align: right;">-0.7985077</td>
+<td style="text-align: right;">-0.2876821</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">4.317488</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.8640801</td>
+<td style="text-align: right;">-1.1086626</td>
+<td style="text-align: right;">6.326149</td>
+<td style="text-align: right;">4.867534</td>
+<td style="text-align: right;">4.672829</td>
+<td style="text-align: right;">5.351858</td>
+<td style="text-align: right;">1.2149127</td>
+<td style="text-align: right;">2.451005</td>
+<td style="text-align: right;">2.8678989</td>
+<td style="text-align: right;">-0.2231436</td>
+<td style="text-align: right;">3.931826</td>
+<td style="text-align: right;">3.104587</td>
+<td style="text-align: right;">0.5596158</td>
+<td style="text-align: right;">1.7047481</td>
+<td style="text-align: right;">0.7701082</td>
+<td style="text-align: right;">0.4510756</td>
+<td style="text-align: right;">-2.040221</td>
+<td style="text-align: right;">-1.0788097</td>
+<td style="text-align: right;">-0.6931472</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: right;">4.406719</td>
+<td style="text-align: right;">3.178054</td>
+<td style="text-align: right;">1.8131947</td>
+<td style="text-align: right;">-1.1711830</td>
+<td style="text-align: right;">6.306275</td>
+<td style="text-align: right;">5.075174</td>
+<td style="text-align: right;">4.322807</td>
+<td style="text-align: right;">2.267994</td>
+<td style="text-align: right;">1.1600209</td>
+<td style="text-align: right;">2.028148</td>
+<td style="text-align: right;">1.9430489</td>
+<td style="text-align: right;">-0.1863296</td>
+<td style="text-align: right;">4.069027</td>
+<td style="text-align: right;">3.165475</td>
+<td style="text-align: right;">0.6881346</td>
+<td style="text-align: right;">2.5877640</td>
+<td style="text-align: right;">1.2669476</td>
+<td style="text-align: right;">0.8586616</td>
+<td style="text-align: right;">-2.207275</td>
+<td style="text-align: right;">0.3715636</td>
+<td style="text-align: right;">-1.3470736</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9</td>
+<td style="text-align: right;">4.382027</td>
+<td style="text-align: right;">2.890372</td>
+<td style="text-align: right;">1.5325569</td>
+<td style="text-align: right;">-0.8209806</td>
+<td style="text-align: right;">6.177944</td>
+<td style="text-align: right;">5.068904</td>
+<td style="text-align: right;">4.691348</td>
+<td style="text-align: right;">3.186353</td>
+<td style="text-align: right;">1.6639261</td>
+<td style="text-align: right;">3.417727</td>
+<td style="text-align: right;">1.3660917</td>
+<td style="text-align: right;">-0.0943107</td>
+<td style="text-align: right;">4.514151</td>
+<td style="text-align: right;">3.165475</td>
+<td style="text-align: right;">0.5247285</td>
+<td style="text-align: right;">2.1282317</td>
+<td style="text-align: right;">0.9932518</td>
+<td style="text-align: right;">0.5766134</td>
+<td style="text-align: right;">-2.659260</td>
+<td style="text-align: right;">-2.2072749</td>
+<td style="text-align: right;">-0.8439701</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">10</td>
+<td style="text-align: right;">4.276666</td>
+<td style="text-align: right;">3.332205</td>
+<td style="text-align: right;">1.7783364</td>
+<td style="text-align: right;">-0.2744368</td>
+<td style="text-align: right;">6.075346</td>
+<td style="text-align: right;">4.653960</td>
+<td style="text-align: right;">4.709530</td>
+<td style="text-align: right;">3.157000</td>
+<td style="text-align: right;">2.1150500</td>
+<td style="text-align: right;">2.785011</td>
+<td style="text-align: right;">1.8946169</td>
+<td style="text-align: right;">-0.4942963</td>
+<td style="text-align: right;">3.317816</td>
+<td style="text-align: right;">2.970414</td>
+<td style="text-align: right;">0.2070142</td>
+<td style="text-align: right;">1.9125011</td>
+<td style="text-align: right;">0.6931472</td>
+<td style="text-align: right;">0.3435897</td>
+<td style="text-align: right;">-2.120264</td>
+<td style="text-align: right;">-1.5606477</td>
+<td style="text-align: right;">-1.2039728</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">11</td>
+<td style="text-align: right;">4.330733</td>
+<td style="text-align: right;">2.944439</td>
+<td style="text-align: right;">1.7800242</td>
+<td style="text-align: right;">-0.8439701</td>
+<td style="text-align: right;">6.263398</td>
+<td style="text-align: right;">4.927254</td>
+<td style="text-align: right;">3.974058</td>
+<td style="text-align: right;">2.714695</td>
+<td style="text-align: right;">1.6351057</td>
+<td style="text-align: right;">2.140066</td>
+<td style="text-align: right;">2.1150500</td>
+<td style="text-align: right;">-0.1508229</td>
+<td style="text-align: right;">3.998201</td>
+<td style="text-align: right;">2.557227</td>
+<td style="text-align: right;">-0.0833816</td>
+<td style="text-align: right;">1.8825138</td>
+<td style="text-align: right;">0.5364934</td>
+<td style="text-align: right;">0.2468601</td>
+<td style="text-align: right;">-2.302585</td>
+<td style="text-align: right;">-0.5798185</td>
+<td style="text-align: right;">-1.4271164</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">12</td>
+<td style="text-align: right;">4.234107</td>
+<td style="text-align: right;">2.833213</td>
+<td style="text-align: right;">1.8976199</td>
+<td style="text-align: right;">-0.6931472</td>
+<td style="text-align: right;">6.487684</td>
+<td style="text-align: right;">4.948760</td>
+<td style="text-align: right;">3.914021</td>
+<td style="text-align: right;">2.624669</td>
+<td style="text-align: right;">1.4929041</td>
+<td style="text-align: right;">2.116255</td>
+<td style="text-align: right;">2.0967902</td>
+<td style="text-align: right;">-0.1392621</td>
+<td style="text-align: right;">4.007333</td>
+<td style="text-align: right;">2.595255</td>
+<td style="text-align: right;">0.1823216</td>
+<td style="text-align: right;">1.1693814</td>
+<td style="text-align: right;">0.5007753</td>
+<td style="text-align: right;">0.0953102</td>
+<td style="text-align: right;">-2.302585</td>
+<td style="text-align: right;">1.1410330</td>
+<td style="text-align: right;">-1.5141277</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">13</td>
+<td style="text-align: right;">4.356709</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.1939225</td>
+<td style="text-align: right;">0.0582689</td>
+<td style="text-align: right;">6.126869</td>
+<td style="text-align: right;">5.241747</td>
+<td style="text-align: right;">6.308098</td>
+<td style="text-align: right;">5.283204</td>
+<td style="text-align: right;">0.4700036</td>
+<td style="text-align: right;">2.850706</td>
+<td style="text-align: right;">3.6454499</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">5.198497</td>
+<td style="text-align: right;">4.461300</td>
+<td style="text-align: right;">0.4382549</td>
+<td style="text-align: right;">2.2278615</td>
+<td style="text-align: right;">1.1249296</td>
+<td style="text-align: right;">0.8020016</td>
+<td style="text-align: right;">-2.659260</td>
+<td style="text-align: right;">-0.6539265</td>
+<td style="text-align: right;">0.1570037</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">14</td>
+<td style="text-align: right;">4.304065</td>
+<td style="text-align: right;">3.218876</td>
+<td style="text-align: right;">1.5475625</td>
+<td style="text-align: right;">-0.8209806</td>
+<td style="text-align: right;">6.070738</td>
+<td style="text-align: right;">4.403054</td>
+<td style="text-align: right;">4.479607</td>
+<td style="text-align: right;">2.681021</td>
+<td style="text-align: right;">1.6253113</td>
+<td style="text-align: right;">3.010621</td>
+<td style="text-align: right;">0.6830968</td>
+<td style="text-align: right;">-0.3424903</td>
+<td style="text-align: right;">3.261935</td>
+<td style="text-align: right;">3.391147</td>
+<td style="text-align: right;">0.1222176</td>
+<td style="text-align: right;">1.8733395</td>
+<td style="text-align: right;">0.9122827</td>
+<td style="text-align: right;">0.4382549</td>
+<td style="text-align: right;">-2.302585</td>
+<td style="text-align: right;">-1.7719568</td>
+<td style="text-align: right;">-1.6607312</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">15</td>
+<td style="text-align: right;">4.430817</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.6486586</td>
+<td style="text-align: right;">-1.9661129</td>
+<td style="text-align: right;">6.308098</td>
+<td style="text-align: right;">5.141664</td>
+<td style="text-align: right;">4.672829</td>
+<td style="text-align: right;">3.025291</td>
+<td style="text-align: right;">0.0582689</td>
+<td style="text-align: right;">3.152736</td>
+<td style="text-align: right;">1.4445633</td>
+<td style="text-align: right;">-0.0512933</td>
+<td style="text-align: right;">4.521789</td>
+<td style="text-align: right;">2.484907</td>
+<td style="text-align: right;">-0.3011051</td>
+<td style="text-align: right;">1.2354715</td>
+<td style="text-align: right;">0.4574248</td>
+<td style="text-align: right;">0.0769610</td>
+<td style="text-align: right;">-2.525729</td>
+<td style="text-align: right;">-2.5257286</td>
+<td style="text-align: right;">-1.7719568</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">16</td>
+<td style="text-align: right;">4.406719</td>
+<td style="text-align: right;">2.944439</td>
+<td style="text-align: right;">1.5518088</td>
+<td style="text-align: right;">-1.8325815</td>
+<td style="text-align: right;">6.327937</td>
+<td style="text-align: right;">5.087596</td>
+<td style="text-align: right;">4.634729</td>
+<td style="text-align: right;">2.990720</td>
+<td style="text-align: right;">0.1310283</td>
+<td style="text-align: right;">3.100092</td>
+<td style="text-align: right;">1.3862944</td>
+<td style="text-align: right;">-0.1165338</td>
+<td style="text-align: right;">4.407938</td>
+<td style="text-align: right;">2.517697</td>
+<td style="text-align: right;">-0.4004776</td>
+<td style="text-align: right;">3.0540012</td>
+<td style="text-align: right;">0.8415672</td>
+<td style="text-align: right;">0.9282193</td>
+<td style="text-align: right;">-2.525729</td>
+<td style="text-align: right;">-1.1711830</td>
+<td style="text-align: right;">-1.1711830</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">17</td>
+<td style="text-align: right;">4.343805</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.9344158</td>
+<td style="text-align: right;">-0.2357223</td>
+<td style="text-align: right;">6.214608</td>
+<td style="text-align: right;">5.176150</td>
+<td style="text-align: right;">5.030438</td>
+<td style="text-align: right;">4.001864</td>
+<td style="text-align: right;">2.2038691</td>
+<td style="text-align: right;">3.459466</td>
+<td style="text-align: right;">4.1866198</td>
+<td style="text-align: right;">-0.2107210</td>
+<td style="text-align: right;">3.328627</td>
+<td style="text-align: right;">1.757858</td>
+<td style="text-align: right;">-0.9162907</td>
+<td style="text-align: right;">1.1969482</td>
+<td style="text-align: right;">-0.0725707</td>
+<td style="text-align: right;">-0.4004776</td>
+<td style="text-align: right;">-2.525729</td>
+<td style="text-align: right;">1.9837563</td>
+<td style="text-align: right;">-1.0498221</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">18</td>
+<td style="text-align: right;">4.418841</td>
+<td style="text-align: right;">2.944439</td>
+<td style="text-align: right;">1.5195132</td>
+<td style="text-align: right;">-0.8209806</td>
+<td style="text-align: right;">6.244167</td>
+<td style="text-align: right;">5.062595</td>
+<td style="text-align: right;">4.709530</td>
+<td style="text-align: right;">3.095578</td>
+<td style="text-align: right;">1.6272778</td>
+<td style="text-align: right;">3.346389</td>
+<td style="text-align: right;">1.3350011</td>
+<td style="text-align: right;">-0.0100503</td>
+<td style="text-align: right;">4.492001</td>
+<td style="text-align: right;">3.068053</td>
+<td style="text-align: right;">-0.6539265</td>
+<td style="text-align: right;">1.4060970</td>
+<td style="text-align: right;">0.5247285</td>
+<td style="text-align: right;">0.0099503</td>
+<td style="text-align: right;">-2.407946</td>
+<td style="text-align: right;">2.4680995</td>
+<td style="text-align: right;">-1.3093333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">19</td>
+<td style="text-align: right;">4.262680</td>
+<td style="text-align: right;">3.332205</td>
+<td style="text-align: right;">1.6582281</td>
+<td style="text-align: right;">-0.3285041</td>
+<td style="text-align: right;">6.202535</td>
+<td style="text-align: right;">4.736198</td>
+<td style="text-align: right;">4.615120</td>
+<td style="text-align: right;">3.640214</td>
+<td style="text-align: right;">1.8148247</td>
+<td style="text-align: right;">2.917771</td>
+<td style="text-align: right;">2.3418058</td>
+<td style="text-align: right;">-0.3285041</td>
+<td style="text-align: right;">3.514526</td>
+<td style="text-align: right;">2.873565</td>
+<td style="text-align: right;">0.3987761</td>
+<td style="text-align: right;">2.1234584</td>
+<td style="text-align: right;">0.9593502</td>
+<td style="text-align: right;">0.4317824</td>
+<td style="text-align: right;">-1.832582</td>
+<td style="text-align: right;">1.5871923</td>
+<td style="text-align: right;">1.2149127</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">20</td>
+<td style="text-align: right;">4.330733</td>
+<td style="text-align: right;">2.944439</td>
+<td style="text-align: right;">1.8421357</td>
+<td style="text-align: right;">-0.8915981</td>
+<td style="text-align: right;">6.282267</td>
+<td style="text-align: right;">4.934474</td>
+<td style="text-align: right;">3.941582</td>
+<td style="text-align: right;">2.639057</td>
+<td style="text-align: right;">1.4838747</td>
+<td style="text-align: right;">2.104134</td>
+<td style="text-align: right;">2.0930979</td>
+<td style="text-align: right;">-0.0304592</td>
+<td style="text-align: right;">4.030695</td>
+<td style="text-align: right;">2.595255</td>
+<td style="text-align: right;">-0.4780358</td>
+<td style="text-align: right;">1.0681531</td>
+<td style="text-align: right;">0.2926696</td>
+<td style="text-align: right;">-0.2357223</td>
+<td style="text-align: right;">-2.813411</td>
+<td style="text-align: right;">-0.8675006</td>
+<td style="text-align: right;">-0.9162907</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">21</td>
+<td style="text-align: right;">4.304065</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">1.5851452</td>
+<td style="text-align: right;">-0.7133499</td>
+<td style="text-align: right;">6.047372</td>
+<td style="text-align: right;">4.382027</td>
+<td style="text-align: right;">4.219508</td>
+<td style="text-align: right;">2.667228</td>
+<td style="text-align: right;">1.7351891</td>
+<td style="text-align: right;">3.113515</td>
+<td style="text-align: right;">0.6881346</td>
+<td style="text-align: right;">-0.0943107</td>
+<td style="text-align: right;">3.230804</td>
+<td style="text-align: right;">3.269569</td>
+<td style="text-align: right;">-0.8675006</td>
+<td style="text-align: right;">0.9122827</td>
+<td style="text-align: right;">-0.0304592</td>
+<td style="text-align: right;">-0.5276327</td>
+<td style="text-align: right;">-2.659260</td>
+<td style="text-align: right;">-0.3566749</td>
+<td style="text-align: right;">-1.4696760</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">22</td>
+<td style="text-align: right;">4.262680</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">1.7917595</td>
+<td style="text-align: right;">-0.0725707</td>
+<td style="text-align: right;">6.406880</td>
+<td style="text-align: right;">4.955827</td>
+<td style="text-align: right;">5.164786</td>
+<td style="text-align: right;">4.012773</td>
+<td style="text-align: right;">2.7100482</td>
+<td style="text-align: right;">2.468100</td>
+<td style="text-align: right;">3.7376696</td>
+<td style="text-align: right;">-0.5798185</td>
+<td style="text-align: right;">3.835142</td>
+<td style="text-align: right;">3.246491</td>
+<td style="text-align: right;">-0.1625189</td>
+<td style="text-align: right;">2.4510051</td>
+<td style="text-align: right;">1.0367369</td>
+<td style="text-align: right;">0.7839015</td>
+<td style="text-align: right;">-2.120264</td>
+<td style="text-align: right;">2.7146947</td>
+<td style="text-align: right;">1.2837078</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">4.276666</td>
+<td style="text-align: right;">3.091042</td>
+<td style="text-align: right;">1.8213183</td>
+<td style="text-align: right;">-1.1086626</td>
+<td style="text-align: right;">6.434546</td>
+<td style="text-align: right;">4.795790</td>
+<td style="text-align: right;">4.207673</td>
+<td style="text-align: right;">2.210470</td>
+<td style="text-align: right;">0.9593502</td>
+<td style="text-align: right;">2.451005</td>
+<td style="text-align: right;">2.2049723</td>
+<td style="text-align: right;">-0.5447272</td>
+<td style="text-align: right;">3.691376</td>
+<td style="text-align: right;">2.906901</td>
+<td style="text-align: right;">-0.3147107</td>
+<td style="text-align: right;">1.6826884</td>
+<td style="text-align: right;">0.9242589</td>
+<td style="text-align: right;">0.3715636</td>
+<td style="text-align: right;">-2.207275</td>
+<td style="text-align: right;">-2.5257286</td>
+<td style="text-align: right;">-1.9661129</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">24</td>
+<td style="text-align: right;">4.330733</td>
+<td style="text-align: right;">2.890372</td>
+<td style="text-align: right;">1.8702625</td>
+<td style="text-align: right;">-1.2729657</td>
+<td style="text-align: right;">6.469250</td>
+<td style="text-align: right;">5.147494</td>
+<td style="text-align: right;">3.960813</td>
+<td style="text-align: right;">2.243896</td>
+<td style="text-align: right;">0.6626880</td>
+<td style="text-align: right;">2.208274</td>
+<td style="text-align: right;">2.2772673</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">4.378270</td>
+<td style="text-align: right;">2.681021</td>
+<td style="text-align: right;">-0.9162907</td>
+<td style="text-align: right;">1.3244190</td>
+<td style="text-align: right;">0.3293037</td>
+<td style="text-align: right;">-0.1508229</td>
+<td style="text-align: right;">-2.525729</td>
+<td style="text-align: right;">-1.8971200</td>
+<td style="text-align: right;">-1.2729657</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">25</td>
+<td style="text-align: right;">4.356709</td>
+<td style="text-align: right;">2.890372</td>
+<td style="text-align: right;">0.0487902</td>
+<td style="text-align: right;">-0.2876821</td>
+<td style="text-align: right;">6.206576</td>
+<td style="text-align: right;">5.087596</td>
+<td style="text-align: right;">3.471967</td>
+<td style="text-align: right;">4.037774</td>
+<td style="text-align: right;">-1.0788097</td>
+<td style="text-align: right;">1.609438</td>
+<td style="text-align: right;">1.4109870</td>
+<td style="text-align: right;">-0.0943107</td>
+<td style="text-align: right;">3.908015</td>
+<td style="text-align: right;">3.384390</td>
+<td style="text-align: right;">-0.4942963</td>
+<td style="text-align: right;">1.6695918</td>
+<td style="text-align: right;">0.7030975</td>
+<td style="text-align: right;">0.2390169</td>
+<td style="text-align: right;">-2.407946</td>
+<td style="text-align: right;">-1.7719568</td>
+<td style="text-align: right;">-1.1394343</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">26</td>
+<td style="text-align: right;">4.317488</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.8484548</td>
+<td style="text-align: right;">-0.7985077</td>
+<td style="text-align: right;">6.297109</td>
+<td style="text-align: right;">4.919981</td>
+<td style="text-align: right;">4.044804</td>
+<td style="text-align: right;">2.251292</td>
+<td style="text-align: right;">1.5993876</td>
+<td style="text-align: right;">2.415914</td>
+<td style="text-align: right;">2.1150500</td>
+<td style="text-align: right;">-0.1625189</td>
+<td style="text-align: right;">4.070735</td>
+<td style="text-align: right;">3.152736</td>
+<td style="text-align: right;">-0.7133499</td>
+<td style="text-align: right;">2.6810215</td>
+<td style="text-align: right;">0.5247285</td>
+<td style="text-align: right;">0.0953102</td>
+<td style="text-align: right;">-2.659260</td>
+<td style="text-align: right;">-1.6607312</td>
+<td style="text-align: right;">-1.3862944</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">27</td>
+<td style="text-align: right;">4.276666</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.8687205</td>
+<td style="text-align: right;">-0.8915981</td>
+<td style="text-align: right;">6.324359</td>
+<td style="text-align: right;">4.941642</td>
+<td style="text-align: right;">3.998201</td>
+<td style="text-align: right;">2.208274</td>
+<td style="text-align: right;">1.4678743</td>
+<td style="text-align: right;">2.360854</td>
+<td style="text-align: right;">2.1029139</td>
+<td style="text-align: right;">-0.1165338</td>
+<td style="text-align: right;">4.043051</td>
+<td style="text-align: right;">2.912351</td>
+<td style="text-align: right;">-1.0216512</td>
+<td style="text-align: right;">1.1151416</td>
+<td style="text-align: right;">0.3987761</td>
+<td style="text-align: right;">-0.1625189</td>
+<td style="text-align: right;">-2.659260</td>
+<td style="text-align: right;">1.9065751</td>
+<td style="text-align: right;">-1.3470736</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">28</td>
+<td style="text-align: right;">4.330733</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">1.7766458</td>
+<td style="text-align: right;">-0.1863296</td>
+<td style="text-align: right;">6.154858</td>
+<td style="text-align: right;">5.147494</td>
+<td style="text-align: right;">4.934474</td>
+<td style="text-align: right;">3.839452</td>
+<td style="text-align: right;">2.1838016</td>
+<td style="text-align: right;">4.001864</td>
+<td style="text-align: right;">0.6365768</td>
+<td style="text-align: right;">-0.4155154</td>
+<td style="text-align: right;">3.295837</td>
+<td style="text-align: right;">2.525729</td>
+<td style="text-align: right;">-0.8915981</td>
+<td style="text-align: right;">1.8437192</td>
+<td style="text-align: right;">0.7080358</td>
+<td style="text-align: right;">0.4700036</td>
+<td style="text-align: right;">-2.407946</td>
+<td style="text-align: right;">1.3862944</td>
+<td style="text-align: right;">1.5238800</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">29</td>
+<td style="text-align: right;">4.234107</td>
+<td style="text-align: right;">3.332205</td>
+<td style="text-align: right;">1.8825138</td>
+<td style="text-align: right;">-0.2107210</td>
+<td style="text-align: right;">6.198479</td>
+<td style="text-align: right;">4.795790</td>
+<td style="text-align: right;">4.804021</td>
+<td style="text-align: right;">3.273364</td>
+<td style="text-align: right;">2.0528409</td>
+<td style="text-align: right;">2.933857</td>
+<td style="text-align: right;">2.2648832</td>
+<td style="text-align: right;">-0.3424903</td>
+<td style="text-align: right;">3.505557</td>
+<td style="text-align: right;">3.095578</td>
+<td style="text-align: right;">-0.6348783</td>
+<td style="text-align: right;">1.6582281</td>
+<td style="text-align: right;">1.0079579</td>
+<td style="text-align: right;">0.5933268</td>
+<td style="text-align: right;">-2.040221</td>
+<td style="text-align: right;">-0.0725707</td>
+<td style="text-align: right;">-0.9675840</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">30</td>
+<td style="text-align: right;">4.454347</td>
+<td style="text-align: right;">2.772589</td>
+<td style="text-align: right;">1.5282279</td>
+<td style="text-align: right;">-0.5621189</td>
+<td style="text-align: right;">6.146329</td>
+<td style="text-align: right;">5.278115</td>
+<td style="text-align: right;">5.062595</td>
+<td style="text-align: right;">3.629660</td>
+<td style="text-align: right;">2.3418058</td>
+<td style="text-align: right;">2.985682</td>
+<td style="text-align: right;">1.5892352</td>
+<td style="text-align: right;">-0.0100503</td>
+<td style="text-align: right;">4.306764</td>
+<td style="text-align: right;">3.113515</td>
+<td style="text-align: right;">-1.6607312</td>
+<td style="text-align: right;">0.7701082</td>
+<td style="text-align: right;">0.1222176</td>
+<td style="text-align: right;">-0.4004776</td>
+<td style="text-align: right;">-2.659260</td>
+<td style="text-align: right;">-1.2729657</td>
+<td style="text-align: right;">-1.6094379</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">31</td>
+<td style="text-align: right;">4.343805</td>
+<td style="text-align: right;">3.218876</td>
+<td style="text-align: right;">1.6582281</td>
+<td style="text-align: right;">-0.3147107</td>
+<td style="text-align: right;">5.991465</td>
+<td style="text-align: right;">4.488636</td>
+<td style="text-align: right;">4.615120</td>
+<td style="text-align: right;">2.912351</td>
+<td style="text-align: right;">2.3005831</td>
+<td style="text-align: right;">3.117950</td>
+<td style="text-align: right;">1.0612565</td>
+<td style="text-align: right;">-0.3856625</td>
+<td style="text-align: right;">3.269569</td>
+<td style="text-align: right;">3.484312</td>
+<td style="text-align: right;">-1.1711830</td>
+<td style="text-align: right;">1.3762440</td>
+<td style="text-align: right;">0.5877867</td>
+<td style="text-align: right;">0.0487902</td>
+<td style="text-align: right;">-2.302585</td>
+<td style="text-align: right;">-1.9661129</td>
+<td style="text-align: right;">-1.4271164</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">32</td>
+<td style="text-align: right;">4.406719</td>
+<td style="text-align: right;">3.091042</td>
+<td style="text-align: right;">1.9768550</td>
+<td style="text-align: right;">-0.3285041</td>
+<td style="text-align: right;">6.133398</td>
+<td style="text-align: right;">4.997212</td>
+<td style="text-align: right;">4.997212</td>
+<td style="text-align: right;">3.756538</td>
+<td style="text-align: right;">2.2027648</td>
+<td style="text-align: right;">3.985273</td>
+<td style="text-align: right;">1.0438041</td>
+<td style="text-align: right;">-0.0512933</td>
+<td style="text-align: right;">3.666123</td>
+<td style="text-align: right;">2.639057</td>
+<td style="text-align: right;">-0.9416085</td>
+<td style="text-align: right;">1.5560371</td>
+<td style="text-align: right;">0.9202828</td>
+<td style="text-align: right;">0.4382549</td>
+<td style="text-align: right;">-2.120264</td>
+<td style="text-align: right;">-1.7147984</td>
+<td style="text-align: right;">-1.1711830</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">33</td>
+<td style="text-align: right;">4.406719</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.6370531</td>
+<td style="text-align: right;">-0.7985077</td>
+<td style="text-align: right;">6.198479</td>
+<td style="text-align: right;">5.111988</td>
+<td style="text-align: right;">4.762174</td>
+<td style="text-align: right;">3.126761</td>
+<td style="text-align: right;">1.6601310</td>
+<td style="text-align: right;">3.349904</td>
+<td style="text-align: right;">1.2781522</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">4.470495</td>
+<td style="text-align: right;">3.081910</td>
+<td style="text-align: right;">-1.9661129</td>
+<td style="text-align: right;">0.7030975</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">-0.5276327</td>
+<td style="text-align: right;">-2.813411</td>
+<td style="text-align: right;">-1.1086626</td>
+<td style="text-align: right;">-1.8325815</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">34</td>
+<td style="text-align: right;">4.382027</td>
+<td style="text-align: right;">2.772589</td>
+<td style="text-align: right;">1.4996230</td>
+<td style="text-align: right;">-0.7550226</td>
+<td style="text-align: right;">6.148468</td>
+<td style="text-align: right;">5.231109</td>
+<td style="text-align: right;">4.882802</td>
+<td style="text-align: right;">3.520461</td>
+<td style="text-align: right;">2.0333976</td>
+<td style="text-align: right;">2.933857</td>
+<td style="text-align: right;">1.5085120</td>
+<td style="text-align: right;">0.0198026</td>
+<td style="text-align: right;">4.254193</td>
+<td style="text-align: right;">2.928523</td>
+<td style="text-align: right;">-1.9661129</td>
+<td style="text-align: right;">0.7793249</td>
+<td style="text-align: right;">-0.1165338</td>
+<td style="text-align: right;">-0.5621189</td>
+<td style="text-align: right;">-2.813411</td>
+<td style="text-align: right;">-2.4079456</td>
+<td style="text-align: right;">-1.6607312</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">35</td>
+<td style="text-align: right;">4.356709</td>
+<td style="text-align: right;">2.944439</td>
+<td style="text-align: right;">1.8900954</td>
+<td style="text-align: right;">-1.4271164</td>
+<td style="text-align: right;">6.289716</td>
+<td style="text-align: right;">5.159055</td>
+<td style="text-align: right;">4.050044</td>
+<td style="text-align: right;">2.199444</td>
+<td style="text-align: right;">0.6471032</td>
+<td style="text-align: right;">2.186051</td>
+<td style="text-align: right;">2.2803395</td>
+<td style="text-align: right;">-0.0100503</td>
+<td style="text-align: right;">4.385770</td>
+<td style="text-align: right;">2.667228</td>
+<td style="text-align: right;">-1.7719568</td>
+<td style="text-align: right;">0.9669838</td>
+<td style="text-align: right;">0.2700271</td>
+<td style="text-align: right;">-0.3285041</td>
+<td style="text-align: right;">-2.525729</td>
+<td style="text-align: right;">-1.4271164</td>
+<td style="text-align: right;">-1.7719568</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">36</td>
+<td style="text-align: right;">4.356709</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">2.0425182</td>
+<td style="text-align: right;">-1.7147984</td>
+<td style="text-align: right;">6.526495</td>
+<td style="text-align: right;">5.164786</td>
+<td style="text-align: right;">4.171306</td>
+<td style="text-align: right;">1.951608</td>
+<td style="text-align: right;">0.8586616</td>
+<td style="text-align: right;">1.856298</td>
+<td style="text-align: right;">1.8825138</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">4.127134</td>
+<td style="text-align: right;">2.653242</td>
+<td style="text-align: right;">-1.2039728</td>
+<td style="text-align: right;">1.6563215</td>
+<td style="text-align: right;">0.7839015</td>
+<td style="text-align: right;">0.6780335</td>
+<td style="text-align: right;">-2.207275</td>
+<td style="text-align: right;">-0.8675006</td>
+<td style="text-align: right;">-1.4696760</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">37</td>
+<td style="text-align: right;">4.317488</td>
+<td style="text-align: right;">3.135494</td>
+<td style="text-align: right;">1.8916048</td>
+<td style="text-align: right;">-1.4696760</td>
+<td style="text-align: right;">6.139885</td>
+<td style="text-align: right;">4.875197</td>
+<td style="text-align: right;">4.189655</td>
+<td style="text-align: right;">2.016236</td>
+<td style="text-align: right;">1.2089603</td>
+<td style="text-align: right;">2.272126</td>
+<td style="text-align: right;">1.7263317</td>
+<td style="text-align: right;">-0.4307829</td>
+<td style="text-align: right;">3.703768</td>
+<td style="text-align: right;">2.721295</td>
+<td style="text-align: right;">-2.3025851</td>
+<td style="text-align: right;">0.9858168</td>
+<td style="text-align: right;">0.2070142</td>
+<td style="text-align: right;">0.0198026</td>
+<td style="text-align: right;">-2.407946</td>
+<td style="text-align: right;">1.0577903</td>
+<td style="text-align: right;">-2.1202635</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">38</td>
+<td style="text-align: right;">4.499810</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">0.8458683</td>
+<td style="text-align: right;">-0.9675840</td>
+<td style="text-align: right;">6.486161</td>
+<td style="text-align: right;">5.105945</td>
+<td style="text-align: right;">4.828314</td>
+<td style="text-align: right;">5.303305</td>
+<td style="text-align: right;">-0.1053605</td>
+<td style="text-align: right;">3.210844</td>
+<td style="text-align: right;">2.7536607</td>
+<td style="text-align: right;">0.5596158</td>
+<td style="text-align: right;">5.017280</td>
+<td style="text-align: right;">4.370713</td>
+<td style="text-align: right;">-0.9162907</td>
+<td style="text-align: right;">2.1938857</td>
+<td style="text-align: right;">1.3737156</td>
+<td style="text-align: right;">0.8501509</td>
+<td style="text-align: right;">-1.514128</td>
+<td style="text-align: right;">0.7884574</td>
+<td style="text-align: right;">-0.8675006</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#taking the log.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(logIngots, <span class="at">col =</span> <span class="st">"#785EF0"</span>, <span class="at">main =</span> <span class="st">"Normal QQ- Plot of the log-transformed data (all elements)"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(logIngots, <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/qqnormal-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Report_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The HZ test stipulates</p>
+<p>This returned multiple zero-values, which are somewhat concerning. The negative values are not an issue because we will be using distances, which are calculated from coordinate distances, and can handle negative values. Try and combat this by standardising dataset using instead .</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#log transform data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>logIngots1 <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">as.matrix</span>(Ingots_F_no[<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>] <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#print(logIngots)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(logIngots1,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">"Log Transformed Data"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"pipe"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Log Transformed Data</caption>
+<colgroup>
+<col style="width: 1%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Cu</th>
+<th style="text-align: right;">Zn</th>
+<th style="text-align: right;">Pb</th>
+<th style="text-align: right;">Fe</th>
+<th style="text-align: right;">Ni</th>
+<th style="text-align: right;">Ag</th>
+<th style="text-align: right;">Sb</th>
+<th style="text-align: right;">As</th>
+<th style="text-align: right;">Co</th>
+<th style="text-align: right;">Cd</th>
+<th style="text-align: right;">Sn</th>
+<th style="text-align: right;">Te</th>
+<th style="text-align: right;">Bi</th>
+<th style="text-align: right;">Mn</th>
+<th style="text-align: right;">Li</th>
+<th style="text-align: right;">Al</th>
+<th style="text-align: right;">V</th>
+<th style="text-align: right;">Cr</th>
+<th style="text-align: right;">Rb</th>
+<th style="text-align: right;">Sr</th>
+<th style="text-align: right;">Ba</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">4.477337</td>
+<td style="text-align: right;">2.833213</td>
+<td style="text-align: right;">1.6658182</td>
+<td style="text-align: right;">0.4252677</td>
+<td style="text-align: right;">6.282267</td>
+<td style="text-align: right;">5.298317</td>
+<td style="text-align: right;">4.890349</td>
+<td style="text-align: right;">3.621671</td>
+<td style="text-align: right;">2.2449560</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">1.757858</td>
+<td style="text-align: right;">0.6931472</td>
+<td style="text-align: right;">4.301359</td>
+<td style="text-align: right;">3.081910</td>
+<td style="text-align: right;">1.1537316</td>
+<td style="text-align: right;">1.697449</td>
+<td style="text-align: right;">0.9360934</td>
+<td style="text-align: right;">0.8372475</td>
+<td style="text-align: right;">0.0676586</td>
+<td style="text-align: right;">0.1397619</td>
+<td style="text-align: right;">0.1655144</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">4.304065</td>
+<td style="text-align: right;">3.367296</td>
+<td style="text-align: right;">1.9329696</td>
+<td style="text-align: right;">0.5766134</td>
+<td style="text-align: right;">6.113682</td>
+<td style="text-align: right;">4.882802</td>
+<td style="text-align: right;">4.663439</td>
+<td style="text-align: right;">3.210844</td>
+<td style="text-align: right;">2.2481289</td>
+<td style="text-align: right;">2.862201</td>
+<td style="text-align: right;">2.041220</td>
+<td style="text-align: right;">0.4946962</td>
+<td style="text-align: right;">3.401197</td>
+<td style="text-align: right;">2.815409</td>
+<td style="text-align: right;">1.6094379</td>
+<td style="text-align: right;">2.291524</td>
+<td style="text-align: right;">1.4655675</td>
+<td style="text-align: right;">1.3083328</td>
+<td style="text-align: right;">0.1310283</td>
+<td style="text-align: right;">2.2925348</td>
+<td style="text-align: right;">0.3001046</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">4.394449</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">1.9699057</td>
+<td style="text-align: right;">0.3293037</td>
+<td style="text-align: right;">6.326149</td>
+<td style="text-align: right;">5.147494</td>
+<td style="text-align: right;">4.262680</td>
+<td style="text-align: right;">2.493206</td>
+<td style="text-align: right;">1.7630170</td>
+<td style="text-align: right;">2.557227</td>
+<td style="text-align: right;">2.336020</td>
+<td style="text-align: right;">0.5988365</td>
+<td style="text-align: right;">4.122284</td>
+<td style="text-align: right;">3.186353</td>
+<td style="text-align: right;">1.9685100</td>
+<td style="text-align: right;">2.694627</td>
+<td style="text-align: right;">1.9572739</td>
+<td style="text-align: right;">1.7766458</td>
+<td style="text-align: right;">0.1310283</td>
+<td style="text-align: right;">0.2546422</td>
+<td style="text-align: right;">0.3293037</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: right;">4.369448</td>
+<td style="text-align: right;">3.135494</td>
+<td style="text-align: right;">1.5830939</td>
+<td style="text-align: right;">0.4382549</td>
+<td style="text-align: right;">6.242223</td>
+<td style="text-align: right;">5.056246</td>
+<td style="text-align: right;">4.219508</td>
+<td style="text-align: right;">2.740840</td>
+<td style="text-align: right;">2.0135688</td>
+<td style="text-align: right;">1.840550</td>
+<td style="text-align: right;">2.162173</td>
+<td style="text-align: right;">0.4574248</td>
+<td style="text-align: right;">4.089332</td>
+<td style="text-align: right;">3.190476</td>
+<td style="text-align: right;">1.5830939</td>
+<td style="text-align: right;">2.533697</td>
+<td style="text-align: right;">1.6826884</td>
+<td style="text-align: right;">1.5454326</td>
+<td style="text-align: right;">0.1133287</td>
+<td style="text-align: right;">0.6471032</td>
+<td style="text-align: right;">0.3715636</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">6</td>
+<td style="text-align: right;">4.406719</td>
+<td style="text-align: right;">3.135494</td>
+<td style="text-align: right;">2.0162355</td>
+<td style="text-align: right;">0.1739533</td>
+<td style="text-align: right;">6.363028</td>
+<td style="text-align: right;">5.075174</td>
+<td style="text-align: right;">4.115780</td>
+<td style="text-align: right;">2.232163</td>
+<td style="text-align: right;">1.0577903</td>
+<td style="text-align: right;">2.360854</td>
+<td style="text-align: right;">2.255494</td>
+<td style="text-align: right;">0.6729445</td>
+<td style="text-align: right;">4.133565</td>
+<td style="text-align: right;">2.815409</td>
+<td style="text-align: right;">1.1378330</td>
+<td style="text-align: right;">1.678964</td>
+<td style="text-align: right;">1.1908876</td>
+<td style="text-align: right;">1.0647107</td>
+<td style="text-align: right;">0.1043600</td>
+<td style="text-align: right;">0.3715636</td>
+<td style="text-align: right;">0.5596158</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">4.330733</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">2.0082140</td>
+<td style="text-align: right;">0.2851789</td>
+<td style="text-align: right;">6.327937</td>
+<td style="text-align: right;">4.875197</td>
+<td style="text-align: right;">4.682131</td>
+<td style="text-align: right;">5.356586</td>
+<td style="text-align: right;">1.4747630</td>
+<td style="text-align: right;">2.533697</td>
+<td style="text-align: right;">2.923162</td>
+<td style="text-align: right;">0.5877867</td>
+<td style="text-align: right;">3.951244</td>
+<td style="text-align: right;">3.148453</td>
+<td style="text-align: right;">1.0116009</td>
+<td style="text-align: right;">1.871802</td>
+<td style="text-align: right;">1.1505720</td>
+<td style="text-align: right;">0.9439059</td>
+<td style="text-align: right;">0.1222176</td>
+<td style="text-align: right;">0.2926696</td>
+<td style="text-align: right;">0.4054651</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: right;">4.418841</td>
+<td style="text-align: right;">3.218876</td>
+<td style="text-align: right;">1.9643112</td>
+<td style="text-align: right;">0.2700271</td>
+<td style="text-align: right;">6.308098</td>
+<td style="text-align: right;">5.081404</td>
+<td style="text-align: right;">4.335983</td>
+<td style="text-align: right;">2.366498</td>
+<td style="text-align: right;">1.4327007</td>
+<td style="text-align: right;">2.151762</td>
+<td style="text-align: right;">2.076938</td>
+<td style="text-align: right;">0.6043160</td>
+<td style="text-align: right;">4.085976</td>
+<td style="text-align: right;">3.206803</td>
+<td style="text-align: right;">1.0952734</td>
+<td style="text-align: right;">2.660259</td>
+<td style="text-align: right;">1.5151272</td>
+<td style="text-align: right;">1.2119410</td>
+<td style="text-align: right;">0.1043600</td>
+<td style="text-align: right;">0.8960880</td>
+<td style="text-align: right;">0.2311117</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9</td>
+<td style="text-align: right;">4.394449</td>
+<td style="text-align: right;">2.944439</td>
+<td style="text-align: right;">1.7281094</td>
+<td style="text-align: right;">0.3646431</td>
+<td style="text-align: right;">6.180017</td>
+<td style="text-align: right;">5.075174</td>
+<td style="text-align: right;">4.700480</td>
+<td style="text-align: right;">3.226844</td>
+<td style="text-align: right;">1.8373700</td>
+<td style="text-align: right;">3.449988</td>
+<td style="text-align: right;">1.593309</td>
+<td style="text-align: right;">0.6471032</td>
+<td style="text-align: right;">4.525044</td>
+<td style="text-align: right;">3.206803</td>
+<td style="text-align: right;">0.9895412</td>
+<td style="text-align: right;">2.240710</td>
+<td style="text-align: right;">1.3083328</td>
+<td style="text-align: right;">1.0224509</td>
+<td style="text-align: right;">0.0676586</td>
+<td style="text-align: right;">0.1043600</td>
+<td style="text-align: right;">0.3576744</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">10</td>
+<td style="text-align: right;">4.290459</td>
+<td style="text-align: right;">3.367296</td>
+<td style="text-align: right;">1.9344158</td>
+<td style="text-align: right;">0.5653138</td>
+<td style="text-align: right;">6.077642</td>
+<td style="text-align: right;">4.663439</td>
+<td style="text-align: right;">4.718499</td>
+<td style="text-align: right;">3.198673</td>
+<td style="text-align: right;">2.2289386</td>
+<td style="text-align: right;">2.844909</td>
+<td style="text-align: right;">2.034706</td>
+<td style="text-align: right;">0.4762342</td>
+<td style="text-align: right;">3.353407</td>
+<td style="text-align: right;">3.020425</td>
+<td style="text-align: right;">0.8020016</td>
+<td style="text-align: right;">2.050270</td>
+<td style="text-align: right;">1.0986123</td>
+<td style="text-align: right;">0.8796267</td>
+<td style="text-align: right;">0.1133287</td>
+<td style="text-align: right;">0.1906204</td>
+<td style="text-align: right;">0.2623643</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">11</td>
+<td style="text-align: right;">4.343805</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.9358598</td>
+<td style="text-align: right;">0.3576744</td>
+<td style="text-align: right;">6.265301</td>
+<td style="text-align: right;">4.934474</td>
+<td style="text-align: right;">3.992681</td>
+<td style="text-align: right;">2.778819</td>
+<td style="text-align: right;">1.8131947</td>
+<td style="text-align: right;">2.251292</td>
+<td style="text-align: right;">2.228939</td>
+<td style="text-align: right;">0.6205765</td>
+<td style="text-align: right;">4.016383</td>
+<td style="text-align: right;">2.631889</td>
+<td style="text-align: right;">0.6523252</td>
+<td style="text-align: right;">2.024193</td>
+<td style="text-align: right;">0.9969486</td>
+<td style="text-align: right;">0.8241754</td>
+<td style="text-align: right;">0.0953102</td>
+<td style="text-align: right;">0.4446858</td>
+<td style="text-align: right;">0.2151114</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">12</td>
+<td style="text-align: right;">4.248495</td>
+<td style="text-align: right;">2.890372</td>
+<td style="text-align: right;">2.0373166</td>
+<td style="text-align: right;">0.4054651</td>
+<td style="text-align: right;">6.489205</td>
+<td style="text-align: right;">4.955827</td>
+<td style="text-align: right;">3.933784</td>
+<td style="text-align: right;">2.694627</td>
+<td style="text-align: right;">1.6956156</td>
+<td style="text-align: right;">2.230014</td>
+<td style="text-align: right;">2.212660</td>
+<td style="text-align: right;">0.6259384</td>
+<td style="text-align: right;">4.025352</td>
+<td style="text-align: right;">2.667228</td>
+<td style="text-align: right;">0.7884574</td>
+<td style="text-align: right;">1.439835</td>
+<td style="text-align: right;">0.9745596</td>
+<td style="text-align: right;">0.7419373</td>
+<td style="text-align: right;">0.0953102</td>
+<td style="text-align: right;">1.4182774</td>
+<td style="text-align: right;">0.1988509</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">13</td>
+<td style="text-align: right;">4.369448</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">1.4586150</td>
+<td style="text-align: right;">0.7227060</td>
+<td style="text-align: right;">6.129050</td>
+<td style="text-align: right;">5.247024</td>
+<td style="text-align: right;">6.309918</td>
+<td style="text-align: right;">5.288267</td>
+<td style="text-align: right;">0.9555114</td>
+<td style="text-align: right;">2.906901</td>
+<td style="text-align: right;">3.671225</td>
+<td style="text-align: right;">0.6931472</td>
+<td style="text-align: right;">5.204007</td>
+<td style="text-align: right;">4.472781</td>
+<td style="text-align: right;">0.9360934</td>
+<td style="text-align: right;">2.330200</td>
+<td style="text-align: right;">1.4060970</td>
+<td style="text-align: right;">1.1724821</td>
+<td style="text-align: right;">0.0676586</td>
+<td style="text-align: right;">0.4187103</td>
+<td style="text-align: right;">0.7747272</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">14</td>
+<td style="text-align: right;">4.317488</td>
+<td style="text-align: right;">3.258097</td>
+<td style="text-align: right;">1.7404662</td>
+<td style="text-align: right;">0.3646431</td>
+<td style="text-align: right;">6.073044</td>
+<td style="text-align: right;">4.415220</td>
+<td style="text-align: right;">4.490881</td>
+<td style="text-align: right;">2.747271</td>
+<td style="text-align: right;">1.8050047</td>
+<td style="text-align: right;">3.058707</td>
+<td style="text-align: right;">1.091923</td>
+<td style="text-align: right;">0.5364934</td>
+<td style="text-align: right;">3.299534</td>
+<td style="text-align: right;">3.424263</td>
+<td style="text-align: right;">0.7561220</td>
+<td style="text-align: right;">2.016236</td>
+<td style="text-align: right;">1.2499017</td>
+<td style="text-align: right;">0.9360934</td>
+<td style="text-align: right;">0.0953102</td>
+<td style="text-align: right;">0.1570037</td>
+<td style="text-align: right;">0.1739533</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">15</td>
+<td style="text-align: right;">4.442651</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">1.8245493</td>
+<td style="text-align: right;">0.1310283</td>
+<td style="text-align: right;">6.309918</td>
+<td style="text-align: right;">5.147494</td>
+<td style="text-align: right;">4.682131</td>
+<td style="text-align: right;">3.072693</td>
+<td style="text-align: right;">0.7227060</td>
+<td style="text-align: right;">3.194583</td>
+<td style="text-align: right;">1.656322</td>
+<td style="text-align: right;">0.6678294</td>
+<td style="text-align: right;">4.532599</td>
+<td style="text-align: right;">2.564949</td>
+<td style="text-align: right;">0.5538851</td>
+<td style="text-align: right;">1.490654</td>
+<td style="text-align: right;">0.9477894</td>
+<td style="text-align: right;">0.7323679</td>
+<td style="text-align: right;">0.0769610</td>
+<td style="text-align: right;">0.0769610</td>
+<td style="text-align: right;">0.1570037</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">16</td>
+<td style="text-align: right;">4.418841</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.7439688</td>
+<td style="text-align: right;">0.1484200</td>
+<td style="text-align: right;">6.329721</td>
+<td style="text-align: right;">5.093750</td>
+<td style="text-align: right;">4.644391</td>
+<td style="text-align: right;">3.039749</td>
+<td style="text-align: right;">0.7608058</td>
+<td style="text-align: right;">3.144152</td>
+<td style="text-align: right;">1.609438</td>
+<td style="text-align: right;">0.6365768</td>
+<td style="text-align: right;">4.420045</td>
+<td style="text-align: right;">2.595255</td>
+<td style="text-align: right;">0.5128236</td>
+<td style="text-align: right;">3.100092</td>
+<td style="text-align: right;">1.1999648</td>
+<td style="text-align: right;">1.2612979</td>
+<td style="text-align: right;">0.0769610</td>
+<td style="text-align: right;">0.2700271</td>
+<td style="text-align: right;">0.2700271</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">17</td>
+<td style="text-align: right;">4.356709</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">2.0693912</td>
+<td style="text-align: right;">0.5822156</td>
+<td style="text-align: right;">6.216606</td>
+<td style="text-align: right;">5.181784</td>
+<td style="text-align: right;">5.036953</td>
+<td style="text-align: right;">4.019980</td>
+<td style="text-align: right;">2.3085672</td>
+<td style="text-align: right;">3.490429</td>
+<td style="text-align: right;">4.201703</td>
+<td style="text-align: right;">0.5933268</td>
+<td style="text-align: right;">3.363842</td>
+<td style="text-align: right;">1.916923</td>
+<td style="text-align: right;">0.3364722</td>
+<td style="text-align: right;">1.460938</td>
+<td style="text-align: right;">0.6575200</td>
+<td style="text-align: right;">0.5128236</td>
+<td style="text-align: right;">0.0769610</td>
+<td style="text-align: right;">2.1126345</td>
+<td style="text-align: right;">0.3001046</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">18</td>
+<td style="text-align: right;">4.430817</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.7173951</td>
+<td style="text-align: right;">0.3646431</td>
+<td style="text-align: right;">6.246107</td>
+<td style="text-align: right;">5.068904</td>
+<td style="text-align: right;">4.718499</td>
+<td style="text-align: right;">3.139833</td>
+<td style="text-align: right;">1.8066481</td>
+<td style="text-align: right;">3.380995</td>
+<td style="text-align: right;">1.568616</td>
+<td style="text-align: right;">0.6881346</td>
+<td style="text-align: right;">4.503138</td>
+<td style="text-align: right;">3.113515</td>
+<td style="text-align: right;">0.4187103</td>
+<td style="text-align: right;">1.625311</td>
+<td style="text-align: right;">0.9895412</td>
+<td style="text-align: right;">0.6981347</td>
+<td style="text-align: right;">0.0861777</td>
+<td style="text-align: right;">2.5494452</td>
+<td style="text-align: right;">0.2390169</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">19</td>
+<td style="text-align: right;">4.276666</td>
+<td style="text-align: right;">3.367296</td>
+<td style="text-align: right;">1.8325815</td>
+<td style="text-align: right;">0.5423243</td>
+<td style="text-align: right;">6.204558</td>
+<td style="text-align: right;">4.744932</td>
+<td style="text-align: right;">4.624973</td>
+<td style="text-align: right;">3.666123</td>
+<td style="text-align: right;">1.9657128</td>
+<td style="text-align: right;">2.970414</td>
+<td style="text-align: right;">2.433613</td>
+<td style="text-align: right;">0.5423243</td>
+<td style="text-align: right;">3.543854</td>
+<td style="text-align: right;">2.928523</td>
+<td style="text-align: right;">0.9122827</td>
+<td style="text-align: right;">2.236445</td>
+<td style="text-align: right;">1.2837078</td>
+<td style="text-align: right;">0.9321641</td>
+<td style="text-align: right;">0.1484200</td>
+<td style="text-align: right;">1.7732560</td>
+<td style="text-align: right;">1.4747630</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">20</td>
+<td style="text-align: right;">4.343805</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">1.9892433</td>
+<td style="text-align: right;">0.3435897</td>
+<td style="text-align: right;">6.284134</td>
+<td style="text-align: right;">4.941642</td>
+<td style="text-align: right;">3.960813</td>
+<td style="text-align: right;">2.708050</td>
+<td style="text-align: right;">1.6882491</td>
+<td style="text-align: right;">2.219203</td>
+<td style="text-align: right;">2.209373</td>
+<td style="text-align: right;">0.6780335</td>
+<td style="text-align: right;">4.048301</td>
+<td style="text-align: right;">2.667228</td>
+<td style="text-align: right;">0.4824261</td>
+<td style="text-align: right;">1.363537</td>
+<td style="text-align: right;">0.8501509</td>
+<td style="text-align: right;">0.5822156</td>
+<td style="text-align: right;">0.0582689</td>
+<td style="text-align: right;">0.3506569</td>
+<td style="text-align: right;">0.3364722</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">21</td>
+<td style="text-align: right;">4.317488</td>
+<td style="text-align: right;">3.091042</td>
+<td style="text-align: right;">1.7715568</td>
+<td style="text-align: right;">0.3987761</td>
+<td style="text-align: right;">6.049734</td>
+<td style="text-align: right;">4.394449</td>
+<td style="text-align: right;">4.234107</td>
+<td style="text-align: right;">2.734367</td>
+<td style="text-align: right;">1.8976199</td>
+<td style="text-align: right;">3.157000</td>
+<td style="text-align: right;">1.095273</td>
+<td style="text-align: right;">0.6471032</td>
+<td style="text-align: right;">3.269569</td>
+<td style="text-align: right;">3.306887</td>
+<td style="text-align: right;">0.3506569</td>
+<td style="text-align: right;">1.249902</td>
+<td style="text-align: right;">0.6780335</td>
+<td style="text-align: right;">0.4637340</td>
+<td style="text-align: right;">0.0676586</td>
+<td style="text-align: right;">0.5306283</td>
+<td style="text-align: right;">0.2070142</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">22</td>
+<td style="text-align: right;">4.276666</td>
+<td style="text-align: right;">3.091042</td>
+<td style="text-align: right;">1.9459101</td>
+<td style="text-align: right;">0.6575200</td>
+<td style="text-align: right;">6.408529</td>
+<td style="text-align: right;">4.962845</td>
+<td style="text-align: right;">5.170484</td>
+<td style="text-align: right;">4.030695</td>
+<td style="text-align: right;">2.7744620</td>
+<td style="text-align: right;">2.549445</td>
+<td style="text-align: right;">3.761200</td>
+<td style="text-align: right;">0.4446858</td>
+<td style="text-align: right;">3.856510</td>
+<td style="text-align: right;">3.284664</td>
+<td style="text-align: right;">0.6151856</td>
+<td style="text-align: right;">2.533697</td>
+<td style="text-align: right;">1.3402504</td>
+<td style="text-align: right;">1.1600209</td>
+<td style="text-align: right;">0.1133287</td>
+<td style="text-align: right;">2.7788193</td>
+<td style="text-align: right;">1.5282279</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">4.290459</td>
+<td style="text-align: right;">3.135494</td>
+<td style="text-align: right;">1.9712994</td>
+<td style="text-align: right;">0.2851789</td>
+<td style="text-align: right;">6.436150</td>
+<td style="text-align: right;">4.804021</td>
+<td style="text-align: right;">4.222445</td>
+<td style="text-align: right;">2.314514</td>
+<td style="text-align: right;">1.2837078</td>
+<td style="text-align: right;">2.533697</td>
+<td style="text-align: right;">2.309561</td>
+<td style="text-align: right;">0.4574248</td>
+<td style="text-align: right;">3.716008</td>
+<td style="text-align: right;">2.960105</td>
+<td style="text-align: right;">0.5481214</td>
+<td style="text-align: right;">1.853168</td>
+<td style="text-align: right;">1.2584610</td>
+<td style="text-align: right;">0.8960880</td>
+<td style="text-align: right;">0.1043600</td>
+<td style="text-align: right;">0.0769610</td>
+<td style="text-align: right;">0.1310283</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">24</td>
+<td style="text-align: right;">4.343805</td>
+<td style="text-align: right;">2.944439</td>
+<td style="text-align: right;">2.0135688</td>
+<td style="text-align: right;">0.2468601</td>
+<td style="text-align: right;">6.470800</td>
+<td style="text-align: right;">5.153292</td>
+<td style="text-align: right;">3.979682</td>
+<td style="text-align: right;">2.344686</td>
+<td style="text-align: right;">1.0784096</td>
+<td style="text-align: right;">2.312535</td>
+<td style="text-align: right;">2.374906</td>
+<td style="text-align: right;">0.6931472</td>
+<td style="text-align: right;">4.390739</td>
+<td style="text-align: right;">2.747271</td>
+<td style="text-align: right;">0.3364722</td>
+<td style="text-align: right;">1.560248</td>
+<td style="text-align: right;">0.8712934</td>
+<td style="text-align: right;">0.6205765</td>
+<td style="text-align: right;">0.0769610</td>
+<td style="text-align: right;">0.1397619</td>
+<td style="text-align: right;">0.2468601</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">25</td>
+<td style="text-align: right;">4.369448</td>
+<td style="text-align: right;">2.944439</td>
+<td style="text-align: right;">0.7178398</td>
+<td style="text-align: right;">0.5596158</td>
+<td style="text-align: right;">6.208590</td>
+<td style="text-align: right;">5.093750</td>
+<td style="text-align: right;">3.502550</td>
+<td style="text-align: right;">4.055257</td>
+<td style="text-align: right;">0.2926696</td>
+<td style="text-align: right;">1.791759</td>
+<td style="text-align: right;">1.629241</td>
+<td style="text-align: right;">0.6471032</td>
+<td style="text-align: right;">3.927896</td>
+<td style="text-align: right;">3.417727</td>
+<td style="text-align: right;">0.4762342</td>
+<td style="text-align: right;">1.842136</td>
+<td style="text-align: right;">1.1052568</td>
+<td style="text-align: right;">0.8197798</td>
+<td style="text-align: right;">0.0861777</td>
+<td style="text-align: right;">0.1570037</td>
+<td style="text-align: right;">0.2776317</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">26</td>
+<td style="text-align: right;">4.330733</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">1.9947003</td>
+<td style="text-align: right;">0.3715636</td>
+<td style="text-align: right;">6.298949</td>
+<td style="text-align: right;">4.927254</td>
+<td style="text-align: right;">4.062166</td>
+<td style="text-align: right;">2.351375</td>
+<td style="text-align: right;">1.7833912</td>
+<td style="text-align: right;">2.501436</td>
+<td style="text-align: right;">2.228939</td>
+<td style="text-align: right;">0.6151856</td>
+<td style="text-align: right;">4.087656</td>
+<td style="text-align: right;">3.194583</td>
+<td style="text-align: right;">0.3987761</td>
+<td style="text-align: right;">2.747271</td>
+<td style="text-align: right;">0.9895412</td>
+<td style="text-align: right;">0.7419373</td>
+<td style="text-align: right;">0.0676586</td>
+<td style="text-align: right;">0.1739533</td>
+<td style="text-align: right;">0.2231436</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">27</td>
+<td style="text-align: right;">4.290459</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">2.0122328</td>
+<td style="text-align: right;">0.3435897</td>
+<td style="text-align: right;">6.326149</td>
+<td style="text-align: right;">4.948760</td>
+<td style="text-align: right;">4.016383</td>
+<td style="text-align: right;">2.312535</td>
+<td style="text-align: right;">1.6752257</td>
+<td style="text-align: right;">2.451005</td>
+<td style="text-align: right;">2.218116</td>
+<td style="text-align: right;">0.6365768</td>
+<td style="text-align: right;">4.060443</td>
+<td style="text-align: right;">2.965273</td>
+<td style="text-align: right;">0.3074847</td>
+<td style="text-align: right;">1.398717</td>
+<td style="text-align: right;">0.9122827</td>
+<td style="text-align: right;">0.6151856</td>
+<td style="text-align: right;">0.0676586</td>
+<td style="text-align: right;">2.0451089</td>
+<td style="text-align: right;">0.2311117</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">28</td>
+<td style="text-align: right;">4.343805</td>
+<td style="text-align: right;">3.091042</td>
+<td style="text-align: right;">1.9329696</td>
+<td style="text-align: right;">0.6043160</td>
+<td style="text-align: right;">6.156979</td>
+<td style="text-align: right;">5.153292</td>
+<td style="text-align: right;">4.941642</td>
+<td style="text-align: right;">3.860730</td>
+<td style="text-align: right;">2.2905125</td>
+<td style="text-align: right;">4.019980</td>
+<td style="text-align: right;">1.061257</td>
+<td style="text-align: right;">0.5068176</td>
+<td style="text-align: right;">3.332205</td>
+<td style="text-align: right;">2.602690</td>
+<td style="text-align: right;">0.3435897</td>
+<td style="text-align: right;">1.990610</td>
+<td style="text-align: right;">1.1085626</td>
+<td style="text-align: right;">0.9555114</td>
+<td style="text-align: right;">0.0861777</td>
+<td style="text-align: right;">1.6094379</td>
+<td style="text-align: right;">1.7209793</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">29</td>
+<td style="text-align: right;">4.248495</td>
+<td style="text-align: right;">3.367296</td>
+<td style="text-align: right;">2.0241931</td>
+<td style="text-align: right;">0.5933268</td>
+<td style="text-align: right;">6.200509</td>
+<td style="text-align: right;">4.804021</td>
+<td style="text-align: right;">4.812184</td>
+<td style="text-align: right;">3.310543</td>
+<td style="text-align: right;">2.1736147</td>
+<td style="text-align: right;">2.985682</td>
+<td style="text-align: right;">2.363680</td>
+<td style="text-align: right;">0.5364934</td>
+<td style="text-align: right;">3.535145</td>
+<td style="text-align: right;">3.139833</td>
+<td style="text-align: right;">0.4252677</td>
+<td style="text-align: right;">1.832582</td>
+<td style="text-align: right;">1.3190856</td>
+<td style="text-align: right;">1.0331845</td>
+<td style="text-align: right;">0.1222176</td>
+<td style="text-align: right;">0.6575200</td>
+<td style="text-align: right;">0.3220835</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">30</td>
+<td style="text-align: right;">4.465908</td>
+<td style="text-align: right;">2.833213</td>
+<td style="text-align: right;">1.7245507</td>
+<td style="text-align: right;">0.4510756</td>
+<td style="text-align: right;">6.148468</td>
+<td style="text-align: right;">5.283204</td>
+<td style="text-align: right;">5.068904</td>
+<td style="text-align: right;">3.655840</td>
+<td style="text-align: right;">2.4336134</td>
+<td style="text-align: right;">3.034953</td>
+<td style="text-align: right;">1.774952</td>
+<td style="text-align: right;">0.6881346</td>
+<td style="text-align: right;">4.320151</td>
+<td style="text-align: right;">3.157000</td>
+<td style="text-align: right;">0.1739533</td>
+<td style="text-align: right;">1.150572</td>
+<td style="text-align: right;">0.7561220</td>
+<td style="text-align: right;">0.5128236</td>
+<td style="text-align: right;">0.0676586</td>
+<td style="text-align: right;">0.2468601</td>
+<td style="text-align: right;">0.1823216</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">31</td>
+<td style="text-align: right;">4.356709</td>
+<td style="text-align: right;">3.258097</td>
+<td style="text-align: right;">1.8325815</td>
+<td style="text-align: right;">0.5481214</td>
+<td style="text-align: right;">5.993961</td>
+<td style="text-align: right;">4.499810</td>
+<td style="text-align: right;">4.624973</td>
+<td style="text-align: right;">2.965273</td>
+<td style="text-align: right;">2.3960754</td>
+<td style="text-align: right;">3.161247</td>
+<td style="text-align: right;">1.358409</td>
+<td style="text-align: right;">0.5187938</td>
+<td style="text-align: right;">3.306887</td>
+<td style="text-align: right;">3.514526</td>
+<td style="text-align: right;">0.2700271</td>
+<td style="text-align: right;">1.601406</td>
+<td style="text-align: right;">1.0296194</td>
+<td style="text-align: right;">0.7178398</td>
+<td style="text-align: right;">0.0953102</td>
+<td style="text-align: right;">0.1310283</td>
+<td style="text-align: right;">0.2151114</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">32</td>
+<td style="text-align: right;">4.418841</td>
+<td style="text-align: right;">3.135494</td>
+<td style="text-align: right;">2.1065702</td>
+<td style="text-align: right;">0.5423243</td>
+<td style="text-align: right;">6.135565</td>
+<td style="text-align: right;">5.003946</td>
+<td style="text-align: right;">5.003946</td>
+<td style="text-align: right;">3.779634</td>
+<td style="text-align: right;">2.3075726</td>
+<td style="text-align: right;">4.003690</td>
+<td style="text-align: right;">1.345472</td>
+<td style="text-align: right;">0.6678294</td>
+<td style="text-align: right;">3.691376</td>
+<td style="text-align: right;">2.708050</td>
+<td style="text-align: right;">0.3293037</td>
+<td style="text-align: right;">1.747459</td>
+<td style="text-align: right;">1.2556160</td>
+<td style="text-align: right;">0.9360934</td>
+<td style="text-align: right;">0.1133287</td>
+<td style="text-align: right;">0.1655144</td>
+<td style="text-align: right;">0.2700271</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">33</td>
+<td style="text-align: right;">4.418841</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">1.8148247</td>
+<td style="text-align: right;">0.3715636</td>
+<td style="text-align: right;">6.200509</td>
+<td style="text-align: right;">5.117994</td>
+<td style="text-align: right;">4.770685</td>
+<td style="text-align: right;">3.169686</td>
+<td style="text-align: right;">1.8341802</td>
+<td style="text-align: right;">3.384390</td>
+<td style="text-align: right;">1.523880</td>
+<td style="text-align: right;">0.6931472</td>
+<td style="text-align: right;">4.481872</td>
+<td style="text-align: right;">3.126761</td>
+<td style="text-align: right;">0.1310283</td>
+<td style="text-align: right;">1.105257</td>
+<td style="text-align: right;">0.6931472</td>
+<td style="text-align: right;">0.4637340</td>
+<td style="text-align: right;">0.0582689</td>
+<td style="text-align: right;">0.2851789</td>
+<td style="text-align: right;">0.1484200</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">34</td>
+<td style="text-align: right;">4.394449</td>
+<td style="text-align: right;">2.833213</td>
+<td style="text-align: right;">1.7011051</td>
+<td style="text-align: right;">0.3852624</td>
+<td style="text-align: right;">6.150603</td>
+<td style="text-align: right;">5.236442</td>
+<td style="text-align: right;">4.890349</td>
+<td style="text-align: right;">3.549617</td>
+<td style="text-align: right;">2.1564026</td>
+<td style="text-align: right;">2.985682</td>
+<td style="text-align: right;">1.708378</td>
+<td style="text-align: right;">0.7030975</td>
+<td style="text-align: right;">4.268298</td>
+<td style="text-align: right;">2.980619</td>
+<td style="text-align: right;">0.1310283</td>
+<td style="text-align: right;">1.156881</td>
+<td style="text-align: right;">0.6365768</td>
+<td style="text-align: right;">0.4510756</td>
+<td style="text-align: right;">0.0582689</td>
+<td style="text-align: right;">0.0861777</td>
+<td style="text-align: right;">0.1739533</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">35</td>
+<td style="text-align: right;">4.369448</td>
+<td style="text-align: right;">2.995732</td>
+<td style="text-align: right;">2.0307764</td>
+<td style="text-align: right;">0.2151114</td>
+<td style="text-align: right;">6.291569</td>
+<td style="text-align: right;">5.164786</td>
+<td style="text-align: right;">4.067316</td>
+<td style="text-align: right;">2.304583</td>
+<td style="text-align: right;">1.0681531</td>
+<td style="text-align: right;">2.292535</td>
+<td style="text-align: right;">2.377693</td>
+<td style="text-align: right;">0.6881346</td>
+<td style="text-align: right;">4.398146</td>
+<td style="text-align: right;">2.734367</td>
+<td style="text-align: right;">0.1570037</td>
+<td style="text-align: right;">1.289233</td>
+<td style="text-align: right;">0.8372475</td>
+<td style="text-align: right;">0.5423243</td>
+<td style="text-align: right;">0.0769610</td>
+<td style="text-align: right;">0.2151114</td>
+<td style="text-align: right;">0.1570037</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">36</td>
+<td style="text-align: right;">4.369448</td>
+<td style="text-align: right;">3.044522</td>
+<td style="text-align: right;">2.1644718</td>
+<td style="text-align: right;">0.1655144</td>
+<td style="text-align: right;">6.527958</td>
+<td style="text-align: right;">5.170484</td>
+<td style="text-align: right;">4.186620</td>
+<td style="text-align: right;">2.084429</td>
+<td style="text-align: right;">1.2119410</td>
+<td style="text-align: right;">2.001480</td>
+<td style="text-align: right;">2.024193</td>
+<td style="text-align: right;">0.6931472</td>
+<td style="text-align: right;">4.143135</td>
+<td style="text-align: right;">2.721295</td>
+<td style="text-align: right;">0.2623643</td>
+<td style="text-align: right;">1.830980</td>
+<td style="text-align: right;">1.1600209</td>
+<td style="text-align: right;">1.0885620</td>
+<td style="text-align: right;">0.1043600</td>
+<td style="text-align: right;">0.3506569</td>
+<td style="text-align: right;">0.2070142</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">37</td>
+<td style="text-align: right;">4.330733</td>
+<td style="text-align: right;">3.178054</td>
+<td style="text-align: right;">2.0320878</td>
+<td style="text-align: right;">0.2070142</td>
+<td style="text-align: right;">6.142037</td>
+<td style="text-align: right;">4.882802</td>
+<td style="text-align: right;">4.204693</td>
+<td style="text-align: right;">2.141242</td>
+<td style="text-align: right;">1.4701758</td>
+<td style="text-align: right;">2.370244</td>
+<td style="text-align: right;">1.890095</td>
+<td style="text-align: right;">0.5007753</td>
+<td style="text-align: right;">3.728100</td>
+<td style="text-align: right;">2.785011</td>
+<td style="text-align: right;">0.0953102</td>
+<td style="text-align: right;">1.302913</td>
+<td style="text-align: right;">0.8020016</td>
+<td style="text-align: right;">0.7030975</td>
+<td style="text-align: right;">0.0861777</td>
+<td style="text-align: right;">1.3558352</td>
+<td style="text-align: right;">0.1133287</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">38</td>
+<td style="text-align: right;">4.510859</td>
+<td style="text-align: right;">3.091042</td>
+<td style="text-align: right;">1.2029723</td>
+<td style="text-align: right;">0.3220835</td>
+<td style="text-align: right;">6.487684</td>
+<td style="text-align: right;">5.111988</td>
+<td style="text-align: right;">4.836282</td>
+<td style="text-align: right;">5.308268</td>
+<td style="text-align: right;">0.6418539</td>
+<td style="text-align: right;">3.250374</td>
+<td style="text-align: right;">2.815409</td>
+<td style="text-align: right;">1.0116009</td>
+<td style="text-align: right;">5.023880</td>
+<td style="text-align: right;">4.383276</td>
+<td style="text-align: right;">0.3364722</td>
+<td style="text-align: right;">2.299581</td>
+<td style="text-align: right;">1.5993876</td>
+<td style="text-align: right;">1.2059708</td>
+<td style="text-align: right;">0.1988509</td>
+<td style="text-align: right;">1.1631508</td>
+<td style="text-align: right;">0.3506569</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#taking the log.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(logIngots1, <span class="at">col =</span> <span class="st">"#785EF0"</span>, <span class="at">main =</span> <span class="st">"Normal QQ- Plot of the log-transformed data (all elements)"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(logIngots1, <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>HZoriginal <span class="ot">&lt;-</span> <span class="fu">mvn</span>(<span class="at">data =</span> logIngots1, <span class="at">mvn_test =</span> <span class="st">"hz"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Henze_Zirkler Test Results:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Henze_Zirkler Test Results:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(HZoriginal<span class="sc">$</span>multivariate_normality)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Test Statistic p.value     Method      MVN
+1 Henze-Zirkler         1   0.069 asymptotic ✓ Normal</code></pre>
+</div>
+</div>
+<p>The Henze-Zirkler test stipulates</p>
 <span class="math display">\[\begin{aligned}
 \mathcal{H}_0 :&amp;
 \text{ The data follow a multivariate normal distribution},
@@ -2034,6 +4011,7 @@ window.Quarto = {
 \mathcal{H}_1 :&amp;
 \text{ The data do not follow a multivariate normal distribution}.
 \end{aligned}\]</span>
+<p>and while we returned a , suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution, the QQ plot shows enough &lt;flat tails, step, steep, etc&gt; that further testing is warranted.</p>
 <p>Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn’t hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds. steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be the answer as it is very robust to outliers. Plus we return a lot of negative values after a log transformation. Either need to add a constant to keep values non-negative or normalize data another way. This is where I start considering removing the massive outliers from the data set.</p>
 <p>{this maybe wrong as our data is a combination of percentages and PPM - will need to have another look at}</p>
 <p><strong><em>2.3.1 Mad Transformation</em></strong></p>
@@ -2471,66 +4449,66 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Obj 1</td>
-<td style="text-align: right;">0.2091045</td>
-<td style="text-align: right;">0.1987208</td>
-<td style="text-align: right;">0.1555895</td>
-<td style="text-align: right;">0.1247397</td>
-<td style="text-align: right;">0.1675092</td>
-<td style="text-align: right;">0.1443364</td>
+<td style="text-align: right;">0.1565298</td>
+<td style="text-align: right;">0.1487568</td>
+<td style="text-align: right;">0.1164699</td>
+<td style="text-align: right;">0.1211721</td>
+<td style="text-align: right;">0.0933766</td>
+<td style="text-align: right;">0.3636947</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 2</td>
-<td style="text-align: right;">0.1646330</td>
-<td style="text-align: right;">0.1138099</td>
-<td style="text-align: right;">0.1358867</td>
-<td style="text-align: right;">0.1579481</td>
-<td style="text-align: right;">0.0907620</td>
-<td style="text-align: right;">0.3369602</td>
+<td style="text-align: right;">0.1964014</td>
+<td style="text-align: right;">0.1357712</td>
+<td style="text-align: right;">0.1621081</td>
+<td style="text-align: right;">0.1540761</td>
+<td style="text-align: right;">0.1884265</td>
+<td style="text-align: right;">0.1632168</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 3</td>
-<td style="text-align: right;">0.2042144</td>
-<td style="text-align: right;">0.1348720</td>
-<td style="text-align: right;">0.1359459</td>
-<td style="text-align: right;">0.2108820</td>
-<td style="text-align: right;">0.1181184</td>
-<td style="text-align: right;">0.1959674</td>
+<td style="text-align: right;">0.1898074</td>
+<td style="text-align: right;">0.1253571</td>
+<td style="text-align: right;">0.1263552</td>
+<td style="text-align: right;">0.1726400</td>
+<td style="text-align: right;">0.1960047</td>
+<td style="text-align: right;">0.1898357</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 4</td>
-<td style="text-align: right;">0.2418146</td>
-<td style="text-align: right;">0.1796703</td>
-<td style="text-align: right;">0.1360131</td>
-<td style="text-align: right;">0.1644016</td>
-<td style="text-align: right;">0.2176435</td>
-<td style="text-align: right;">0.0604569</td>
+<td style="text-align: right;">0.2653827</td>
+<td style="text-align: right;">0.1971815</td>
+<td style="text-align: right;">0.1492694</td>
+<td style="text-align: right;">0.1225195</td>
+<td style="text-align: right;">0.1804247</td>
+<td style="text-align: right;">0.0852221</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 5</td>
-<td style="text-align: right;">0.2268266</td>
-<td style="text-align: right;">0.1397148</td>
-<td style="text-align: right;">0.1428474</td>
-<td style="text-align: right;">0.2234835</td>
-<td style="text-align: right;">0.1385564</td>
-<td style="text-align: right;">0.1285714</td>
+<td style="text-align: right;">0.1926738</td>
+<td style="text-align: right;">0.1186782</td>
+<td style="text-align: right;">0.1213392</td>
+<td style="text-align: right;">0.2366132</td>
+<td style="text-align: right;">0.1898341</td>
+<td style="text-align: right;">0.1408614</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 6</td>
-<td style="text-align: right;">0.2091030</td>
-<td style="text-align: right;">0.1773348</td>
-<td style="text-align: right;">0.1593441</td>
-<td style="text-align: right;">0.1465050</td>
-<td style="text-align: right;">0.1551289</td>
-<td style="text-align: right;">0.1525842</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Obj 7</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obj 7</td>
+<td style="text-align: right;">0.2115821</td>
+<td style="text-align: right;">0.1428816</td>
+<td style="text-align: right;">0.1452790</td>
+<td style="text-align: right;">0.1639374</td>
+<td style="text-align: right;">0.2053212</td>
+<td style="text-align: right;">0.1309987</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 8</td>
@@ -2543,48 +4521,48 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 9</td>
-<td style="text-align: right;">0.2352924</td>
-<td style="text-align: right;">0.1992988</td>
-<td style="text-align: right;">0.2448350</td>
-<td style="text-align: right;">0.1476927</td>
-<td style="text-align: right;">0.1232943</td>
-<td style="text-align: right;">0.0495869</td>
+<td style="text-align: right;">0.2462303</td>
+<td style="text-align: right;">0.2085635</td>
+<td style="text-align: right;">0.2562165</td>
+<td style="text-align: right;">0.0903731</td>
+<td style="text-align: right;">0.1545585</td>
+<td style="text-align: right;">0.0440582</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 10</td>
-<td style="text-align: right;">0.1615204</td>
-<td style="text-align: right;">0.1270414</td>
-<td style="text-align: right;">0.1362591</td>
-<td style="text-align: right;">0.1822376</td>
-<td style="text-align: right;">0.0928236</td>
-<td style="text-align: right;">0.3001179</td>
+<td style="text-align: right;">0.1689818</td>
+<td style="text-align: right;">0.1329101</td>
+<td style="text-align: right;">0.1425536</td>
+<td style="text-align: right;">0.1734088</td>
+<td style="text-align: right;">0.1906560</td>
+<td style="text-align: right;">0.1914898</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 11</td>
-<td style="text-align: right;">0.1913005</td>
-<td style="text-align: right;">0.2027672</td>
-<td style="text-align: right;">0.1465104</td>
-<td style="text-align: right;">0.1237793</td>
-<td style="text-align: right;">0.2559236</td>
-<td style="text-align: right;">0.0797189</td>
+<td style="text-align: right;">0.1872633</td>
+<td style="text-align: right;">0.1984879</td>
+<td style="text-align: right;">0.1434184</td>
+<td style="text-align: right;">0.1179974</td>
+<td style="text-align: right;">0.1211671</td>
+<td style="text-align: right;">0.2316660</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 12</td>
-<td style="text-align: right;">0.1790465</td>
-<td style="text-align: right;">0.1720778</td>
-<td style="text-align: right;">0.2353280</td>
-<td style="text-align: right;">0.1257283</td>
-<td style="text-align: right;">0.1629961</td>
-<td style="text-align: right;">0.1248234</td>
+<td style="text-align: right;">0.1522093</td>
+<td style="text-align: right;">0.1462850</td>
+<td style="text-align: right;">0.2000547</td>
+<td style="text-align: right;">0.1261893</td>
+<td style="text-align: right;">0.1068829</td>
+<td style="text-align: right;">0.2683788</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 13</td>
-<td style="text-align: right;">0.1728764</td>
-<td style="text-align: right;">0.1361209</td>
-<td style="text-align: right;">0.1443848</td>
-<td style="text-align: right;">0.1681005</td>
-<td style="text-align: right;">0.1123339</td>
-<td style="text-align: right;">0.2661835</td>
+<td style="text-align: right;">0.1915654</td>
+<td style="text-align: right;">0.1508364</td>
+<td style="text-align: right;">0.1599936</td>
+<td style="text-align: right;">0.1582745</td>
+<td style="text-align: right;">0.1862732</td>
+<td style="text-align: right;">0.1530569</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 14</td>
@@ -2597,39 +4575,39 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 15</td>
-<td style="text-align: right;">0.1786125</td>
-<td style="text-align: right;">0.1955709</td>
-<td style="text-align: right;">0.1882806</td>
-<td style="text-align: right;">0.1364657</td>
-<td style="text-align: right;">0.1202525</td>
-<td style="text-align: right;">0.1808178</td>
+<td style="text-align: right;">0.1761548</td>
+<td style="text-align: right;">0.1928798</td>
+<td style="text-align: right;">0.1856898</td>
+<td style="text-align: right;">0.1559031</td>
+<td style="text-align: right;">0.1345879</td>
+<td style="text-align: right;">0.1547845</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 16</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 17</td>
-<td style="text-align: right;">0.1191765</td>
-<td style="text-align: right;">0.1814555</td>
-<td style="text-align: right;">0.1106270</td>
-<td style="text-align: right;">0.0663417</td>
-<td style="text-align: right;">0.4994835</td>
-<td style="text-align: right;">0.0229159</td>
+<td style="text-align: right;">0.2077303</td>
+<td style="text-align: right;">0.3162857</td>
+<td style="text-align: right;">0.1928282</td>
+<td style="text-align: right;">0.1117918</td>
+<td style="text-align: right;">0.1156367</td>
+<td style="text-align: right;">0.0557271</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 18</td>
-<td style="text-align: right;">0.2585365</td>
-<td style="text-align: right;">0.1803020</td>
-<td style="text-align: right;">0.1724451</td>
-<td style="text-align: right;">0.1600730</td>
-<td style="text-align: right;">0.1363204</td>
-<td style="text-align: right;">0.0923231</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 19</td>
@@ -2642,75 +4620,75 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 20</td>
-<td style="text-align: right;">0.1086233</td>
-<td style="text-align: right;">0.0780404</td>
-<td style="text-align: right;">0.0875395</td>
-<td style="text-align: right;">0.1253443</td>
-<td style="text-align: right;">0.0603249</td>
-<td style="text-align: right;">0.5401276</td>
+<td style="text-align: right;">0.1937999</td>
+<td style="text-align: right;">0.1392355</td>
+<td style="text-align: right;">0.1561832</td>
+<td style="text-align: right;">0.1578751</td>
+<td style="text-align: right;">0.2236325</td>
+<td style="text-align: right;">0.1292737</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 21</td>
-<td style="text-align: right;">0.1902434</td>
-<td style="text-align: right;">0.1972968</td>
-<td style="text-align: right;">0.1625666</td>
-<td style="text-align: right;">0.1193400</td>
-<td style="text-align: right;">0.1706108</td>
-<td style="text-align: right;">0.1599425</td>
+<td style="text-align: right;">0.1649852</td>
+<td style="text-align: right;">0.1711022</td>
+<td style="text-align: right;">0.1409830</td>
+<td style="text-align: right;">0.1339858</td>
+<td style="text-align: right;">0.1034956</td>
+<td style="text-align: right;">0.2854482</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 22</td>
-<td style="text-align: right;">0.1388219</td>
-<td style="text-align: right;">0.1203323</td>
-<td style="text-align: right;">0.1271803</td>
-<td style="text-align: right;">0.1307121</td>
-<td style="text-align: right;">0.0868390</td>
-<td style="text-align: right;">0.3961144</td>
+<td style="text-align: right;">0.1706266</td>
+<td style="text-align: right;">0.1479010</td>
+<td style="text-align: right;">0.1563178</td>
+<td style="text-align: right;">0.1728955</td>
+<td style="text-align: right;">0.1606588</td>
+<td style="text-align: right;">0.1916002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 23</td>
-<td style="text-align: right;">0.1781324</td>
-<td style="text-align: right;">0.2168842</td>
-<td style="text-align: right;">0.1777296</td>
-<td style="text-align: right;">0.1128823</td>
-<td style="text-align: right;">0.1965302</td>
-<td style="text-align: right;">0.1178413</td>
+<td style="text-align: right;">0.1455383</td>
+<td style="text-align: right;">0.1771994</td>
+<td style="text-align: right;">0.1452092</td>
+<td style="text-align: right;">0.1216245</td>
+<td style="text-align: right;">0.0922275</td>
+<td style="text-align: right;">0.3182011</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 24</td>
-<td style="text-align: right;">0.1952605</td>
-<td style="text-align: right;">0.2255361</td>
-<td style="text-align: right;">0.1664700</td>
-<td style="text-align: right;">0.1071598</td>
-<td style="text-align: right;">0.1806068</td>
-<td style="text-align: right;">0.1249669</td>
+<td style="text-align: right;">0.1745415</td>
+<td style="text-align: right;">0.2016046</td>
+<td style="text-align: right;">0.1488060</td>
+<td style="text-align: right;">0.1261840</td>
+<td style="text-align: right;">0.0957891</td>
+<td style="text-align: right;">0.2530748</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 25</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.2060513</td>
+<td style="text-align: right;">0.3624021</td>
+<td style="text-align: right;">0.1844404</td>
+<td style="text-align: right;">0.0982658</td>
+<td style="text-align: right;">0.0947744</td>
+<td style="text-align: right;">0.0540660</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Obj 26</td>
-<td style="text-align: right;">0.1993913</td>
-<td style="text-align: right;">0.1770612</td>
-<td style="text-align: right;">0.1557682</td>
-<td style="text-align: right;">0.1688757</td>
-<td style="text-align: right;">0.2419104</td>
-<td style="text-align: right;">0.0569931</td>
+<td style="text-align: right;">0.2231491</td>
+<td style="text-align: right;">0.1981583</td>
+<td style="text-align: right;">0.1743282</td>
+<td style="text-align: right;">0.1390053</td>
+<td style="text-align: right;">0.1889975</td>
+<td style="text-align: right;">0.0763616</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Obj 27</td>
-<td style="text-align: right;">0.2026514</td>
-<td style="text-align: right;">0.1855553</td>
-<td style="text-align: right;">0.2140028</td>
-<td style="text-align: right;">0.1737097</td>
-<td style="text-align: right;">0.1394386</td>
-<td style="text-align: right;">0.0846423</td>
+<td style="text-align: right;">0.2184313</td>
+<td style="text-align: right;">0.2000040</td>
+<td style="text-align: right;">0.2306667</td>
+<td style="text-align: right;">0.1067917</td>
+<td style="text-align: right;">0.1872360</td>
+<td style="text-align: right;">0.0568702</td>
 </tr>
 </tbody>
 </table>
@@ -2729,13 +4707,12 @@ window.Quarto = {
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">5. Results</h2>
+<p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at ~20mg.</p>
+<p>The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.</p>
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">6. Discussion</h2>
-<p>The historic Gela, Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port <span class="citation" data-cites="Angelucci2026">(<a href="#ref-Angelucci2026" role="doc-biblioref">Angelucci, 2026</a>)</span>. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled to and from Gela for centuries.</p>
-<p>A shipwreck off the coast of Gela, Italy continues to provide significant archaeological finds to this day. A discovery dating back to 1988 <span class="citation" data-cites="nuttersworldGelaWreck">(<a href="#ref-nuttersworldGelaWreck" role="doc-biblioref">Nutter, 2025</a>)</span>, where it was first stumbled upon by divers near Bulala beach. We are exploring one of the most significant finds from this wreck; A veritable hoard of the fabled metal, Orichalcum.</p>
-<p>The discovery of 40 orichalcum ingots in 2017 was a monumental one. There has never been a discovery of this many ingots in one place. There was also evidence of consistent casting processes, with overall similarities suggest a rudimentary mold production, likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggested cast-diverse technologies.</p>
-<p>with <span class="citation" data-cites="Caponetti2017-sc">Caponetti, Armetta, Martino, et al. (<a href="#ref-Caponetti2017-sc" role="doc-biblioref">2017</a>)</span> determining 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time</p>
+<p><span class="citation" data-cites="Caponetti2017-sc">Caponetti, Armetta, Martino, et al. (<a href="#ref-Caponetti2017-sc" role="doc-biblioref">2017</a>)</span> determined 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time</p>
 <p>The initial analysis was performed by non-invasive XRF, a method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.</p>
 <p>The find was dated to ~600BCE, the approximate age of the ship, and by the pottery also found in the wreck.</p>
 <p>A study on a sample group this large has never been done before. Also, this dataset is not very large. - love this sentence 10/10.</p>
@@ -2749,6 +4726,7 @@ window.Quarto = {
 <p>What were the limitations of this study?</p>
 <p>What further research could be done? Different statistical analysis?</p>
 <p>When working with museum quality pieces, that need destructive analyses performed to</p>
+<p>Data obtained for the (NAME TABLE) containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by ICP-OES and ICP-MS. Collecting samples from 38 ancient ingots to analysis the association between the ingots elemental composition.</p>
 </section>
 <section id="refrences" class="level2">
 <h2 class="anchored" data-anchor-id="refrences">7. Refrences</h2>

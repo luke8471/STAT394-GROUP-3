@@ -253,9 +253,6 @@ qqline(logIngots1, col = "red")
 
 #HZ test on the log transformed data
 
-[{\cal H}_0:\text{ The data follows a multivariate normal distribution}]
-
-\[{\cal H}_1:\text{ The data does not a multivariate normal distribution}\]
 
 
 HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
@@ -273,12 +270,12 @@ Looking at the QQ-plot with the light blue points (no transformation) we can see
 Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data  normality assumption holds.
 
 
-##  Getting MAD to work: - code from somewhere online (https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/mad and https://www.geeksforgeeks.org/r-language/calculate-the-median-absolute-deviation-in-r-programming-mad-function/)
+##  MAD
 ```{r transformations-mad, echo=TRUE}
 
 #Calculate medians and MAD for each column:
-median <- apply(Ingots_F_no[,-1], 2, median)
-mad <- apply(Ingots_F_no[,-1], 2, mad)
+median <- apply(logIngots1[,-1], 2, median)
+mad <- apply(logIngots1[,-1], 2, mad)
 
 
 print(median/mad)
@@ -291,39 +288,40 @@ print(median/mad)
 
 
 #Compute the robust z-scores:
-z <- scale(Ingots_F_no[,-1], center = median, scale = mad)
+z <- scale(logIngots1[,-1], center = median, scale = mad)
 
 #Flag observations where any variable exceeds the threshold
 outliers <- apply(abs(z) > 2.5, 1, any)
 
 list(outliers)
 
+print(outliers)
+
 # View the rows flagged as outliers
-summary(Ingots_F_no[outliers,])
+summary(logIngots1[outliers,])
 
 #The QQ plot shows very skewed data (expected)
 
 qqnorm((z), col="gray");
 qqline((z), col="red")
 
-num_cols <- sapply(Ingots_F_no, is.numeric)
-z_scores <- as.data.frame(scale(Ingots_F_no[, num_cols]))
+z_scores <- as.data.frame(scale(logIngots1[, ]))
 
 summary(z_scores)
 
-ol <- Ingots_F_no[rowSums(abs(z_scores) > 4) > 0, ]
+ol <- logIngots1[rowSums(abs(z_scores) > 3) > 0, ]
 
 print(ol)
 
-Ingots_clean <- Ingots_F_no[rowSums(abs(z_scores) > 3) == 0, ]
+Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 
-summary(Ingots_clean)
+Ingots_clean
 
 #old boxplot:
 #boxplot(Ingots_clean[,-1], notch = TRUE, col="lightblue")
 
 #New boxplot:
-Ingots_clean_long <- Ingots_clean[,-1] |>
+Ingots_clean_long <- as.data.frame(Ingots_clean[,-1]) |>
   pivot_longer(
     cols = everything(),
     names_to = "Elements",
