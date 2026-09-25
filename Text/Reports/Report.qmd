@@ -141,7 +141,7 @@ We will be excluding the Cu/Zn ratio variable as we chose to analyse the linkage
 
 **3.1 Analysing raw data**
 
-We perfprmed a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to note is that the elements Cu, Zn, Pb, and Fe are all in percentages, where as the concentrations of the other elements are in PPM (parts per a million). This immediately indicated that scaling was needed.
+We performed a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to note is that the elements Cu, Zn, Pb, and Fe are all in percentages, where as the concentrations of the other elements are in PPM (parts per a million). This immediately indicated that scaling was needed.
 
 ```{r extracting the table, echo=FALSE}
 ##  Extracting the table from the pdf: - tabulapdf package codes:
@@ -260,7 +260,7 @@ skim(main_com[,6])|>
 
 ```
 
-Notice that these samples have a mean of \numcal{104.4%} with a range \numcal{93.17%} to \numcal{113.71%}. Where 33 of the 38 samples exceed \numcal{100%}. The most significant deviations are samples 8 and 38 (COMMENT ON THIS). @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of available material for sampling for each observation.
+These samples have a mean of \\numcal{104.4%} with a range \\numcal{93.17%} to \\numcal{113.71%}. Where 33 of the 38 samples exceed \\numcal{100%}. The most significant deviations are samples 8 and 38 (COMMENT ON THIS). @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of available material for sampling for each observation.
 
 **3.2 QQ-plots & Henze-Zirkler Test For Multivariate Normality**
 
@@ -310,8 +310,6 @@ The QQ-plot of the log transformed data roughly followed the theoretical line (i
 
 The observed zero-values for (PUT SAMPLES NUMBERS IN HERE) in (TABLE) in variables(HERE), which while not a large quantity of the samples, still provided some concern as \numcal{log(0)} is undefined and can influence non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
 
-Given these irregularities, tried log transform. This returned some zero-values for (PUT SAMPLES NUMBERS IN HERE), which while not a large quantity of the samples, still provides some concern as \numcal{log(0)} is undefined and can return non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
-
 We chose to combat the zero values by standardising the data set using \mathcal{log(x + 1)}, where \mathcal{x} is our data. This, coupled with a Henze-Zirkler test, established if there is preliminary evidence for multivariate normality.
 
 ```{r}
@@ -339,6 +337,8 @@ print(HZoriginal$multivariate_normality)
 
 As you can see in table 2, our values are now all non-zero.
 
+The normal QQ-plot looks less normal after standardisation, with the length of the tails being accentuated and continuing presence of stepped data.
+
 The Henze-Zirkler test stipulates
 
 \begin{aligned}
@@ -355,7 +355,7 @@ Given the uncertainty of multivariate normality and the presence of outliers, fu
 
 **3.3 MAD**
 
-MAD was used because it is a robust outlier-resistant measure of variability. The log transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence.
+MAD was used because it is a robust, outlier-resistant, measure of variability. The log transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence.
 
 ```{r transformations-mad, echo=FALSE}
 
@@ -379,9 +379,9 @@ knitr::kable(med_mad_table,
 
 ```
 
-Notice from this table we can see some massive deviations, as expected.
+From {TABLE NUMBER} we observed some massive deviations, as expected.
 
-Next we used the robust Z score to identify outliers that were candidates for removal. leys et al. (2013) argue the MAD is the most robust scale measure under contamination and recommend a median plus or minus 2.5 time MAD rule for outlier detection. .
+Next the robust Z score was used to identify outliers that were candidates for removal. For our cutoff, we went with @Leys2013-cr recommendation, who argued that the MAD is the most robust scale measure under contamination and recommend a median plus or minus 2.5 time MAD rule for outlier detection.
 
 ```{r outliers, echo=FALSE}
 #Compute the robust z-scores:
@@ -416,20 +416,20 @@ Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 
 #New boxplot:
 
-#THIS IS BROKEN BROKEN BROKEN
+df <- as.data.frame(Ingots_clean)
 
-#Ingots_clean_long <- Ingots_clean[,-1] |>
-  #pivot_longer(
-    #cols = everything(),
-    #names_to = "Elements",
-    #values_to = "Concentrations")
+Ingots_clean_long <- df[,-1] |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Elements",
+    values_to = "Concentrations")
 
 
 
-#ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
-  #geom_boxplot(notch = FALSE, fill ="#40B0A6") +
-  #theme_minimal()+
-  #labs(title = "Boxplot of MAD Transformation With Outliers Removed")
+ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
+  geom_boxplot(notch = FALSE, fill ="#40B0A6") +
+  theme_minimal()+
+  labs(title = "Boxplot of MAD Transformation With Outliers Removed")
 
 
 #still getting negative values (even with elevated magnitude cutoff) in here so 
@@ -555,7 +555,7 @@ We started by performing a PAM (Partitioning Around Medoids) analysis
 
 ```{r LDA, echo=FALSE}
 
-ICN <- sapply(Ingots_clean[,-1], as.numeric)
+ICN <- sapply(Ingots_clean, as.numeric)
 
 scaled <- scale(ICN)
 
@@ -563,7 +563,7 @@ scaled <- scale(ICN)
 
 #need to find optimal silhouette width
 
-sil_avg <- nrow(Ingots_clean[,-1])
+sil_avg <- nrow(Ingots_clean)
 
 for (k in 2:26) {
   PAM_fit <- pam(scaled, k)
@@ -577,15 +577,11 @@ knitr::kable(LDA_K,
              format = "pipe")
 
 
-pam <- pam(Ingots_clean[,-1], k = 5)
+pam <- pam(Ingots_clean, k = 5)
 
 cluster <- pam$clustering
 
-ICN1 <- sapply(Ingots_clean[,-1], as.numeric)
-
-scaled1 <- scale(ICN1)
-
-sil_avg1 <- nrow(Ingots_clean[,-1])
+sil_avg1 <- nrow(Ingots_clean)
 
 for (k in 2:26) {
   PAM_fit <- pam(scaled, k)
@@ -603,52 +599,15 @@ fviz_silhouette(pam)+
 
 ```
 
-The silhouette value/metric is a measurement of the quality of a clustering. between -1 and 1
+The silhouette value/metric is a measurement of the quality of a clustering. between -1 and 1. The data reports the optimal silhouette width as 5, with 0.6496032, indicating some. There are several other clustering values with a reported similar quality.
 
-Reports optimal silhouette width as 5 with 0.31014624, indicating some weak clustering. Using complete data set or any of the other variations does not affect the suggested average silhouette. Stick with 5. \*\*\*6 is also very close.
+Due to the ambiguous clustering, we opted to perform more cluster analyses to determine if this was a good fit.
 
-Due to the weak clustering, we opted to perform more cluster analyses to determine if this was a good fit.
+MANHATTAN NOT EUCLEDIAN.
 
-**3.3 Cluster Anaylsis**
+**3.3 Cluster Analysis**
 
-```{r cluster plot, echo=FALSE}
-
-
-
-result <- invisible(kmeans(ICN, 
-                 algorithm = "MacQueen",
-                 centers = 5, iter.max = 100, nstart = 50))
-
-#trying to do the clusterplot:
-factoextra::fviz_cluster(result, data = ICN,
-                         palette = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"),
-                         ellipse.type = "euclid", 
-                         star.plot = TRUE,
-                         repel = TRUE, 
-                         ggtheme = theme_minimal())
-
-
-```
-
-for the clusting below based on the PAM we wil be taking k = 5
-
-```{r ward hclustering, echo=FALSE}
-old_par <- par(no.readonly = TRUE) #stuff to help make the legend
-
-par(mar = c(6,5,4,6.5)) #stuff to help make the legend
-
-wards <- hclust(dist(scaled), method = "ward.D")
-
-plot(wards, main = "Ward. D Cluster Dendrogram")
-rect.hclust(wards, 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
-legend("topright",
-       inset = c(-0.10,0),
-       legend = c("1", "2", "3", "4", "5"),
-       fill = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"), xpd = TRUE)
-
-on.exit((par(old_par))) #stuff to help make the legend
-
-```
+H cluster using manhattan distance as a measure.
 
 However we may not want to use wards method as .... {ALICE} ... hence Manhatten distance cluster may be a better cluster to consider as it more robust to outliers then Eucledian.
 
@@ -675,17 +634,17 @@ on.exit((par(old_par))) #stuff to help make the legend
 
 Something interesting top note is that for both cluster options they both cluster sample's 15, 10, and 22 this could be because of ...
 
-**3.4 Fuzzy Analysis** lastly we decided to perform a Fuzzy analysis of the clean data as another form of clustering .. . {ALICE}
+**3.4 Fuzzy Analysis**
+
+As the third and final method of clustering, we performed a Fuzzy analysis.
 
 ```{r fuzzy, echo=FALSE}
 
 old_par <- par(no.readonly = TRUE) #stuff to help make the legend
 
-#scaled1
-
 #k-medoids for Fuzzy
 
-Fuzzy_k <- FKM.med(scaled, k = 6, m = 2)
+Fuzzy_k <- FKM.med(scaled, k = 5, m = 2)
 
 #silhouettes
 
