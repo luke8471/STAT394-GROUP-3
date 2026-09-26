@@ -708,6 +708,28 @@ plot(sil_each,
      main = "Silhouette Plot")
 
 
+sil_df <- data.frame(
+  obs = 1:nrow(sil_each), 
+  width = sil_each[, "sil_width"],
+  cluster = factor(sil_each[, "cluster"])
+  )
+
+ggplot(sil_df,
+       aes(x = reorder(obs, width),
+           y = width,
+           fill = cluster)) + 
+  geom_col() +
+  coord_flip() +
+  geom_hline(yintercept = mean(sil_df$width),
+             linetype = "dashed",
+             colour = "red") +
+  scale_fill_manual(values = c(
+    "#648FFF", "#785EF0", "#DC267F", "#FE6100", "#FFB000")) +
+  labs(title = "Silhouette Plot",
+       x = "Observation",
+       y = "Silhouette Width") +
+  theme_minimal()
+
 plot(sil_each[, "sil_width"],
      pch = 15,
      col = my_col[Fuzzy_Clust],
@@ -716,6 +738,44 @@ plot(sil_each[, "sil_width"],
      main = "Per-Observation Silhouettes")
 abline(h = 0, lty = 2)
 
+
+
+ggplot(LDA_K,
+       aes(k, avg_silhouette)) +
+  geom_line() +
+  geom_point(size = 3) +
+  theme_minimal() +
+  labs(
+    title = "Average Silhouette Width by Number of Clusters",
+    x = "Number of Clusters",
+    y = "Average Silhouette Width"
+    )
+
+
+certainty <- apply(Fuzzy_k$U, 1, max)
+
+ggplot(
+  data.frame(
+    Obs = 1:length(certainty),
+    Certainty = certainty,
+    Cluster = factor(Fuzzy_Clust)
+  ),
+  aes(Obs, Certainty, colour = Cluster)
+  ) +
+  geom_hline(
+    yintercept = 1/5,
+    linetype = "dashed",
+    colour = "red"
+  ) +
+  labs(
+    caption = "Red dashed line indicates complete ambiguity (1/k)"
+    ) +
+  geom_point(size = 6) +
+  theme_minimal() +
+  labs(
+    title = "Fuzzy Membership Certainty",
+    y = "Maximum Membership"
+    )
 
 
 
@@ -738,6 +798,8 @@ abline(h = 0, lty = 2)
 #on.exit((par(old_par))) #stuff to help make the legend
 
 ```
+
+The graph of Fuzzy Membership Certainty shows that the majority of our observations are near ambiguous in there assigned groupings.
 
 ## 5. Results
 
