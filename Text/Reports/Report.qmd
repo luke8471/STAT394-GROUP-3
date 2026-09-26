@@ -40,8 +40,9 @@ library(knitr)
 library(tidyverse)
 library(skimr)
 library(bibtex)
+library(ggdendro)
 
-my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000","#F0E442")
+my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
 ##  Reading the pdf: - pdftools package code:
 
@@ -634,7 +635,7 @@ MANHATTAN NOT EUCLEDIAN.
 
 **3.3 Cluster Analysis**
 
-Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian.
+Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.
 
 ```{r manhatten cluster, echo=FALSE}
 #| fig-width: 10
@@ -648,23 +649,50 @@ HiMan <- hclust(dist, method = "average")
 
 CC <- cor(dist, cophenetic(HiMan))
 
-par(mar = c(6,5,4,6.5)) #stuff to help make the legend
+dend <- dendro_data(HiMan)
 
-plot(HiMan, main = "Manhatten Cluster Dendrogram",
-     sub = paste(
-       "Average Linkage | Cophenetic Correlation =",
-       round(CC, 3)
-       )
-     )
+legend_df <- data.frame(
+  Cluster = factor(1:5),
+  x = 0,
+  y = 0
+)
+
+fviz_dend(
+  HiMan,
+  k = 5,
+  rect = TRUE,
+  rect_border = my_col,
+  k_colors = my_col,
+  color_labels_by_k = TRUE
+  ) +
+  geom_point(
+    data = legend_df,
+    aes(x, y, colour = Cluster),
+    shape = 21,
+    size = 5,
+    alpha = 0
+    ) +
+  scale_fill_manual(
+    values = cols,
+    name = "Cluster"
+    ) +
+  labs(
+  title = "Hierarchichal Cluster Dendrogram using 
+    Manhattan Distance",
+  subtitle = paste(
+    "Average Linkage | Manhattan Distance | CCC =",
+    round(CC, 3)
+    ),
+  colour = "Cluster"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(colour = "grey40")
+    ) 
 
 
-rect.hclust(HiMan , 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
-legend("topright",
-       inset = c(-0.10,0),
-       legend = c("1", "2", "3", "4", "5"),
-       fill = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"), xpd = TRUE)
 
-on.exit((par(old_par))) #stuff to help make the legend
 
 
 ```
