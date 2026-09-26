@@ -634,9 +634,7 @@ MANHATTAN NOT EUCLEDIAN.
 
 **3.3 Cluster Analysis**
 
-H cluster using Manhattan Distance as a measure.
-
-However we may not want to use wards method as .... {ALICE} ... hence Manhatten distance cluster may be a better cluster to consider as it more robust to outliers then Eucledian.
+Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian.
 
 ```{r manhatten cluster, echo=FALSE}
 #| fig-width: 10
@@ -648,9 +646,18 @@ dist <- dist(scaled, method = "manhattan")
 
 HiMan <- hclust(dist, method = "average")
 
+CC <- cor(dist, cophenetic(HiMan))
+
 par(mar = c(6,5,4,6.5)) #stuff to help make the legend
 
-plot(HiMan, main = "Manhatten Cluster Dendrogram")
+plot(HiMan, main = "Manhatten Cluster Dendrogram",
+     sub = paste(
+       "Average Linkage | Cophenetic Correlation =",
+       round(CC, 3)
+       )
+     )
+
+
 rect.hclust(HiMan , 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
 legend("topright",
        inset = c(-0.10,0),
@@ -663,6 +670,8 @@ on.exit((par(old_par))) #stuff to help make the legend
 ```
 
 Something interesting top note is that for both cluster options they both cluster sample's 15, 10, and 22 this could be because of ...
+
+Cophenetic correlation coefficient 0.825 is pretty dang good. I'm going to remake this using ggplot, should be nicer.
 
 **3.4 Fuzzy Analysis**
 
@@ -781,6 +790,8 @@ ggplot(
 ```
 
 The graph of Fuzzy Membership Certainty shows that the majority of our observations are near ambiguous in there assigned groupings.
+
+Picks by median centrality, determines closest group and percentage it belongs in said group.
 
 ## 5. Results
 
