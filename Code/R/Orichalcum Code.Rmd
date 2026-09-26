@@ -190,7 +190,7 @@ ggcorrplot(cor(Ingots_F_no[,-1]),
 ```
 
 *Notes:*
-Our raw data of concentrations produced a summary and simple box plots from above some things to note are Ni (nickel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations.
+Our raw data of concentrations produced a summary and simple box plots from above some things to note are Ni (nickel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. 
 looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
 
 We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
@@ -216,14 +216,24 @@ boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue")
 ```
 
 *Notes:*
-From the these boxplots we can more clearly see differences between spreads between our main elements, Lead and Zinc have a slight spread where as Copper and tine have a larger spread, Tin also has some outliers, particularly 65.8 from sample 17, as well as 42 from sample 22. Again Transformations will give us a better picture to show the relationships between the variable 
+From the these boxplots we can more clearly see differences between spreads between some of our most prevalent elements, Lead and Zinc have a slight spread where as Copper and tine have a larger spread, Tin also has some outliers, particularly 65.8 from sample 17, as well as 42 from sample 22. Again Transformations will give us a better picture to show the relationships between the variable 
 
-##  QQ-normal plots: (taking the log) - code from STAT292
+##  QQ-normal plots: - code from STAT292
 ```{r qqnormal, echo=TRUE}
 #no transformations
 
 qqnorm(as.matrix(Ingots_F_no[-1,-1]), col="lightblue")
 qqline(as.matrix(Ingots_F_no[-1,-1]), col="red")
+
+#no transformations: elements in percentages:
+
+qqnorm(as.matrix(Ingots_F_no[-1,2:5]), col="#648FFF", main = "Normal QQ-Plot of Table 1", sub =  "Using all elements that were recored in percentages (Cu, Zn, Pb and Fe)")
+qqline(as.matrix(Ingots_F_no[-1,2:5]), col="red")
+
+#no transformations: elements in PPM:
+
+qqnorm(as.matrix(Ingots_F_no[-1,6:22]), col="#648FFF", main = "Normal QQ-Plot of table 1", sub = "Using all elements that were recored in PPM")
+qqline(as.matrix(Ingots_F_no[-1,6:22]), col="red")
 
 #log transform data
 
@@ -241,7 +251,7 @@ logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 summary(logIngots1)
 print(logIngots1)
 
-#taking the log anyway, for giggles.
+#log(x + 1)
 
 qqnorm(logIngots1, col = "#4169E1");
 qqline(logIngots1, col = "red")
@@ -250,9 +260,7 @@ qqline(logIngots1, col = "red")
 #the answer. Very robust to outliers. AMENDMENT best option fo sho
 
 
-
 #HZ test on the log transformed data
-
 
 
 HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
@@ -260,9 +268,9 @@ cat("Henze_Zirkler Test Results:\n")
 print(HZoriginal$multivariate_normality)
 
 
-#steps in data and long tails, not happy. Median Absolute Deviation (MAD) may be
-#the answer. Very robust to outliers. AMENDMENT best option fo sho
-
+#steps in data and long tails, not happy despite HZ reporting normal, p-value 
+#still close. Median Absolute Deviation (MAD) may be the answer. Very robust to 
+#outliers.
 ```
 *Notes:*
 Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7. 

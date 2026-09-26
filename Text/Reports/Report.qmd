@@ -216,7 +216,7 @@ Using R, summary statistics were created from table 1 (table 2) and initial obse
 
 @Caponetti2017-fd observed that samples S13, S25, and S38 were potential outliers due to various unusual element concentrations which we also saw. We also found that S22, S18, and S17 appear to have high Sr content (15.1ppm, 11.8ppm, 7.27ppm respectively compared to a median of 0.42ppm) while S28, S22, and S19 have high Ba content (4.59ppm, 3.61ppm, 3.37ppm respectively compared to a median of 0.28ppm).
 
-(MAYBE SAY 'further data clustering analysis may find that these groupings of samples cluster together in similar groups, furthering @Caponetti2017-fd claim that trace element analysis could be used to differentiate providence of alloy production)xxxxxxxxxxxxxxxxxxxx
+(MAYBE SAY 'further data clustering analysis may find that these groupings of samples cluster together in similar groups, furthering @Caponetti2017-fd claim that trace element analysis could be used to differentiate providence of alloy production)
 
 ```{r basic summary, echo=FALSE}
 #| fig-width: 10
