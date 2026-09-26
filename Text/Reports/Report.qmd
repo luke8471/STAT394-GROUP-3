@@ -778,30 +778,13 @@ ggplot(
     )
 
 
-
-#not plotting right variables, fixed above.
-
-#par(mar = c(6,5,4,6.5)) #stuff to help make the legend
-
-
-
-#plot(Fuzzy_Clust, pch = 15, 
-     #col = my_col[apply(Fuzzy_k$U, 1, which.max)],
-     #xlab = "Obs",
-     #ylab = "Silhouette Width",
-     #main = "Fuzzy Silhouette Plot Using k-Medoids")
-#legend("topright",
-       #inset = c(-0.15,0),
-       #legend = c("1", "2", "3", "4", "5","6"),
-       #fill = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000","#F0E442"), xpd = TRUE)
-
-#on.exit((par(old_par))) #stuff to help make the legend
-
 ```
 
 The graph of Fuzzy Membership Certainty shows that the majority of our observations are near ambiguous in there assigned groupings.
 
 ## 5. Results
+
+We are unable to make direct
 
 @Caponetti2017-fd determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at \~20mg.
 
