@@ -591,12 +591,12 @@ result <- kmeans(ICN,
 print(result)
 
 #trying to do the clusterplot
-factoextra::fviz_cluster(result, data = ICN,
-                         palette = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"),
-                         ellipse.type = "euclid", 
-                         star.plot = TRUE,
-                         repel = TRUE, 
-                         ggtheme = theme_minimal())
+#factoextra::fviz_cluster(result, data = ICN,
+                         #palette = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"),
+                         #ellipse.type = "euclid", 
+                         #star.plot = TRUE,
+                         #repel = TRUE, 
+                         #ggtheme = theme_minimal())
 
 
 ```
@@ -624,7 +624,7 @@ dend_col <- color_branches(
 
 dend_data <- dendro_data(dend_col)
 
-fviz_dend(
+p <- fviz_dend(
   HiMan,
   k = 5,
   rect = TRUE,
@@ -648,12 +648,13 @@ fviz_dend(
   ) 
 
 ggsave(
-  "Figures/dendrogram.png",
+  file.path("../STAT394-GROUP-3/Figures", "dendrogram.png"),
   p,
   width = 10,
   height = 6,
   dpi = 300
 )
+
 ```
 
 ## Trying stuff - Note Gaia couldn't get this to work ALICE

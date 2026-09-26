@@ -126,6 +126,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body class="quarto-light">
@@ -1518,7 +1519,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/basic%20summary-1.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/basic%20summary-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1936,14 +1937,14 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/qqnormal-1.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/qqnormal-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/qqnormal-2.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/qqnormal-2.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2913,7 +2914,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3883,7 +3884,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -4055,7 +4056,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/outliers-1.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/outliers-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -4070,7 +4071,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/outliers-2.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/outliers-2.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -4083,7 +4084,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/pairwise-1.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/pairwise-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -4115,14 +4116,14 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/correlations-1.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/correlations-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/correlations-2.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/correlations-2.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -4260,7 +4261,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/LDA-1.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/LDA-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -4271,19 +4272,40 @@ window.Quarto = {
 <p><strong>3.3 Cluster Analysis</strong></p>
 <p>Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.</p>
 <div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/manhatten%20cluster-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 520   1</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/manhatten%20cluster-2.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/manhatten%20cluster-1.png" class="img-fluid figure-img" width="3600"></p>
 </figure>
 </div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(scaled, <span class="at">method =</span> <span class="st">"manhattan"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>HiMan <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d, <span class="at">method =</span> <span class="st">"average"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(scaled) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(ICN)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">fviz_dend</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  HiMan,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">5</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">rect =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_colors =</span> my_col,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">rect_border =</span> my_col</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">ggplot_build</span>(p)<span class="sc">$</span>data[[<span class="dv">2</span>]]<span class="sc">$</span>label)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 103 92  87  93  98  82 
+520 Levels: 103 92 87 93 98 82 86 81 90 79 91 94 102 83 88 89 95 85 84 ... 239</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">ggplot_build</span>(p)<span class="sc">$</span>data[[<span class="dv">2</span>]]<span class="sc">$</span>label))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 520</code></pre>
 </div>
 </div>
 <p>Something interesting top note is that for both cluster options they both cluster sample’s 15, 10, and 22 this could be because of …</p>
@@ -4307,59 +4329,59 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">0.1837223</td>
-<td style="text-align: right;">0.1604535</td>
-<td style="text-align: right;">0.1617960</td>
-<td style="text-align: right;">0.3647139</td>
-<td style="text-align: right;">0.1293143</td>
+<td style="text-align: right;">0.1736653</td>
+<td style="text-align: right;">0.1516703</td>
+<td style="text-align: right;">0.1529392</td>
+<td style="text-align: right;">0.1368563</td>
+<td style="text-align: right;">0.3848689</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">0.2743970</td>
-<td style="text-align: right;">0.2058822</td>
-<td style="text-align: right;">0.1759881</td>
-<td style="text-align: right;">0.1341465</td>
-<td style="text-align: right;">0.2095862</td>
+<td style="text-align: right;">0.2281289</td>
+<td style="text-align: right;">0.1711670</td>
+<td style="text-align: right;">0.1463135</td>
+<td style="text-align: right;">0.2755176</td>
+<td style="text-align: right;">0.1788730</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">5</td>
-<td style="text-align: right;">0.2772959</td>
-<td style="text-align: right;">0.2436443</td>
-<td style="text-align: right;">0.1777119</td>
-<td style="text-align: right;">0.1252760</td>
-<td style="text-align: right;">0.1760719</td>
+<td style="text-align: right;">0.1790369</td>
+<td style="text-align: right;">0.1573096</td>
+<td style="text-align: right;">0.1147401</td>
+<td style="text-align: right;">0.3570616</td>
+<td style="text-align: right;">0.1918518</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">6</td>
-<td style="text-align: right;">0.2547068</td>
-<td style="text-align: right;">0.1923250</td>
-<td style="text-align: right;">0.2663341</td>
-<td style="text-align: right;">0.1032215</td>
-<td style="text-align: right;">0.1834126</td>
+<td style="text-align: right;">0.2186566</td>
+<td style="text-align: right;">0.1651041</td>
+<td style="text-align: right;">0.2286381</td>
+<td style="text-align: right;">0.2404590</td>
+<td style="text-align: right;">0.1471422</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">8</td>
-<td style="text-align: right;">0.2712500</td>
-<td style="text-align: right;">0.2960191</td>
-<td style="text-align: right;">0.1532005</td>
-<td style="text-align: right;">0.1050444</td>
-<td style="text-align: right;">0.1744860</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">9</td>
-<td style="text-align: right;">0.2007902</td>
-<td style="text-align: right;">0.2264072</td>
-<td style="text-align: right;">0.1763241</td>
-<td style="text-align: right;">0.2518103</td>
-<td style="text-align: right;">0.1446682</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10</td>
-<td style="text-align: right;">0.2686159</td>
-<td style="text-align: right;">0.2338997</td>
-<td style="text-align: right;">0.1780810</td>
-<td style="text-align: right;">0.1409975</td>
-<td style="text-align: right;">0.1784058</td>
+<td style="text-align: right;">0.2534904</td>
+<td style="text-align: right;">0.2207291</td>
+<td style="text-align: right;">0.1680535</td>
+<td style="text-align: right;">0.1896985</td>
+<td style="text-align: right;">0.1680285</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">11</td>
@@ -4371,35 +4393,35 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">12</td>
-<td style="text-align: right;">0.2997819</td>
-<td style="text-align: right;">0.1313858</td>
-<td style="text-align: right;">0.2026460</td>
-<td style="text-align: right;">0.0612202</td>
-<td style="text-align: right;">0.3049661</td>
+<td style="text-align: right;">0.3877630</td>
+<td style="text-align: right;">0.1699455</td>
+<td style="text-align: right;">0.2621193</td>
+<td style="text-align: right;">0.1043723</td>
+<td style="text-align: right;">0.0757999</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">15</td>
-<td style="text-align: right;">0.2088894</td>
-<td style="text-align: right;">0.1483544</td>
-<td style="text-align: right;">0.1965969</td>
-<td style="text-align: right;">0.2989064</td>
-<td style="text-align: right;">0.1472529</td>
+<td style="text-align: right;">0.2345273</td>
+<td style="text-align: right;">0.1665625</td>
+<td style="text-align: right;">0.2207260</td>
+<td style="text-align: right;">0.1562440</td>
+<td style="text-align: right;">0.2219403</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">16</td>
-<td style="text-align: right;">0.2557350</td>
-<td style="text-align: right;">0.2293714</td>
-<td style="text-align: right;">0.1850173</td>
-<td style="text-align: right;">0.1764975</td>
-<td style="text-align: right;">0.1533788</td>
+<td style="text-align: right;">0.1963024</td>
+<td style="text-align: right;">0.1760657</td>
+<td style="text-align: right;">0.1420194</td>
+<td style="text-align: right;">0.2080554</td>
+<td style="text-align: right;">0.2775570</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">18</td>
-<td style="text-align: right;">0.1651782</td>
-<td style="text-align: right;">0.1480776</td>
-<td style="text-align: right;">0.1500243</td>
-<td style="text-align: right;">0.3297245</td>
-<td style="text-align: right;">0.2069954</td>
+<td style="text-align: right;">0.1904276</td>
+<td style="text-align: right;">0.1707130</td>
+<td style="text-align: right;">0.1729573</td>
+<td style="text-align: right;">0.1624493</td>
+<td style="text-align: right;">0.3034527</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">20</td>
@@ -4411,19 +4433,19 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td style="text-align: left;">23</td>
-<td style="text-align: right;">0.2999084</td>
-<td style="text-align: right;">0.2610732</td>
-<td style="text-align: right;">0.1586979</td>
-<td style="text-align: right;">0.0856721</td>
-<td style="text-align: right;">0.1946484</td>
+<td style="text-align: right;">0.2938520</td>
+<td style="text-align: right;">0.2558011</td>
+<td style="text-align: right;">0.1554932</td>
+<td style="text-align: right;">0.2009510</td>
+<td style="text-align: right;">0.0939027</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">24</td>
-<td style="text-align: right;">0.2277548</td>
-<td style="text-align: right;">0.1705338</td>
-<td style="text-align: right;">0.3206540</td>
-<td style="text-align: right;">0.0850383</td>
-<td style="text-align: right;">0.1960191</td>
+<td style="text-align: right;">0.2610510</td>
+<td style="text-align: right;">0.1954647</td>
+<td style="text-align: right;">0.3675315</td>
+<td style="text-align: right;">0.0978939</td>
+<td style="text-align: right;">0.0780588</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">26</td>
@@ -4435,83 +4457,83 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">27</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.2571636</td>
+<td style="text-align: right;">0.2302979</td>
+<td style="text-align: right;">0.3271268</td>
+<td style="text-align: right;">0.1046257</td>
+<td style="text-align: right;">0.0807861</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">29</td>
-<td style="text-align: right;">0.2517924</td>
-<td style="text-align: right;">0.2317768</td>
-<td style="text-align: right;">0.1783140</td>
-<td style="text-align: right;">0.1344882</td>
-<td style="text-align: right;">0.2036286</td>
+<td style="text-align: right;">0.2378183</td>
+<td style="text-align: right;">0.2189135</td>
+<td style="text-align: right;">0.1684178</td>
+<td style="text-align: right;">0.2073922</td>
+<td style="text-align: right;">0.1674582</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">30</td>
-<td style="text-align: right;">0.1139200</td>
-<td style="text-align: right;">0.1056298</td>
-<td style="text-align: right;">0.1210501</td>
-<td style="text-align: right;">0.5586861</td>
-<td style="text-align: right;">0.1007140</td>
+<td style="text-align: right;">0.1922915</td>
+<td style="text-align: right;">0.1782981</td>
+<td style="text-align: right;">0.2043269</td>
+<td style="text-align: right;">0.1265562</td>
+<td style="text-align: right;">0.2985273</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">31</td>
-<td style="text-align: right;">0.1995135</td>
-<td style="text-align: right;">0.2261349</td>
-<td style="text-align: right;">0.1707574</td>
-<td style="text-align: right;">0.2229763</td>
-<td style="text-align: right;">0.1806178</td>
+<td style="text-align: right;">0.2037581</td>
+<td style="text-align: right;">0.2309459</td>
+<td style="text-align: right;">0.1743903</td>
+<td style="text-align: right;">0.1721778</td>
+<td style="text-align: right;">0.2187279</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">32</td>
-<td style="text-align: right;">0.2252052</td>
-<td style="text-align: right;">0.1776700</td>
-<td style="text-align: right;">0.1807440</td>
-<td style="text-align: right;">0.2594404</td>
-<td style="text-align: right;">0.1569404</td>
+<td style="text-align: right;">0.2154055</td>
+<td style="text-align: right;">0.1699388</td>
+<td style="text-align: right;">0.1728790</td>
+<td style="text-align: right;">0.1662621</td>
+<td style="text-align: right;">0.2755145</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">33</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.1900568</td>
+<td style="text-align: right;">0.1963429</td>
+<td style="text-align: right;">0.2267380</td>
+<td style="text-align: right;">0.1196799</td>
+<td style="text-align: right;">0.2671824</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">34</td>
-<td style="text-align: right;">0.1009872</td>
-<td style="text-align: right;">0.0892477</td>
-<td style="text-align: right;">0.1185795</td>
-<td style="text-align: right;">0.6008686</td>
-<td style="text-align: right;">0.0903170</td>
+<td style="text-align: right;">0.2062111</td>
+<td style="text-align: right;">0.1822395</td>
+<td style="text-align: right;">0.2421336</td>
+<td style="text-align: right;">0.1101549</td>
+<td style="text-align: right;">0.2592610</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">35</td>
-<td style="text-align: right;">0.2264733</td>
-<td style="text-align: right;">0.1588407</td>
-<td style="text-align: right;">0.2914818</td>
-<td style="text-align: right;">0.1144725</td>
-<td style="text-align: right;">0.2087317</td>
+<td style="text-align: right;">0.2727266</td>
+<td style="text-align: right;">0.1912813</td>
+<td style="text-align: right;">0.3510121</td>
+<td style="text-align: right;">0.1028095</td>
+<td style="text-align: right;">0.0821704</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">36</td>
-<td style="text-align: right;">0.2832469</td>
-<td style="text-align: right;">0.2064448</td>
-<td style="text-align: right;">0.2096686</td>
-<td style="text-align: right;">0.0988054</td>
-<td style="text-align: right;">0.2018344</td>
+<td style="text-align: right;">0.2755077</td>
+<td style="text-align: right;">0.2008041</td>
+<td style="text-align: right;">0.2039398</td>
+<td style="text-align: right;">0.2229206</td>
+<td style="text-align: right;">0.0968277</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">37</td>
-<td style="text-align: right;">0.2323875</td>
-<td style="text-align: right;">0.1679180</td>
-<td style="text-align: right;">0.1835538</td>
-<td style="text-align: right;">0.1138111</td>
-<td style="text-align: right;">0.3023296</td>
+<td style="text-align: right;">0.3018704</td>
+<td style="text-align: right;">0.2181248</td>
+<td style="text-align: right;">0.2384356</td>
+<td style="text-align: right;">0.1445132</td>
+<td style="text-align: right;">0.0970561</td>
 </tr>
 </tbody>
 </table>
@@ -4521,45 +4543,45 @@ window.Quarto = {
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     cluster neighbor   sil_width
-[1,]       4        3  0.35296335
-[2,]       1        2  0.07047399
-[3,]       1        2 -0.02521016
-[4,]       3        5  0.16927964
-[5,]       2        1 -0.12326565
-[6,]       4        2  0.13765782</code></pre>
+[1,]       5        3  0.31634878
+[2,]       4        1  0.05990402
+[3,]       4        1  0.24390020
+[4,]       4        3 -0.14548886
+[5,]       4        1  0.08875384
+[6,]       5        2  0.18443264</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/fuzzy-1.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/fuzzy-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/fuzzy-2.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/fuzzy-2.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/fuzzy-3.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/fuzzy-3.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/fuzzy-4.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/fuzzy-4.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Report_files/figure-html/fuzzy-5.png" class="img-fluid figure-img"></p>
+<p><img src="Report_files/figure-html/fuzzy-5.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
