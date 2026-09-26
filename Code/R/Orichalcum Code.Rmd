@@ -603,14 +603,57 @@ factoextra::fviz_cluster(result, data = ICN,
 
 
 ##  Hcluster: trying
-```{r hclustering, echo=TRUE}
+```{r manhatten cluster, echo=FALSE}
+#| fig-format: png
+#| dpi: 300
+#| fig-width: 12
+#| fig-height: 7
 
-wards <- hclust(dist(scaled), method = "ward.D")
-plot(wards)
-rect.hclust(wards, 5, border = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
+d <- dist(scaled, method = "manhattan")
+HiMan <- hclust(d, method = "average")
 
-#based on Alice's PAM we are using k = 5
+CC <- cor(d, cophenetic(HiMan))
 
+dend <- as.dendrogram(HiMan)
+
+dend_col <- color_branches(
+  dend,
+  k = 5,
+  col = my_col
+)
+
+dend_data <- dendro_data(dend_col)
+
+fviz_dend(
+  HiMan,
+  k = 5,
+  rect = TRUE,
+  rect_border = my_col,
+  k_colors = my_col,
+  color_labels_by_k = TRUE
+) +
+  labs(
+    title = "Hierarchichal Cluster Dendrogram using 
+    Manhattan Distance",
+    subtitle = paste(
+      "Average Linkage | Manhattan Distance | CCC =",
+      round(CC, 3)
+    ),
+    colour = "Cluster"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(colour = "grey30")
+  ) 
+
+ggsave(
+  "Figures/dendrogram.png",
+  p,
+  width = 10,
+  height = 6,
+  dpi = 300
+)
 ```
 
 ## Trying stuff - Note Gaia couldn't get this to work ALICE
