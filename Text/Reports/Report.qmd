@@ -708,10 +708,6 @@ plot(sil_each,
      main = "Silhouette Plot")
 
 
-
-
-
-
 plot(sil_each[, "sil_width"],
      pch = 15,
      col = my_col[Fuzzy_Clust],
@@ -723,27 +719,23 @@ abline(h = 0, lty = 2)
 
 
 
+#not plotting right variables, fixed above.
+
+#par(mar = c(6,5,4,6.5)) #stuff to help make the legend
 
 
 
+#plot(Fuzzy_Clust, pch = 15, 
+     #col = my_col[apply(Fuzzy_k$U, 1, which.max)],
+     #xlab = "Obs",
+     #ylab = "Silhouette Width",
+     #main = "Fuzzy Silhouette Plot Using k-Medoids")
+#legend("topright",
+       #inset = c(-0.15,0),
+       #legend = c("1", "2", "3", "4", "5","6"),
+       #fill = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000","#F0E442"), xpd = TRUE)
 
-
-
-par(mar = c(6,5,4,6.5)) #stuff to help make the legend
-
-
-
-plot(Fuzzy_Clust, pch = 15, 
-     col = my_col[apply(Fuzzy_k$U, 1, which.max)],
-     xlab = "Obs",
-     ylab = "Silhouette Width",
-     main = "Fuzzy Silhouette Plot Using k-Medoids")
-legend("topright",
-       inset = c(-0.15,0),
-       legend = c("1", "2", "3", "4", "5","6"),
-       fill = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000","#F0E442"), xpd = TRUE)
-
-on.exit((par(old_par))) #stuff to help make the legend
+#on.exit((par(old_par))) #stuff to help make the legend
 
 ```
 
