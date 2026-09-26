@@ -555,7 +555,7 @@ We started by performing a PAM (Partitioning Around Medoids) analysis
 
 ```{r LDA, echo=FALSE}
 
-ICN <- sapply(Ingots_clean, as.numeric)
+ICN <- data.frame(sapply(Ingots_clean[,-1], as.numeric))
 
 scaled <- scale(ICN)
 
@@ -563,7 +563,7 @@ scaled <- scale(ICN)
 
 #need to find optimal silhouette width
 
-sil_avg <- nrow(Ingots_clean)
+sil_avg <- numeric(25)
 
 for (k in 2:26) {
   PAM_fit <- pam(scaled, k)
@@ -580,8 +580,6 @@ knitr::kable(LDA_K,
 pam <- pam(Ingots_clean, k = 5)
 
 cluster <- pam$clustering
-
-sil_avg1 <- nrow(Ingots_clean)
 
 for (k in 2:26) {
   PAM_fit <- pam(scaled, k)
@@ -607,7 +605,7 @@ MANHATTAN NOT EUCLEDIAN.
 
 **3.3 Cluster Analysis**
 
-H cluster using manhattan distance as a measure.
+H cluster using Manhattan Distance as a measure.
 
 However we may not want to use wards method as .... {ALICE} ... hence Manhatten distance cluster may be a better cluster to consider as it more robust to outliers then Eucledian.
 
@@ -644,6 +642,9 @@ old_par <- par(no.readonly = TRUE) #stuff to help make the legend
 
 #k-medoids for Fuzzy
 
+ICN <- Ingots_clean
+scaled <- scale(ICN)
+
 Fuzzy_k <- FKM.med(scaled, k = 5, m = 2)
 
 #silhouettes
@@ -657,9 +658,15 @@ knitr::kable(Fuzzy_k$U,
 
 
 
-Fuzzy_Sil <- SIL.F(scaled1, Fuzzy_k$U)
+Fuzzy_Sil <- SIL.F(scaled, Fuzzy_k$U)
 
 Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
+
+d <- dist(scaled)
+
+sil_each <- silhouette(clust, d)
+
+head(sil)
 
 par(mar = c(6,5,4,6.5)) #stuff to help make the legend
 
