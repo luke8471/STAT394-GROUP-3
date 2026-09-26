@@ -41,6 +41,8 @@ library(tidyverse)
 library(skimr)
 library(bibtex)
 
+my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000","#F0E442")
+
 ##  Reading the pdf: - pdftools package code:
 
 #Load paper by caponnetti et. al from repository and store locally temporarily
@@ -144,6 +146,9 @@ We will be excluding the Cu/Zn ratio variable as we chose to analyse the linkage
 We performed a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to note is that the elements Cu, Zn, Pb, and Fe are all in percentages, where as the concentrations of the other elements are in PPM (parts per a million). This immediately indicated that scaling was needed.
 
 ```{r extracting the table, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
+
 ##  Extracting the table from the pdf: - tabulapdf package codes:
 ingots2 <- suppressMessages(extract_tables(url, pages=3))
 
@@ -208,6 +213,8 @@ Ingots_F_no <- Ingots_Frame[,1:22]
 looking at the raw data we also noticed some interesting outliers. Particularly, sample 13 for Sb (antimony), which is \mathcal{549PPM}, magnitudes larger than the other samples. (INSERT MORE OBSERVATIONS FROM MAIN TABLE HERE) a large range of concentrates (ranging from a minimum of 0.06PPM for Rb and a max of 683PPM for Ni)
 
 ```{r basic summary, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
 #Summary of the Data Frame:
 invisible(summary(Ingots_F_no))
@@ -243,6 +250,8 @@ Due to the fact the data was recorded at different scales (percentage and PPM) a
 The percentages of elements Cu, Zn, Pb, and Fe do not add up to 100% for each sample, as shown in the table below.
 
 ```{r suprising, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
 main_com <- Ingots_Frame[c(1:5)]
 
@@ -267,6 +276,8 @@ These samples have a mean of \\numcal{104.4%} with a range \\numcal{93.17%} to \
 We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers and standardisation.
 
 ```{r qqnormal, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
 #no transformations: elements in percentages:
 
@@ -289,6 +300,8 @@ PPM: Shows significant departure from normality....
 The QQ-plot of the raw data had some clear deviations in the tails (lower and mostly upper data points), few of the points actually follow the theoretical line (in red), this alone indicated that the normality assumption may not hold. Their are also some slight steps in the points as well as a large jump at (THIS IS ALL NEEDS TO BE REVISED)
 
 ```{r}
+#| fig-width: 10
+#| fig-height: 6
 
 #log transform data
 
@@ -313,6 +326,9 @@ The observed zero-values for (PUT SAMPLES NUMBERS IN HERE) in (TABLE) in variabl
 We chose to combat the zero values by standardising the data set using \mathcal{log(x + 1)}, where \mathcal{x} is our data. This, coupled with a Henze-Zirkler test, established if there is preliminary evidence for multivariate normality.
 
 ```{r}
+#| fig-width: 10
+#| fig-height: 6
+
 #log transform data
 
 logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
@@ -358,6 +374,8 @@ Given the uncertainty of multivariate normality and the presence of outliers, fu
 MAD was used because it is a robust, outlier-resistant, measure of variability. The log transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence.
 
 ```{r transformations-mad, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
 #Calculate medians and MAD for each column:
 median <- apply(logIngots1[,-1], 2, median)
@@ -384,6 +402,9 @@ From {TABLE NUMBER} we observed some massive deviations, as expected.
 Next the robust Z score was used to identify outliers that were candidates for removal. For our cutoff, we went with @Leys2013-cr recommendation, who argued that the MAD is the most robust scale measure under contamination and recommend a median plus or minus 2.5 time MAD rule for outlier detection.
 
 ```{r outliers, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
+
 #Compute the robust z-scores:
 z <- scale(logIngots1[,-1], center = median, scale = mad)
 
@@ -456,6 +477,8 @@ What is after we have "cleaned" up the outliers our \|z\| \> 3 rule removes samp
 ***2.3.1 pairwise between CU, Zn, Pb, and Sn using the clean data***
 
 ```{r pairwise, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
 ggpairs(Ingots_clean, columns = c(2,3,4,12),
         lower = list(continuous = wrap("points", alpha = 0.6, size = 1.5, color = "#006CD1")),
@@ -473,6 +496,8 @@ What tests did we use? Henze Zirkler
 Why did we use those tests? #ALICE STUFF
 
 ```{R Henze Zirkler, echo=FALSE, warning = FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
 #HZ test on OG data, which also rejects null.
 
@@ -503,6 +528,8 @@ As our data isn't multivariate it isn't appropriate to perform a mahalanobis dis
 **2.5 Correlation plots before and after the transformation**
 
 ```{r correlations, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
 #Covariance table of the data:
 invisible(var(Ingots_F_no[-1,-1]))
@@ -554,6 +581,8 @@ Given the uncertainty about multivariate normality, a linear data analysis was c
 We started by performing a PAM (Partitioning Around Medoids) analysis
 
 ```{r LDA, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
 ICN <- data.frame(sapply(Ingots_clean[,-1], as.numeric))
 
@@ -610,6 +639,9 @@ H cluster using Manhattan Distance as a measure.
 However we may not want to use wards method as .... {ALICE} ... hence Manhatten distance cluster may be a better cluster to consider as it more robust to outliers then Eucledian.
 
 ```{r manhatten cluster, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
+
 old_par <- par(no.readonly = TRUE) #stuff to help make the legend
 
 dist <- dist(scaled, method = "manhattan")
@@ -637,6 +669,8 @@ Something interesting top note is that for both cluster options they both cluste
 As the third and final method of clustering, we performed a Fuzzy analysis.
 
 ```{r fuzzy, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
 old_par <- par(no.readonly = TRUE) #stuff to help make the legend
 
@@ -664,14 +698,40 @@ Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
 
 d <- dist(scaled)
 
-sil_each <- silhouette(clust, d)
+sil_each <- silhouette(Fuzzy_Clust, d)
 
-head(sil)
+head(sil_each)
+
+plot(sil_each,
+     col = my_col[sort(unique(Fuzzy_Clust))],
+     border = NA,
+     main = "Silhouette Plot")
+
+
+
+
+
+
+plot(sil_each[, "sil_width"],
+     pch = 15,
+     col = my_col[Fuzzy_Clust],
+     xlab = "Observation",
+     ylab = "Silhouette Width",
+     main = "Per-Observation Silhouettes")
+abline(h = 0, lty = 2)
+
+
+
+
+
+
+
+
+
 
 par(mar = c(6,5,4,6.5)) #stuff to help make the legend
 
 
-my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000","#F0E442")
 
 plot(Fuzzy_Clust, pch = 15, 
      col = my_col[apply(Fuzzy_k$U, 1, which.max)],
