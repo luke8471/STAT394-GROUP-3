@@ -465,7 +465,7 @@ ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
 logIngotsClean <- invisible(log(as.matrix(Ingots_clean[-1,-1])))
 invisible(summary(logIngotsClean))
 
-View(logIngotsClean)
+head(logIngotsClean)
 
 
 #making the dataframe numeric so it can be manipulated.
