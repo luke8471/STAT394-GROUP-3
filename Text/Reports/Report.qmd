@@ -58,7 +58,7 @@ ingots <- pdftools::pdf_text(tmp)
 
 ```
 
-*Gaia Smith, Alice Thompson and Luke Harkness*
+*Gaia Smith & Alice Thompson*
 
 ## 1. Abstract
 
@@ -688,7 +688,7 @@ fviz_dend(
   theme_minimal() +
   theme(
     plot.title = element_text(face = "bold"),
-    plot.subtitle = element_text(colour = "grey40")
+    plot.subtitle = element_text(colour = "grey30")
     ) 
 
 
