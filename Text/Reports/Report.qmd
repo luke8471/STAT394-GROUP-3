@@ -42,6 +42,8 @@ library(skimr)
 library(bibtex)
 library(ggdendro)
 library(dendextend)
+library(gt)
+
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -220,34 +222,7 @@ Using R, summary statistics were created from table 1 (table 2) and initial obse
 
 (MAYBE SAY 'further data clustering analysis may find that these groupings of samples cluster together in similar groups, furthering @Caponetti2017-fd claim that trace element analysis could be used to differentiate providence of alloy production)
 
-```{r basic summary, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
-
-#Summary of the Data Frame:
-invisible(summary(Ingots_F_no))
-
-#code to make the summary into a table
-skim(Ingots_F_no[,-1]) |>
-  select(-n_missing, -complete_rate)
-  
-
-#box plot of the initial data: (no transformations) using ggplot:
-#start by turing the data into long format:
-Ingots_long <- Ingots_F_no[,-1] |>
-  pivot_longer(
-    cols = everything(),
-    names_to = "Elements",
-    values_to = "Concentrations")
-
-
-
-ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
-  geom_boxplot(notch = FALSE, fill ="#40B0A6") +
-  theme_minimal()+
-  labs(title = "Boxplot the table 1")
-
-```
+![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchbox.png)
 
 Ni (nickel) had the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, likely driven by sample 13's recorded Sb being magnitudes larger than any of the other samples.
 
@@ -255,33 +230,47 @@ Due to the fact the data was recorded at different scales (percentage and PPM) a
 
 ***3.1.1 Inconsistencies in Percentages***
 
-The percentages of elements Cu, Zn, Pb, and Fe do not add up to 100% for each sample, as shown in the table below.
+The percentages of elements Cu, Zn, Pb, and Fe do not add up to 100% for each sample, as shown in the summary table below.
 
-Trace elements weren't included for interpretability as the values are \times 10\^-4 smaller.
-
-```{r suprising, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
-
+```{r echo = FALSE}
 main_com <- Ingots_Frame[c(1:5)]
 
 #adding the sum of the main components:
 main_com$percentage_total <- rowSums(main_com[c(2:5)])
 
-#table of the main components:
-knitr::kable(main_com,
-             caption = "Deeper dive into the main components",
-             format = "pipe")
+per_table <- sum_main <- main_com |>
+  summarise(
+    across(
+      c(Cu, Zn, Pb, Fe, percentage_total),
+      list(
+        Mean = base::mean,
+        SD = stats::sd,
+        Median = stats::median,
+        Min = base::min,
+        Max = base::max
+      ),
+      .names = "{.col}_{.fn}"
+    )
+  ) |>
+  pivot_longer(
+    everything(),
+    names_to = c("Element", ".value"),
+    names_pattern = "(.+)_(Mean|SD|Median|Min|Max)"
+  )
 
-#summary of the main components:
-skim(main_com[,6])|>
-  dplyr::select(-n_missing, -complete_rate)
-
+knitr::kable(
+  sum_main,
+  digits = 2,
+  caption = "Summary statistics for main component elements."
+)
 ```
 
-These samples have a mean of \\numcal{104.4%} with a range \\numcal{93.17%} to \\numcal{113.71%}. Where 33 of the 38 samples exceed \\numcal{100%}. The most significant deviations are samples 8 and 38 (COMMENT ON THIS). @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of available material for sampling for each observation.
 
-These samples have a mean of \\numcal{104.4%} with a range \\numcal{93.17%} to \\numcal{113.71%}. Where 33 of the 38 samples exceed \\numcal{100%}. The most significant deviations are samples 8 and 38 which have percentage totals of 112.44% and 113.71% respectively. @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of available material for sampling for each observation. For example, only 12.3 mg of sample 38 were obtained compared to the ideal 20mg of material as described in their methods.
+Trace elements weren't included for interpretability as the values are \times 10\^-4 smaller.
+
+These samples have a mean of 104.4\\% with a range 93.17\\% to 113.71\\%. Where 33 of the 38 samples exceed 100\\%. The most significant deviations are samples 8 and 38 (COMMENT ON THIS). @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of available material for sampling for each observation.
+
+These samples have a mean of 104.4\\% with a range 93.17\\% to 113.71\\%. Where 33 of the 38 samples exceed 100\\%. The most significant deviations are samples 8 and 38 which have percentage totals of 112.44\\% and 113.71\\% respectively. @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of available material for sampling for each observation. For example, only 12.3 mg of sample 38 were obtained compared to the ideal 20mg of material as described in their methods.
 
 **3.2 QQ-plots & Henze-Zirkler Test For Multivariate Normality**
 
@@ -293,13 +282,13 @@ We first compared the QQ-normal plots of table 1 and compared it to the log tran
 
 #no transformations: elements in percentages:
 
-qqnorm(as.matrix(Ingots_F_no[-1,2:5]), col="#648FFF", main = "Normal QQ-Plot of Table 1", sub =  "Using all elements that were recored in percentages (Cu, Zn, Pb and Fe)")
-qqline(as.matrix(Ingots_F_no[-1,2:5]), col="red")
+qqnorm(as.matrix(Ingots_F_no[-1,2:5]), col="#648FFF", main = "Normal QQ-Plot for Cu, Zn, Pb and Fe")
+qqline(as.matrix(Ingots_F_no[-1,2:5]), col="#DC267F")
 
 #no transformations: elements in PPM:
 
-qqnorm(as.matrix(Ingots_F_no[-1,6:22]), col="#648FFF", main = "Normal QQ-Plot of table 1", sub = "Using all elements that were recored in PPM")
-qqline(as.matrix(Ingots_F_no[-1,6:22]), col="red")
+qqnorm(as.matrix(Ingots_F_no[-1,6:22]), col="#648FFF", main = "Normal QQ-Plot for Trace Elements")
+qqline(as.matrix(Ingots_F_no[-1,6:22]), col="#DC267F")
 
 ```
 
@@ -318,22 +307,28 @@ logIngots <- log(as.matrix(Ingots_F_no[-1,-1]))
 
 knitr::kable(logIngots,
              caption = "Log Transformed Data",
+             digits = 2,
              format = "pipe")
 
+```
+
+
+```{r echo = FALSE}
 #taking the log.
 
-qqnorm(logIngots, col = "#785EF0", main = "Normal QQ- Plot of the log-transformed data (all elements)")
-qqline(logIngots, col = "red")
+qqnorm(logIngots, col = "#648FFF", main = "Normal QQ-Plot for the log-Transformed Data",
+       sub = "All Elements")
+qqline(logIngots, col = "#DC267F")
 
 ```
 
 The QQ-plot of the log transformed data roughly followed the theoretical line (in red), this is evidence that the normality assumption may hold. The tails are relatively long and flat, indicating that there may be some extreme outliers. There are several steps in the upper and lower tails, which alone is not necessarily a departure from normality, and may be explained by the zero values returned for some Sample's variables after the log transformation.
 
-The observed zero-values for (PUT SAMPLES NUMBERS IN HERE) in (TABLE) in variables(HERE), which while not a large quantity of the samples, still provided some concern as \numcal{log(0)} is undefined and can influence non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
+The observed zero-values for (PUT SAMPLES NUMBERS IN HERE) in (TABLE) in variables(HERE), which while not a large quantity of the samples, still provided some concern as log(0) is undefined and can influence non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
 
-We chose to combat the zero values by standardising the data set using \mathcal{log(x + 1)}, where \mathcal{x} is our data. This, coupled with a Henze-Zirkler test, established if there is preliminary evidence for multivariate normality.
+We chose to combat the zero values by standardising the data set using log($\mathcal{x}$ + 1)}, where $\mathcal{x}$ is our data. This, coupled with a Henze-Zirkler test, established if there is preliminary evidence for multivariate normality.
 
-```{r}
+```{r echo = FALSE}
 #| fig-width: 10
 #| fig-height: 6
 
@@ -341,7 +336,7 @@ We chose to combat the zero values by standardising the data set using \mathcal{
 
 logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 
-#print(logIngots)
+#print(logIngots1)
 
 knitr::kable(logIngots1,
              caption = "Log Transformed Data",
@@ -349,14 +344,19 @@ knitr::kable(logIngots1,
 
 #taking the log.
 
-qqnorm(logIngots1, col = "#785EF0", main = "Normal QQ- Plot of the log-transformed data (all elements)")
-qqline(logIngots1, col = "red")
+qqnorm(logIngots1, col = "#648FFF", main = "Normal QQ- Plot of the log-transformed data (all elements)")
+qqline(logIngots1, col = "#DC267F")
 
 
 HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
-cat("Henze_Zirkler Test Results:\n")
-print(HZoriginal$multivariate_normality)
 
+hz_table <- HZoriginal$multivariate_normality
+
+knitr::kable(
+  hz_table,
+  digits = 4,
+  caption = "Henze-Zirkler Test For Multivariate Normality"
+)
 ```
 
 As you can see in table 2, our values are now all non-zero.
@@ -365,6 +365,7 @@ The normal QQ-plot looks less normal after standardisation, with the length of t
 
 The Henze-Zirkler test stipulates
 
+$$
 \begin{aligned}
 \mathcal{H}_0 :& 
 \text{ The data follow a multivariate normal distribution},
@@ -372,8 +373,9 @@ The Henze-Zirkler test stipulates
 \mathcal{H}_1 :& 
 \text{ The data do not follow a multivariate normal distribution}.
 \end{aligned}
+$$
 
-This generated a \mathcal{p-value=0.069}, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution. However, the QQ-plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining if multivariate normality is likely.
+This generated a p-value=0.069, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution. However, the QQ-plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining if multivariate normality is likely.
 
 Given the uncertainty of multivariate normality and the presence of outliers, further data manipulation by Medioid Absolute Deviation was determined to be the next best step towards multivariate analysis.
 
@@ -400,7 +402,8 @@ med_mad_table <- data.frame(
 )
 
 knitr::kable(med_mad_table,
-             caption = "Medians / Mads",
+             caption = "Medians / MAD",
+             digits = 2,
              format = "pipe")
 
 ```
@@ -467,7 +470,7 @@ ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
 logIngotsClean <- invisible(log(as.matrix(Ingots_clean[-1,-1])))
 invisible(summary(logIngotsClean))
 
-head(logIngotsClean)
+#head(logIngotsClean)
 
 
 #making the dataframe numeric so it can be manipulated.
@@ -548,15 +551,24 @@ invisible(cor(Ingots_F_no[-1,-1]))
 
 
 #Correlation plot:
-ggcorrplot(cor(Ingots_F_no[,-1]),
-           hc.order = TRUE,
-           type = "lower",
-           lab = TRUE,
-           lab_size = 1.5,
-           ggtheme = theme_minimal(),
-           colors = c("#FE6100", "white","#648FFF"),
-           tl.col = "gray30",
-           title = "Correlation plot of the raw data")
+ggcorrplot(
+  cor(Ingots_F_no[,-1]),
+  hc.order = FALSE,
+  type = "lower",
+  lab = TRUE,
+  lab_size = 1.5,
+  ggtheme = theme_minimal(),
+  colors = c("#FE6100", "white","#648FFF"),
+  tl.col = "gray30"
+  ) +
+  labs(
+    title = "Correlation Matrix",
+    subtitle = "Pearson Correlations | Raw Data"
+    ) +
+  theme(
+    plot.subtitle = element_text(
+    colour = "grey30"
+    ))
 
 
 #performed for clean data:
@@ -564,15 +576,24 @@ invisible(var(Ingots_clean[-1,-1]))
 
 invisible(cor(Ingots_clean[-1,-1]))
 
-ggcorrplot(cor(Ingots_clean[,-1]),
-           hc.order = TRUE,
-           type = "lower",
-           lab = TRUE,
-           lab_size = 1.5,
-           ggtheme = theme_minimal(),
-           colors = c("#FE6100", "white","#648FFF"),
-           tl.col = "gray30",
-           title = "Correlation plot of the data with outliers removed")
+ggcorrplot(
+  cor(Ingots_clean),
+  hc.order = FALSE,
+  type = "lower",
+  lab = TRUE,
+  lab_size = 1.5,
+  ggtheme = theme_minimal(),
+  colors = c("#FE6100", "white","#648FFF"),
+  tl.col = "gray30",
+  ) +
+  labs(
+    title = "Correlation Matrix",
+    subtitle = "Pearson Correlations | log-Transformed Data"
+    ) +
+  theme(
+    plot.subtitle = element_text(
+    colour = "grey30"
+    ))
 
 ```
 
@@ -592,50 +613,25 @@ We started by performing a PAM (Partitioning Around Medoids) analysis
 #| fig-width: 10
 #| fig-height: 6
 
-ICN <- as.data.frame(Ingots_clean[,-1])
+pam_sum_tab |>
+gt() |>
+tab_header(
+title = "PAM Clustering Summary",
+subtitle = "Average silhouette width and cluster sizes"
+) |>
+fmt_number(
+columns = Avg_Silhouette,
+decimals = 3
+) 
 
-ICN[] <- lapply(ICN, as.numeric)
+top_pam <- pam_sum_tab |>
+arrange(desc(Avg_Silhouette)) |>
+slice(1:10)
 
-str(ICN)
-dim(ICN)
-
-scaled <- scale(ICN)
-
-#head(scaled, n = 3)
-
-#need to find optimal silhouette width
-
-sil_avg <- numeric(25)
-
-for (k in 2:26) {
-  PAM_fit <- pam(scaled, k)
-  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
-    }
-
-LDA_K <- data.frame(k = 2:26, avg_silhouette = sil_avg)
-
-knitr::kable(LDA_K,
-             caption = "Figure 8: Table contain the k scaled values",
-             format = "pipe")
-
-
-pam <- pam(Ingots_clean, k = 5)
-
-cluster <- pam$clustering
-
-for (k in 2:26) {
-  PAM_fit <- pam(scaled, k)
-  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
-    }
-
-LDA_K1 <- data.frame(k = 2:26, avg_silhouette = sil_avg)
-
-#summary(pam) ---- Not sure if we would like to include this or not
-
-fviz_silhouette(pam)+
-  scale_fill_manual( values = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))+
-  scale_colour_manual( values = c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000"))
-  
+knitr::kable(
+top_pam,
+caption = "Top ten cluster solutions ranked by average silhouette width."
+)
 
 ```
 
@@ -651,7 +647,7 @@ Hierarchical cluster using Manhattan Distance as a measure. Because more robust 
 
 ![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/manhattan_dendrogram.png)
 
-```{}
+```         
 ```
 
 ```{r}
