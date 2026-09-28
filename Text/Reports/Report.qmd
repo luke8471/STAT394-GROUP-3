@@ -531,7 +531,7 @@ Due to our Henze Zirkler test for both the un-transformed data (p-value \<0.001)
 
 As our data isn't multivariate it isn't appropriate to perform a mahalanobis distance. {could potentially do need to research tho}
 
-**2.5 Correlation plots before and after the transformation**
+**2.5 Correlation plots before and after**
 
 ```{r correlations, echo=FALSE}
 #| fig-width: 10
@@ -550,11 +550,11 @@ ggcorrplot(cor(Ingots_F_no[,-1]),
            hc.order = TRUE,
            type = "lower",
            lab = TRUE,
-           lab_size = 2,
+           lab_size = 1.5,
            ggtheme = theme_minimal(),
-           colors = c("#5D3A9B", "white","#E66100"),
+           colors = c("#FE6100", "white","#648FFF"),
            tl.col = "gray30",
-           title = "Correlation plot of the raw data (no transformations)")
+           title = "Correlation plot of the raw data")
 
 
 #performed for clean data:
@@ -568,9 +568,9 @@ ggcorrplot(cor(Ingots_clean[,-1]),
            lab = TRUE,
            lab_size = 1.5,
            ggtheme = theme_minimal(),
-           colors = c("#5D3A9B", "white","#E66100"),
+           colors = c("#FE6100", "white","#648FFF"),
            tl.col = "gray30",
-           title = "Correlation plot of the clean data exluding Cu/Zn")
+           title = "Correlation plot of the data with outliers removed")
 
 ```
 
@@ -590,7 +590,12 @@ We started by performing a PAM (Partitioning Around Medoids) analysis
 #| fig-width: 10
 #| fig-height: 6
 
-ICN <- data.frame(sapply(Ingots_clean[,-1], as.numeric))
+ICN <- as.data.frame(Ingots_clean[,-1])
+
+ICN[] <- lapply(ICN, as.numeric)
+
+str(ICN)
+dim(ICN)
 
 scaled <- scale(ICN)
 
@@ -656,7 +661,12 @@ HiMan <- hclust(d, method = "average")
 
 CC <- cor(d, cophenetic(HiMan))
 
-dim(scaled)
+png(
+  "../Figures/manhattan_dendrogram.png",
+  width = 3000,
+  height = 1800,
+  res = 300
+)
 
 fviz_dend(
   HiMan,
