@@ -265,7 +265,6 @@ knitr::kable(
 )
 ```
 
-
 Trace elements weren't included for interpretability as the values are \times 10\^-4 smaller.
 
 These samples have a mean of 104.4\\% with a range 93.17\\% to 113.71\\%. Where 33 of the 38 samples exceed 100\\%. The most significant deviations are samples 8 and 38 (COMMENT ON THIS). @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of available material for sampling for each observation.
@@ -276,20 +275,9 @@ These samples have a mean of 104.4\\% with a range 93.17\\% to 113.71\\%. Where 
 
 We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers and standardisation.
 
-```{r qqnormal, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all.png)
 
-#no transformations: elements in percentages:
-
-qqnorm(as.matrix(Ingots_F_no[-1,2:5]), col="#648FFF", main = "Normal QQ-Plot for Cu, Zn, Pb and Fe")
-qqline(as.matrix(Ingots_F_no[-1,2:5]), col="#DC267F")
-
-#no transformations: elements in PPM:
-
-qqnorm(as.matrix(Ingots_F_no[-1,6:22]), col="#648FFF", main = "Normal QQ-Plot for Trace Elements")
-qqline(as.matrix(Ingots_F_no[-1,6:22]), col="#DC267F")
-
+```         
 ```
 
 As this was before there was any scaling performed, we opted to display the elements measured in percentages and the elements measured in PPM separately to better display their individual influence.
@@ -311,7 +299,6 @@ knitr::kable(logIngots,
              format = "pipe")
 
 ```
-
 
 ```{r echo = FALSE}
 #taking the log.
@@ -402,7 +389,7 @@ med_mad_table <- data.frame(
 )
 
 knitr::kable(med_mad_table,
-             caption = "Medians / MAD",
+             caption = "Median / MAD",
              digits = 2,
              format = "pipe")
 
@@ -483,28 +470,13 @@ The QQ plot shows very skewed data which we would expected...
 
 What is after we have "cleaned" up the outliers our \|z\| \> 3 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al. set aside as their G4 group.
 
-{should probably explain why cutting out 11 samples will be good for the rest of our analysis, something along the line of outliers, terrible samples and low sample quality}
-
-***2.3.1 pairwise between CU, Zn, Pb, and Sn using the clean data***
-
-```{r pairwise, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
-
-ggpairs(Ingots_clean, columns = c(2,3,4,12),
-        lower = list(continuous = wrap("points", alpha = 0.6, size = 1.5, color = "#006CD1")),
-        upper = list(continuous = wrap("cor", size = 4, color = "#005AB5")),
-        diag = list(continuous = wrap("densityDiag", alpha = 0.5, color = "#40B0A6")))
-
-```
-
-Also done to reflect the traditional primary components that make up orichalcum, showing the relationship between these four elements.
+{should probably explain why cutting out 11 samples will be good for the rest of our analysis, something along the line of outliers, terrible samples and low sample quality}.
 
 **2.4 Multivariate normal distribution**
 
 What tests did we use? Henze Zirkler
 
-Why did we use those tests? #ALICE STUFF
+Why did we use those tests?
 
 ```{R Henze Zirkler, echo=FALSE, warning = FALSE}
 #| fig-width: 10
@@ -538,64 +510,9 @@ As our data isn't multivariate it isn't appropriate to perform a mahalanobis dis
 
 **2.5 Correlation plots before and after**
 
-```{r correlations, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
+![Correlation matrix of Raw Data](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix.png)
 
-#Covariance table of the data:
-invisible(var(Ingots_F_no[-1,-1]))
-
-
-#Correlation table of the data:
-invisible(cor(Ingots_F_no[-1,-1]))
-
-
-#Correlation plot:
-ggcorrplot(
-  cor(Ingots_F_no[,-1]),
-  hc.order = FALSE,
-  type = "lower",
-  lab = TRUE,
-  lab_size = 1.5,
-  ggtheme = theme_minimal(),
-  colors = c("#FE6100", "white","#648FFF"),
-  tl.col = "gray30"
-  ) +
-  labs(
-    title = "Correlation Matrix",
-    subtitle = "Pearson Correlations | Raw Data"
-    ) +
-  theme(
-    plot.subtitle = element_text(
-    colour = "grey30"
-    ))
-
-
-#performed for clean data:
-invisible(var(Ingots_clean[-1,-1]))
-
-invisible(cor(Ingots_clean[-1,-1]))
-
-ggcorrplot(
-  cor(Ingots_clean),
-  hc.order = FALSE,
-  type = "lower",
-  lab = TRUE,
-  lab_size = 1.5,
-  ggtheme = theme_minimal(),
-  colors = c("#FE6100", "white","#648FFF"),
-  tl.col = "gray30",
-  ) +
-  labs(
-    title = "Correlation Matrix",
-    subtitle = "Pearson Correlations | log-Transformed Data"
-    ) +
-  theme(
-    plot.subtitle = element_text(
-    colour = "grey30"
-    ))
-
-```
+![Correlation matrix of log-Transformed Data](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix_log.png)
 
 Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr is also strongly positively association in the data with the outlying samples removes.. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
 
@@ -613,24 +530,87 @@ We started by performing a PAM (Partitioning Around Medoids) analysis
 #| fig-width: 10
 #| fig-height: 6
 
-pam_sum_tab |>
-gt() |>
-tab_header(
-title = "PAM Clustering Summary",
-subtitle = "Average silhouette width and cluster sizes"
-) |>
-fmt_number(
-columns = Avg_Silhouette,
-decimals = 3
-) 
+#need to find optimal silhouette width
+CN <- as.data.frame(Ingots_clean[,-1])
 
-top_pam <- pam_sum_tab |>
-arrange(desc(Avg_Silhouette)) |>
-slice(1:10)
+ICN[] <- lapply(ICN, as.numeric)
+
+scaled <- scale(ICN)
+
+#need to find optimal silhouette width
+
+sil_avg <- numeric(25)
+
+for (k in 2:25) {
+  PAM_fit <- pam(scaled, k)
+  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
+}
+
+LDA_K <- data.frame(k = 2:26, avg_silhouette = sil_avg)
+
+pam_sum_tab <- data.frame()
+
+for (k in 2:25) {
+  
+  PAM_fit <- cluster::pam(scaled, k)
+  
+  sizes <- table(PAM_fit$clustering)
+  
+  pam_sum_tab <- rbind(
+    pam_sum_tab,
+    data.frame(
+      k = k,
+      Avg_Silhouette = round(PAM_fit$silinfo$avg.width, 3),
+      Smallest_Cluster = min(sizes),
+      Largest_Cluster = max(sizes),
+      Cluster_Sizes = paste(sizes, collapse = ", ")
+    )
+  )
+}
 
 knitr::kable(
-top_pam,
-caption = "Top ten cluster solutions ranked by average silhouette width."
+  pam_sum_tab,
+  caption = "PAM clustering summary across candidate values of k.",
+  align = "c"
+)
+
+pam <- pam(Ingots_clean, k =3)
+
+cluster <- pam$clustering
+
+for (k in 2:25) {
+  PAM_fit <- pam(scaled, k)
+  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
+}
+
+LDA_K1 <- data.frame(k = 2:26, avg_silhouette = sil_avg)
+
+#summary(pam)
+
+fviz_silhouette(pam)+
+  scale_fill_manual( values = c("#648FFF", "#DC267F", "#FFB000"))+
+  scale_colour_manual( values = c("gray30", "gray30", "gray30"))
+
+
+
+pam_sum_tab |>
+  gt() |>
+  tab_header(
+    title = "PAM Clustering Summary",
+    subtitle = "Average silhouette width and cluster sizes"
+  ) |>
+  fmt_number(
+    columns = Avg_Silhouette,
+    decimals = 3
+  ) 
+
+top_pam <- pam_sum_tab |>
+  arrange(desc(Avg_Silhouette)) |>
+  slice(1:10)
+
+knitr::kable(
+  top_pam,
+  caption = "Top ten cluster choices ranked by average silhouette width."
 )
 
 ```
@@ -646,9 +626,6 @@ MANHATTAN NOT EUCLEDIAN.
 Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.
 
 ![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/manhattan_dendrogram.png)
-
-```         
-```
 
 ```{r}
 
@@ -682,8 +659,6 @@ As the third and final method of clustering, we performed a Fuzzy analysis.
 ```{r fuzzy, echo=FALSE}
 #| fig-width: 10
 #| fig-height: 6
-
-old_par <- par(no.readonly = TRUE) #stuff to help make the legend
 
 #k-medoids for Fuzzy
 
