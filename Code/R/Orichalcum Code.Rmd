@@ -9,7 +9,9 @@ output: github_document: default
 knitr::opts_chunk$set(echo = TRUE)
 ```
 ##  Packages to load/install:
-```{r packages, include=FALSE}
+```{r packages and set up, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
 
 library(tabulapdf)
 library(dplyr)
@@ -28,11 +30,18 @@ library(factoextra)
 library(hexbin)
 library(matrixStats)
 library(fclust)
+library(knitr)
 library(tidyverse)
 library(skimr)
-```
-##  Reading the pdf: - pdftools package code
-```{r reading pdf, echo=TRUE}
+library(bibtex)
+library(ggdendro)
+library(dendextend)
+library(gridExtra)
+library(gt)
+
+my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
+
+##  Reading the pdf: - pdftools package code:
 
 #Load paper by caponnetti et. al from repository and store locally temporarily
 
@@ -44,16 +53,8 @@ pdf <- httr::GET(url, write_disk(tmp, overwrite = TRUE))
 
 ingots <- pdftools::pdf_text(tmp)
 
-
-#check you have all the pages
-length(ingots) #should out put 8
-
-#prints page 3 which has the table on:
-#cat(ingots[[3]])
-
-#this works if we want to view the pdf! not extract the data
-
 ```
+
 
 ##  Extracting the table from the pdf: - tabulapdf package codes
 ```{r extracting the table, echo=TRUE}
@@ -95,6 +96,36 @@ head(table1)
 
 ##  Creating a Data Frame of the Concentrations:
 ```{r making a new table, echo=TRUE}
+#| fig-width: 10
+#| fig-height: 6
+
+##  Extracting the table from the pdf: - tabulapdf package codes:
+ingots2 <- suppressMessages(extract_tables(url, pages=3))
+
+#lets store it in a table:
+
+table1 <- suppressMessages(ingots2[[1]])
+
+#when I first did this this you couldn't view Ni, Ag and Sb separately they all went under concentration
+##  Cleaning the table: - DATA202 codes
+table1 <- suppressMessages(table1 %>%
+                             separate(
+                               'Concentration in PPM',
+                               into = c("Ni", "Ag", "Sb"),
+                               sep = " "
+                             ))
+
+#this should now have all the columns separate :)
+
+#making sure all the columns are named correctly:
+suppressMessages(names(table1) <- c(
+  "Sample", "Cu", "Zn", "Pb", "Fe",
+  "Ni", "Ag", "Sb", "As", "Co", "Cd", "Sn",
+  "Te", "Bi", "Mn", "Li", "Al", "V", "Cr",
+  "Rb", "Sr", "Ba", "Cu_Zn"
+))
+
+#as R was having a hard time using the table above we created a Data Frame of the Concentrations:
 
 Cu <- as.numeric(table1$Cu[-1])
 Zn <- as.numeric(table1$Zn[-1])
@@ -121,12 +152,21 @@ Cu_Zn <- as.numeric(table1$Cu_Zn[-1])
 
 Ingots_Frame <- data.frame (Sample = c("S1","S2","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","S13","S14","S15","S16","S17","S18","S19","S20","S21","S22","S23","S24","S25","S26","S27","S28","S29","S30","S31","S32","S33","S34","S35","S36","S37","S38"),Cu, Zn, Pb, Fe, Ni, Ag, Sb, As, Co, Cd, Sn, Te, Bi, Mn, Li, Al, V, Cr, Rb, Sr, Ba, Cu_Zn)
 
-head(Ingots_Frame)
+knitr::kable(Ingots_Frame,
+             caption = "Figure 1: Table 1 The main components and trace elements from Caponetti et al study",
+             format = "pipe")
 
 # Removing Cu/Zn from the table
 Ingots_F_no <- Ingots_Frame[,1:22]
 
-head(Ingots_F_no)
+#How to save table an image
+
+#tab <- gt(Ingots_Frame)
+
+#gtsave(
+  #tab,
+  #"LOCAL DIRECTORY"
+  #)
 
 ```
 
@@ -163,18 +203,11 @@ ggplot(Ingots_long, aes(x= Elements, y= Concentrations)) +
   theme_minimal()+
   labs(title = "Intial boxplot of the raw data (no transformations)")
 
-
-
-
-#boxplot(Ingots_F_no_Cu_zn[,-1], notch = TRUE, col="lightgreen")
-
 #Covariance table of the data:
 var(Ingots_F_no[-1,-1])
 
-
 #Correlation table of the data:
 cor(Ingots_F_no[-1,-1])
-
 
 #Correlation plot:
 ggcorrplot(cor(Ingots_F_no[,-1]),
@@ -714,13 +747,12 @@ ggplot(plotPamMan,
 #| dpi: 300
 #| fig-width: 12
 #| fig-height: 7
+#| label: manhattan-dendrogram
+#| fig-cap: "Hierarchical clustering using Manhattan distance."
+#| fig-path: "../Figures/"
 
 
 #manhattan distance instead. More robust to outliers than Eucledian.
-
-dim(ICN)
-str(ICN)
-
 
 rownames(scaled) <- rownames(ICN)
 
@@ -730,7 +762,6 @@ HiMan <- hclust(d, method = "average")
 
 CC <- cor(d, cophenetic(HiMan))
 
-dim(scaled)
 
 fviz_dend(
   HiMan,
@@ -755,7 +786,6 @@ fviz_dend(
     plot.title = element_text(face = "bold"),
     plot.subtitle = element_text(colour = "grey30")
   ) 
-
 
 ```
 

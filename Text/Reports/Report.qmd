@@ -204,12 +204,14 @@ Cu_Zn <- as.numeric(table1$Cu_Zn[-1])
 
 Ingots_Frame <- data.frame (Sample = c("S1","S2","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12","S13","S14","S15","S16","S17","S18","S19","S20","S21","S22","S23","S24","S25","S26","S27","S28","S29","S30","S31","S32","S33","S34","S35","S36","S37","S38"),Cu, Zn, Pb, Fe, Ni, Ag, Sb, As, Co, Cd, Sn, Te, Bi, Mn, Li, Al, V, Cr, Rb, Sr, Ba, Cu_Zn)
 
-knitr::kable(Ingots_Frame,
-             caption = "Figure 1: Table 1 The main components and trace elements from Caponetti et al study",
-             format = "pipe")
-
 # Removing Cu/Zn from the table
 Ingots_F_no <- Ingots_Frame[,1:22]
+
+knitr::kable(
+  Ingots_F_no, 
+  caption = "Figure 1: Main component and trace element 
+  concentrations obtained by ICP-OES & ICP-MS techniques", 
+  format = "pipe")
 ```
 
 Using R, summary statistics were created from table 1 (table 2) and initial observations were made. We found that concentrations for each element varied greatly in range and skew (if skew in this case is distance between mean and median) between each other. The elements Sb, As, Sn, Li, Sr, and Ba all show strong positive skews, numerous other elements show weaker skews. Cu and Zn are roughly symmetric in terms of skew. Ranges vary greatly with many magnitude differences between the 'percentage based' vs the 'ppm' elements (where percentage is \~10\^4 more then ppm of the same value assuming the 2 measurement techniques are equally accurate) and between trace element ranges (Rb having a minimum of 0.03ppm while Ni has a maximum of 683ppm), and between the different samples vs same element (I.e. Sr has a minimum of 0.08ppm and a maximum of 15.10ppm which is over 180 times move than the minimum) these characteristics hint that a data transformation may be appropriate to increase interpretability.
@@ -647,51 +649,9 @@ MANHATTAN NOT EUCLEDIAN.
 
 Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.
 
-```{r manhatten cluster, echo=FALSE}
-#| fig-format: png
-#| dpi: 300
-#| fig-width: 12
-#| fig-height: 7
+![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/manhattan_dendrogram.png)
 
-rownames(scaled) <- rownames(ICN)
-
-d <- dist(scaled, method = "manhattan")
-
-HiMan <- hclust(d, method = "average")
-
-CC <- cor(d, cophenetic(HiMan))
-
-png(
-  "../Figures/manhattan_dendrogram.png",
-  width = 3000,
-  height = 1800,
-  res = 300
-)
-
-fviz_dend(
-  HiMan,
-  k = 5,
-  rect = TRUE,
-  rect_border = my_col,
-  k_colors = my_col,
-  color_labels_by_k = TRUE
-) +
-  labs(
-    title = "Hierarchichal Cluster Dendrogram using 
-    Manhattan Distance",
-    subtitle = paste(
-      "Average Linkage | Manhattan Distance | CCC =",
-      round(CC, 3)
-    ),
-    colour = "Cluster"
-  ) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(face = "bold"),
-    plot.subtitle = element_text(colour = "grey30")
-  ) 
-
-
+```{}
 ```
 
 ```{r}
