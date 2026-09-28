@@ -37,7 +37,7 @@ library(bibtex)
 library(ggdendro)
 library(dendextend)
 library(gridExtra)
-library(gt)
+library(kableExtra)
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -226,8 +226,55 @@ ggcorrplot(cor(Ingots_F_no[,-1]),
 Our raw data of concentrations produced a summary and simple box plots from above some things to note are Ni (nickel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. 
 looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
 
-We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
+## Percentages Table
 
+```{r}
+main_com <- Ingots_Frame[c(1:5)]
+
+#adding the sum of the main components:
+main_com$percentage_total <- rowSums(main_com[c(2:5)])
+
+per_table <- sum_main <- main_com |>
+  summarise(
+    across(
+      c(Cu, Zn, Pb, Fe, percentage_total),
+      list(
+        Mean = base::mean,
+        SD = stats::sd,
+        Median = stats::median,
+        Min = base::min,
+        Max = base::max
+      ),
+      .names = "{.col}_{.fn}"
+    )
+  ) |>
+  pivot_longer(
+    everything(),
+    names_to = c("Element", ".value"),
+    names_pattern = "(.+)_(Mean|SD|Median|Min|Max)"
+  )
+
+knitr::kable(
+  sum_main,
+  digits = 2,
+  caption = "Summary statistics for main component elements."
+)
+
+# saving png of table locally to upload
+
+#per_tab <- kbl(
+#sum_main,
+#digits = 2,
+#caption = "Summary statistics for main component elements."
+#) |>
+#kable_styling(full_width = FALSE)
+
+#save_kable(
+#per_tab,
+#file = "LOCAL FILE",
+#density = 300
+#)
+```
 
 
 
