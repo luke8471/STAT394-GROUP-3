@@ -603,27 +603,6 @@ Hierarchical cluster using Manhattan Distance as a measure. Because more robust 
 
 ![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/dendrogram.png)
 
-```{r}
-
-d <- dist(scaled, method = "manhattan")
-
-HiMan <- hclust(d, method = "average")
-
-rownames(scaled) <- rownames(ICN)
-
-p <- fviz_dend(
-  HiMan,
-  k = 5,
-  rect = TRUE,
-  k_colors = my_col,
-  rect_border = my_col
-)
-
-head(ggplot_build(p)$data[[2]]$label)
-
-length(unique(ggplot_build(p)$data[[2]]$label))
-```
-
 Something interesting top note is that for both cluster options they both cluster sample's 15, 10, and 22 this could be because of ...
 
 Cophenetic correlation coefficient 0.825 is pretty dang good. I'm going to remake this using ggplot, should be nicer.
@@ -647,8 +626,6 @@ knitr::kable(Fuzzy_k$U,
              caption = "Fuzzy K Silhouettes Clusterings",
              format = "pipe")
 
-
-
 Fuzzy_Sil <- SIL.F(scaled, Fuzzy_k$U)
 
 Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
@@ -656,46 +633,6 @@ Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
 d <- dist(scaled)
 
 sil_each <- silhouette(Fuzzy_Clust, d)
-
-head(sil_each)
-
-plot(sil_each,
-     col = my_col[sort(unique(Fuzzy_Clust))],
-     border = NA,
-     main = "Silhouette Plot")
-
-
-sil_df <- data.frame(
-  obs = 1:nrow(sil_each), 
-  width = sil_each[, "sil_width"],
-  cluster = factor(sil_each[, "cluster"])
-  )
-
-ggplot(sil_df,
-       aes(x = reorder(obs, width),
-           y = width,
-           fill = cluster)) + 
-  geom_col() +
-  coord_flip() +
-  geom_hline(yintercept = mean(sil_df$width),
-             linetype = "dashed",
-             colour = "red") +
-  scale_fill_manual(values = c(
-    "#648FFF", "#DC267F", "#FFB000")) +
-  labs(title = "Silhouette Plot",
-       x = "Observation",
-       y = "Silhouette Width") +
-  theme_minimal()
-
-plot(sil_each[, "sil_width"],
-     pch = 15,
-     col = my_col[Fuzzy_Clust],
-     xlab = "Observation",
-     ylab = "Silhouette Width",
-     main = "Per-Observation Silhouettes")
-abline(h = 0, lty = 2)
-
-
 
 ggplot(LDA_K,
        aes(k, avg_silhouette)) +
@@ -707,7 +644,6 @@ ggplot(LDA_K,
     x = "Number of Clusters",
     y = "Average Silhouette Width"
     )
-
 
 certainty <- apply(Fuzzy_k$U, 1, max)
 
