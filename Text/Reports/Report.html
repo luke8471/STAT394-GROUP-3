@@ -203,7 +203,7 @@ window.Quarto = {
 <section id="eda" class="level2">
 <h2 class="anchored" data-anchor-id="eda">3. EDA</h2>
 <p><strong>3.1 Analysing raw data</strong></p>
-<p>We performed a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to note is that the elements Cu, Zn, Pb, and Fe are all in percentages, where as the concentrations of the other elements are in PPM (parts per a million). This immediately indicated that scaling was needed.</p>
+<p>We performed a simple summary of the data in table 1 and created a box plot to visualize the data. Something to note is that the elements Cu, Zn, Pb, and Fe are all in percentages, where as the concentrations of the other elements are in PPM (parts per a million). This immediately indicated that scaling was needed.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1174,10 +1174,296 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Summary Statistics of Table 1</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Element</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">SD</th>
+<th style="text-align: right;">Min</th>
+<th style="text-align: right;">Q1</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Q3</th>
+<th style="text-align: right;">Max</th>
+<th style="text-align: right;">IQR</th>
+<th style="text-align: right;">Kurtosis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cu</td>
+<td style="text-align: right;">77.42</td>
+<td style="text-align: right;">4.98</td>
+<td style="text-align: right;">69.00</td>
+<td style="text-align: right;">74.00</td>
+<td style="text-align: right;">77.00</td>
+<td style="text-align: right;">80.75</td>
+<td style="text-align: right;">90.00</td>
+<td style="text-align: right;">6.75</td>
+<td style="text-align: right;">2.75</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Zn</td>
+<td style="text-align: right;">20.95</td>
+<td style="text-align: right;">3.25</td>
+<td style="text-align: right;">16.00</td>
+<td style="text-align: right;">19.00</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">22.00</td>
+<td style="text-align: right;">28.00</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">3.19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pb</td>
+<td style="text-align: right;">5.50</td>
+<td style="text-align: right;">1.34</td>
+<td style="text-align: right;">1.05</td>
+<td style="text-align: right;">4.70</td>
+<td style="text-align: right;">5.92</td>
+<td style="text-align: right;">6.47</td>
+<td style="text-align: right;">7.71</td>
+<td style="text-align: right;">1.77</td>
+<td style="text-align: right;">4.94</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fe</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">1.06</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">2.43</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ni</td>
+<td style="text-align: right;">525.05</td>
+<td style="text-align: right;">69.56</td>
+<td style="text-align: right;">400.00</td>
+<td style="text-align: right;">468.75</td>
+<td style="text-align: right;">520.00</td>
+<td style="text-align: right;">558.75</td>
+<td style="text-align: right;">683.00</td>
+<td style="text-align: right;">90.00</td>
+<td style="text-align: right;">2.60</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ag</td>
+<td style="text-align: right;">149.07</td>
+<td style="text-align: right;">29.59</td>
+<td style="text-align: right;">80.00</td>
+<td style="text-align: right;">132.50</td>
+<td style="text-align: right;">157.00</td>
+<td style="text-align: right;">171.00</td>
+<td style="text-align: right;">199.00</td>
+<td style="text-align: right;">38.50</td>
+<td style="text-align: right;">2.96</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sb</td>
+<td style="text-align: right;">105.16</td>
+<td style="text-align: right;">82.28</td>
+<td style="text-align: right;">32.20</td>
+<td style="text-align: right;">61.42</td>
+<td style="text-align: right;">101.00</td>
+<td style="text-align: right;">120.75</td>
+<td style="text-align: right;">549.00</td>
+<td style="text-align: right;">59.33</td>
+<td style="text-align: right;">23.59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">As</td>
+<td style="text-align: right;">36.81</td>
+<td style="text-align: right;">51.35</td>
+<td style="text-align: right;">7.04</td>
+<td style="text-align: right;">10.16</td>
+<td style="text-align: right;">20.25</td>
+<td style="text-align: right;">37.38</td>
+<td style="text-align: right;">211.00</td>
+<td style="text-align: right;">27.21</td>
+<td style="text-align: right;">9.24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Co</td>
+<td style="text-align: right;">5.23</td>
+<td style="text-align: right;">3.25</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">2.66</td>
+<td style="text-align: right;">5.02</td>
+<td style="text-align: right;">7.75</td>
+<td style="text-align: right;">15.03</td>
+<td style="text-align: right;">5.10</td>
+<td style="text-align: right;">3.41</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cd</td>
+<td style="text-align: right;">17.81</td>
+<td style="text-align: right;">11.38</td>
+<td style="text-align: right;">5.00</td>
+<td style="text-align: right;">9.62</td>
+<td style="text-align: right;">16.35</td>
+<td style="text-align: right;">22.42</td>
+<td style="text-align: right;">54.70</td>
+<td style="text-align: right;">12.80</td>
+<td style="text-align: right;">6.22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sn</td>
+<td style="text-align: right;">10.17</td>
+<td style="text-align: right;">12.43</td>
+<td style="text-align: right;">1.89</td>
+<td style="text-align: right;">4.14</td>
+<td style="text-align: right;">7.34</td>
+<td style="text-align: right;">9.56</td>
+<td style="text-align: right;">65.80</td>
+<td style="text-align: right;">5.42</td>
+<td style="text-align: right;">13.11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Te</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">1.75</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">9.49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bi</td>
+<td style="text-align: right;">60.49</td>
+<td style="text-align: right;">32.61</td>
+<td style="text-align: right;">25.30</td>
+<td style="text-align: right;">39.35</td>
+<td style="text-align: right;">56.65</td>
+<td style="text-align: right;">73.85</td>
+<td style="text-align: right;">181.00</td>
+<td style="text-align: right;">34.50</td>
+<td style="text-align: right;">7.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mn</td>
+<td style="text-align: right;">22.54</td>
+<td style="text-align: right;">15.51</td>
+<td style="text-align: right;">5.80</td>
+<td style="text-align: right;">14.45</td>
+<td style="text-align: right;">19.70</td>
+<td style="text-align: right;">23.37</td>
+<td style="text-align: right;">86.60</td>
+<td style="text-align: right;">8.92</td>
+<td style="text-align: right;">13.07</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Li</td>
+<td style="text-align: right;">1.23</td>
+<td style="text-align: right;">1.44</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">1.54</td>
+<td style="text-align: right;">6.16</td>
+<td style="text-align: right;">1.14</td>
+<td style="text-align: right;">6.93</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Al</td>
+<td style="text-align: right;">6.57</td>
+<td style="text-align: right;">4.29</td>
+<td style="text-align: right;">2.02</td>
+<td style="text-align: right;">3.34</td>
+<td style="text-align: right;">5.28</td>
+<td style="text-align: right;">8.77</td>
+<td style="text-align: right;">21.20</td>
+<td style="text-align: right;">5.43</td>
+<td style="text-align: right;">4.87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">V</td>
+<td style="text-align: right;">2.23</td>
+<td style="text-align: right;">1.09</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">1.50</td>
+<td style="text-align: right;">2.02</td>
+<td style="text-align: right;">2.68</td>
+<td style="text-align: right;">6.08</td>
+<td style="text-align: right;">1.17</td>
+<td style="text-align: right;">5.52</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cr</td>
+<td style="text-align: right;">1.60</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">1.01</td>
+<td style="text-align: right;">1.43</td>
+<td style="text-align: right;">1.95</td>
+<td style="text-align: right;">4.91</td>
+<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">5.94</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rb</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">6.34</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sr</td>
+<td style="text-align: right;">2.05</td>
+<td style="text-align: right;">3.51</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">2.01</td>
+<td style="text-align: right;">15.10</td>
+<td style="text-align: right;">1.83</td>
+<td style="text-align: right;">7.66</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ba</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">4.59</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">11.17</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>Using R, summary statistics were created from table 1 (table 2) and initial observations were made. We found that concentrations for each element varied greatly in range and skew (if skew in this case is distance between mean and median) between each other. The elements Sb, As, Sn, Li, Sr, and Ba all show strong positive skews, numerous other elements show weaker skews. Cu and Zn are roughly symmetric in terms of skew. Ranges vary greatly with many magnitude differences between the ‘percentage based’ vs the ‘ppm’ elements (where percentage is ~10^4 more then ppm of the same value assuming the 2 measurement techniques are equally accurate) and between trace element ranges (Rb having a minimum of 0.03ppm while Ni has a maximum of 683ppm), and between the different samples vs same element (I.e. Sr has a minimum of 0.08ppm and a maximum of 15.10ppm which is over 180 times move than the minimum) these characteristics hint that a data transformation may be appropriate to increase interpretability.</p>
-<p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> observed that samples S13, S25, and S38 were potential outliers due to various unusual element concentrations which we also saw. We also found that S22, S18, and S17 appear to have high Sr content (15.1ppm, 11.8ppm, 7.27ppm respectively compared to a median of 0.42ppm) while S28, S22, and S19 have high Ba content (4.59ppm, 3.61ppm, 3.37ppm respectively compared to a median of 0.28ppm).</p>
-<p>(MAYBE SAY ’further data clustering analysis may find that these groupings of samples cluster together in similar groups, furthering <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> claim that trace element analysis could be used to differentiate providence of alloy production)</p>
+</div>
+<p>Using R, summary statistics (table 2) were created from table 1 and initial observations were made. We found that concentrations for each element varied greatly in range and skew, where skew in this case is distance between mean and median.</p>
+<p>The elements Sb, As, Sn, Li, Sr, and Ba all show strong positive skews, numerous other elements show weaker skews. Cu and Zn are roughly symmetric. Ranges vary greatly with many magnitude differences between the ‘percentage based’ vs the ‘ppm’ elements (where percentage is ~10^4 more then ppm of the same value assuming the 2 measurement techniques are equally accurate) and between trace element ranges (Rb having a minimum of 0.03ppm while Ni has a maximum of 683ppm), and between the different samples vs same element (I.e. Sr has a minimum of 0.08ppm and a maximum of 15.10ppm which is over 180 times move than the minimum) these characteristics hint that a data transformation may be appropriate to increase interpretability.</p>
+<p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> observed that samples S13, S25, and S38 were potential outliers due to various unusual element concentrations which we also noted. We also found that S22, S18, and S17 appear to have high Sr content (15.1ppm, 11.8ppm, 7.27ppm respectively, compared to a median of 0.42ppm) while S28, S22, and S19 have high Ba content (4.59ppm, 3.61ppm, 3.37ppm respectively, compared to a median of 0.28ppm).</p>
+<p>Data clustering analysis may find that these groupings of samples cluster together in similar groups, furthering <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span>, who claimed that trace element analysis could be used to differentiate providence of orichalcum alloy production.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchbox.png" class="img-fluid figure-img"></p>
@@ -1253,19 +1539,18 @@ window.Quarto = {
 <p><strong>3.2 QQ-plots &amp; Henze-Zirkler Test For Multivariate Normality</strong></p>
 <p>We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers and standardisation.</p>
 <p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all.png" class="img-fluid"></p>
-<pre><code></code></pre>
 <p>As this was before there was any scaling performed, we opted to display the elements measured in percentages and the elements measured in PPM separately to better display their individual influence.</p>
 <p>Both Percentages and PPM show blatant departures from the assumption of normality. Few of the points follow the theoretical model line, steps/gaps in the points are likely because the various element concentrations have such different numerical ranges, both plots somewhat show an s-shaped curve which tend to indicate that the variables have heavy skew (extreme values/outliers) which is unsurprising considering the ranges and variations between elements being widely different. Overall significant departures from normality can be seen for both Percentages and PPM. We do note that the qq-plot for percentages is marginally better due to the more symmetric distribution of values.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#log transform data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>logIngots <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">as.matrix</span>(Ingots_F_no[<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>]))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#print(logIngots)</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(logIngots,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">"Log Transformed Data"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"pipe"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#log transform data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>logIngots <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">as.matrix</span>(Ingots_F_no[<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>]))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#print(logIngots)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(logIngots,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">"Log Transformed Data"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"pipe"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Log Transformed Data</caption>
@@ -3636,23 +3921,23 @@ window.Quarto = {
 </div>
 </div>
 <div class="cell-output-display">
-<div id="udxllvvpkk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#udxllvvpkk table {
+<div id="fxpyghsynf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fxpyghsynf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#udxllvvpkk thead, #udxllvvpkk tbody, #udxllvvpkk tfoot, #udxllvvpkk tr, #udxllvvpkk td, #udxllvvpkk th {
+#fxpyghsynf thead, #fxpyghsynf tbody, #fxpyghsynf tfoot, #fxpyghsynf tr, #fxpyghsynf td, #fxpyghsynf th {
   border-style: none;
 }
 
-#udxllvvpkk p {
+#fxpyghsynf p {
   margin: 0;
   padding: 0;
 }
 
-#udxllvvpkk .gt_table {
+#fxpyghsynf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3678,12 +3963,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_caption {
+#fxpyghsynf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#udxllvvpkk .gt_title {
+#fxpyghsynf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3695,7 +3980,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#udxllvvpkk .gt_subtitle {
+#fxpyghsynf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3707,7 +3992,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#udxllvvpkk .gt_heading {
+#fxpyghsynf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3719,13 +4004,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_bottom_border {
+#fxpyghsynf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_col_headings {
+#fxpyghsynf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3740,7 +4025,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_col_heading {
+#fxpyghsynf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3760,7 +4045,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#udxllvvpkk .gt_column_spanner_outer {
+#fxpyghsynf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3772,15 +4057,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#udxllvvpkk .gt_column_spanner_outer:first-child {
+#fxpyghsynf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#udxllvvpkk .gt_column_spanner_outer:last-child {
+#fxpyghsynf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#udxllvvpkk .gt_column_spanner {
+#fxpyghsynf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3792,11 +4077,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#udxllvvpkk .gt_spanner_row {
+#fxpyghsynf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#udxllvvpkk .gt_group_heading {
+#fxpyghsynf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3822,7 +4107,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#udxllvvpkk .gt_empty_group_heading {
+#fxpyghsynf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3837,15 +4122,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#udxllvvpkk .gt_from_md > :first-child {
+#fxpyghsynf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#udxllvvpkk .gt_from_md > :last-child {
+#fxpyghsynf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#udxllvvpkk .gt_row {
+#fxpyghsynf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3864,7 +4149,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#udxllvvpkk .gt_stub {
+#fxpyghsynf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3877,7 +4162,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#udxllvvpkk .gt_stub_row_group {
+#fxpyghsynf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3891,15 +4176,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#udxllvvpkk .gt_row_group_first td {
+#fxpyghsynf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#udxllvvpkk .gt_row_group_first th {
+#fxpyghsynf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#udxllvvpkk .gt_summary_row {
+#fxpyghsynf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3909,16 +4194,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#udxllvvpkk .gt_first_summary_row {
+#fxpyghsynf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_first_summary_row.thick {
+#fxpyghsynf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#udxllvvpkk .gt_last_summary_row {
+#fxpyghsynf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3928,7 +4213,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_grand_summary_row {
+#fxpyghsynf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3938,7 +4223,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#udxllvvpkk .gt_first_grand_summary_row {
+#fxpyghsynf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3948,7 +4233,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_last_grand_summary_row_top {
+#fxpyghsynf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3958,11 +4243,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_striped {
+#fxpyghsynf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#udxllvvpkk .gt_table_body {
+#fxpyghsynf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3971,7 +4256,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_footnotes {
+#fxpyghsynf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3985,7 +4270,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_footnote {
+#fxpyghsynf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3994,7 +4279,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#udxllvvpkk .gt_sourcenotes {
+#fxpyghsynf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4008,7 +4293,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#udxllvvpkk .gt_sourcenote {
+#fxpyghsynf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4016,72 +4301,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#udxllvvpkk .gt_left {
+#fxpyghsynf .gt_left {
   text-align: left;
 }
 
-#udxllvvpkk .gt_center {
+#fxpyghsynf .gt_center {
   text-align: center;
 }
 
-#udxllvvpkk .gt_right {
+#fxpyghsynf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#udxllvvpkk .gt_font_normal {
+#fxpyghsynf .gt_font_normal {
   font-weight: normal;
 }
 
-#udxllvvpkk .gt_font_bold {
+#fxpyghsynf .gt_font_bold {
   font-weight: bold;
 }
 
-#udxllvvpkk .gt_font_italic {
+#fxpyghsynf .gt_font_italic {
   font-style: italic;
 }
 
-#udxllvvpkk .gt_super {
+#fxpyghsynf .gt_super {
   font-size: 65%;
 }
 
-#udxllvvpkk .gt_footnote_marks {
+#fxpyghsynf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#udxllvvpkk .gt_asterisk {
+#fxpyghsynf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#udxllvvpkk .gt_indent_1 {
+#fxpyghsynf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#udxllvvpkk .gt_indent_2 {
+#fxpyghsynf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#udxllvvpkk .gt_indent_3 {
+#fxpyghsynf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#udxllvvpkk .gt_indent_4 {
+#fxpyghsynf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#udxllvvpkk .gt_indent_5 {
+#fxpyghsynf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#udxllvvpkk .katex-display {
+#fxpyghsynf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#udxllvvpkk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fxpyghsynf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4381,31 +4666,6 @@ window.Quarto = {
 <figcaption>Dendrogram</figcaption>
 </figure>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(scaled, <span class="at">method =</span> <span class="st">"manhattan"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>HiMan <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d, <span class="at">method =</span> <span class="st">"average"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(scaled) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(ICN)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">fviz_dend</span>(</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  HiMan,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">5</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">rect =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_colors =</span> my_col,</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">rect_border =</span> my_col</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">ggplot_build</span>(p)<span class="sc">$</span>data[[<span class="dv">2</span>]]<span class="sc">$</span>label)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 32 31 3  10 29 15
-26 Levels: 32 31 3 10 29 15 16 33 2 30 34 9 18 5 8 23 37 6 36 24 35 26 ... 12</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">ggplot_build</span>(p)<span class="sc">$</span>data[[<span class="dv">2</span>]]<span class="sc">$</span>label))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 26</code></pre>
-</div>
-</div>
 <p>Something interesting top note is that for both cluster options they both cluster sample’s 15, 10, and 22 this could be because of …</p>
 <p>Cophenetic correlation coefficient 0.825 is pretty dang good. I’m going to remake this using ggplot, should be nicer.</p>
 <p><strong>3.4 Fuzzy Analysis</strong></p>
@@ -4425,45 +4685,45 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">0.3712874</td>
-<td style="text-align: right;">0.3268016</td>
-<td style="text-align: right;">0.3019109</td>
+<td style="text-align: right;">0.3642165</td>
+<td style="text-align: right;">0.3205779</td>
+<td style="text-align: right;">0.3152056</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">0.3896741</td>
-<td style="text-align: right;">0.2905992</td>
-<td style="text-align: right;">0.3197266</td>
+<td style="text-align: right;">0.4192879</td>
+<td style="text-align: right;">0.3126837</td>
+<td style="text-align: right;">0.2680284</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">5</td>
-<td style="text-align: right;">0.3817529</td>
-<td style="text-align: right;">0.3368281</td>
-<td style="text-align: right;">0.2814191</td>
+<td style="text-align: right;">0.3964731</td>
+<td style="text-align: right;">0.3498160</td>
+<td style="text-align: right;">0.2537109</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">6</td>
-<td style="text-align: right;">0.3852587</td>
-<td style="text-align: right;">0.2920806</td>
-<td style="text-align: right;">0.3226607</td>
+<td style="text-align: right;">0.3564183</td>
+<td style="text-align: right;">0.2702156</td>
+<td style="text-align: right;">0.3733661</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">8</td>
-<td style="text-align: right;">0.3535656</td>
-<td style="text-align: right;">0.4001300</td>
-<td style="text-align: right;">0.2463044</td>
+<td style="text-align: right;">0.3731855</td>
+<td style="text-align: right;">0.4223339</td>
+<td style="text-align: right;">0.2044806</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">9</td>
-<td style="text-align: right;">0.3527853</td>
-<td style="text-align: right;">0.4045173</td>
-<td style="text-align: right;">0.2426974</td>
+<td style="text-align: right;">0.3308487</td>
+<td style="text-align: right;">0.3793640</td>
+<td style="text-align: right;">0.2897873</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10</td>
-<td style="text-align: right;">0.4022431</td>
-<td style="text-align: right;">0.3459401</td>
-<td style="text-align: right;">0.2518168</td>
+<td style="text-align: right;">0.3972201</td>
+<td style="text-align: right;">0.3416203</td>
+<td style="text-align: right;">0.2611597</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">11</td>
@@ -4473,45 +4733,45 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">12</td>
+<td style="text-align: right;">0.5056657</td>
+<td style="text-align: right;">0.1835340</td>
+<td style="text-align: right;">0.3108003</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">15</td>
+<td style="text-align: right;">0.3788758</td>
+<td style="text-align: right;">0.2666590</td>
+<td style="text-align: right;">0.3544652</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">16</td>
+<td style="text-align: right;">0.3814978</td>
+<td style="text-align: right;">0.3462338</td>
+<td style="text-align: right;">0.2722684</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">18</td>
+<td style="text-align: right;">0.3558813</td>
+<td style="text-align: right;">0.3226723</td>
+<td style="text-align: right;">0.3214464</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">20</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">15</td>
-<td style="text-align: right;">0.4033959</td>
-<td style="text-align: right;">0.2839167</td>
-<td style="text-align: right;">0.3126873</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">16</td>
-<td style="text-align: right;">0.3890680</td>
-<td style="text-align: right;">0.3531042</td>
-<td style="text-align: right;">0.2578278</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">18</td>
-<td style="text-align: right;">0.3452228</td>
-<td style="text-align: right;">0.3130084</td>
-<td style="text-align: right;">0.3417688</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">20</td>
-<td style="text-align: right;">0.4514959</td>
-<td style="text-align: right;">0.2409304</td>
-<td style="text-align: right;">0.3075738</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">23</td>
-<td style="text-align: right;">0.3824191</td>
-<td style="text-align: right;">0.3249243</td>
-<td style="text-align: right;">0.2926567</td>
+<td style="text-align: right;">0.4224857</td>
+<td style="text-align: right;">0.3589670</td>
+<td style="text-align: right;">0.2185473</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">24</td>
-<td style="text-align: right;">0.3548025</td>
-<td style="text-align: right;">0.2663203</td>
-<td style="text-align: right;">0.3788772</td>
+<td style="text-align: right;">0.3166053</td>
+<td style="text-align: right;">0.2376488</td>
+<td style="text-align: right;">0.4457459</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">26</td>
@@ -4521,78 +4781,69 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">27</td>
-<td style="text-align: right;">0.3044826</td>
-<td style="text-align: right;">0.2654330</td>
-<td style="text-align: right;">0.4300844</td>
+<td style="text-align: right;">0.3161169</td>
+<td style="text-align: right;">0.2755752</td>
+<td style="text-align: right;">0.4083079</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">29</td>
-<td style="text-align: right;">0.3806608</td>
-<td style="text-align: right;">0.3423361</td>
-<td style="text-align: right;">0.2770031</td>
+<td style="text-align: right;">0.3857492</td>
+<td style="text-align: right;">0.3469122</td>
+<td style="text-align: right;">0.2673387</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">30</td>
-<td style="text-align: right;">0.3617614</td>
-<td style="text-align: right;">0.3399568</td>
-<td style="text-align: right;">0.2982818</td>
+<td style="text-align: right;">0.3323539</td>
+<td style="text-align: right;">0.3123218</td>
+<td style="text-align: right;">0.3553243</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">31</td>
-<td style="text-align: right;">0.3478500</td>
-<td style="text-align: right;">0.3954776</td>
-<td style="text-align: right;">0.2566724</td>
+<td style="text-align: right;">0.3341482</td>
+<td style="text-align: right;">0.3798999</td>
+<td style="text-align: right;">0.2859519</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">32</td>
-<td style="text-align: right;">0.3916442</td>
-<td style="text-align: right;">0.3099527</td>
-<td style="text-align: right;">0.2984031</td>
+<td style="text-align: right;">0.3863466</td>
+<td style="text-align: right;">0.3057601</td>
+<td style="text-align: right;">0.3078933</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">33</td>
-<td style="text-align: right;">0.3467602</td>
-<td style="text-align: right;">0.3647826</td>
-<td style="text-align: right;">0.2884572</td>
+<td style="text-align: right;">0.3072383</td>
+<td style="text-align: right;">0.3232066</td>
+<td style="text-align: right;">0.3695551</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">34</td>
-<td style="text-align: right;">0.3722342</td>
-<td style="text-align: right;">0.3314273</td>
-<td style="text-align: right;">0.2963385</td>
+<td style="text-align: right;">0.3259026</td>
+<td style="text-align: right;">0.2901749</td>
+<td style="text-align: right;">0.3839225</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">35</td>
-<td style="text-align: right;">0.3934302</td>
-<td style="text-align: right;">0.2778994</td>
-<td style="text-align: right;">0.3286704</td>
+<td style="text-align: right;">0.3335817</td>
+<td style="text-align: right;">0.2356255</td>
+<td style="text-align: right;">0.4307928</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">36</td>
-<td style="text-align: right;">0.3587441</td>
-<td style="text-align: right;">0.2631092</td>
-<td style="text-align: right;">0.3781467</td>
+<td style="text-align: right;">0.4045562</td>
+<td style="text-align: right;">0.2967087</td>
+<td style="text-align: right;">0.2987351</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">37</td>
-<td style="text-align: right;">0.4015658</td>
-<td style="text-align: right;">0.2894561</td>
-<td style="text-align: right;">0.3089781</td>
+<td style="text-align: right;">0.3983628</td>
+<td style="text-align: right;">0.2871473</td>
+<td style="text-align: right;">0.3144899</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The default value alpha=1 has been set </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     cluster neighbor     sil_width
-[1,]       1        2 -0.0952924919
-[2,]       1        2 -0.0002748774
-[3,]       1        2 -0.0764344076
-[4,]       1        3 -0.2364866231
-[5,]       2        3 -0.1392343234
-[6,]       2        1  0.0462518251</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -4605,27 +4856,6 @@ window.Quarto = {
 <div>
 <figure class="figure">
 <p><img src="Report_files/figure-html/fuzzy-2.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/fuzzy-3.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/fuzzy-4.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/fuzzy-5.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>

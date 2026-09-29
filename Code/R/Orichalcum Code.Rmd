@@ -45,6 +45,7 @@ library(gridExtra)
 library(gt)
 library(factoextra)
 library(umap)
+library(moments)
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -188,15 +189,50 @@ invisible(summary(Ingots_F_no))
 #code to make the summary into a table
 skim(Ingots_F_no[,-1]) |>
   select(-n_missing, -complete_rate)
-  
 
+
+#Making summary stats of table 1
+
+
+Element_order <- colnames(as.data.frame(Ingots_F_no[, -1]))
+
+Ingots_sum <- Ingots_F_no[, -1] |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Element",
+    values_to = "Concentration"
+  ) |>
+  mutate(
+    Element = factor(Element, levels = Element_order)
+  ) |>
+  group_by(Element) |>
+  summarise(
+    Mean = mean(Concentration, na.rm = TRUE),
+    SD = sd(Concentration, na.rm = TRUE),
+    Min = min(Concentration, na.rm = TRUE),
+    Q1 = quantile(Concentration, 0.25, na.rm = TRUE),
+    Median = median(Concentration, na.rm = TRUE),
+    Q3 = quantile(Concentration, 0.75, na.rm = TRUE),
+    Max = max(Concentration, na.rm = TRUE),
+    IQR = IQR(Concentration, na.rm = TRUE),
+    Kurtosis = kurtosis(Concentration, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+knitr::kable(
+  Ingots_sum, 
+  digits = 2,
+  caption = "Summary Statistics of Table 1", 
+  format = "pipe")
+  
 #box plot of the initial data: (no transformations) using ggplot:
-#start by turing the data into long format:
+
 Ingots_long <- Ingots_F_no[, -1] |>
   pivot_longer(
     cols = everything(),
     names_to = "Element",
-    values_to = "Concentration")
+    values_to = "Concentration"
+    )
 
 #notchbox
   

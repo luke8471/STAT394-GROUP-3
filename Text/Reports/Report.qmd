@@ -46,7 +46,7 @@ library(gridExtra)
 library(gt)
 library(factoextra)
 library(umap)
-
+library(moments)
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -150,7 +150,7 @@ We will be excluding the Cu/Zn ratio variable as we chose to analyse the linkage
 
 **3.1 Analysing raw data**
 
-We performed a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to note is that the elements Cu, Zn, Pb, and Fe are all in percentages, where as the concentrations of the other elements are in PPM (parts per a million). This immediately indicated that scaling was needed.
+We performed a simple summary of the data in table 1 and created a box plot to visualize the data. Something to note is that the elements Cu, Zn, Pb, and Fe are all in percentages, where as the concentrations of the other elements are in PPM (parts per a million). This immediately indicated that scaling was needed.
 
 ```{r extracting the table, echo=FALSE}
 #| fig-width: 10
@@ -217,17 +217,51 @@ knitr::kable(
   caption = "Figure 1: Main component and trace element 
   concentrations obtained by ICP-OES & ICP-MS techniques", 
   format = "pipe")
+
+Element_order <- colnames(as.data.frame(Ingots_F_no[, -1]))
+
+Ingots_sum <- Ingots_F_no[, -1] |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Element",
+    values_to = "Concentration"
+  ) |>
+  mutate(
+    Element = factor(Element, levels = Element_order)
+  ) |>
+  group_by(Element) |>
+  summarise(
+    Mean = mean(Concentration, na.rm = TRUE),
+    SD = sd(Concentration, na.rm = TRUE),
+    Min = min(Concentration, na.rm = TRUE),
+    Q1 = quantile(Concentration, 0.25, na.rm = TRUE),
+    Median = median(Concentration, na.rm = TRUE),
+    Q3 = quantile(Concentration, 0.75, na.rm = TRUE),
+    Max = max(Concentration, na.rm = TRUE),
+    IQR = IQR(Concentration, na.rm = TRUE),
+    Kurtosis = kurtosis(Concentration, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+knitr::kable(
+  Ingots_sum, 
+  digits = 2,
+  caption = "Summary Statistics of Table 1", 
+  format = "pipe")
+
 ```
 
-Using R, summary statistics were created from table 1 (table 2) and initial observations were made. We found that concentrations for each element varied greatly in range and skew (if skew in this case is distance between mean and median) between each other. The elements Sb, As, Sn, Li, Sr, and Ba all show strong positive skews, numerous other elements show weaker skews. Cu and Zn are roughly symmetric in terms of skew. Ranges vary greatly with many magnitude differences between the 'percentage based' vs the 'ppm' elements (where percentage is \~10\^4 more then ppm of the same value assuming the 2 measurement techniques are equally accurate) and between trace element ranges (Rb having a minimum of 0.03ppm while Ni has a maximum of 683ppm), and between the different samples vs same element (I.e. Sr has a minimum of 0.08ppm and a maximum of 15.10ppm which is over 180 times move than the minimum) these characteristics hint that a data transformation may be appropriate to increase interpretability.
+Using R, summary statistics (table 2) were created from table 1 and initial observations were made. We found that concentrations for each element varied greatly in range and skew, where skew in this case is distance between mean and median.
 
-@Caponetti2017-fd observed that samples S13, S25, and S38 were potential outliers due to various unusual element concentrations which we also saw. We also found that S22, S18, and S17 appear to have high Sr content (15.1ppm, 11.8ppm, 7.27ppm respectively compared to a median of 0.42ppm) while S28, S22, and S19 have high Ba content (4.59ppm, 3.61ppm, 3.37ppm respectively compared to a median of 0.28ppm).
+The elements Sb, As, Sn, Li, Sr, and Ba all show strong positive skews, numerous other elements show weaker skews. Cu and Zn are roughly symmetric. Ranges vary greatly with many magnitude differences between the 'percentage based' vs the 'ppm' elements (where percentage is \~10\^4 more then ppm of the same value assuming the 2 measurement techniques are equally accurate) and between trace element ranges (Rb having a minimum of 0.03ppm while Ni has a maximum of 683ppm), and between the different samples vs same element (I.e. Sr has a minimum of 0.08ppm and a maximum of 15.10ppm which is over 180 times move than the minimum) these characteristics hint that a data transformation may be appropriate to increase interpretability.
 
-(MAYBE SAY 'further data clustering analysis may find that these groupings of samples cluster together in similar groups, furthering @Caponetti2017-fd claim that trace element analysis could be used to differentiate providence of alloy production)
+@Caponetti2017-fd observed that samples S13, S25, and S38 were potential outliers due to various unusual element concentrations which we also noted. We also found that S22, S18, and S17 appear to have high Sr content (15.1ppm, 11.8ppm, 7.27ppm respectively, compared to a median of 0.42ppm) while S28, S22, and S19 have high Ba content (4.59ppm, 3.61ppm, 3.37ppm respectively, compared to a median of 0.28ppm).
+
+Data clustering analysis may find that these groupings of samples cluster together in similar groups, furthering @Caponetti2017-fd, who claimed that trace element analysis could be used to differentiate providence of orichalcum alloy production.
 
 ![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchbox.png)
 
-Ni (nickel) had the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, likely driven by sample 13's recorded Sb being magnitudes larger than any of the other samples.
+Ni (nickel) had the widest interquartile range of 90.00, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, likely driven by sample 13's recorded Sb being magnitudes larger than any of the other samples.
 
 Due to the fact the data was recorded at different scales (percentage and PPM) and obvious outliers, log transformation and scaling were the next logical steps.
 
@@ -280,12 +314,15 @@ We first compared the QQ-normal plots of table 1 and compared it to the log tran
 
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all.png)
 
-```         
-```
+As this was before there was any scaling performed, we opted to display the elements individually to better display each elements influence.
 
-As this was before there was any scaling performed, we opted to display the elements measured in percentages and the elements measured in PPM separately to better display their individual influence.
+##### Primary Elements
 
-Both Percentages and PPM show blatant departures from the assumption of normality. Few of the points follow the theoretical model line, steps/gaps in the points are likely because the various element concentrations have such different numerical ranges, both plots somewhat show an s-shaped curve which tend to indicate that the variables have heavy skew (extreme values/outliers) which is unsurprising considering the ranges and variations between elements being widely different. Overall significant departures from normality can be seen for both Percentages and PPM. We do note that the qq-plot for percentages is marginally better due to the more symmetric distribution of values.
+Cu roughly follows the normal QQ-line, indicating it may follow a normal distribution. Fe and Pb are similarly distributed to Cu, but show slight deviation from QQ-line in the upper and lower tails. Zn has clear deviation from the QQ-line in the upper tail.
+
+##### Trace Elements
+
+Ag, Co, and Ni roughly follow the QQ-line indicating some evidence for normality. All other trace elements have blatant deviations from the normal line, particularly in the upper tail, likely due to previously discussed potential outliers. (LIL MORE HERE PLZ)
 
 ```{r}
 #| fig-width: 10
@@ -303,17 +340,6 @@ knitr::kable(logIngots,
 
 ```
 
-```{r echo = FALSE}
-#taking the log.
-
-qqnorm(logIngots, col = "#648FFF", main = "Normal QQ-Plot for the log-Transformed Data",
-       sub = "All Elements")
-qqline(logIngots, col = "#DC267F")
-
-```
-
-The QQ-plot of the log transformed data roughly followed the theoretical line (in red), this is evidence that the normality assumption may hold. The tails are relatively long and flat, indicating that there may be some extreme outliers. There are several steps in the upper and lower tails, which alone is not necessarily a departure from normality, and may be explained by the zero values returned for some Sample's variables after the log transformation.
-
 The observed zero-values for (PUT SAMPLES NUMBERS IN HERE) in (TABLE) in variables(HERE), which while not a large quantity of the samples, still provided some concern as log(0) is undefined and can influence non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
 
 We chose to combat the zero values by standardising the data set using log($\mathcal{x}$ + 1)}, where $\mathcal{x}$ is our data. This, coupled with a Henze-Zirkler test, established if there is preliminary evidence for multivariate normality.
@@ -329,14 +355,8 @@ logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 #print(logIngots1)
 
 knitr::kable(logIngots1,
-             caption = "Log Transformed Data",
+             caption = "Log(x + 1) Transformed Data",
              format = "pipe")
-
-#taking the log.
-
-qqnorm(logIngots1, col = "#648FFF", main = "Normal QQ- Plot of the log-transformed data (all elements)")
-qqline(logIngots1, col = "#DC267F")
-
 
 HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
 
@@ -352,6 +372,8 @@ knitr::kable(
 As you can see in table 2, our values are now all non-zero.
 
 ![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png)
+
+The QQ-plot of the log transformed data roughly followed the theoretical line (in red), this is evidence that the normality assumption may hold. The tails are relatively long and flat, indicating that there may be some extreme outliers. There are several steps in the upper and lower tails, which alone is not necessarily a departure from normality, and may be explained by the zero values returned for some Sample's variables after the log transformation.
 
 The normal QQ-plot looks less normal after standardisation, with the length of the tails being accentuated and continuing presence of stepped data.
 
@@ -439,8 +461,6 @@ print(ol) # ALICE STUFF
 Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 
 ```
-
-
 
 The QQ plot shows very skewed data which we would expected...
 
