@@ -1,10 +1,11 @@
 ---
 title: "It's just rocks and metal ing-it"
 author: "Gaia Smith and Alice Thompson"
-format: revealjs
-  footnote: "STAT394 - Group 3 - VUW 2026"
-  slide-number: TRUE
-  Theme: moon
+format:
+  revealjs:
+    footer: "STAT394 - Group 3 - VUW 2026"
+    slide-number: TRUE
+    Theme: moon
 editor: visual
 ---
 
@@ -462,8 +463,8 @@ We started by performing a PAM (Partitioning Around Medoids) analysis
 
 #need to find optimal silhouette width
 CN <- as.data.frame(Ingots_clean[,-1])
-
-ICN[] <- lapply(ICN, as.numeric)
+ICN <- Ingots_clean
+ICN <- lapply(ICN, as.numeric)
 
 scaled <- scale(ICN)
 
