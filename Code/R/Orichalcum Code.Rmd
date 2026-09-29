@@ -394,6 +394,9 @@ ggsave(
 ## MAD
 
 ```{r transformations-mad, echo=TRUE}
+#| fig-width: 10
+#| fig-height: 6
+
 
 #Calculate medians and MAD for each column:
 median <- apply(logIngots1[,-1], 2, median)
@@ -401,7 +404,6 @@ mad <- apply(logIngots1[,-1], 2, mad)
 
 
 print(median/mad)
-#mad
 
 #looking at this we can see some MASSIVE deviations, as expected. Now use the
 #robust Z score to identify outliers that are candidates for removal.
@@ -427,30 +429,75 @@ z_scores <- as.data.frame(scale(logIngots1[, ]))
 
 summary(z_scores)
 
-ol <- logIngots1[rowSums(abs(z_scores) > 3) > 0, ]
-
-print(ol)
+ol <- logIngots1[rowSums(abs(z_scores) > 2.5) > 0, ]
 
 Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 
-#Ingots_clean
 
-#old boxplot:
-#boxplot(Ingots_clean[,-1], notch = TRUE, col="lightblue")
+#boxplot standardised with outliers removed:
 
-#New boxplot:
 Ingots_clean_long <- as.data.frame(Ingots_clean[,-1]) |>
   pivot_longer(
     cols = everything(),
     names_to = "Elements",
     values_to = "Concentrations")
 
+#normbox <- 
 
+ggplot(
+  Ingots_clean_long,
+  aes(
+    x= Elements,
+    y= Concentrations
+    )
+  ) +
+  geom_boxplot(
+    notch = TRUE,
+    fill = "#648FFF",
+    colour = "grey30",
+    linewidth = 0.7,
+    outlier.shape = 21,
+    outlier.fill = "#FE6100",
+    outlier.colour = "grey30",
+    outlier.stroke = 0.8,
+    outlier.size = 3
+  ) +
+  geom_jitter(
+    colour = "#785EF0",
+    alpha = 0.1,
+    width = 0.12,
+    size = 2
+  ) +
+  labs(
+    title = "Element Concentration Spread Between Samples",
+    subtitle = "Outliers Removed | Standardised | Highlighted Outliers",
+    x = "Element",
+    y = "Concentration"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(
+      face = "bold",
+      size = 22
+    ),
+    plot.subtitle = element_text(
+      colour = "grey30",
+      size = 14
+    ),
+    plot.title.position = "plot",
+    axis.text.x = element_text(
+      angle = 45,
+      hjust = 1
+    )
+  )
 
-ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
-  geom_boxplot(notch = FALSE, fill ="#40B0A6") +
-  theme_minimal()+
-  labs(title = "Boxplot of the clean data")
+#ggsave(
+  #file.path("C:/Users/Alice/Documents/STAT394-GROUP-3/Figures", "notchboxnorm.png"),
+  #normbox,
+  #width = 10,
+  #height = 6,
+  #dpi = 600
+ #)
 
 
 #still getting negative values (even with elevated magnitude cutoff) in here so 

@@ -433,38 +433,9 @@ Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 
 #summary(Ingots_clean)
 
-#New boxplot:
-
-df <- as.data.frame(Ingots_clean)
-
-Ingots_clean_long <- df[,-1] |>
-  pivot_longer(
-    cols = everything(),
-    names_to = "Elements",
-    values_to = "Concentrations")
-
-
-
-ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
-  geom_boxplot(notch = FALSE, fill ="#40B0A6") +
-  theme_minimal()+
-  labs(title = "Boxplot of MAD Transformation With Outliers Removed")
-
-
-#still getting negative values (even with elevated magnitude cutoff) in here so 
-#log transforming may not be appropriate.
-
-logIngotsClean <- invisible(log(as.matrix(Ingots_clean[-1,-1])))
-invisible(summary(logIngotsClean))
-
-#head(logIngotsClean)
-
-
-#making the dataframe numeric so it can be manipulated.
-
-num_vars <- sapply(Ingots_clean, is.numeric)
-
 ```
+
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
 
 The QQ plot shows very skewed data which we would expected...
 
