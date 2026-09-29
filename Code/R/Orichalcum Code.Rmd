@@ -257,107 +257,6 @@ ggplot(
 
 ```
 
-*Note:* Had to do this as R was having a hard time working from the table 1 ======= \## Summary of the raw data (no transformations)
-
-```{r basic summary, echo=TRUE}
-#| fig-width: 10
-#| fig-height: 6
-
-#Covariance table of the data:
-invisible(var(Ingots_F_no[-1,-1]))
-
-
-#Correlation table of the data:
-invisible(cor(Ingots_F_no[-1,-1]))
-
-
-#Correlation plot:
-ggcorrplot(
-  cor(Ingots_F_no[,-1]),
-  hc.order = FALSE,
-  type = "lower",
-  lab = TRUE,
-  lab_size = 1.5,
-  ggtheme = theme_minimal(),
-  colors = c("#FE6100", "white","#648FFF"),
-  tl.col = "gray30"
-  ) +
-  labs(
-    title = "Correlation Matrix",
-    subtitle = "Pearson Correlations | Raw Data"
-    ) +
-  theme(
-    plot.subtitle = element_text(
-    colour = "grey30"
-    ))
-
-#ggsave(
-  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/correlation_matrix.png",
-  #plot = cor1,
-  #width = 12,
-  #height = 10,
-  #dpi = 600
-#)
-
-
-#performed for clean data:
-invisible(var(Ingots_clean[-1,-1]))
-
-invisible(cor(Ingots_clean[-1,-1]))
-
-ggcorrplot(
-  cor(Ingots_clean),
-  hc.order = FALSE,
-  type = "lower",
-  lab = TRUE,
-  lab_size = 1.5,
-  ggtheme = theme_minimal(),
-  colors = c("#FE6100", "white","#648FFF"),
-  tl.col = "gray30",
-  ) +
-  labs(
-    title = "Correlation Matrix",
-    subtitle = "Pearson Correlations | log-Transformed Data"
-    ) +
-  theme(
-    plot.subtitle = element_text(
-    colour = "grey30"
-    ))
-
-#ggsave(
-  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/correlation_matrix_log.png",
-  #plot = cor2,
-  #width = 12,
-  #height = 10,
-  #dpi = 600
-#)
-
-```
-
-*Notes:* Our raw data of concentrations produced a summary and simple box plots from above some things to note are Ni (nickel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
-
-We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
-
-## Deeper summary and box plot of Cu, Zn, Pb and Sn:
-
-```{r basic summary & boxplot, echo=TRUE}
-
-#Summary of the Data Frame:
-summary(Ingots_F_no[,c(2,3,4,12)])
-
-skim(Ingots_F_no[,c(2,3,4,12)]) |>
-  dplyr::select(-n_missing, -complete_rate)
-
-
-
-#Basic boxplot of the raw data: (no transformations)
-boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue")
-
-
-```
-
-*Notes:* From the these boxplots we can more clearly see differences between spreads between some of our most prevalent elements, Lead and Zinc have a slight spread where as Copper and tine have a larger spread, Tin also has some outliers, particularly 65.8 from sample 17, as well as 42 from sample 22. Again Transformations will give us a better picture to show the relationships between the variable
-
 ## QQ-normal plots: - code from STAT292
 
 ```{r qqnormal, echo=TRUE}
@@ -491,10 +390,7 @@ ggsave(
 )
 ```
 
-*Notes:* Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7.
-
-Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds.
-
+*Note:* Had to do this as R was having a hard time working from the table 1 ======= \## Summary of the raw data (no transformations)
 ## MAD
 
 ```{r transformations-mad, echo=TRUE}
@@ -519,10 +415,6 @@ z <- scale(logIngots1[,-1], center = median, scale = mad)
 #Flag observations where any variable exceeds the threshold
 outliers <- apply(abs(z) > 2.5, 1, any)
 
-list(outliers)
-
-print(outliers)
-
 # View the rows flagged as outliers
 summary(logIngots1[outliers,])
 
@@ -541,7 +433,7 @@ print(ol)
 
 Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 
-Ingots_clean
+#Ingots_clean
 
 #old boxplot:
 #boxplot(Ingots_clean[,-1], notch = TRUE, col="lightblue")
@@ -566,8 +458,6 @@ ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
 
 logIngotsClean <- log(as.matrix(Ingots_clean[-1,-1]))
 summary(logIngotsClean)
-
-View(logIngotsClean)
 
 
 #making the dataframe numeric so it can be manipulated.
@@ -598,51 +488,113 @@ HZ <- mvn(data = Ingots_clean, mvn_test = "hz")
 cat("Henze_Zirkler Test Results:\n")
 print(HZ$multivariate_normality)
 
-#Reject null and conclude that at pvalue=0.05, this dataset deviates from multivariate normality
+```
+
+```{r basic summary, echo=TRUE}
+#| fig-width: 10
+#| fig-height: 6
+
+#Covariance table of the data:
+invisible(var(Ingots_F_no[-1,-1]))
 
 
-#I think at this point we reject MVN for the WHOLE dataset.
+#Correlation table of the data:
+invisible(cor(Ingots_F_no[-1,-1]))
 
-#consider log transforming the trace elements..
 
-#We COULD do this for every variable, and maybe should for primary components.
+#Correlation plot:
+ggcorrplot(
+  cor(Ingots_F_no[,-1]),
+  hc.order = FALSE,
+  type = "lower",
+  lab = TRUE,
+  lab_size = 1.5,
+  ggtheme = theme_minimal(),
+  colors = c("#FE6100", "white","#648FFF"),
+  tl.col = "gray30"
+  ) +
+  labs(
+    title = "Correlation Matrix",
+    subtitle = "Pearson Correlations | Raw Data"
+    ) +
+  theme(
+    plot.subtitle = element_text(
+    colour = "grey30"
+    ))
 
-ggplot(Ingots_clean, aes(sample = Cu)) +
-  stat_qq() +
-  stat_qq_line(color = "red") +
-  theme_minimal()
+#ggsave(
+  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/correlation_matrix.png",
+  #plot = cor1,
+  #width = 12,
+  #height = 10,
+  #dpi = 600
+#)
 
-ggplot(Ingots_clean, aes(sample = Zn)) +
-  stat_qq() +
-  stat_qq_line(color = "red") +
-  theme_minimal()
 
-ggplot(Ingots_clean, aes(sample = Sn)) +
-  stat_qq() +
-  stat_qq_line(color = "red") +
-  theme_minimal()
+#performed for clean data:
+invisible(var(Ingots_clean[-1,-1]))
 
-ggplot(Ingots_clean, aes(sample = Sb)) +
-  stat_qq() +
-  stat_qq_line(color = "red") +
-  theme_minimal()
+invisible(cor(Ingots_clean[-1,-1]))
 
-ggplot(Ingots_clean, aes(sample = Ni)) +
-  stat_qq() +
-  stat_qq_line(color = "red") +
-  theme_minimal()
+ggcorrplot(
+  cor(Ingots_clean),
+  hc.order = FALSE,
+  type = "lower",
+  lab = TRUE,
+  lab_size = 1.5,
+  ggtheme = theme_minimal(),
+  colors = c("#FE6100", "white","#648FFF"),
+  tl.col = "gray30",
+  ) +
+  labs(
+    title = "Correlation Matrix",
+    subtitle = "Pearson Correlations | log-Transformed Data"
+    ) +
+  theme(
+    plot.subtitle = element_text(
+    colour = "grey30"
+    ))
 
-ggplot(Ingots_clean, aes(sample = Ag)) +
-  stat_qq() +
-  stat_qq_line(color = "red") +
-  theme_minimal()
-
-ggplot(Ingots_clean, aes(sample = As)) +
-  stat_qq() +
-  stat_qq_line(color = "red") +
-  theme_minimal()
+#ggsave(
+  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/correlation_matrix_log.png",
+  #plot = cor2,
+  #width = 12,
+  #height = 10,
+  #dpi = 600
+#)
 
 ```
+
+*Notes:* Our raw data of concentrations produced a summary and simple box plots from above some things to note are Ni (nickel) has the largest spread followed by Sb (tin). Unfortunately due to the fact the data has a large range of concentrates (ranging from a minimum of 0.06 for Rb and a max of 683 for Ni) we will have to consider some transformations to allow for this massive difference in concentrations. looking at the raw data we also noticed some interesting outliers particularly the 549 for sample 13 for Sb (tin), which the original paper noted as well.
+
+We will be taking a deeper dive into Copper, Zinc, Lead and Tin as ... {something - Alice got this}
+
+## Deeper summary and box plot of Cu, Zn, Pb and Sn:
+
+```{r basic summary & boxplot, echo=TRUE}
+
+#Summary of the Data Frame:
+summary(Ingots_F_no[,c(2,3,4,12)])
+
+skim(Ingots_F_no[,c(2,3,4,12)]) |>
+  dplyr::select(-n_missing, -complete_rate)
+
+
+
+#Basic boxplot of the raw data: (no transformations)
+boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue")
+
+
+```
+
+*Notes:* From the these boxplots we can more clearly see differences between spreads between some of our most prevalent elements, Lead and Zinc have a slight spread where as Copper and tine have a larger spread, Tin also has some outliers, particularly 65.8 from sample 17, as well as 42 from sample 22. Again Transformations will give us a better picture to show the relationships between the variable
+
+
+
+*Notes:* Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7.
+
+Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds.
+
 
 ## Correlation and Covariance tables: - STAT394 inference pdf
 
