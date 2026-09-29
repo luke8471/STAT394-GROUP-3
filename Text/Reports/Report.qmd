@@ -324,7 +324,7 @@ Cu roughly follows the normal QQ-line, indicating it may follow a normal distrib
 
 Ag, Co, and Ni roughly follow the QQ-line indicating some evidence for normality. All other trace elements have blatant deviations from the normal line, particularly in the upper tail, likely due to previously discussed potential outliers. (LIL MORE HERE PLZ)
 
-```{r}
+```{r echo = FALSE}
 #| fig-width: 10
 #| fig-height: 6
 

@@ -1470,7 +1470,7 @@ window.Quarto = {
 <figcaption>Notch Boxplot</figcaption>
 </figure>
 </div>
-<p>Ni (nickel) had the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, likely driven by sample 13’s recorded Sb being magnitudes larger than any of the other samples.</p>
+<p>Ni (nickel) had the widest interquartile range of 90.00, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, likely driven by sample 13’s recorded Sb being magnitudes larger than any of the other samples.</p>
 <p>Due to the fact the data was recorded at different scales (percentage and PPM) and obvious outliers, log transformation and scaling were the next logical steps.</p>
 <p><strong><em>3.1.1 Inconsistencies in Percentages</em></strong></p>
 <p>The percentages of elements Cu, Zn, Pb, and Fe do not add up to 100% for each sample, as shown in the summary table below.</p>
@@ -1539,8 +1539,14 @@ window.Quarto = {
 <p><strong>3.2 QQ-plots &amp; Henze-Zirkler Test For Multivariate Normality</strong></p>
 <p>We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers and standardisation.</p>
 <p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all.png" class="img-fluid"></p>
-<p>As this was before there was any scaling performed, we opted to display the elements measured in percentages and the elements measured in PPM separately to better display their individual influence.</p>
-<p>Both Percentages and PPM show blatant departures from the assumption of normality. Few of the points follow the theoretical model line, steps/gaps in the points are likely because the various element concentrations have such different numerical ranges, both plots somewhat show an s-shaped curve which tend to indicate that the variables have heavy skew (extreme values/outliers) which is unsurprising considering the ranges and variations between elements being widely different. Overall significant departures from normality can be seen for both Percentages and PPM. We do note that the qq-plot for percentages is marginally better due to the more symmetric distribution of values.</p>
+<p>As this was before there was any scaling performed, we opted to display the elements individually to better display each elements influence.</p>
+<section id="primary-elements" class="level5">
+<h5 class="anchored" data-anchor-id="primary-elements">Primary Elements</h5>
+<p>Cu roughly follows the normal QQ-line, indicating it may follow a normal distribution. Fe and Pb are similarly distributed to Cu, but show slight deviation from QQ-line in the upper and lower tails. Zn has clear deviation from the QQ-line in the upper tail.</p>
+</section>
+<section id="trace-elements" class="level5">
+<h5 class="anchored" data-anchor-id="trace-elements">Trace Elements</h5>
+<p>Ag, Co, and Ni roughly follow the QQ-line indicating some evidence for normality. All other trace elements have blatant deviations from the normal line, particularly in the upper tail, likely due to previously discussed potential outliers. (LIL MORE HERE PLZ)</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#log transform data</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -2497,22 +2503,12 @@ window.Quarto = {
 </table>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The QQ-plot of the log transformed data roughly followed the theoretical line (in red), this is evidence that the normality assumption may hold. The tails are relatively long and flat, indicating that there may be some extreme outliers. There are several steps in the upper and lower tails, which alone is not necessarily a departure from normality, and may be explained by the zero values returned for some Sample’s variables after the log transformation.</p>
 <p>The observed zero-values for (PUT SAMPLES NUMBERS IN HERE) in (TABLE) in variables(HERE), which while not a large quantity of the samples, still provided some concern as log(0) is undefined and can influence non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.</p>
 <p>We chose to combat the zero values by standardising the data set using log(<span class="math inline">\(\mathcal{x}\)</span> + 1)}, where <span class="math inline">\(\mathcal{x}\)</span> is our data. This, coupled with a Henze-Zirkler test, established if there is preliminary evidence for multivariate normality.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Log Transformed Data</caption>
+<caption>Log(x + 1) Transformed Data</caption>
 <colgroup>
 <col style="width: 1%">
 <col style="width: 4%">
@@ -3456,13 +3452,6 @@ window.Quarto = {
 </table>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Henze-Zirkler Test For Multivariate Normality</caption>
 <thead>
@@ -3493,6 +3482,7 @@ window.Quarto = {
 <figcaption>Notch Boxplot</figcaption>
 </figure>
 </div>
+<p>The QQ-plot of the log transformed data roughly followed the theoretical line (in red), this is evidence that the normality assumption may hold. The tails are relatively long and flat, indicating that there may be some extreme outliers. There are several steps in the upper and lower tails, which alone is not necessarily a departure from normality, and may be explained by the zero values returned for some Sample’s variables after the log transformation.</p>
 <p>The normal QQ-plot looks less normal after standardisation, with the length of the tails being accentuated and continuing presence of stepped data.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -3711,6 +3701,7 @@ window.Quarto = {
 <p>The transformation didn’t just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co.&nbsp;This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.</p>
 <p>Given the uncertainty about multivariate normality, a linear data analysis was chosen over a primary component analysis.</p>
 </section>
+</section>
 <section id="lda" class="level2">
 <h2 class="anchored" data-anchor-id="lda">4. LDA</h2>
 <p><strong>4.1 PAM</strong></p>
@@ -3921,23 +3912,23 @@ window.Quarto = {
 </div>
 </div>
 <div class="cell-output-display">
-<div id="fxpyghsynf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fxpyghsynf table {
+<div id="kbemxjqsre" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kbemxjqsre table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fxpyghsynf thead, #fxpyghsynf tbody, #fxpyghsynf tfoot, #fxpyghsynf tr, #fxpyghsynf td, #fxpyghsynf th {
+#kbemxjqsre thead, #kbemxjqsre tbody, #kbemxjqsre tfoot, #kbemxjqsre tr, #kbemxjqsre td, #kbemxjqsre th {
   border-style: none;
 }
 
-#fxpyghsynf p {
+#kbemxjqsre p {
   margin: 0;
   padding: 0;
 }
 
-#fxpyghsynf .gt_table {
+#kbemxjqsre .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3963,12 +3954,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_caption {
+#kbemxjqsre .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fxpyghsynf .gt_title {
+#kbemxjqsre .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3980,7 +3971,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#fxpyghsynf .gt_subtitle {
+#kbemxjqsre .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3992,7 +3983,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#fxpyghsynf .gt_heading {
+#kbemxjqsre .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4004,13 +3995,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_bottom_border {
+#kbemxjqsre .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_col_headings {
+#kbemxjqsre .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4025,7 +4016,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_col_heading {
+#kbemxjqsre .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4045,7 +4036,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#fxpyghsynf .gt_column_spanner_outer {
+#kbemxjqsre .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4057,15 +4048,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#fxpyghsynf .gt_column_spanner_outer:first-child {
+#kbemxjqsre .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fxpyghsynf .gt_column_spanner_outer:last-child {
+#kbemxjqsre .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fxpyghsynf .gt_column_spanner {
+#kbemxjqsre .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4077,11 +4068,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#fxpyghsynf .gt_spanner_row {
+#kbemxjqsre .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fxpyghsynf .gt_group_heading {
+#kbemxjqsre .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4107,7 +4098,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#fxpyghsynf .gt_empty_group_heading {
+#kbemxjqsre .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4122,15 +4113,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#fxpyghsynf .gt_from_md > :first-child {
+#kbemxjqsre .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fxpyghsynf .gt_from_md > :last-child {
+#kbemxjqsre .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fxpyghsynf .gt_row {
+#kbemxjqsre .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4149,7 +4140,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#fxpyghsynf .gt_stub {
+#kbemxjqsre .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4162,7 +4153,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fxpyghsynf .gt_stub_row_group {
+#kbemxjqsre .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4176,15 +4167,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#fxpyghsynf .gt_row_group_first td {
+#kbemxjqsre .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fxpyghsynf .gt_row_group_first th {
+#kbemxjqsre .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fxpyghsynf .gt_summary_row {
+#kbemxjqsre .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4194,16 +4185,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fxpyghsynf .gt_first_summary_row {
+#kbemxjqsre .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_first_summary_row.thick {
+#kbemxjqsre .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fxpyghsynf .gt_last_summary_row {
+#kbemxjqsre .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4213,7 +4204,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_grand_summary_row {
+#kbemxjqsre .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4223,7 +4214,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fxpyghsynf .gt_first_grand_summary_row {
+#kbemxjqsre .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4233,7 +4224,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_last_grand_summary_row_top {
+#kbemxjqsre .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4243,11 +4234,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_striped {
+#kbemxjqsre .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fxpyghsynf .gt_table_body {
+#kbemxjqsre .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4256,7 +4247,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_footnotes {
+#kbemxjqsre .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4270,7 +4261,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_footnote {
+#kbemxjqsre .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4279,7 +4270,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fxpyghsynf .gt_sourcenotes {
+#kbemxjqsre .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4293,7 +4284,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#fxpyghsynf .gt_sourcenote {
+#kbemxjqsre .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4301,72 +4292,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#fxpyghsynf .gt_left {
+#kbemxjqsre .gt_left {
   text-align: left;
 }
 
-#fxpyghsynf .gt_center {
+#kbemxjqsre .gt_center {
   text-align: center;
 }
 
-#fxpyghsynf .gt_right {
+#kbemxjqsre .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fxpyghsynf .gt_font_normal {
+#kbemxjqsre .gt_font_normal {
   font-weight: normal;
 }
 
-#fxpyghsynf .gt_font_bold {
+#kbemxjqsre .gt_font_bold {
   font-weight: bold;
 }
 
-#fxpyghsynf .gt_font_italic {
+#kbemxjqsre .gt_font_italic {
   font-style: italic;
 }
 
-#fxpyghsynf .gt_super {
+#kbemxjqsre .gt_super {
   font-size: 65%;
 }
 
-#fxpyghsynf .gt_footnote_marks {
+#kbemxjqsre .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fxpyghsynf .gt_asterisk {
+#kbemxjqsre .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fxpyghsynf .gt_indent_1 {
+#kbemxjqsre .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fxpyghsynf .gt_indent_2 {
+#kbemxjqsre .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fxpyghsynf .gt_indent_3 {
+#kbemxjqsre .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fxpyghsynf .gt_indent_4 {
+#kbemxjqsre .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fxpyghsynf .gt_indent_5 {
+#kbemxjqsre .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fxpyghsynf .katex-display {
+#kbemxjqsre .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fxpyghsynf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kbemxjqsre div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
