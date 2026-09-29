@@ -1,11 +1,12 @@
 ---
-title: "It's just rocks and metal ing-it"
+title: "It's just rocks and metal! ing-it"
 author: "Gaia Smith and Alice Thompson"
 format:
   revealjs:
     footer: "STAT394 - Group 3 - VUW 2026"
     slide-number: TRUE
-    Theme: moon
+    theme: moon
+    transition: slide
 editor: visual
 ---
 
@@ -37,6 +38,8 @@ library(bibtex)
 library(ggdendro)
 library(dendextend)
 library(gt)
+library(knitr)
+library(kableExtra)
 
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
@@ -55,34 +58,21 @@ ingots <- pdftools::pdf_text(tmp)
 
 ```
 
-
 ## 1. Introduction
+:::{.incremental}
+- What is orichalcum?
 
-**2.2 What is orichalcum?**
+- Summary of Collection Techniques
 
-Orichalcum is defined as a copper alloy with zinc content as the principal components. A widely varying quantity of lead and tin among other trace elements are expected. There is no consistent proportion to the amount of copper and zinc found, but the overall composition and relative amounts of principal elemental components can be used to deduce the rough date and origin of a sample. The modern day equivalent is brass.
+- Scope of This Multivariate Analysis
+:::
 
-**2.3 Summary of Collection Techniques**
-
-In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer [@Caponetti2017-sc] was used. The subject paper includes that data and further investigates the composition of each ingot using more invasive and refined elemental analysis.
-
-To obtain material for further testing, a micro-well was drilled into each ingot and the extracted alloy was taken to determine trace elements using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots. (FLESH OUT AND EXPLAIN MORE, TOO VAGUE NOT EXPLAINING WHY)
-
-**2.4 Scope of This Multivariate Analysis**
-
-This multivariate analysis includes manipulations of the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical characteristics of the ingots or any correlation analysis of those variables.
-
-We will be excluding the Cu/Zn ratio variable as we chose to analyse the linkage of all elements between each other, not between Cu/Zn ratios and other elements
-
-## 3. EDA
-
-**3.1 Analysing raw data**
-
-We performed a simple summary of the data in table 1 and creating a box plot to visualize the data. Something to note is that the elements Cu, Zn, Pb, and Fe are all in percentages, where as the concentrations of the other elements are in PPM (parts per a million). This immediately indicated that scaling was needed.
+## 2.1  Analysing the raw data
 
 ```{r extracting the table, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
+
+#| fig-width: 6
+#| fig-height: 4
 
 ##  Extracting the table from the pdf: - tabulapdf package codes:
 ingots2 <- suppressMessages(extract_tables(url, pages=3))
@@ -144,25 +134,87 @@ knitr::kable(
   Ingots_F_no, 
   caption = "Figure 1: Main component and trace element 
   concentrations obtained by ICP-OES & ICP-MS techniques", 
-  format = "pipe")
+  format = "pipe") %>%
+  kable_styling(font_size = 14, latex_options = "scale_down")
+
 ```
 
-Using R, summary statistics were created from table 1 (table 2) and initial observations were made. We found that concentrations for each element varied greatly in range and skew (if skew in this case is distance between mean and median) between each other. The elements Sb, As, Sn, Li, Sr, and Ba all show strong positive skews, numerous other elements show weaker skews. Cu and Zn are roughly symmetric in terms of skew. Ranges vary greatly with many magnitude differences between the 'percentage based' vs the 'ppm' elements (where percentage is \~10\^4 more then ppm of the same value assuming the 2 measurement techniques are equally accurate) and between trace element ranges (Rb having a minimum of 0.03ppm while Ni has a maximum of 683ppm), and between the different samples vs same element (I.e. Sr has a minimum of 0.08ppm and a maximum of 15.10ppm which is over 180 times move than the minimum) these characteristics hint that a data transformation may be appropriate to increase interpretability.
+## 2.1 Anaylysising the Raw data
+```{r basic summary, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
-@Caponetti2017-fd observed that samples S13, S25, and S38 were potential outliers due to various unusual element concentrations which we also saw. We also found that S22, S18, and S17 appear to have high Sr content (15.1ppm, 11.8ppm, 7.27ppm respectively compared to a median of 0.42ppm) while S28, S22, and S19 have high Ba content (4.59ppm, 3.61ppm, 3.37ppm respectively compared to a median of 0.28ppm).
+#Summary of the Data Frame:
+#invisible(summary(Ingots_F_no))
 
-(MAYBE SAY 'further data clustering analysis may find that these groupings of samples cluster together in similar groups, furthering @Caponetti2017-fd claim that trace element analysis could be used to differentiate providence of alloy production)
+#code to make the summary into a table
+#skim(Ingots_F_no[,-1]) |>
+  #select(-n_missing, -complete_rate)
+  
 
-![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchbox.png)
+#box plot of the initial data: (no transformations) using ggplot:
+#start by turing the data into long format:
+Ingots_long <- Ingots_F_no[, -1] |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Element",
+    values_to = "Concentration")
 
-Ni (nickel) had the widest interquartile range, indicating the greatest variation among the samples, while Sb (antimony) shows the largest total range, likely driven by sample 13's recorded Sb being magnitudes larger than any of the other samples.
+#notchbox
+  
+ggplot( 
+  Ingots_long,
+   aes(
+     x = Element,
+     y = Concentration
+     )
+  ) +
+  geom_boxplot(
+    notch = TRUE,
+    fill = "#648FFF",
+    colour = "grey30",
+    linewidth = 0.7,
+    outlier.shape = 21,
+    outlier.fill = "#FE6100",
+    outlier.colour = "grey30",
+    outlier.stroke = 0.8,
+    outlier.size = 3
+  ) +
+  geom_jitter(
+    colour = "#785EF0",
+    alpha = 0.1,
+    width = 0.12,
+    size = 2
+  ) +
+  labs(
+    title = "Element Concentration Spread Between Samples",
+    subtitle = "38 Orichalcum Ingots | Notched Boxplots | Highlighted Outliers",
+    x = "Element",
+    y = "Concentration (PPM)"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(
+      face = "bold",
+      size = 22
+    ),
+    plot.subtitle = element_text(
+      colour = "grey30",
+      size = 14
+    ),
+    plot.title.position = "plot",
+    axis.text.x = element_text(
+      angle = 45,
+      hjust = 1
+    )
+  )
 
-Due to the fact the data was recorded at different scales (percentage and PPM) and obvious outliers, log transformation and scaling were the next logical steps.
+```
 
-***3.1.1 Inconsistencies in Percentages***
 
-The percentages of elements Cu, Zn, Pb, and Fe do not add up to 100% for each sample, as shown in the summary table below.
 
+
+## 2.1.1 Inconsistencies in Percentages
 ```{r echo = FALSE}
 main_com <- Ingots_Frame[c(1:5)]
 
@@ -192,30 +244,34 @@ per_table <- sum_main <- main_com |>
 knitr::kable(
   sum_main,
   digits = 2,
-  caption = "Summary statistics for main component elements."
-)
+  caption = "Summary statistics for main component elements.")  %>%
+  kable_styling(font_size = 35)
 ```
 
-Trace elements weren't included for interpretability as the values are \times 10\^-4 smaller.
 
-These samples have a mean of 104.4\\% with a range 93.17\\% to 113.71\\%. Where 33 of the 38 samples exceed 100\\%. The most significant deviations are samples 8 and 38 (COMMENT ON THIS). @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of available material for sampling for each observation.
+## 2.2 Intital Testing for Multivariate Normality 
+## 2.2 intial QQ-plots
+![QQ_all](/Users/smith/Documents/STAT394-GROUP-3/Figures/QQ_all.png)
 
-These samples have a mean of 104.4\\% with a range 93.17\\% to 113.71\\%. Where 33 of the 38 samples exceed 100\\%. The most significant deviations are samples 8 and 38 which have percentage totals of 112.44\\% and 113.71\\% respectively. @Caponetti2017-fd attribute this to be due to errors generated from the low quantity of available material for sampling for each observation. For example, only 12.3 mg of sample 38 were obtained compared to the ideal 20mg of material as described in their methods.
 
-**3.2 QQ-plots & Henze-Zirkler Test For Multivariate Normality**
+## 2.2 Henze-Zirkler Test For Multivariate Normality 
+:::{.center}
+$$
+\begin{aligned}
+\mathcal{H}_0 :& 
+\text{ The data follow a multivariate normal distribution},
+\\
+\mathcal{H}_1 :& 
+\text{ The data do not follow a multivariate normal distribution}.
+\end{aligned}
+$$
+:::
 
-We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers and standardisation.
+## 2.3 Transformations
 
-![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all.png)
+## 2.3 QQ plot and Henze-Zirkler Test for Multivariate Normality
 
-```         
-```
-
-As this was before there was any scaling performed, we opted to display the elements measured in percentages and the elements measured in PPM separately to better display their individual influence.
-
-Both Percentages and PPM show blatant departures from the assumption of normality. Few of the points follow the theoretical model line, steps/gaps in the points are likely because the various element concentrations have such different numerical ranges, both plots somewhat show an s-shaped curve which tend to indicate that the variables have heavy skew (extreme values/outliers) which is unsurprising considering the ranges and variations between elements being widely different. Overall significant departures from normality can be seen for both Percentages and PPM. We do note that the qq-plot for percentages is marginally better due to the more symmetric distribution of values.
-
-```{r}
+```{r, echo=FALSE}
 #| fig-width: 10
 #| fig-height: 6
 
@@ -283,21 +339,12 @@ The normal QQ-plot looks less normal after standardisation, with the length of t
 
 The Henze-Zirkler test stipulates
 
-$$
-\begin{aligned}
-\mathcal{H}_0 :& 
-\text{ The data follow a multivariate normal distribution},
-\\
-\mathcal{H}_1 :& 
-\text{ The data do not follow a multivariate normal distribution}.
-\end{aligned}
-$$
 
 This generated a p-value=0.069, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution. However, the QQ-plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining if multivariate normality is likely.
 
 Given the uncertainty of multivariate normality and the presence of outliers, further data manipulation by Medioid Absolute Deviation was determined to be the next best step towards multivariate analysis.
 
-**3.3 MAD**
+## 2.3 MAD
 
 MAD was used because it is a robust, outlier-resistant, measure of variability. The log transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence.
 
@@ -451,294 +498,52 @@ The transformation didn't just strength some of the associations it also happene
 
 Given the uncertainty about multivariate normality, a linear data analysis was chosen over a primary component analysis.
 
-## 4. LDA
+## 3.1 PAM
 
-**4.1 PAM**
-
-We started by performing a PAM (Partitioning Around Medoids) analysis
 
 ```{r LDA, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
 
-#need to find optimal silhouette width
-CN <- as.data.frame(Ingots_clean[,-1])
-ICN <- Ingots_clean
-ICN <- lapply(ICN, as.numeric)
-
-scaled <- scale(ICN)
-
-#need to find optimal silhouette width
-
-sil_avg <- numeric(25)
-
-for (k in 2:25) {
-  PAM_fit <- pam(scaled, k)
-  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
-}
-
-LDA_K <- data.frame(k = 2:26, avg_silhouette = sil_avg)
-
-pam_sum_tab <- data.frame()
-
-for (k in 2:25) {
-  
-  PAM_fit <- cluster::pam(scaled, k)
-  
-  sizes <- table(PAM_fit$clustering)
-  
-  pam_sum_tab <- rbind(
-    pam_sum_tab,
-    data.frame(
-      k = k,
-      Avg_Silhouette = round(PAM_fit$silinfo$avg.width, 3),
-      Smallest_Cluster = min(sizes),
-      Largest_Cluster = max(sizes),
-      Cluster_Sizes = paste(sizes, collapse = ", ")
-    )
-  )
-}
-
-knitr::kable(
-  pam_sum_tab,
-  caption = "PAM clustering summary across candidate values of k.",
-  align = "c"
-)
-
-pam <- pam(Ingots_clean, k =3)
-
-cluster <- pam$clustering
-
-for (k in 2:25) {
-  PAM_fit <- pam(scaled, k)
-  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
-}
-
-LDA_K1 <- data.frame(k = 2:26, avg_silhouette = sil_avg)
-
-#summary(pam)
-
-fviz_silhouette(pam)+
-  scale_fill_manual( values = c("#648FFF", "#DC267F", "#FFB000"))+
-  scale_colour_manual( values = c("gray30", "gray30", "gray30"))
-
-
-
-pam_sum_tab |>
-  gt() |>
-  tab_header(
-    title = "PAM Clustering Summary",
-    subtitle = "Average silhouette width and cluster sizes"
-  ) |>
-  fmt_number(
-    columns = Avg_Silhouette,
-    decimals = 3
-  ) 
-
-top_pam <- pam_sum_tab |>
-  arrange(desc(Avg_Silhouette)) |>
-  slice(1:10)
-
-knitr::kable(
-  top_pam,
-  caption = "Top ten cluster choices ranked by average silhouette width."
-)
 
 ```
 
-The silhouette value/metric is a measurement of the quality of a clustering. between -1 and 1. The data reports the optimal silhouette width as 5, with 0.6496032, indicating some. There are several other clustering values with a reported similar quality.
 
-Due to the ambiguous clustering, we opted to perform more cluster analyses to determine if this was a good fit.
+## 3.2 Cluster Analysis
 
-MANHATTAN NOT EUCLEDIAN.
+```{r, echo=FALSE}
 
-**3.3 Cluster Analysis**
-
-Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.
-
-![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/manhattan_dendrogram.png)
-
-```{r}
-
-d <- dist(scaled, method = "manhattan")
-
-HiMan <- hclust(d, method = "average")
-
-rownames(scaled) <- rownames(ICN)
-
-p <- fviz_dend(
-  HiMan,
-  k = 5,
-  rect = TRUE,
-  k_colors = my_col,
-  rect_border = my_col
-)
-
-head(ggplot_build(p)$data[[2]]$label)
-
-length(unique(ggplot_build(p)$data[[2]]$label))
 ```
 
-Something interesting top note is that for both cluster options they both cluster sample's 15, 10, and 22 this could be because of ...
+## 3.3 Fuzzy Analysis
 
-Cophenetic correlation coefficient 0.825 is pretty dang good. I'm going to remake this using ggplot, should be nicer.
-
-**3.4 Fuzzy Analysis**
-
-As the third and final method of clustering, we performed a Fuzzy analysis.
 
 ```{r fuzzy, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
 
-#k-medoids for Fuzzy
-
-ICN <- Ingots_clean
-scaled <- scale(ICN)
-
-Fuzzy_k <- FKM.med(scaled, k = 5, m = 2)
-
-#silhouettes
-
-#print(Fuzzy_k$U)
-
-#Table of Fuzzy_K$U:
-knitr::kable(Fuzzy_k$U,
-             caption = "Fuzzy K Silhouettes Clusterings",
-             format = "pipe")
-
-
-
-Fuzzy_Sil <- SIL.F(scaled, Fuzzy_k$U)
-
-Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
-
-d <- dist(scaled)
-
-sil_each <- silhouette(Fuzzy_Clust, d)
-
-head(sil_each)
-
-plot(sil_each,
-     col = my_col[sort(unique(Fuzzy_Clust))],
-     border = NA,
-     main = "Silhouette Plot")
-
-
-sil_df <- data.frame(
-  obs = 1:nrow(sil_each), 
-  width = sil_each[, "sil_width"],
-  cluster = factor(sil_each[, "cluster"])
-  )
-
-ggplot(sil_df,
-       aes(x = reorder(obs, width),
-           y = width,
-           fill = cluster)) + 
-  geom_col() +
-  coord_flip() +
-  geom_hline(yintercept = mean(sil_df$width),
-             linetype = "dashed",
-             colour = "red") +
-  scale_fill_manual(values = c(
-    "#648FFF", "#785EF0", "#DC267F", "#FE6100", "#FFB000")) +
-  labs(title = "Silhouette Plot",
-       x = "Observation",
-       y = "Silhouette Width") +
-  theme_minimal()
-
-plot(sil_each[, "sil_width"],
-     pch = 15,
-     col = my_col[Fuzzy_Clust],
-     xlab = "Observation",
-     ylab = "Silhouette Width",
-     main = "Per-Observation Silhouettes")
-abline(h = 0, lty = 2)
-
-
-
-ggplot(LDA_K,
-       aes(k, avg_silhouette)) +
-  geom_line() +
-  geom_point(size = 3) +
-  theme_minimal() +
-  labs(
-    title = "Average Silhouette Width by Number of Clusters",
-    x = "Number of Clusters",
-    y = "Average Silhouette Width"
-    )
-
-
-certainty <- apply(Fuzzy_k$U, 1, max)
-
-ggplot(
-  data.frame(
-    Obs = 1:length(certainty),
-    Certainty = certainty,
-    Cluster = factor(Fuzzy_Clust)
-  ),
-  aes(Obs, Certainty, colour = Cluster)
-  ) +
-  geom_hline(
-    yintercept = 1/5,
-    linetype = "dashed",
-    colour = "red"
-  ) +
-  labs(
-    caption = "Red dashed line indicates complete ambiguity (1/k)"
-    ) +
-  geom_point(size = 6) +
-  theme_minimal() +
-  labs(
-    title = "Fuzzy Membership Certainty",
-    y = "Maximum Membership"
-    )
 
 
 ```
 
-The graph of Fuzzy Membership Certainty shows that the majority of our observations are near ambiguous in there assigned groupings.
 
-Picks by median centrality, determines closest group and percentage it belongs in said group.
+## 4. Results
+:::{.incremental}
+- We are unable to make direct
 
-## 5. Results
+- @Caponetti2017-fd determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at \~20mg.
 
-We are unable to make direct
+- The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.
+:::
 
-@Caponetti2017-fd determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at \~20mg.
+## 5. Discussion
+:::{.incremental}
+- @Caponetti2017-sc determined 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time. This was determined with the added variable of the physical form of the ingots.
 
-The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.
+- Our results
 
-## 6. Discussion
+- What were the limitations of this study?
 
-@Caponetti2017-sc determined 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time. This was determined with the added variable of the physical form of the ingots.
+- What further research could be done? Different statistical analysis?
 
-Our results
-
-The initial analysis was performed by non-invasive XRF, a method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.
-
-The find was dated to \~600BCE, the approximate age of the ship, and by the pottery also found in the wreck.
-
-A study on a sample group this large has never been done before. Also, this dataset is not very large. - love this sentence 10/10.
-
-XRF is a portable, non-invasive method of getting accurate readings within a certain range of elements (find that bit again). The ICP-OE and ICP-MS chemometric techniques require a small amount of material to be sacrificed in order to obtain a full range of the elemental composition of each ingot.
-
-@Caponetti2017-fd performed chemoanalysis to determine the trace elements of these orichalcum ingots. Using this data, they determined correlation between the observed different features and the composition to group the ingots into their appropriate cluster. This is an extension from a fledgling study by the same author, where they performed a less invasive XRF (X-Ray Fluorescence) spectroscopy of the ingots, a non-distructive test that can be performed in the field.
-
-Their motivation was to create a starting point for giving insight into archaeometric study of the orichalcum ingots regarding their origin and manufacture technologies.
-
-Our study also has the same motivations. We aim to provide a high level data analysis to provide a detailed, and logical, path to a linkage analysis.
-
-Motivation, problem statement, approach, results, conclusions.
-
-What were the limitations of this study?
-
-What further research could be done? Different statistical analysis?
-
-When working with museum quality pieces, that need destructive analyses performed to
-
-Data obtained for the (NAME TABLE) containing the main component, trace element concentrations and Cu/Zn weight ratio was obtained by ICP-OES and ICP-MS. Collecting samples from 38 ancient ingots to analysis the association between the ingots elemental composition.
-
-We also took a preliminary look at the Copper (Cu), Zinc (Zn), Lead (Pb), and Tin (Sn) as they are the four alloying elements that are known to define orichalcum and historically have been the primary elemental components used to date and pinpoint origin of other orichalcum artifacts.
-
-## 7. Refrences
+:::
+## 6. References
+::: {#refs}
+:::
+## 7. Any Questions
