@@ -379,7 +379,10 @@ qq_long$Element <- factor(
 ggplot(qq_long, aes(sample = Value)) +
   stat_qq(colour = "#648FFF") +
   stat_qq_line(colour = "#DC267F") +
-  facet_wrap(~ Element, scales = "free", ncol = 3) +
+  facet_wrap(~ Element, 
+             scales = "free",
+             ncol = 3
+             ) +
   theme_minimal()
 
 #ggsave(
@@ -432,7 +435,6 @@ summary(z_scores)
 ol <- logIngots1[rowSums(abs(z_scores) > 2.5) > 0, ]
 
 Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
-
 
 #boxplot standardised with outliers removed:
 
@@ -500,8 +502,7 @@ ggplot(
  #)
 
 
-#still getting negative values (even with elevated magnitude cutoff) in here so 
-#log transforming may not be appropriate.
+#no zero values, LDA is go
 
 logIngotsClean <- log(as.matrix(Ingots_clean[-1,-1]))
 summary(logIngotsClean)
@@ -509,6 +510,39 @@ summary(logIngotsClean)
 #making the dataframe numeric so it can be manipulated.
 
 num_vars <- sapply(Ingots_clean, is.numeric)
+
+#QQ-plots for Ingots_clean
+
+Ingots_clean_df <- as.data.frame(Ingots_clean)
+
+qq_long2 <- Ingots_clean_df |>
+  pivot_longer(
+    cols = 1:21,
+    names_to = "Element",
+    values_to = "Value"
+  )
+
+
+qq_long2$Element <- factor(
+  qq_long2$Element,
+  levels = element_order
+)
+
+ggplot(qq_long2, aes(sample = Value)) +
+  stat_qq(colour = "#648FFF") +
+  stat_qq_line(colour = "#DC267F") +
+  facet_wrap(~ Element, 
+             scales = "free", 
+             ncol = 3 
+    ) +
+  theme_minimal()
+
+#ggsave(
+  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/QQ_allnorm.png",
+  #width = 12,
+  #height = 20,
+  #dpi = 600
+#)
 
 #Henze-Zirkler test on cleaned data?
 #Non-negative functional distance that measures between two distribution functions. If data
