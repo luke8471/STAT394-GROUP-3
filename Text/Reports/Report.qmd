@@ -324,27 +324,15 @@ Cu roughly follows the normal QQ-line, indicating it may follow a normal distrib
 
 Ag, Co, and Ni roughly follow the QQ-line indicating some evidence for normality. All other trace elements have blatant deviations from the normal line, particularly in the upper tail, likely due to previously discussed potential outliers. (LIL MORE HERE PLZ)
 
-```{r echo = FALSE}
-#| fig-width: 10
-#| fig-height: 6
+#### Data Transformation
 
-#log transform data
+We tried a simple log transformation witch resulted in a few zero values which was of some concern, as log(0) is undefined and can influence towards non-normality in multivariate data, particularly in small datasets like this one. We also had negative values. These were not an issue because we later chose metrics which are calculated from coordinate distances for clustering which can handle negative values.
 
-logIngots <- log(as.matrix(Ingots_F_no[-1,-1]))
-#print(logIngots)
+Zero values were compensated for by instead transforming using log($\mathcal x$ + 1), where $\mathcal{x}$ is our data.
 
-knitr::kable(logIngots,
-             caption = "Log Transformed Data",
-             digits = 2,
-             format = "pipe")
+Henze-Zirkler test established if there was preliminary evidence for multivariate normality.
 
-```
-
-The observed zero-values for (PUT SAMPLES NUMBERS IN HERE) in (TABLE) in variables(HERE), which while not a large quantity of the samples, still provided some concern as log(0) is undefined and can influence non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
-
-We chose to combat the zero values by standardising the data set using log($\mathcal{x}$ + 1)}, where $\mathcal{x}$ is our data. This, coupled with a Henze-Zirkler test, established if there is preliminary evidence for multivariate normality.
-
-```{r echo = FALSE}
+```{r, echo = FALSE}
 #| fig-width: 10
 #| fig-height: 6
 
@@ -354,9 +342,27 @@ logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 
 #print(logIngots1)
 
-knitr::kable(logIngots1,
-             caption = "Log(x + 1) Transformed Data",
-             format = "pipe")
+#knitr::kable(logIngots1,
+             #caption = "Log(x + 1) Transformed Data",
+             #format = "pipe")
+
+```
+
+![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png)
+
+The QQ-plot of the log($\mathcal x$ + 1) showed improvement overall.
+
+Multiple trace elements (which had big upper skew) bnetter jeFWOjwfc
+
+As, V, Cr looking much better
+
+![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
+
+Much more interpretable
+
+Sr still has many outliers
+
+```{r, echo = FALSE}
 
 HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
 
@@ -364,20 +370,10 @@ hz_table <- HZoriginal$multivariate_normality
 
 knitr::kable(
   hz_table,
-  digits = 4,
+  digits = 2,
   caption = "Henze-Zirkler Test For Multivariate Normality"
 )
 ```
-
-As you can see in table 2, our values are now all non-zero.
-
-![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png)
-
-The QQ-plot of the log transformed data roughly followed the theoretical line (in red), this is evidence that the normality assumption may hold. The tails are relatively long and flat, indicating that there may be some extreme outliers. There are several steps in the upper and lower tails, which alone is not necessarily a departure from normality, and may be explained by the zero values returned for some Sample's variables after the log transformation.
-
-The normal QQ-plot looks less normal after standardisation, with the length of the tails being accentuated and continuing presence of stepped data.
-
-![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
 
 The Henze-Zirkler test stipulates
 
@@ -391,13 +387,13 @@ $$
 \end{aligned}
 $$
 
-This generated a p-value=0.069, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution. However, the QQ-plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining if multivariate normality is likely.
+This generated a p-value=0.069, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution. However, the QQ-plot shows many variables with evidence of non-normality and/or significant outliers that we decided further testing was warranted before determining if multivariate normality is an appropriate statistical assumption.
 
-Given the uncertainty of multivariate normality and the presence of outliers, further data manipulation by Medioid Absolute Deviation was determined to be the next best step towards multivariate analysis.
+Data manipulation by Median Absolute Deviation (MAD) was determined to be the next best step towards multivariate analysis.
 
 **3.3 MAD**
 
-MAD was used because it is a robust, outlier-resistant, measure of variability. The log transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence.
+MAD was used because it is a robust, outlier-resistant, measure of variability. The log($\mathcal x$ +1) transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence.
 
 ```{r transformations-mad, echo=FALSE}
 #| fig-width: 10
@@ -411,20 +407,35 @@ mad <- apply(logIngots1[,-1], 2, mad)
 #print(median/mad)
 #mad
 
-med_mad_table <- data.frame(
-  Median = median,
-  Mad = mad,
-  Median_over_Mad = median/mad
-)
+MAD_summary <- as.data.frame(logIngots1) |>
+  pivot_longer(
+    everything(),
+    names_to = "Element",
+    values_to = "Concentration"
+      ) |>
+  group_by(Element) |>
+  summarise(
+    Median = median(Concentration),
+    MAD = mad(Concentration),
+    Skewness = moments::skewness(Concentration),
+    Kurtosis = moments::kurtosis(Concentration),
+    .groups = "drop"
+  )
 
-knitr::kable(med_mad_table,
-             caption = "Median / MAD",
-             digits = 2,
-             format = "pipe")
+knitr::kable(
+  MAD_summary,
+  caption = "Median Absolute Deviation Summary Table",
+  digits = 2,
+  format = "pipe"
+)
 
 ```
 
-From {TABLE NUMBER} we observed some massive deviations, as expected.
+From observed some massive deviations, as expected.
+
+Variance because MAD\>SD robustness
+
+Outliers MAD/median
 
 Next the robust Z score was used to identify outliers that were candidates for removal. For our cutoff, we went with @Leys2013-cr recommendation, who argued that the MAD is the most robust scale measure under contamination and recommend a median plus or minus 2.5 time MAD rule for outlier detection.
 
@@ -440,39 +451,20 @@ outliers <- apply(abs(z) > 2.5, 1, any)
 
 #list(outliers)
 
-# View the rows flagged as outliers
-invisible(summary(logIngots1[outliers,]))
-
-#The QQ plot of the mad transformed data:
-
-qqnorm((z), col="#785EF0", main = "Normal QQ-Plot of 
-       MAD-Transformed data")
-qqline((z), col="red")
-
-num_cols <- sapply(logIngots1, is.numeric)
 z_scores <- as.data.frame(scale(logIngots1[, ]))
 
-#summary(z_scores)
-
-ol <- logIngots1[rowSums(abs(z_scores) > 4) > 0, ] #ALICE STUFF
-
-print(ol) # ALICE STUFF
+# View the rows flagged as outliers
+invisible(summary(logIngots1[outliers,]))
 
 Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 
 ```
 
-The QQ plot shows very skewed data which we would expected...
-
-What is after we have "cleaned" up the outliers our \|z\| \> 3 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al. set aside as their G4 group.
+What is after we have "cleaned" up the outliers our \|z\| \> 2.5 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al. set aside as their G4 group. (PUT OTHER SAMPLES THAT WERE REMOVED)
 
 {should probably explain why cutting out 11 samples will be good for the rest of our analysis, something along the line of outliers, terrible samples and low sample quality}.
 
 **2.4 Multivariate normal distribution**
-
-What tests did we use? Henze Zirkler
-
-Why did we use those tests?
 
 ```{R Henze Zirkler, echo=FALSE, warning = FALSE}
 #| fig-width: 10
@@ -502,19 +494,31 @@ print(HZ$multivariate_normality)
 
 Due to our Henze Zirkler test for both the un-transformed data (p-value \<0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a multivariate normal distribution.
 
-As our data isn't multivariate it isn't appropriate to perform a mahalanobis distance. {could potentially do need to research tho}
+Barely normal once outliers removed. Not normal before. Evidence for outlier removal helping normality.
+
+Lots of manipulation, still barely normal.
 
 **2.5 Correlation plots before and after**
 
-![Correlation matrix of Raw Data](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix.png)
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix.png)
 
 ![Correlation matrix of log-Transformed Data](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix_log.png)
+
+Many of the element to element correlations change in degree and direction between the raw data and log(x + 1)-transformed data correlation matrices. Because Pearson correlations are not robust to changes due to outliers/heavily skewed data, we believe the transformed data correlation plot is a more accurate plot to make interpretations from.
+
+Simple observations include a strong-positive correlation between Sb-As, Fe-Co, Ag-Bi, V-Cr, Cr-Rb, Cu-Bi, Cu-Ag, Sb-Cd, all of these pairs have an above 0.8 correlation value. Compared to the positive, strong-negative correlation can be found between Cd-Sn at \~-0.8 correlation value, with a multiple pairs having a somewhat strong-negative correlation in the negative 0.7 to -0.8 range. Interestingly the elements needed to create orichalchum/brass do not have strong correlations with one another,
+
+IDK IF YOU WANT THIS -\> If specific measured amounts of the metals were chosen when alloying them together into brass we would likely find stronger correlations, as discussed by shand et al, the ore to create orichalcum is likely natural purified ore??? and thus containing many natural variations in elemental composistion?? idk
+
+This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
+
+Given the uncertainty about multivariate normality and the presence of negative values in our transformed data, a linear data analysis was chosen over a primary component analysis.
+
+REVIEW STUFF BELOW (PRE - SOME DATA CHANGED)
 
 Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr is also strongly positively association in the data with the outlying samples removes.. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
 
 The transformation didn't just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co. This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
-
-Given the uncertainty about multivariate normality, a linear data analysis was chosen over a primary component analysis.
 
 ## 4. LDA
 
@@ -533,14 +537,12 @@ ICN[] <- lapply(ICN, as.numeric)
 
 scaled <- scale(ICN)
 
-#need to find optimal silhouette width
-
 sil_avg <- numeric(25)
 
-for (k in 2:25) {
-  PAM_fit <- pam(scaled, k)
-  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
-}
+#for (k in 2:25) {
+  #PAM_fit <- pam(scaled, k)
+  #sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
+#}
 
 LDA_K <- data.frame(k = 2:26, avg_silhouette = sil_avg)
 
@@ -564,20 +566,20 @@ for (k in 2:25) {
   )
 }
 
-knitr::kable(
-  pam_sum_tab,
-  caption = "PAM clustering summary across candidate values of k.",
-  align = "c"
-)
+#knitr::kable(
+  #pam_sum_tab,
+  #caption = "PAM clustering summary across candidate values of k.",
+  #align = "c"
+#)
 
-pam <- pam(Ingots_clean, k =3)
+pam <- pam(Ingots_clean, k = 3)
 
 cluster <- pam$clustering
 
-for (k in 2:25) {
-  PAM_fit <- pam(scaled, k)
-  sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
-}
+#for (k in 2:25) {
+  #PAM_fit <- pam(scaled, k)
+  #sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
+#}
 
 LDA_K1 <- data.frame(k = 2:26, avg_silhouette = sil_avg)
 
@@ -588,25 +590,13 @@ fviz_silhouette(pam)+
   scale_colour_manual( values = c("gray30", "gray30", "gray30"))
 
 
-
-pam_sum_tab |>
-  gt() |>
-  tab_header(
-    title = "PAM Clustering Summary",
-    subtitle = "Average silhouette width and cluster sizes"
-  ) |>
-  fmt_number(
-    columns = Avg_Silhouette,
-    decimals = 3
-  ) 
-
 top_pam <- pam_sum_tab |>
   arrange(desc(Avg_Silhouette)) |>
-  slice(1:10)
+  slice(1:5)
 
 knitr::kable(
   top_pam,
-  caption = "Top ten cluster choices ranked by average silhouette width."
+  caption = "Top five cluster choices ranked by average silhouette width."
 )
 
 ```
