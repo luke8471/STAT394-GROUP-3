@@ -1252,34 +1252,20 @@ window.Quarto = {
 <p>These samples have a mean of 104.4\% with a range 93.17\% to 113.71\%. Where 33 of the 38 samples exceed 100\%. The most significant deviations are samples 8 and 38 which have percentage totals of 112.44\% and 113.71\% respectively. <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> attribute this to be due to errors generated from the low quantity of available material for sampling for each observation. For example, only 12.3 mg of sample 38 were obtained compared to the ideal 20mg of material as described in their methods.</p>
 <p><strong>3.2 QQ-plots &amp; Henze-Zirkler Test For Multivariate Normality</strong></p>
 <p>We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers and standardisation.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/qqnormal-1.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/qqnormal-2.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
+<p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all.png" class="img-fluid"></p>
+<pre><code></code></pre>
 <p>As this was before there was any scaling performed, we opted to display the elements measured in percentages and the elements measured in PPM separately to better display their individual influence.</p>
 <p>Both Percentages and PPM show blatant departures from the assumption of normality. Few of the points follow the theoretical model line, steps/gaps in the points are likely because the various element concentrations have such different numerical ranges, both plots somewhat show an s-shaped curve which tend to indicate that the variables have heavy skew (extreme values/outliers) which is unsurprising considering the ranges and variations between elements being widely different. Overall significant departures from normality can be seen for both Percentages and PPM. We do note that the qq-plot for percentages is marginally better due to the more symmetric distribution of values.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#log transform data</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>logIngots <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">as.matrix</span>(Ingots_F_no[<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>]))</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#print(logIngots)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(logIngots,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">"Log Transformed Data"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"pipe"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#log transform data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>logIngots <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">as.matrix</span>(Ingots_F_no[<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>]))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#print(logIngots)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(logIngots,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">"Log Transformed Data"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"pipe"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Log Transformed Data</caption>
@@ -3234,7 +3220,7 @@ window.Quarto = {
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Medians / MAD</caption>
+<caption>Median / MAD</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
@@ -3396,21 +3382,10 @@ window.Quarto = {
 </div>
 <p>The QQ plot shows very skewed data which we would expected…</p>
 <p>What is after we have “cleaned” up the outliers our |z| &gt; 3 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al.&nbsp;set aside as their G4 group.</p>
-<p>{should probably explain why cutting out 11 samples will be good for the rest of our analysis, something along the line of outliers, terrible samples and low sample quality}</p>
-<p><strong><em>2.3.1 pairwise between CU, Zn, Pb, and Sn using the clean data</em></strong></p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/pairwise-1.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Also done to reflect the traditional primary components that make up orichalcum, showing the relationship between these four elements.</p>
+<p>{should probably explain why cutting out 11 samples will be good for the rest of our analysis, something along the line of outliers, terrible samples and low sample quality}.</p>
 <p><strong>2.4 Multivariate normal distribution</strong></p>
 <p>What tests did we use? Henze Zirkler</p>
-<p>Why did we use those tests? #ALICE STUFF</p>
+<p>Why did we use those tests?</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Henze_Zirkler Test Results:</code></pre>
@@ -3430,21 +3405,17 @@ window.Quarto = {
 <p>Due to our Henze Zirkler test for both the un-transformed data (p-value &lt;0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a multivariate normal distribution.</p>
 <p>As our data isn’t multivariate it isn’t appropriate to perform a mahalanobis distance. {could potentially do need to research tho}</p>
 <p><strong>2.5 Correlation plots before and after</strong></p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Report_files/figure-html/correlations-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix.png" class="img-fluid figure-img"></p>
+<figcaption>Correlation matrix of Raw Data</figcaption>
 </figure>
 </div>
-</div>
-<div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Report_files/figure-html/correlations-2.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix_log.png" class="img-fluid figure-img"></p>
+<figcaption>Correlation matrix of log-Transformed Data</figcaption>
 </figure>
-</div>
-</div>
 </div>
 <p>Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr is also strongly positively association in the data with the outlying samples removes.. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn’t show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.</p>
 <p>The transformation didn’t just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co.&nbsp;This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.</p>
@@ -3455,145 +3426,6 @@ window.Quarto = {
 <p><strong>4.1 PAM</strong></p>
 <p>We started by performing a PAM (Partitioning Around Medoids) analysis</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   26 obs. of  20 variables:
- $ Zn: num  2.83 3.37 3.14 3.14 3.22 ...
- $ Pb: num  1.67 1.93 1.58 2.02 1.96 ...
- $ Fe: num  0.425 0.577 0.438 0.174 0.27 ...
- $ Ni: num  6.28 6.11 6.24 6.36 6.31 ...
- $ Ag: num  5.3 4.88 5.06 5.08 5.08 ...
- $ Sb: num  4.89 4.66 4.22 4.12 4.34 ...
- $ As: num  3.62 3.21 2.74 2.23 2.37 ...
- $ Co: num  2.24 2.25 2.01 1.06 1.43 ...
- $ Cd: num  3.04 2.86 1.84 2.36 2.15 ...
- $ Sn: num  1.76 2.04 2.16 2.26 2.08 ...
- $ Te: num  0.693 0.495 0.457 0.673 0.604 ...
- $ Bi: num  4.3 3.4 4.09 4.13 4.09 ...
- $ Mn: num  3.08 2.82 3.19 2.82 3.21 ...
- $ Li: num  1.15 1.61 1.58 1.14 1.1 ...
- $ Al: num  1.7 2.29 2.53 1.68 2.66 ...
- $ V : num  0.936 1.466 1.683 1.191 1.515 ...
- $ Cr: num  0.837 1.308 1.545 1.065 1.212 ...
- $ Rb: num  0.0677 0.131 0.1133 0.1044 0.1044 ...
- $ Sr: num  0.14 2.293 0.647 0.372 0.896 ...
- $ Ba: num  0.166 0.3 0.372 0.56 0.231 ...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 26 20</code></pre>
-</div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Figure 8: Table contain the k scaled values</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">k</th>
-<th style="text-align: right;">avg_silhouette</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0.1819397</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0.2456829</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0.1617763</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">0.1794853</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">0.1764320</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">0.1644250</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">0.1695008</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">0.1681690</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">0.1517058</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">0.1473579</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">0.1278878</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">0.1226697</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">0.1126834</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">0.1163527</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">16</td>
-<td style="text-align: right;">0.1256641</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">0.1002570</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">18</td>
-<td style="text-align: right;">0.0947269</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">0.1025459</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0.1096880</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">0.1068241</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">22</td>
-<td style="text-align: right;">0.0987708</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">0.0931162</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">0.0656316</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">0.0348698</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">0.0000000</td>
-</tr>
-</tbody>
-</table>
-</div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>PAM clustering summary across candidate values of k.</caption>
@@ -3787,11 +3619,9 @@ window.Quarto = {
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  cluster size ave.sil.width
-1       1    5          0.24
-2       2    5         -0.04
-3       3    8          0.34
-4       4    4          0.15
-5       5    4          0.21</code></pre>
+1       1    8          0.28
+2       2    5          0.17
+3       3   13          0.22</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -3801,23 +3631,23 @@ window.Quarto = {
 </div>
 </div>
 <div class="cell-output-display">
-<div id="jpgettvmss" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jpgettvmss table {
+<div id="gpjubodpkd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gpjubodpkd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jpgettvmss thead, #jpgettvmss tbody, #jpgettvmss tfoot, #jpgettvmss tr, #jpgettvmss td, #jpgettvmss th {
+#gpjubodpkd thead, #gpjubodpkd tbody, #gpjubodpkd tfoot, #gpjubodpkd tr, #gpjubodpkd td, #gpjubodpkd th {
   border-style: none;
 }
 
-#jpgettvmss p {
+#gpjubodpkd p {
   margin: 0;
   padding: 0;
 }
 
-#jpgettvmss .gt_table {
+#gpjubodpkd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3843,12 +3673,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_caption {
+#gpjubodpkd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jpgettvmss .gt_title {
+#gpjubodpkd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3860,7 +3690,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#jpgettvmss .gt_subtitle {
+#gpjubodpkd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3872,7 +3702,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#jpgettvmss .gt_heading {
+#gpjubodpkd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3884,13 +3714,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_bottom_border {
+#gpjubodpkd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_col_headings {
+#gpjubodpkd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3905,7 +3735,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_col_heading {
+#gpjubodpkd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3925,7 +3755,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#jpgettvmss .gt_column_spanner_outer {
+#gpjubodpkd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3937,15 +3767,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#jpgettvmss .gt_column_spanner_outer:first-child {
+#gpjubodpkd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jpgettvmss .gt_column_spanner_outer:last-child {
+#gpjubodpkd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jpgettvmss .gt_column_spanner {
+#gpjubodpkd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3957,11 +3787,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#jpgettvmss .gt_spanner_row {
+#gpjubodpkd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jpgettvmss .gt_group_heading {
+#gpjubodpkd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3987,7 +3817,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#jpgettvmss .gt_empty_group_heading {
+#gpjubodpkd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4002,15 +3832,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#jpgettvmss .gt_from_md > :first-child {
+#gpjubodpkd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jpgettvmss .gt_from_md > :last-child {
+#gpjubodpkd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jpgettvmss .gt_row {
+#gpjubodpkd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4029,7 +3859,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#jpgettvmss .gt_stub {
+#gpjubodpkd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4042,7 +3872,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jpgettvmss .gt_stub_row_group {
+#gpjubodpkd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4056,15 +3886,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#jpgettvmss .gt_row_group_first td {
+#gpjubodpkd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jpgettvmss .gt_row_group_first th {
+#gpjubodpkd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jpgettvmss .gt_summary_row {
+#gpjubodpkd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4074,16 +3904,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jpgettvmss .gt_first_summary_row {
+#gpjubodpkd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_first_summary_row.thick {
+#gpjubodpkd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jpgettvmss .gt_last_summary_row {
+#gpjubodpkd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4093,7 +3923,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_grand_summary_row {
+#gpjubodpkd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4103,7 +3933,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jpgettvmss .gt_first_grand_summary_row {
+#gpjubodpkd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4113,7 +3943,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_last_grand_summary_row_top {
+#gpjubodpkd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4123,11 +3953,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_striped {
+#gpjubodpkd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jpgettvmss .gt_table_body {
+#gpjubodpkd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4136,7 +3966,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_footnotes {
+#gpjubodpkd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4150,7 +3980,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_footnote {
+#gpjubodpkd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4159,7 +3989,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jpgettvmss .gt_sourcenotes {
+#gpjubodpkd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4173,7 +4003,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#jpgettvmss .gt_sourcenote {
+#gpjubodpkd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4181,72 +4011,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#jpgettvmss .gt_left {
+#gpjubodpkd .gt_left {
   text-align: left;
 }
 
-#jpgettvmss .gt_center {
+#gpjubodpkd .gt_center {
   text-align: center;
 }
 
-#jpgettvmss .gt_right {
+#gpjubodpkd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jpgettvmss .gt_font_normal {
+#gpjubodpkd .gt_font_normal {
   font-weight: normal;
 }
 
-#jpgettvmss .gt_font_bold {
+#gpjubodpkd .gt_font_bold {
   font-weight: bold;
 }
 
-#jpgettvmss .gt_font_italic {
+#gpjubodpkd .gt_font_italic {
   font-style: italic;
 }
 
-#jpgettvmss .gt_super {
+#gpjubodpkd .gt_super {
   font-size: 65%;
 }
 
-#jpgettvmss .gt_footnote_marks {
+#gpjubodpkd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jpgettvmss .gt_asterisk {
+#gpjubodpkd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jpgettvmss .gt_indent_1 {
+#gpjubodpkd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jpgettvmss .gt_indent_2 {
+#gpjubodpkd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jpgettvmss .gt_indent_3 {
+#gpjubodpkd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jpgettvmss .gt_indent_4 {
+#gpjubodpkd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jpgettvmss .gt_indent_5 {
+#gpjubodpkd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#jpgettvmss .katex-display {
+#gpjubodpkd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#jpgettvmss div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gpjubodpkd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4443,13 +4273,13 @@ window.Quarto = {
 </div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Top five cluster solutions ranked by average silhouette width.</caption>
+<caption>Top ten cluster choices ranked by average silhouette width.</caption>
 <colgroup>
-<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 18%">
 <col style="width: 20%">
-<col style="width: 22%">
-<col style="width: 21%">
-<col style="width: 31%">
+<col style="width: 19%">
+<col style="width: 38%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -4496,6 +4326,41 @@ window.Quarto = {
 <td style="text-align: right;">7</td>
 <td style="text-align: left;">5, 4, 2, 1, 3, 7, 3, 1</td>
 </tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.168</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">4, 4, 2, 1, 2, 7, 2, 3, 1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.164</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">5, 4, 3, 3, 7, 3, 1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.162</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">6, 5, 10, 5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.152</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">4, 4, 2, 1, 1, 7, 2, 1, 3, 1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.147</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">4, 1, 2, 1, 1, 3, 7, 2, 1, 3, 1</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -4511,28 +4376,27 @@ window.Quarto = {
 <figcaption>Dendrogram</figcaption>
 </figure>
 </div>
-<pre><code></code></pre>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(scaled, <span class="at">method =</span> <span class="st">"manhattan"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>HiMan <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d, <span class="at">method =</span> <span class="st">"average"</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(scaled) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(ICN)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">fviz_dend</span>(</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  HiMan,</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">5</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">rect =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_colors =</span> my_col,</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">rect_border =</span> my_col</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">ggplot_build</span>(p)<span class="sc">$</span>data[[<span class="dv">2</span>]]<span class="sc">$</span>label)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(scaled, <span class="at">method =</span> <span class="st">"manhattan"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>HiMan <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d, <span class="at">method =</span> <span class="st">"average"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(scaled) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(ICN)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">fviz_dend</span>(</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  HiMan,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">5</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">rect =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_colors =</span> my_col,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">rect_border =</span> my_col</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">ggplot_build</span>(p)<span class="sc">$</span>data[[<span class="dv">2</span>]]<span class="sc">$</span>label)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 32 31 3  10 29 15
 26 Levels: 32 31 3 10 29 15 16 33 2 30 34 9 18 5 8 23 37 6 36 24 35 26 ... 12</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">ggplot_build</span>(p)<span class="sc">$</span>data[[<span class="dv">2</span>]]<span class="sc">$</span>label))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">ggplot_build</span>(p)<span class="sc">$</span>data[[<span class="dv">2</span>]]<span class="sc">$</span>label))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 26</code></pre>
 </div>
@@ -4558,59 +4422,59 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">0.1762421</td>
-<td style="text-align: right;">0.1539207</td>
-<td style="text-align: right;">0.1552085</td>
-<td style="text-align: right;">0.1240493</td>
-<td style="text-align: right;">0.3905794</td>
+<td style="text-align: right;">0.2355209</td>
+<td style="text-align: right;">0.2074127</td>
+<td style="text-align: right;">0.2056918</td>
+<td style="text-align: right;">0.1856014</td>
+<td style="text-align: right;">0.1657732</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">0.2538351</td>
-<td style="text-align: right;">0.1904545</td>
-<td style="text-align: right;">0.1628005</td>
-<td style="text-align: right;">0.1938810</td>
-<td style="text-align: right;">0.1990289</td>
+<td style="text-align: right;">0.2291893</td>
+<td style="text-align: right;">0.1469936</td>
+<td style="text-align: right;">0.1719626</td>
+<td style="text-align: right;">0.2767982</td>
+<td style="text-align: right;">0.1750563</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">5</td>
-<td style="text-align: right;">0.2366273</td>
-<td style="text-align: right;">0.2079111</td>
-<td style="text-align: right;">0.1516484</td>
-<td style="text-align: right;">0.1502489</td>
-<td style="text-align: right;">0.2535644</td>
+<td style="text-align: right;">0.1942191</td>
+<td style="text-align: right;">0.1244700</td>
+<td style="text-align: right;">0.1706494</td>
+<td style="text-align: right;">0.3873402</td>
+<td style="text-align: right;">0.1233214</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">6</td>
-<td style="text-align: right;">0.2384493</td>
-<td style="text-align: right;">0.1800492</td>
-<td style="text-align: right;">0.2493343</td>
-<td style="text-align: right;">0.1717057</td>
-<td style="text-align: right;">0.1604615</td>
+<td style="text-align: right;">0.2164250</td>
+<td style="text-align: right;">0.2263047</td>
+<td style="text-align: right;">0.1634191</td>
+<td style="text-align: right;">0.2380050</td>
+<td style="text-align: right;">0.1558462</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">8</td>
-<td style="text-align: right;">0.2475332</td>
-<td style="text-align: right;">0.2701366</td>
-<td style="text-align: right;">0.1398054</td>
-<td style="text-align: right;">0.1592298</td>
-<td style="text-align: right;">0.1832950</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">9</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9</td>
+<td style="text-align: right;">0.2083177</td>
+<td style="text-align: right;">0.1829344</td>
+<td style="text-align: right;">0.2348951</td>
+<td style="text-align: right;">0.2237612</td>
+<td style="text-align: right;">0.1500917</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10</td>
-<td style="text-align: right;">0.2590175</td>
-<td style="text-align: right;">0.2255418</td>
-<td style="text-align: right;">0.1717177</td>
-<td style="text-align: right;">0.1720308</td>
-<td style="text-align: right;">0.1716921</td>
+<td style="text-align: right;">0.2534064</td>
+<td style="text-align: right;">0.1679978</td>
+<td style="text-align: right;">0.2206559</td>
+<td style="text-align: right;">0.1896357</td>
+<td style="text-align: right;">0.1683042</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">11</td>
@@ -4622,65 +4486,65 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">12</td>
-<td style="text-align: right;">0.3005691</td>
-<td style="text-align: right;">0.1317308</td>
-<td style="text-align: right;">0.2031781</td>
-<td style="text-align: right;">0.3057668</td>
-<td style="text-align: right;">0.0587552</td>
+<td style="text-align: right;">0.2940564</td>
+<td style="text-align: right;">0.1987757</td>
+<td style="text-align: right;">0.1288765</td>
+<td style="text-align: right;">0.0791498</td>
+<td style="text-align: right;">0.2991416</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">15</td>
-<td style="text-align: right;">0.2324165</td>
-<td style="text-align: right;">0.1650634</td>
-<td style="text-align: right;">0.2187395</td>
-<td style="text-align: right;">0.1638378</td>
-<td style="text-align: right;">0.2199428</td>
+<td style="text-align: right;">0.2486017</td>
+<td style="text-align: right;">0.2339723</td>
+<td style="text-align: right;">0.1765582</td>
+<td style="text-align: right;">0.1656205</td>
+<td style="text-align: right;">0.1752473</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">16</td>
-<td style="text-align: right;">0.2157932</td>
-<td style="text-align: right;">0.1935472</td>
-<td style="text-align: right;">0.1561205</td>
-<td style="text-align: right;">0.1294234</td>
-<td style="text-align: right;">0.3051156</td>
+<td style="text-align: right;">0.2336442</td>
+<td style="text-align: right;">0.1690352</td>
+<td style="text-align: right;">0.2095580</td>
+<td style="text-align: right;">0.2476329</td>
+<td style="text-align: right;">0.1401297</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">18</td>
-<td style="text-align: right;">0.1769465</td>
-<td style="text-align: right;">0.1586275</td>
-<td style="text-align: right;">0.1607130</td>
-<td style="text-align: right;">0.2217429</td>
-<td style="text-align: right;">0.2819701</td>
+<td style="text-align: right;">0.2036258</td>
+<td style="text-align: right;">0.1849446</td>
+<td style="text-align: right;">0.1825448</td>
+<td style="text-align: right;">0.1737083</td>
+<td style="text-align: right;">0.2551765</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">20</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">23</td>
-<td style="text-align: right;">0.2968902</td>
-<td style="text-align: right;">0.2584459</td>
-<td style="text-align: right;">0.1571009</td>
-<td style="text-align: right;">0.1926895</td>
-<td style="text-align: right;">0.0948735</td>
+<td style="text-align: right;">0.2679140</td>
+<td style="text-align: right;">0.1417679</td>
+<td style="text-align: right;">0.2332217</td>
+<td style="text-align: right;">0.1832132</td>
+<td style="text-align: right;">0.1738831</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">24</td>
-<td style="text-align: right;">0.2316784</td>
-<td style="text-align: right;">0.1734716</td>
-<td style="text-align: right;">0.3261780</td>
-<td style="text-align: right;">0.1993960</td>
-<td style="text-align: right;">0.0692759</td>
+<td style="text-align: right;">0.2276707</td>
+<td style="text-align: right;">0.3205356</td>
+<td style="text-align: right;">0.1704708</td>
+<td style="text-align: right;">0.0853763</td>
+<td style="text-align: right;">0.1959467</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">26</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
@@ -4689,80 +4553,80 @@ window.Quarto = {
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">29</td>
-<td style="text-align: right;">0.2414557</td>
-<td style="text-align: right;">0.2222618</td>
-<td style="text-align: right;">0.1709938</td>
-<td style="text-align: right;">0.1952692</td>
-<td style="text-align: right;">0.1700195</td>
+<td style="text-align: right;">0.2320474</td>
+<td style="text-align: right;">0.1643310</td>
+<td style="text-align: right;">0.2136014</td>
+<td style="text-align: right;">0.2023597</td>
+<td style="text-align: right;">0.1876605</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">30</td>
-<td style="text-align: right;">0.1842854</td>
-<td style="text-align: right;">0.1708745</td>
-<td style="text-align: right;">0.1958196</td>
-<td style="text-align: right;">0.1629225</td>
-<td style="text-align: right;">0.2860979</td>
+<td style="text-align: right;">0.2206511</td>
+<td style="text-align: right;">0.2344615</td>
+<td style="text-align: right;">0.2045938</td>
+<td style="text-align: right;">0.1452210</td>
+<td style="text-align: right;">0.1950726</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">31</td>
-<td style="text-align: right;">0.2012858</td>
-<td style="text-align: right;">0.2281437</td>
-<td style="text-align: right;">0.1722743</td>
-<td style="text-align: right;">0.1822222</td>
-<td style="text-align: right;">0.2160739</td>
+<td style="text-align: right;">0.2109881</td>
+<td style="text-align: right;">0.1805782</td>
+<td style="text-align: right;">0.2391406</td>
+<td style="text-align: right;">0.1782873</td>
+<td style="text-align: right;">0.1910057</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">32</td>
-<td style="text-align: right;">0.2189416</td>
-<td style="text-align: right;">0.1727286</td>
-<td style="text-align: right;">0.1757170</td>
-<td style="text-align: right;">0.1525755</td>
-<td style="text-align: right;">0.2800373</td>
+<td style="text-align: right;">0.2462913</td>
+<td style="text-align: right;">0.1976671</td>
+<td style="text-align: right;">0.1943054</td>
+<td style="text-align: right;">0.1901015</td>
+<td style="text-align: right;">0.1716348</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">33</td>
-<td style="text-align: right;">0.1755171</td>
-<td style="text-align: right;">0.1813223</td>
-<td style="text-align: right;">0.2093921</td>
-<td style="text-align: right;">0.1870261</td>
-<td style="text-align: right;">0.2467425</td>
+<td style="text-align: right;">0.2031961</td>
+<td style="text-align: right;">0.2424132</td>
+<td style="text-align: right;">0.2099167</td>
+<td style="text-align: right;">0.1279538</td>
+<td style="text-align: right;">0.2165201</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">34</td>
-<td style="text-align: right;">0.1919549</td>
-<td style="text-align: right;">0.1696406</td>
-<td style="text-align: right;">0.2253940</td>
-<td style="text-align: right;">0.1716732</td>
-<td style="text-align: right;">0.2413373</td>
+<td style="text-align: right;">0.2228918</td>
+<td style="text-align: right;">0.2617202</td>
+<td style="text-align: right;">0.1969812</td>
+<td style="text-align: right;">0.1190655</td>
+<td style="text-align: right;">0.1993413</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">35</td>
-<td style="text-align: right;">0.2374526</td>
-<td style="text-align: right;">0.1665412</td>
-<td style="text-align: right;">0.3056127</td>
-<td style="text-align: right;">0.2188509</td>
-<td style="text-align: right;">0.0715426</td>
+<td style="text-align: right;">0.2332609</td>
+<td style="text-align: right;">0.3002179</td>
+<td style="text-align: right;">0.1636014</td>
+<td style="text-align: right;">0.0879322</td>
+<td style="text-align: right;">0.2149877</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">36</td>
-<td style="text-align: right;">0.2830368</td>
-<td style="text-align: right;">0.2062916</td>
-<td style="text-align: right;">0.2095130</td>
-<td style="text-align: right;">0.2016847</td>
-<td style="text-align: right;">0.0994738</td>
+<td style="text-align: right;">0.2505773</td>
+<td style="text-align: right;">0.1854855</td>
+<td style="text-align: right;">0.1826335</td>
+<td style="text-align: right;">0.2027488</td>
+<td style="text-align: right;">0.1785549</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">37</td>
-<td style="text-align: right;">0.2418423</td>
-<td style="text-align: right;">0.1747499</td>
-<td style="text-align: right;">0.1910217</td>
-<td style="text-align: right;">0.3146300</td>
-<td style="text-align: right;">0.0777561</td>
+<td style="text-align: right;">0.2329842</td>
+<td style="text-align: right;">0.1840251</td>
+<td style="text-align: right;">0.1683492</td>
+<td style="text-align: right;">0.1115356</td>
+<td style="text-align: right;">0.3031059</td>
 </tr>
 </tbody>
 </table>
@@ -4771,13 +4635,13 @@ window.Quarto = {
 <pre><code>The default value alpha=1 has been set </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     cluster neighbor   sil_width
-[1,]       5        3  0.27791998
-[2,]       1        2  0.03192621
-[3,]       5        2 -0.20726380
-[4,]       3        4  0.16927964
-[5,]       2        1 -0.08012135
-[6,]       5        2  0.12904338</code></pre>
+<pre><code>     cluster neighbor     sil_width
+[1,]       1        2 -0.2628667256
+[2,]       4        1 -0.0006081807
+[3,]       4        3  0.1571234107
+[4,]       4        5  0.0373658874
+[5,]       4        3  0.1114418428
+[6,]       3        2 -0.0315555028</code></pre>
 </div>
 <div class="cell-output-display">
 <div>

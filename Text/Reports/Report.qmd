@@ -531,7 +531,7 @@ We started by performing a PAM (Partitioning Around Medoids) analysis
 #| fig-height: 6
 
 #need to find optimal silhouette width
-CN <- as.data.frame(Ingots_clean[,-1])
+ICN <- as.data.frame(Ingots_clean[,-1])
 
 ICN[] <- lapply(ICN, as.numeric)
 
