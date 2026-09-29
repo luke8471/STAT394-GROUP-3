@@ -382,12 +382,12 @@ ggplot(qq_long, aes(sample = Value)) +
   facet_wrap(~ Element, scales = "free", ncol = 3) +
   theme_minimal()
 
-ggsave(
-  "C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/QQ_all.png",
-  width = 12,
-  height = 20,
-  dpi = 600
-)
+#ggsave(
+  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/QQ_all.png",
+  #width = 12,
+  #height = 20,
+  #dpi = 600
+#)
 ```
 
 *Note:* Had to do this as R was having a hard time working from the table 1 ======= \## Summary of the raw data (no transformations)
