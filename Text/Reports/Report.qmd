@@ -348,7 +348,11 @@ knitr::kable(
 
 As you can see in table 2, our values are now all non-zero.
 
+![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png)
+
 The normal QQ-plot looks less normal after standardisation, with the length of the tails being accentuated and continuing presence of stepped data.
+
+![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
 
 The Henze-Zirkler test stipulates
 
@@ -409,8 +413,19 @@ z <- scale(logIngots1[,-1], center = median, scale = mad)
 #Flag observations where any variable exceeds the threshold
 outliers <- apply(abs(z) > 2.5, 1, any)
 
+#list(outliers)
+
 # View the rows flagged as outliers
 invisible(summary(logIngots1[outliers,]))
+
+#The QQ plot of the mad transformed data:
+
+qqnorm((z), col="#785EF0", main = "Normal QQ-Plot of 
+       MAD-Transformed data")
+qqline((z), col="red")
+
+num_cols <- sapply(logIngots1, is.numeric)
+z_scores <- as.data.frame(scale(logIngots1[, ]))
 
 #summary(z_scores)
 
@@ -420,13 +435,9 @@ print(ol) # ALICE STUFF
 
 Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 
-#summary(Ingots_clean)
 ```
 
 
-![Notch Boxplot of log(x + 1) with outliers removed](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
-
-![QQ-plot of log(x + 1) with outliers removed](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png)
 
 The QQ plot shows very skewed data which we would expected...
 
@@ -587,7 +598,7 @@ MANHATTAN NOT EUCLEDIAN.
 
 Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.
 
-![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/manhattan_dendrogram.png)
+![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/dendrogram.png)
 
 ```{r}
 
