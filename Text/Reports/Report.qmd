@@ -625,7 +625,7 @@ MANHATTAN NOT EUCLEDIAN.
 
 Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.
 
-![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/manhattan_dendrogram.png)
+![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/dendrogram.png)
 
 ```{r}
 
@@ -662,14 +662,9 @@ As the third and final method of clustering, we performed a Fuzzy analysis.
 
 #k-medoids for Fuzzy
 
-ICN <- Ingots_clean
-scaled <- scale(ICN)
-
-Fuzzy_k <- FKM.med(scaled, k = 5, m = 2)
+Fuzzy_k <- FKM.med(scaled, k = 3, m = 2)
 
 #silhouettes
-
-#print(Fuzzy_k$U)
 
 #Table of Fuzzy_K$U:
 knitr::kable(Fuzzy_k$U,
@@ -710,7 +705,7 @@ ggplot(sil_df,
              linetype = "dashed",
              colour = "red") +
   scale_fill_manual(values = c(
-    "#648FFF", "#785EF0", "#DC267F", "#FE6100", "#FFB000")) +
+    "#648FFF", "#DC267F", "#FFB000")) +
   labs(title = "Silhouette Plot",
        x = "Observation",
        y = "Silhouette Width") +
@@ -749,7 +744,7 @@ ggplot(
   aes(Obs, Certainty, colour = Cluster)
   ) +
   geom_hline(
-    yintercept = 1/5,
+    yintercept = 1/3,
     linetype = "dashed",
     colour = "red"
   ) +

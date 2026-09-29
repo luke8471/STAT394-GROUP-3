@@ -459,19 +459,9 @@ ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
 logIngotsClean <- log(as.matrix(Ingots_clean[-1,-1]))
 summary(logIngotsClean)
 
-
 #making the dataframe numeric so it can be manipulated.
 
 num_vars <- sapply(Ingots_clean, is.numeric)
-
-#We COULD do this for every variable, and maybe should for primary components.
-
-#PAIRWISE COMPARISON?
-
-ggplot(Ingots_clean, aes(sample = Cu)) +
-  stat_qq() +
-  stat_qq_line(color = "red") +
-  theme_minimal()
 
 #Henze-Zirkler test on cleaned data?
 #Non-negative functional distance that measures between two distribution functions. If data
@@ -751,7 +741,7 @@ caption = "Top ten cluster choices ranked by average silhouette width."
 
 ```
 
-## Hcluster:
+## Hcluster
 
 ```{r manhatten cluster, echo=FALSE}
 #| fig-format: png
@@ -857,9 +847,9 @@ ggplot(plotPamMan,
 
 ## Fuzzy Analysis
 
-```{r}
-
-#scaled1
+```{r fuzzy, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
 #k-medoids for Fuzzy
 
@@ -867,18 +857,99 @@ Fuzzy_k <- FKM.med(scaled, k = 3, m = 2)
 
 #silhouettes
 
-print(Fuzzy_k$U)
+#Table of Fuzzy_K$U:
+knitr::kable(Fuzzy_k$U,
+             caption = "Fuzzy K Silhouettes Clusterings",
+             format = "pipe")
+
+
 
 Fuzzy_Sil <- SIL.F(scaled, Fuzzy_k$U)
 
 Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
 
-#table(Fuzzy_Clust)
+d <- dist(scaled)
 
-plot(Fuzzy_Clust, pch = 15, 
-     col = apply(Fuzzy_k$U, 1, which.max),
-     xlab = "Obs",
+sil_each <- silhouette(Fuzzy_Clust, d)
+
+head(sil_each)
+
+plot(sil_each,
+     col = my_col[sort(unique(Fuzzy_Clust))],
+     border = NA,
+     main = "Silhouette Plot")
+
+
+sil_df <- data.frame(
+  obs = 1:nrow(sil_each), 
+  width = sil_each[, "sil_width"],
+  cluster = factor(sil_each[, "cluster"])
+  )
+
+ggplot(sil_df,
+       aes(x = reorder(obs, width),
+           y = width,
+           fill = cluster)) + 
+  geom_col() +
+  coord_flip() +
+  geom_hline(yintercept = mean(sil_df$width),
+             linetype = "dashed",
+             colour = "red") +
+  scale_fill_manual(values = c(
+    "#648FFF", "#DC267F", "#FFB000")) +
+  labs(title = "Silhouette Plot",
+       x = "Observation",
+       y = "Silhouette Width") +
+  theme_minimal()
+
+plot(sil_each[, "sil_width"],
+     pch = 15,
+     col = my_col[Fuzzy_Clust],
+     xlab = "Observation",
      ylab = "Silhouette Width",
-     main = "Fuzzy Silhouette Plot Using k-Medoids")
+     main = "Per-Observation Silhouettes")
+abline(h = 0, lty = 2)
+
+
+
+ggplot(LDA_K,
+       aes(k, avg_silhouette)) +
+  geom_line() +
+  geom_point(size = 3) +
+  theme_minimal() +
+  labs(
+    title = "Average Silhouette Width by Number of Clusters",
+    x = "Number of Clusters",
+    y = "Average Silhouette Width"
+    )
+
+
+certainty <- apply(Fuzzy_k$U, 1, max)
+
+ggplot(
+  data.frame(
+    Obs = 1:length(certainty),
+    Certainty = certainty,
+    Cluster = factor(Fuzzy_Clust)
+  ),
+  aes(Obs, Certainty, colour = Cluster)
+  ) +
+  geom_hline(
+    yintercept = 1/3,
+    linetype = "dashed",
+    colour = "red"
+  ) +
+  scale_colour_manual( values = c("#648FFF", "#DC267F", "#FFB000")
+  )+
+  labs(
+    caption = "Red dashed line indicates complete ambiguity (1/k)"
+    ) +
+  geom_point(size = 6) +
+  theme_minimal() +
+  labs(
+    title = "Fuzzy Membership Certainty",
+    y = "Maximum Membership"
+    )
+
 
 ```
