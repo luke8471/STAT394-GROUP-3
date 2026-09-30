@@ -476,14 +476,17 @@ Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 ## 2.6  Henze-Zirkler Test for Multivariate Normality
 
 :::{.center style="font-size: 1.3em;"}
+HZ test on OG data:
 ```{R Henze Zirkler, echo=FALSE, warning=FALSE}
 
-#HZ test on OG data, which also rejects null:
+#
 
 HZoriginal <- mvn(data = Ingots_F_no, mvn_test = "hz")
 cat("Henze_Zirkler Test Results:\n")
 print(HZoriginal$multivariate_normality)
-
+```
+HZ test after all transformations:
+```{r he, echo=FALSE}
 #HZ clean data:
 HZ <- mvn(data = Ingots_clean, mvn_test = "hz")
 

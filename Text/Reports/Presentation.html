@@ -1492,23 +1492,39 @@ Gaia Smith and Alice Thompson
 <section id="initial-qq-plots" class="slide level2">
 <h2>2.2 initial QQ-plots</h2>
 
-<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm%201a.png" class="r-stretch"></section>
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all%201a.png" class="r-stretch"></section>
 <section id="initial-qq-plots-1" class="slide level2">
 <h2>2.2 initial QQ-plots</h2>
 
-<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm%201b.png" class="r-stretch"></section>
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all%201b.png" class="r-stretch"></section>
 <section id="initial-qq-plots-2" class="slide level2">
 <h2>2.2 initial QQ-plots</h2>
 
-<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm%201c.png" class="r-stretch"></section>
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all%201c.png" class="r-stretch"></section>
 <section id="initial-qq-plots-3" class="slide level2">
 <h2>2.2 initial QQ-plots</h2>
 
-<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm%201d.png" class="r-stretch"></section>
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all%201d.png" class="r-stretch"></section>
 <section id="performing-log-transformations" class="slide level2">
 <h2>2.3 Performing Log Transformations</h2>
 
 <img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png" class="r-stretch"></section>
+<section id="log-transformed-qq-plots" class="slide level2">
+<h2>2.3 log Transformed QQ-plots</h2>
+
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm%201a.png" class="r-stretch"></section>
+<section id="log-transformed-qq-plots-1" class="slide level2">
+<h2>2.3 log Transformed QQ-plots</h2>
+
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm%201b.png" class="r-stretch"></section>
+<section id="log-transformed-qq-plots-2" class="slide level2">
+<h2>2.3 log Transformed QQ-plots</h2>
+
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm%201c.png" class="r-stretch"></section>
+<section id="log-transformed-qq-plots-3" class="slide level2">
+<h2>2.3 log Transformed QQ-plots</h2>
+
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm%201d.png" class="r-stretch"></section>
 <section id="henze-zirkler-test-for-multivariate-normality" class="slide level2">
 <h2>2.4 Henze-Zirkler Test For Multivariate Normality</h2>
 <div class="center">
@@ -1746,6 +1762,7 @@ Gaia Smith and Alice Thompson
 <section id="henze-zirkler-test-for-multivariate-normality-2" class="slide level2">
 <h2>2.6 Henze-Zirkler Test for Multivariate Normality</h2>
 <div class="center" style="font-size: 1.3em;">
+<p>HZ test on OG data:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Henze_Zirkler Test Results:</code></pre>
@@ -1754,6 +1771,9 @@ Gaia Smith and Alice Thompson
 <pre><code>           Test Statistic p.value     Method          MVN
 1 Henze-Zirkler     1.001  &lt;0.001 asymptotic ✗ Not normal</code></pre>
 </div>
+</div>
+<p>HZ test after all transformations:</p>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Henze_Zirkler Test Results:</code></pre>
 </div>
@@ -1792,8 +1812,8 @@ Gaia Smith and Alice Thompson
 
 </section>
 
-<section id="pam" class="slide level2">
-<h2>3.1 PAM</h2>
+<section id="pam---linear-analysis" class="slide level2">
+<h2>3.1 PAM - Linear analysis</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>  cluster size ave.sil.width
@@ -1804,62 +1824,10 @@ Gaia Smith and Alice Thompson
 
 </div>
 <img data-src="Presentation_files/figure-revealjs/LDA-1.png" width="960" class="r-stretch"></section>
-<section id="pam-1" class="slide level2">
+<section id="pam" class="slide level2">
 <h2>3.1 PAM</h2>
-<div class="cell">
-<div class="cell-output-display">
-<table class="table caption-top" style="font-size: 30px; margin-left: auto; margin-right: auto;">
-<caption>Top five cluster choices ranked by average silhouette width.</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;" data-quarto-table-cell-role="th">k</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Avg_Silhouette</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Smallest_Cluster</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Largest_Cluster</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Cluster_Sizes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0.246</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: left;">6, 5, 15</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0.182</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: left;">7, 19</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">0.179</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">6, 5, 4, 7, 4</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">0.176</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">5, 5, 3, 3, 7, 3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">0.170</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">5, 4, 2, 1, 3, 7, 3, 1</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
+
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/PAM.png" class="r-stretch"></section>
 <section id="cluster-analysis-using-manhattan-distance" class="slide level2">
 <h2>3.2 Cluster Analysis using Manhattan Distance</h2>
 
@@ -1868,12 +1836,12 @@ Gaia Smith and Alice Thompson
 <h2>3.2 Cluster Analysis using Manhattan Distance</h2>
 
 <img data-src="Presentation_files/figure-revealjs/UMAP-1.png" width="960" class="r-stretch"></section>
-<section id="cluster-analysis-using-manhattan-distance-2" class="slide level2">
-<h2>3.2 Cluster Analysis using Manhattan Distance</h2>
+<section id="umap" class="slide level2">
+<h2>3.2 UMAP</h2>
 
-<img data-src="Presentation_files/figure-revealjs/UMAP2-1.png" width="960" class="r-stretch"></section>
-<section id="fuzzy-analysis" class="slide level2">
-<h2>3.3 Fuzzy Analysis</h2>
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/UMAP.png" class="r-stretch"></section>
+<section id="fuzzy-cluster-analysis" class="slide level2">
+<h2>3.3 Fuzzy Cluster Analysis</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
@@ -2072,34 +2040,35 @@ Gaia Smith and Alice Thompson
 </div>
 </div></div>
 </section>
-<section id="fuzzy-analysis-1" class="slide level2">
+<section id="fuzzy-analysis" class="slide level2">
 <h2>3.3 Fuzzy Analysis</h2>
 
 <img data-src="Presentation_files/figure-revealjs/fuzzy1-1.png" width="960" class="r-stretch"></section>
-<section id="fuzzy-analysis-2" class="slide level2">
+<section id="fuzzy-analysis-1" class="slide level2">
 <h2>3.3 Fuzzy Analysis</h2>
 
 <img data-src="Presentation_files/figure-revealjs/fuzzy2-1.png" width="960" class="r-stretch"></section>
-<section id="fuzzy-analysis-3" class="slide level2">
+<section id="fuzzy-analysis-2" class="slide level2">
 <h2>3.3 Fuzzy Analysis</h2>
 
 <img data-src="Presentation_files/figure-revealjs/fuzzy3-1.png" width="960" class="r-stretch"></section>
-<section id="fuzzy-analysis-4" class="slide level2">
+<section id="fuzzy-analysis-3" class="slide level2">
 <h2>3.3 Fuzzy Analysis</h2>
 
 <img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Avg%20width%20of%20cluster.png" class="r-stretch"></section>
-<section id="fuzzy-analysis-5" class="slide level2">
+<section id="fuzzy-analysis-4" class="slide level2">
 <h2>3.3 Fuzzy Analysis</h2>
 
-<img data-src="Presentation_files/figure-revealjs/fuzzy5-1.png" width="960" class="r-stretch"></section>
-<section id="results" class="slide level2">
-<h2>4. Results</h2>
-<ul>
-<li class="fragment"><p>We are unable to make direct</p></li>
-<li class="fragment"><p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at ~20mg.</p></li>
-<li class="fragment"><p>The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.</p></li>
-</ul>
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Fuzzy.png" class="r-stretch"></section>
+<section id="results" class="title-slide slide level1 centre center">
+<h1>4. Results</h1>
+
 </section>
+
+<section id="ari-heat-map-comparing-the-different-methods" class="slide level2">
+<h2>4.1 ARI Heat-map comparing the different methods</h2>
+
+<img data-src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/ARI_heatmap.png" class="r-stretch"></section>
 <section id="discussion" class="slide level2">
 <h2>5. Discussion</h2>
 <ul>
