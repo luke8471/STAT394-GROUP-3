@@ -1,5 +1,5 @@
 ---
-title: "It's just rocks and metal! ing-it"
+title: "It's just rocks and metal ... ing-it"
 author: "Gaia Smith and Alice Thompson"
 format:
   revealjs:
@@ -40,7 +40,9 @@ library(dendextend)
 library(gt)
 library(knitr)
 library(kableExtra)
-
+library(gridExtra)
+library(umap)
+library(moments)
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -67,7 +69,7 @@ ingots <- pdftools::pdf_text(tmp)
 - Scope of This Multivariate Analysis
 :::
 
-## 2.1  Analysing the raw data
+## 2.1  Analyzing the raw data
 
 ```{r extracting the table, echo=FALSE}
 
@@ -139,7 +141,41 @@ knitr::kable(
 
 ```
 
-## 2.1 Anaylysising the Raw data
+## 2.1  Analyzing the raw data
+```{r 2.1b, echo=FALSE}
+Element_order <- colnames(as.data.frame(Ingots_F_no[, -1]))
+
+Ingots_sum <- Ingots_F_no[, -1] |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Element",
+    values_to = "Concentration"
+  ) |>
+  mutate(
+    Element = factor(Element, levels = Element_order)
+  ) |>
+  group_by(Element) |>
+  summarise(
+    Mean = mean(Concentration, na.rm = TRUE),
+    SD = sd(Concentration, na.rm = TRUE),
+    Min = min(Concentration, na.rm = TRUE),
+    Q1 = quantile(Concentration, 0.25, na.rm = TRUE),
+    Median = median(Concentration, na.rm = TRUE),
+    Q3 = quantile(Concentration, 0.75, na.rm = TRUE),
+    Max = max(Concentration, na.rm = TRUE),
+    IQR = IQR(Concentration, na.rm = TRUE),
+    Kurtosis = kurtosis(Concentration, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+knitr::kable(
+  Ingots_sum, 
+  digits = 2,
+  caption = "Summary Statistics of Table 1", 
+  format = "pipe") %>%
+  kable_styling(font_size = 16, latex_options = "scale_down")
+```
+## 2.1  Analyzing the Raw data
 ```{r basic summary, echo=FALSE}
 #| fig-width: 10
 #| fig-height: 6
@@ -211,10 +247,7 @@ ggplot(
 
 ```
 
-
-
-
-## 2.1.1 Inconsistencies in Percentages
+## 2.1.1  Inconsistencies in Percentages
 ```{r echo = FALSE}
 main_com <- Ingots_Frame[c(1:5)]
 
@@ -249,10 +282,28 @@ knitr::kable(
 ```
 
 
-## 2.2 Intital Testing for Multivariate Normality 
-## 2.2 intial QQ-plots
-![QQ_all](/Users/smith/Documents/STAT394-GROUP-3/Figures/QQ_all.png)
+## 2.2  Initial Testing for Multivariate Normality 
+## 2.2  initial QQ-plots
+![QQ_allnorm](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png)
+## 2.2 Perfroming Log Transformations
 
+```{r, echo = FALSE}
+#| fig-width: 10
+#| fig-height: 6
+
+#log transform data
+
+logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
+
+#print(logIngots1)
+
+#knitr::kable(logIngots1,
+             #caption = "Log(x + 1) Transformed Data",
+             #format = "pipe")
+
+```
+
+![Notchboxnorm](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
 
 ## 2.2 Henze-Zirkler Test For Multivariate Normality 
 :::{.center}
@@ -267,40 +318,27 @@ $$
 $$
 :::
 
-## 2.3 Transformations
+Henze-Zirkler test established if there was preliminary evidence for multivariate normality.
+
+## 2.2 Henze-Zirkler Test For Multivariate Normality  
+```{r, echo = FALSE}
+
+HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
+
+hz_table <- HZoriginal$multivariate_normality
+
+knitr::kable(
+  hz_table,
+  digits = 2,
+  caption = "Henze-Zirkler Test For Multivariate Normality"
+)
+```
+
+
+## 2.3 Performing Mad Transformations
 
 ## 2.3 QQ plot and Henze-Zirkler Test for Multivariate Normality
 
-```{r, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
-
-#log transform data
-
-logIngots <- log(as.matrix(Ingots_F_no[-1,-1]))
-#print(logIngots)
-
-knitr::kable(logIngots,
-             caption = "Log Transformed Data",
-             digits = 2,
-             format = "pipe")
-
-```
-
-```{r echo = FALSE}
-#taking the log.
-
-qqnorm(logIngots, col = "#648FFF", main = "Normal QQ-Plot for the log-Transformed Data",
-       sub = "All Elements")
-qqline(logIngots, col = "#DC267F")
-
-```
-
-The QQ-plot of the log transformed data roughly followed the theoretical line (in red), this is evidence that the normality assumption may hold. The tails are relatively long and flat, indicating that there may be some extreme outliers. There are several steps in the upper and lower tails, which alone is not necessarily a departure from normality, and may be explained by the zero values returned for some Sample's variables after the log transformation.
-
-The observed zero-values for (PUT SAMPLES NUMBERS IN HERE) in (TABLE) in variables(HERE), which while not a large quantity of the samples, still provided some concern as log(0) is undefined and can influence non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
-
-We chose to combat the zero values by standardising the data set using log($\mathcal{x}$ + 1)}, where $\mathcal{x}$ is our data. This, coupled with a Henze-Zirkler test, established if there is preliminary evidence for multivariate normality.
 
 ```{r echo = FALSE}
 #| fig-width: 10
