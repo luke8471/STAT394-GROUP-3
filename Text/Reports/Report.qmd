@@ -358,9 +358,7 @@ There is still evidence of some elements not following assumptions of normality 
 
 ![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
 
-Much more interpretable
-
-Sr still has many outliers
+Ni (nickel) wen from widest to having an interquartile range smaller then the average, while Sb (antimony) went from largest range to again becoming much closer to the average. Overall we can clearly see that the standardisation and log($\mathcal x$ + 1) transformation have greatly added in the interpretability of our EDA graphs. We note that Sr appears to have 4 unusual values/outliers.
 
 ```{r, echo = FALSE}
 
