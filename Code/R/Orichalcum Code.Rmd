@@ -46,6 +46,9 @@ library(gt)
 library(factoextra)
 library(umap)
 library(moments)
+library(mclust)
+library(reshape2)
+library(ggrepel)
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -280,16 +283,23 @@ ggplot(
     axis.text.x = element_text(
       angle = 45,
       hjust = 1
-    )
+    ),
+      panel.background = element_rect(
+      fill = "grey95",
+      colour = NA
+      ),
+    plot.background = element_rect(
+      fill = "white",
+      colour = NA
+      )
   )
 
-#ggsave(
-  #file.path("C:/Users/Alice/Documents/STAT394-GROUP-3/Figures", "notchbox.png"),
-  #p,
-  #width = 10,
-  #height = 6,
-  #dpi = 300
-#)
+ggsave(
+  file.path("C:/Users/Alice/Documents/STAT394-GROUP-3/Figures", "notchbox.png"),
+  width = 10,
+  height = 6,
+  dpi = 600
+ )
 
 ```
 
@@ -360,13 +370,20 @@ dev.off()
 #log transform data
 
 logIngots <- log(as.matrix(Ingots_F_no[-1,-1]))
+#print(logIngots)
 
-#NOTE: we return several zero-values after a log transformation. Either need
-#to add a constant to keep values non-negative or normalise data another way.
-#This is where I start considering removing the massive outliers from the data set.
+knitr::kable(logIngots,
+             caption = "Log Transformed Data",
+             digits = 2,
+             format = "pipe")
+
+```
+
+#NOTE: we return several zero-values after a log transformation. Either need #to add a constant to keep values non-negative or normalise data another way. #This is where I start considering removing the massive outliers from the data set.
 
 #Use log(x + 1) to eliminate zero values. It works
 
+```{r}
 logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 
 #log(x + 1)
@@ -381,7 +398,7 @@ qqline(logIngots1, col = "#DC267F")
 #HZ test on the log(x + 1) transformed data
 
 
-HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
+HZoriginal <- MVN::mvn(data = logIngots1, mvn_test = "hz")
 cat("Henze_Zirkler Test Results:\n")
 print(HZoriginal$multivariate_normality)
 
@@ -429,8 +446,9 @@ ggplot(qq_long, aes(sample = Value)) +
 #)
 ```
 
-*Note:* Had to do this as R was having a hard time working from the table 1 ======= \## Summary of the raw data (no transformations)
-## MAD
+*Note:* Had to do this as R was having a hard time working from the table 1
+
+\## Summary of the raw data (no transformations) \## MAD
 
 ```{r transformations-mad, echo=TRUE}
 #| fig-width: 10
@@ -526,7 +544,15 @@ ggplot(
     axis.text.x = element_text(
       angle = 45,
       hjust = 1
-    )
+    ),
+      panel.background = element_rect(
+      fill = "grey95",
+      colour = NA
+      ),
+    plot.background = element_rect(
+      fill = "white",
+      colour = NA
+      )
   )
 
 #ggsave(
@@ -573,12 +599,12 @@ ggplot(qq_long2, aes(sample = Value)) +
     ) +
   theme_minimal()
 
-#ggsave(
-  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/QQ_allnorm.png",
-  #width = 12,
-  #height = 20,
-  #dpi = 600
-#)
+ggsave(
+  "C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/QQ_allnorm.png",
+  width = 12,
+  height = 20,
+  dpi = 600
+)
 
 #Henze-Zirkler test on cleaned data?
 #Non-negative functional distance that measures between two distribution functions. If data
@@ -590,7 +616,7 @@ ggplot(qq_long2, aes(sample = Value)) +
 #  note         = "Accessed: 2026-9-15"
 #}
 
-HZ <- mvn(data = Ingots_clean, mvn_test = "hz")
+HZ <- MVN::mvn(data = Ingots_clean, mvn_test = "hz")
 
 cat("Henze_Zirkler Test Results:\n")
 print(HZ$multivariate_normality)
@@ -610,7 +636,7 @@ invisible(cor(Ingots_F_no[-1,-1]))
 
 
 #Correlation plot:
-ggcorrplot(
+cor1 <- ggcorrplot(
   cor(Ingots_F_no[,-1]),
   hc.order = FALSE,
   type = "lower",
@@ -629,13 +655,13 @@ ggcorrplot(
     colour = "grey30"
     ))
 
-#ggsave(
-  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/correlation_matrix.png",
-  #plot = cor1,
-  #width = 12,
-  #height = 10,
-  #dpi = 600
-#)
+ggsave(
+  "C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/correlation_matrix.png",
+  plot = cor1,
+  width = 12,
+  height = 10,
+  dpi = 600
+)
 
 
 #performed for clean data:
@@ -643,7 +669,7 @@ invisible(var(Ingots_clean[-1,-1]))
 
 invisible(cor(Ingots_clean[-1,-1]))
 
-ggcorrplot(
+cor2 <- ggcorrplot(
   cor(Ingots_clean),
   hc.order = FALSE,
   type = "lower",
@@ -662,13 +688,13 @@ ggcorrplot(
     colour = "grey30"
     ))
 
-#ggsave(
-  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/correlation_matrix_log.png",
-  #plot = cor2,
-  #width = 12,
-  #height = 10,
-  #dpi = 600
-#)
+ggsave(
+  "C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/correlation_matrix_log.png",
+  plot = cor2,
+  width = 12,
+  height = 10,
+  dpi = 600
+)
 
 ```
 
@@ -696,12 +722,9 @@ boxplot(Ingots_F_no[,c(2,3,4,12)], notch = TRUE, col="lightblue")
 
 *Notes:* From the these boxplots we can more clearly see differences between spreads between some of our most prevalent elements, Lead and Zinc have a slight spread where as Copper and tine have a larger spread, Tin also has some outliers, particularly 65.8 from sample 17, as well as 42 from sample 22. Again Transformations will give us a better picture to show the relationships between the variable
 
-
-
 *Notes:* Looking at the QQ-plot with the light blue points (no transformation) we can see some clear deviations in the tails (lower and mostly upper data points), a low amount of points follow the theoretical line (in red), we can assume that our normality assumption wouldn't hold. hence transformations are needed. Their are also some slight steps in the points as well as a large jump at 1.7.
 
 Performing log transformations on the data produces the QQ-plot with blue points. Notice there are slight deviations in the tails (lower and upper data point), but the rest of the points follow the theoretical line (in red), we can assume that our data normality assumption holds.
-
 
 ## Correlation and Covariance tables: - STAT394 inference pdf
 
@@ -835,6 +858,91 @@ fviz_silhouette(pam)+
   scale_fill_manual( values = c("#648FFF", "#DC267F", "#FFB000"))+
   scale_colour_manual( values = c("gray60", "gray60", "gray60"))
  
+#Rebuilding to match others graphics
+
+pam_fit <- pam(scaled, k = 3)
+d <- dist(scaled, method = "manhattan")
+pam_sil <- silhouette(pam_fit$clustering, d)
+sil_df <- as.data.frame(pam_sil)
+
+sil_df$Sample <- rownames(scaled)
+
+sil_df <- sil_df |>
+  dplyr::arrange(cluster, desc(sil_width)) |>
+  dplyr::mutate(
+    Observation = row_number()
+  )
+
+sil_df$cluster <- factor(sil_df$cluster)
+
+sil_avg <- mean(sil_df$sil_width)
+
+ggplot(sil_df,
+  aes(
+    x = Observation,
+    y = sil_width,
+    fill = cluster
+  )
+) +
+  geom_col(width = 0.8) +
+  geom_text(
+    aes(label = Sample),
+    angle = 0,
+    size = 4,
+    vjust = -0.3 
+  ) +
+  geom_hline(
+    yintercept = sil_avg,
+    colour = "red",
+    linetype = "dashed"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "#648FFF",
+      "#DC267F",
+      "#FFB000"
+    )
+  ) +
+  labs(
+    title = "PAM Cluster Silhouette Plot",
+    subtitle = paste(
+      "Average Silhouette Width =",
+      round(sil_avg, 3)
+      ),
+    x = "Observation",
+    y = "Silhouette Width",
+    fill = "Cluster"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid = element_blank(),
+    panel.background = element_rect(
+      fill = "grey95",
+      colour = NA
+      ),
+    plot.background = element_rect(
+      fill = "white",
+      colour = NA
+      ),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    plot.title = element_text(
+      size = 16,
+      face = "plain"
+    ),
+    plot.subtitle = element_text(
+      size = 10,
+      colour = "grey30"
+    ),
+    legend.title = element_text(face = "plain")
+  )
+
+ggsave(
+  "C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/PAM.png",
+  width = 8,
+  height = 6,
+  dpi = 600
+)
 
 pam_sum_tab |>
 gt() |>
@@ -858,7 +966,7 @@ caption = "Top ten cluster choices ranked by average silhouette width."
 
 ```
 
-## Hcluster
+## H.cluster
 
 ```{r manhatten cluster, echo=FALSE}
 #| fig-format: png
@@ -890,8 +998,7 @@ fviz_dend(
   color_labels_by_k = FALSE
 ) +
   labs(
-    title = "Hierarchichal Cluster Dendrogram using 
-    Manhattan Distance",
+    title = "Hierarchichal Cluster Dendrogram",
     subtitle = paste(
       "Average Linkage | Manhattan Distance | CCC =",
       round(CC, 3)
@@ -901,21 +1008,31 @@ fviz_dend(
   theme_minimal() +
   theme(
     plot.title = element_text(face = "bold"),
-    plot.subtitle = element_text(colour = "grey30")
+    plot.subtitle = element_text(colour = "grey30"),
+        panel.grid = element_blank(),
+    panel.background = element_rect(
+      fill = "grey95",
+      colour = NA
+      ),
+    plot.background = element_rect(
+      fill = "white",
+      colour = NA
+      )
   ) 
 
 
 #saving locally to move to repository
 
-#ggsave(
-  #file.path("LOCAL FILE PATH"),
-  #p,
-  #width = 10,
-  #height = 6,
-  #dpi = 300
-#)
+ggsave(
+  file.path("C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/dendrogram.png"),
+  width = 10,
+  height = 6,
+  dpi = 300
+ )
 
 ```
+
+### UMAP
 
 ```{r UMAP}
 ## Trying stuff - Note Gaia couldn't get this to work ALICE
@@ -929,21 +1046,85 @@ UMAP_plot <- data.frame(
   Cluster = factor(PamMan$cluster)
   )
 
+UMAP_plot$Sample <- rownames(scaled)
+
 ggplot(UMAP_plot,
-       aes(UMAP1, UMAP2, colour = Cluster)
-       ) +
-  geom_point(size = 5) +
-  stat_ellipse(level = 0.95) +
-  scale_colour_manual( values = c("#648FFF", "#DC267F", "#FFB000")
-                       )+
+       aes(
+         UMAP1,
+         UMAP2,
+         colour = Cluster,
+         fill = Cluster
+         )
+       ) + 
+  stat_ellipse(
+    geom = "polygon",
+    alpha = 0.50,
+    colour = NA,
+    level = 0.95
+    ) +
+  geom_point(
+    size = 5,
+    alpha = 0.8
+    ) + 
+  geom_text(
+    aes(label = Sample),
+    colour = "black",
+    size = 2.5,
+    fontface = "bold"
+  ) +
+  scale_colour_manual(
+    values = c(
+      "1" = "#648FFF",
+      "2" = "#DC267F",
+      "3" = "#FFB000"
+      ) 
+    ) +
+  scale_fill_manual(
+    values = c(
+      "1" = "grey60",
+      "2" = "grey60",
+      "3" = "grey60"
+      )
+    ) +
   labs(
     title = "UMAP Projection",
-    subtitle = "Manhattan Distance | PAM clustering | k = 3"
+    subtitle = "Manhattan Distance | PAM clustering | k = 3",
+    x = "UMAP1",
+    y = "UMAP2"
+    ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid = element_blank(),
+    panel.background = element_rect(
+      fill = "grey95",
+      colour = NA
+      ),
+    plot.background = element_rect(
+      fill = "white",
+      colour = NA
+      ),
+      plot.title = element_text(
+        size = 16,
+        face = "plain"
+      ),
+      plot.subtitle = element_text(
+        size = 10,
+        colour = "grey30"
+      ),
+      legend.title = element_text(face = "plain")
     )
+
+ggsave(
+  "C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/UMAP.png",
+  width = 10,
+  height = 8,
+  dpi = 600
+)
+
 
 UMAP <- umap(scaled, metric = "manhattan")
 
-head(UMAP)
+#head(UMAP)
 
 plotPamMan <- data.frame(
   UMAP1 = UMAP$layout[,1],
@@ -952,7 +1133,8 @@ plotPamMan <- data.frame(
   )
 
 ggplot(plotPamMan, 
-       aes(UMAP1, UMAP2, color = cluster, size = medoid)) +
+       aes(UMAP1, UMAP2, color = cluster, size = medoid)
+       ) +
   geom_point(size = 5) +
   theme_classic() +
   labs(title = "UMAP Projection",
@@ -1043,13 +1225,20 @@ ggplot(LDA_K,
 
 certainty <- apply(Fuzzy_k$U, 1, max)
 
-ggplot(
-  data.frame(
-    Obs = 1:length(certainty),
-    Certainty = certainty,
-    Cluster = factor(Fuzzy_Clust)
-  ),
-  aes(Obs, Certainty, colour = Cluster)
+
+fuzzy_df <- data.frame(
+  Obs = 1:length(certainty),
+  Sample = rownames(scaled),
+  Cluster = factor(Fuzzy_Clust)
+)
+
+
+ggplot(fuzzy_df,
+  aes(
+    Obs,
+    certainty,
+    colour = Cluster
+    )
   ) +
   geom_hline(
     yintercept = 1/3,
@@ -1062,11 +1251,286 @@ ggplot(
     caption = "Red dashed line indicates complete ambiguity (1/k)"
     ) +
   geom_point(size = 6) +
-  theme_minimal() +
+  geom_text(
+    aes(label = Sample),
+    colour = "grey10",
+    fontface = "plain",
+    size = 3,
+    vjust = 0.4
+    ) +
+  theme_minimal(base_size = 14) +
   labs(
     title = "Fuzzy Membership Certainty",
+    subtitle = "PAM Clustering | Manhattan Distance | k = 3",
+    x = "Observations",
     y = "Maximum Membership"
+    ) +
+  theme(
+    panel.grid = element_blank(),
+    panel.background = element_rect(
+      fill = "grey95",
+      colour = NA
+      ),
+    plot.background = element_rect(
+      fill = "white",
+      colour = NA
+      ),
+    plot.title = element_text(
+      size = 16,
+      face = "plain"
+    ),
+    plot.subtitle = element_text(
+      size = 10,
+      colour = "grey30"
+    ),
+    legend.title = element_text(face = "plain")
+  )
+
+ggsave(
+"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/Fuzzy.png",
+width = 10,
+height = 8,
+dpi = 600
+)
+
+```
+
+### Comparison tables
+
+```{r}
+#creating tables to visually compare results from PAM, H cluster, UMAP, Fuzzy.
+
+# PAM
+
+pam_fit <- pam(scaled, k = 3)
+pam_size <- table(pam_fit$clustering)
+pam_avg_sil <- pam_fit$silinfo$avg.width
+pam_clust <- pam_fit$clustering
+
+# Hierarchical
+
+h_clust <- cutree(HiMan, k = 3)
+hclust_size <- table(h_clust)
+hclust_sil <- silhouette(h_clust, d)
+hclust_avg_sil <- mean(hclust_sil[, "sil_width"])
+
+#UMAP clustering
+PamMan
+
+umap_size <- table(PamMan$clustering)
+umap_avg_sil <- PamMan$silinfo$avg.width
+umap_clust <- PamMan$clustering
+
+# Fuzzy
+Fuzzy_Clust
+
+fuzzy_size <- table(Fuzzy_Clust)
+fuzzy_avg_sil <- mean(
+  silhouette(Fuzzy_Clust, d)[, "sil_width"]
+  )
+fuzzy_clust <- Fuzzy_Clust
+
+# Silhouettes
+#pam_sil
+#h_sil
+#Fuzzy_Sil
+
+# CCC
+CC
+
+
+#Building table
+
+comp_table <- tibble::tibble(
+  Method = c(
+    "PAM",
+    "Hierarchical Clustering",
+    "UMAP + PAM",
+    "Fuzzy Analysis"
+    ),
+  Clusters = c(
+    3,3,3,3
+  ),
+  Mean_Size = c(
+    mean(pam_size),
+    mean(hclust_size),
+    mean(umap_size),
+    mean(fuzzy_size)
+  ),
+  Max_size = c(
+    max(pam_size),
+    max(hclust_size),
+    max(umap_size),
+    max(fuzzy_size)
+  ),
+  Min_size = c(
+    min(pam_size),
+    min(hclust_size),
+    min(umap_size),
+    min(fuzzy_size)  
+  ),
+  Avg.Silhouette = c(
+    pam_avg_sil,
+    hclust_avg_sil,
+    umap_avg_sil,
+    fuzzy_avg_sil
+  ),
+  CCC = c(
+    NA,
+    CC,
+    NA,
+    NA
+  )
+)
+
+comp_table |>
+  knitr::kable(
+    digits = 3,
+    caption = "Comparison of Clustering Methods"
+    ) 
+
+cluster_compare <- data.frame(
+  Sample = rownames(scaled),
+  PAM = pam_clust,
+  Hierarchical = h_clust,
+  UMAP = umap_clust,
+  Fuzzy = fuzzy_clust
+  )
+
+cluster_compare$Agreement <- apply(
+cluster_compare[, 2:5],
+1,
+function(x) length(unique(x))
+)
+
+knitr::kable(
+cluster_compare,
+caption = "Cluster Assignment by Method"
+)
+
+#ARI because ignores arbitrary clustering labels and measures similarity 
+#between groupings instead.
+
+
+adjustedRandIndex(pam_clust, h_clust)
+
+adjustedRandIndex(pam_clust, umap_clust)
+
+adjustedRandIndex(pam_clust, fuzzy_clust)
+
+ari_matrix <- matrix(
+  c(
+    adjustedRandIndex(pam_clust, pam_clust),
+    adjustedRandIndex(pam_clust, h_clust),
+    adjustedRandIndex(pam_clust, umap_clust),
+    adjustedRandIndex(pam_clust, fuzzy_clust),
+    
+    adjustedRandIndex(h_clust, pam_clust),
+    adjustedRandIndex(h_clust, h_clust),
+    adjustedRandIndex(h_clust, umap_clust),
+    adjustedRandIndex(h_clust, fuzzy_clust),
+    
+    adjustedRandIndex(umap_clust, pam_clust),
+    adjustedRandIndex(umap_clust, h_clust),
+    adjustedRandIndex(umap_clust, umap_clust),
+    adjustedRandIndex(umap_clust, fuzzy_clust),
+    
+    adjustedRandIndex(fuzzy_clust, pam_clust),
+    adjustedRandIndex(fuzzy_clust, h_clust),
+    adjustedRandIndex(fuzzy_clust, umap_clust),
+    adjustedRandIndex(fuzzy_clust, fuzzy_clust)
+    ),
+  nrow = 4,
+  byrow = TRUE
+  )
+
+colnames(ari_matrix) <- c("PAM", "H_clust", "UMAP", "Fuzzy")
+rownames(ari_matrix) <- c("PAM", "H_clust", "UMAP", "Fuzzy")
+
+round(ari_matrix, 3)
+
+knitr::kable(
+round(ari_matrix, 3),
+caption = "Adjusted Rand Index Comparison of Clustering Methods"
+)
+
+
+#Creating heatmap
+
+
+rownames(ari_matrix) <- c("PAM","Hierarchical","UMAP","Fuzzy")
+colnames(ari_matrix) <- c("PAM","Hierarchical","UMAP","Fuzzy")
+
+ari_plot <- ari_matrix
+diag(ari_plot) <- NA
+ari_plot[upper.tri(ari_plot)] <- NA
+
+ari_long <- reshape2::melt(
+ari_plot,
+na.rm = TRUE
+)
+
+ggplot(
+  ari_long,
+  aes(Var1, Var2, fill = value)
+  ) +
+  geom_tile(
+    colour = "gray80",
+    linewidth = 0.3
+  ) +
+  geom_text(
+    aes(
+      label = format(round(value, 2), nsmall = 2)),
+    colour = "gray20",
+    size = 3
+    ) +
+  scale_fill_gradient2(
+    low = "#FE6100",
+    mid = "gray90",
+    high = "#648FFF",
+    midpoint = 0,
+    limits = c(-1, 1),
+    name = "ARI"
+    ) +
+  labs(
+    title = "Clustering Consensus Matrix",
+    subtitle = "Adjusted Rand Index | Clustering Methods",
+    x = "",
+    y = "",
+    fill = "ARI"
+    ) +
+  coord_fixed() +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_text(
+      angle = 45,
+      hjust = 1
+      ),
+    plot.title = element_text(
+      size = 16,
+      face = "plain"
+      ),
+    plot.subtitle = element_text(
+      size = 10,
+      colour = "grey30"
+      ),
+    legend.title = element_text(face = "bold"),
+      panel.background = element_rect(
+      fill = "grey95",
+      colour = NA
+      ),
+    plot.background = element_rect(
+      fill = "white",
+      colour = NA
+      )
     )
 
+ggsave(
+  "C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/ARI_heatmap.png",
+  width = 8,
+  height = 6,
+  dpi = 600
+  )
 
 ```
