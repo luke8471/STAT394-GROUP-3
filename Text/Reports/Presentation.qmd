@@ -632,7 +632,8 @@ ggplot(sil_df,
 :::
 
 ##
-:::{.incremental}
+
+:::{.centre .incremental}
 - comparing to the @Caponetti2017-sc study
 
 - What were the limitations of this study
