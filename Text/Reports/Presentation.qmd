@@ -8,8 +8,9 @@ format:
     slide-number: TRUE
     theme: moon
     transition: slide
-bibliography: https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/Text/Common/CITATIONS.bib
-nocite: | 
+bibliography: ../Common/CITATIONS.bib
+csl: ../Common/apa.csl
+nocite: |
   @*
 editor: visual
 ---
@@ -759,7 +760,7 @@ ggplot(
 
 :::
 ## 6. References
-:::{#ref}
+:::{#refs}
 :::
 
 :::{.center}
