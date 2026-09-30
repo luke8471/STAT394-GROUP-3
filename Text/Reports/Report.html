@@ -1810,20 +1810,26 @@ window.Quarto = {
 </div>
 </div>
 <p>The silhouette value/metric is a measurement of the quality of a clustering. between -1 and 1. The data reports the optimal silhouette width as 5, with 0.6496032, indicating some. There are several other clustering values with a reported similar quality.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/PAM.png" class="img-fluid figure-img"></p>
+<figcaption>PAM Silhouette Plot</figcaption>
+</figure>
+</div>
 <p>Due to the ambiguous clustering, we opted to perform more cluster analyses to determine if this was a good fit.</p>
 <p>MANHATTAN NOT EUCLEDIAN.</p>
 </section>
 <section id="linkage-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="linkage-analysis">5. Linkage Analysis</h2>
-<p>Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.</p>
+<p>Hierarchical cluster using Manhattan Distance as a measure. Chosen because it is more robust to outliers then Eucledian.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/dendrogram.png" class="img-fluid figure-img"></p>
 <figcaption>Dendrogram</figcaption>
 </figure>
 </div>
-<p>Something interesting top note is that for both cluster options they both cluster sample’s 15, 10, and 22 this could be because of …</p>
-<p>Cophenetic correlation coefficient 0.825 is pretty dang good. I’m going to remake this using ggplot, should be nicer.</p>
+<p>Cophenetic correlation coefficient ranges between -1 to 1, with a value of 1 indicating a perfect fit between the clusters and the data. A value of 0.798 means that the clustering is a fairly good fit. CCC can be used to compare between clustering methods.</p>
+<p>We can see which sample pairs are more similar to one another, then to other sample pairs, for example samples 5 and 8 are more similar to one another then either is too the rest of the yellow cluster. We can also see for example that sample 32 is most similar to the grouping of samples 31, 3, 10, and 29 then to any of those samples individually.</p>
 </section>
 <section id="cluster-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="cluster-analysis">6. Cluster Analysis</h2>
@@ -1836,7 +1842,8 @@ window.Quarto = {
 <figcaption>UMAP</figcaption>
 </figure>
 </div>
-<p>The UMAP projection shows clear overlap groupings….</p>
+<p>The UMAP PAM projection shows clear overlap groupings.</p>
+<p>Interesting to note samples 16 and 15 are in different clusters but are close together on the coordinate space when compared to the dendrogram above. This makes intuitive sense as these two samples have a moderate degree of similarity to one another but both also are only moderately similar to their assigned clusters. On a UMAP projection, distance between points within a cluster can be seen as conveying the points similarity with each other however comparing far away points/clusters to each other can lead to issues due to the universal distance not being directly scaled. UMAP projections arn’t ideal for making interpretations from but the visualisation of PAM clusters allows us to see that all 3 clusters are somewhat close to one another.</p>
 <p><strong>6.2 Fuzzy Analysis</strong></p>
 <p>As the fourth and final method of clustering, we performed a Fuzzy analysis.</p>
 <div class="cell">
@@ -1855,44 +1862,44 @@ window.Quarto = {
 <tr class="odd">
 <td style="text-align: left;">2</td>
 <td style="text-align: right;">0.3808610</td>
-<td style="text-align: right;">0.2839108</td>
 <td style="text-align: right;">0.3352282</td>
+<td style="text-align: right;">0.2839108</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">3</td>
 <td style="text-align: right;">0.3994904</td>
-<td style="text-align: right;">0.3025900</td>
 <td style="text-align: right;">0.2979197</td>
+<td style="text-align: right;">0.3025900</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">5</td>
 <td style="text-align: right;">0.3951292</td>
-<td style="text-align: right;">0.2562405</td>
 <td style="text-align: right;">0.3486303</td>
+<td style="text-align: right;">0.2562405</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">6</td>
 <td style="text-align: right;">0.3964214</td>
-<td style="text-align: right;">0.3030350</td>
 <td style="text-align: right;">0.3005436</td>
+<td style="text-align: right;">0.3030350</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">8</td>
 <td style="text-align: right;">0.3548860</td>
-<td style="text-align: right;">0.2434897</td>
 <td style="text-align: right;">0.4016243</td>
+<td style="text-align: right;">0.2434897</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">9</td>
 <td style="text-align: right;">0.3448716</td>
-<td style="text-align: right;">0.2596851</td>
 <td style="text-align: right;">0.3954432</td>
+<td style="text-align: right;">0.2596851</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10</td>
 <td style="text-align: right;">0.3987019</td>
-<td style="text-align: right;">0.2584034</td>
 <td style="text-align: right;">0.3428947</td>
+<td style="text-align: right;">0.2584034</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">11</td>
@@ -1903,110 +1910,110 @@ window.Quarto = {
 <tr class="odd">
 <td style="text-align: left;">12</td>
 <td style="text-align: right;">0.4590163</td>
-<td style="text-align: right;">0.3743813</td>
 <td style="text-align: right;">0.1666023</td>
+<td style="text-align: right;">0.3743813</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">15</td>
 <td style="text-align: right;">0.4064680</td>
-<td style="text-align: right;">0.3074530</td>
 <td style="text-align: right;">0.2860789</td>
+<td style="text-align: right;">0.3074530</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">16</td>
 <td style="text-align: right;">0.3951507</td>
-<td style="text-align: right;">0.2462246</td>
 <td style="text-align: right;">0.3586247</td>
+<td style="text-align: right;">0.2462246</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">18</td>
 <td style="text-align: right;">0.2977457</td>
-<td style="text-align: right;">0.4322926</td>
 <td style="text-align: right;">0.2699617</td>
+<td style="text-align: right;">0.4322926</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">20</td>
 <td style="text-align: right;">0.4236822</td>
-<td style="text-align: right;">0.3502296</td>
 <td style="text-align: right;">0.2260882</td>
+<td style="text-align: right;">0.3502296</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">23</td>
 <td style="text-align: right;">0.4050991</td>
-<td style="text-align: right;">0.2507065</td>
 <td style="text-align: right;">0.3441944</td>
+<td style="text-align: right;">0.2507065</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">24</td>
 <td style="text-align: right;">0.3767881</td>
-<td style="text-align: right;">0.3403890</td>
 <td style="text-align: right;">0.2828230</td>
+<td style="text-align: right;">0.3403890</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">26</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">27</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">29</td>
 <td style="text-align: right;">0.3759377</td>
-<td style="text-align: right;">0.2859738</td>
 <td style="text-align: right;">0.3380885</td>
+<td style="text-align: right;">0.2859738</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">30</td>
 <td style="text-align: right;">0.3446866</td>
-<td style="text-align: right;">0.3314023</td>
 <td style="text-align: right;">0.3239112</td>
+<td style="text-align: right;">0.3314023</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">31</td>
 <td style="text-align: right;">0.3267719</td>
-<td style="text-align: right;">0.3017146</td>
 <td style="text-align: right;">0.3715135</td>
+<td style="text-align: right;">0.3017146</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">32</td>
 <td style="text-align: right;">0.3975712</td>
-<td style="text-align: right;">0.2877853</td>
 <td style="text-align: right;">0.3146435</td>
+<td style="text-align: right;">0.2877853</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">33</td>
 <td style="text-align: right;">0.3103118</td>
-<td style="text-align: right;">0.3632485</td>
 <td style="text-align: right;">0.3264398</td>
+<td style="text-align: right;">0.3632485</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">34</td>
 <td style="text-align: right;">0.3529295</td>
-<td style="text-align: right;">0.3328316</td>
 <td style="text-align: right;">0.3142389</td>
+<td style="text-align: right;">0.3328316</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">35</td>
 <td style="text-align: right;">0.3675679</td>
-<td style="text-align: right;">0.3728005</td>
 <td style="text-align: right;">0.2596316</td>
+<td style="text-align: right;">0.3728005</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">36</td>
 <td style="text-align: right;">0.4021137</td>
-<td style="text-align: right;">0.3029690</td>
 <td style="text-align: right;">0.2949173</td>
+<td style="text-align: right;">0.3029690</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">37</td>
 <td style="text-align: right;">0.3269203</td>
-<td style="text-align: right;">0.4374294</td>
 <td style="text-align: right;">0.2356503</td>
+<td style="text-align: right;">0.4374294</td>
 </tr>
 </tbody>
 </table>
