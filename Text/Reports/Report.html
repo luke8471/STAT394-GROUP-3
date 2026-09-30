@@ -121,38 +121,10 @@ window.Quarto = {
 
 
 <p><em>Gaia Smith &amp; Alice Thompson</em></p>
-<section id="abstract" class="level2">
-<h2 class="anchored" data-anchor-id="abstract">1. Abstract</h2>
-<p>General Background</p>
-<p>A shipwreck off the coast of Gela, Italy has been the source of a historical find of 40 orichalcum ingots. A scarce, fabled metal that has the modern equivalent of brass.</p>
-<p>sPECIFIC BACKGROUND</p>
-<p>Knowledge gap</p>
-<p>Large groupings and finds from one source are very hard to come by: lots of data in one place.</p>
-<p>Here we show…</p>
-<p>After performing a trilogy of cluster analyses, we show that were the clusters accurate were we able to determine a good fit?</p>
-<p>Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.</p>
-<p>Results</p>
-<p>Implications</p>
-<p>They had different origins. Can possibly be linked to geological locations by ore analysis, collected from different regions, etc.</p>
-<p>Why did they wait to do further testing that would provide more information on the composition and provide more accurate data?</p>
-<p>The groupings from the <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> study appears to have been manipulated without compensation of the . By taking the log at any point in this anylysis without standardisation would have resulted in multiple zero-values and artificially inflating</p>
-<p>Is the cluster analysis consistent with different distances and linkages?</p>
-<p>This is the largest sample of its kind however it is still not a large sample.</p>
-<p>For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as…</p>
-<p>Why do we care about the problem and the results?</p>
-<p>Because it could lead to further impressive archaeological finds</p>
-<p>What is the scope of the work and what problem is this paper trying to solve?</p>
-<p>Determine whether or not any of the ingots could be grouped. The scope is mapping orichalcum origin.</p>
-<p>What was done to solve this problem?</p>
-<p>More destructive testing to determine trace elements.</p>
-<p>What implications does the answer imply?</p>
-<p>one of our hypotheses questions is whether our data follows a multivariate normal distribution. probably some hypotheses around the clusterings.</p>
-<hr>
-</section>
 <section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">2. Introduction</h2>
-<p><strong>2.1 Significance of this archaeological find and Gela</strong></p>
-<p>The historic Gela, Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port <span class="citation" data-cites="Angelucci2026">(<a href="#ref-Angelucci2026" role="doc-biblioref">Angelucci, 2026</a>)</span>. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled to and from Gela for centuries.</p>
+<h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
+<p><strong>1.1 Significance of this archaeological find and Gela</strong></p>
+<p>The historic Gela, in Sicily Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port <span class="citation" data-cites="Angelucci2026">(<a href="#ref-Angelucci2026" role="doc-biblioref">Angelucci, 2026</a>)</span>. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled, and sunk, around Gela for centuries.</p>
 <p>A shipwreck off the coast continues to provide significant archaeological finds to this day. This discovery dates back to 1988 <span class="citation" data-cites="nuttersworldGelaWreck">(<a href="#ref-nuttersworldGelaWreck" role="doc-biblioref">Nutter, 2025</a>)</span>, where it was first stumbled upon by divers near Bulala beach. We are exploring one of the most significant finds from this wreck; A veritable hoard of the fabled metal, Orichalcum.</p>
 <p>The discovery of 40 orichalcum ingots in 2017 was a monumental one. There had never been a discovery of this quantity in one place anywhere in the world. There was also evidence of consistent casting processes, with overall similarities suggesting a rudimentary mold production. This was likely a hole dug in the ground and molten alloy was poured in the indentation to solidify. The morphology of the found ingots suggested cast-diverse technologies.</p>
 <p><strong>2.2 What is orichalcum?</strong></p>
@@ -161,10 +133,10 @@ window.Quarto = {
 <p>In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer <span class="citation" data-cites="Caponetti2017-sc">(<a href="#ref-Caponetti2017-sc" role="doc-biblioref">Caponetti, Armetta, Martino, et al., 2017</a>)</span> was used. The subject paper includes that data and further investigates the composition of each ingot using more invasive and refined elemental analysis.</p>
 <p>For further testing, and the subject of this paper, <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> chose to test elemental compositions using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots. ICP-OES was used to obtain measures for the primary elements above 1000 parts per million (PPM) while ICP-MS was used for the more difficult to measure trace elements below 1000 PPM. Both techniques are destructive and require the extraction of ~20mg of the ingots by drilling a micro-well into each ingot to obtain material for testing.</p>
 <p><strong>2.4 Scope of This Multivariate Analysis</strong></p>
-<p>Aims/hypothesis/ish</p>
 <p>This multivariate analysis includes manipulations of the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical characteristics of the ingots or any correlation analysis of those variables.</p>
 <p>We have chosen to reuse data because the orichalcum ingot archaeological find near Gela, Italy is a literally one of a kind find, we do not have the resources or the belief that it would be ethical to conduct excessive destructive testing on artifacts that may never be found again. Therefore, we have used <span class="citation" data-cites="Caponetti2017-sc">Caponetti, Armetta, Martino, et al. (<a href="#ref-Caponetti2017-sc" role="doc-biblioref">2017</a>)</span> ICP-OES and ICP-MS data of 38 orichalcum ingots.</p>
-<p>We will be excluding the Cu/Zn ratio variable as we chose to analyse the linkage of all elements between each other, not between Cu/Zn ratios and other elements</p>
+<p>Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from chemometric elemental analysis of 38 orichalcum ingots to determine if there is coherent clustering between samples that are consistent with different distances and linkages.</p>
+<p>We will be excluding the Cu/Zn ratio variable in the source table as we chose to analyse the linkage of all elements between each other, not between Cu/Zn ratios and other elements</p>
 </section>
 <section id="eda" class="level2">
 <h2 class="anchored" data-anchor-id="eda">3. EDA</h2>
@@ -1140,6 +1112,9 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
+</div>
+<p>Using R, summary statistics (@sum-stat) were created from table 1 and initial observations were made. We found that concentrations for each element varied greatly in range and skew, where skew in this case is distance between mean and median.</p>
+<div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Summary Statistics of Table 1</caption>
@@ -1426,7 +1401,6 @@ window.Quarto = {
 </table>
 </div>
 </div>
-<p>Using R, summary statistics (table 2) were created from table 1 and initial observations were made. We found that concentrations for each element varied greatly in range and skew, where skew in this case is distance between mean and median.</p>
 <p>The elements Sb, As, Sn, Li, Sr, and Ba all show strong positive skews, numerous other elements show weaker skews. Cu and Zn are roughly symmetric. Ranges vary greatly with many magnitude differences between the ‘percentage based’ vs the ‘ppm’ elements (where percentage is ~10^4 more then ppm of the same value assuming the 2 measurement techniques are equally accurate) and between trace element ranges (Rb having a minimum of 0.03ppm while Ni has a maximum of 683ppm), and between the different samples vs same element (I.e. Sr has a minimum of 0.08ppm and a maximum of 15.10ppm which is over 180 times move than the minimum) these characteristics hint that a data transformation may be appropriate to increase interpretability.</p>
 <p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> observed that samples S13, S25, and S38 were potential outliers due to various unusual element concentrations which we also noted. We also found that S22, S18, and S17 appear to have high Sr content (15.1ppm, 11.8ppm, 7.27ppm respectively, compared to a median of 0.42ppm) while S28, S22, and S19 have high Ba content (4.59ppm, 3.61ppm, 3.37ppm respectively, compared to a median of 0.28ppm).</p>
 <p>Data clustering analysis may find that these groupings of samples cluster together in similar groups, furthering <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span>, who claimed that trace element analysis could be used to differentiate providence of orichalcum alloy production.</p>
@@ -1861,8 +1835,15 @@ window.Quarto = {
 </div>
 <p>Something interesting top note is that for both cluster options they both cluster sample’s 15, 10, and 22 this could be because of …</p>
 <p>Cophenetic correlation coefficient 0.825 is pretty dang good. I’m going to remake this using ggplot, should be nicer.</p>
+<p><strong>3.4 UMAP Projection</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/UMAP.png" class="img-fluid figure-img"></p>
+<figcaption>UMAP</figcaption>
+</figure>
+</div>
 <p><strong>3.4 Fuzzy Analysis</strong></p>
-<p>As the third and final method of clustering, we performed a Fuzzy analysis.</p>
+<p>As the fourth and final method of clustering, we performed a Fuzzy analysis.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1878,45 +1859,45 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">0.3830127</td>
-<td style="text-align: right;">0.3314725</td>
-<td style="text-align: right;">0.2855148</td>
+<td style="text-align: right;">0.3808610</td>
+<td style="text-align: right;">0.3352282</td>
+<td style="text-align: right;">0.2839108</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">0.4172427</td>
-<td style="text-align: right;">0.2667210</td>
-<td style="text-align: right;">0.3160363</td>
+<td style="text-align: right;">0.3994904</td>
+<td style="text-align: right;">0.2979197</td>
+<td style="text-align: right;">0.3025900</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">5</td>
-<td style="text-align: right;">0.4369832</td>
-<td style="text-align: right;">0.2796341</td>
-<td style="text-align: right;">0.2833827</td>
+<td style="text-align: right;">0.3951292</td>
+<td style="text-align: right;">0.3486303</td>
+<td style="text-align: right;">0.2562405</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">6</td>
-<td style="text-align: right;">0.3556217</td>
-<td style="text-align: right;">0.3725317</td>
-<td style="text-align: right;">0.2718466</td>
+<td style="text-align: right;">0.3964214</td>
+<td style="text-align: right;">0.3005436</td>
+<td style="text-align: right;">0.3030350</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">8</td>
-<td style="text-align: right;">0.4476196</td>
-<td style="text-align: right;">0.2452655</td>
-<td style="text-align: right;">0.3071149</td>
+<td style="text-align: right;">0.3548860</td>
+<td style="text-align: right;">0.4016243</td>
+<td style="text-align: right;">0.2434897</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">9</td>
-<td style="text-align: right;">0.3803899</td>
-<td style="text-align: right;">0.3331800</td>
-<td style="text-align: right;">0.2864301</td>
+<td style="text-align: right;">0.3448716</td>
+<td style="text-align: right;">0.3954432</td>
+<td style="text-align: right;">0.2596851</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10</td>
-<td style="text-align: right;">0.4337303</td>
-<td style="text-align: right;">0.2851640</td>
-<td style="text-align: right;">0.2811057</td>
+<td style="text-align: right;">0.3987019</td>
+<td style="text-align: right;">0.3428947</td>
+<td style="text-align: right;">0.2584034</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">11</td>
@@ -1926,51 +1907,51 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">12</td>
-<td style="text-align: right;">0.4114799</td>
-<td style="text-align: right;">0.2529103</td>
-<td style="text-align: right;">0.3356098</td>
+<td style="text-align: right;">0.4590163</td>
+<td style="text-align: right;">0.1666023</td>
+<td style="text-align: right;">0.3743813</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">15</td>
-<td style="text-align: right;">0.3714748</td>
-<td style="text-align: right;">0.3475411</td>
-<td style="text-align: right;">0.2809841</td>
+<td style="text-align: right;">0.4064680</td>
+<td style="text-align: right;">0.2860789</td>
+<td style="text-align: right;">0.3074530</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">16</td>
-<td style="text-align: right;">0.4279359</td>
-<td style="text-align: right;">0.3054105</td>
-<td style="text-align: right;">0.2666536</td>
+<td style="text-align: right;">0.3951507</td>
+<td style="text-align: right;">0.3586247</td>
+<td style="text-align: right;">0.2462246</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">18</td>
-<td style="text-align: right;">0.2980514</td>
-<td style="text-align: right;">0.2692122</td>
-<td style="text-align: right;">0.4327364</td>
+<td style="text-align: right;">0.2977457</td>
+<td style="text-align: right;">0.2699617</td>
+<td style="text-align: right;">0.4322926</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">20</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.4236822</td>
+<td style="text-align: right;">0.2260882</td>
+<td style="text-align: right;">0.3502296</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">23</td>
-<td style="text-align: right;">0.4681284</td>
-<td style="text-align: right;">0.2421578</td>
-<td style="text-align: right;">0.2897138</td>
+<td style="text-align: right;">0.4050991</td>
+<td style="text-align: right;">0.3441944</td>
+<td style="text-align: right;">0.2507065</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">24</td>
-<td style="text-align: right;">0.3019973</td>
-<td style="text-align: right;">0.4251794</td>
-<td style="text-align: right;">0.2728233</td>
+<td style="text-align: right;">0.3767881</td>
+<td style="text-align: right;">0.2828230</td>
+<td style="text-align: right;">0.3403890</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">26</td>
-<td style="text-align: right;">0.4139329</td>
-<td style="text-align: right;">0.2865142</td>
-<td style="text-align: right;">0.2995528</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">27</td>
@@ -1980,78 +1961,67 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td style="text-align: left;">29</td>
-<td style="text-align: right;">0.4075424</td>
-<td style="text-align: right;">0.2824422</td>
-<td style="text-align: right;">0.3100154</td>
+<td style="text-align: right;">0.3759377</td>
+<td style="text-align: right;">0.3380885</td>
+<td style="text-align: right;">0.2859738</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">30</td>
-<td style="text-align: right;">0.3299705</td>
-<td style="text-align: right;">0.3527762</td>
-<td style="text-align: right;">0.3172533</td>
+<td style="text-align: right;">0.3446866</td>
+<td style="text-align: right;">0.3239112</td>
+<td style="text-align: right;">0.3314023</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">31</td>
-<td style="text-align: right;">0.3598310</td>
-<td style="text-align: right;">0.3079303</td>
-<td style="text-align: right;">0.3322387</td>
+<td style="text-align: right;">0.3267719</td>
+<td style="text-align: right;">0.3715135</td>
+<td style="text-align: right;">0.3017146</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">32</td>
-<td style="text-align: right;">0.3967004</td>
-<td style="text-align: right;">0.3161447</td>
-<td style="text-align: right;">0.2871549</td>
+<td style="text-align: right;">0.3975712</td>
+<td style="text-align: right;">0.3146435</td>
+<td style="text-align: right;">0.2877853</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">33</td>
-<td style="text-align: right;">0.2964350</td>
-<td style="text-align: right;">0.3565606</td>
-<td style="text-align: right;">0.3470044</td>
+<td style="text-align: right;">0.3103118</td>
+<td style="text-align: right;">0.3264398</td>
+<td style="text-align: right;">0.3632485</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">34</td>
-<td style="text-align: right;">0.3204017</td>
-<td style="text-align: right;">0.3774423</td>
-<td style="text-align: right;">0.3021561</td>
+<td style="text-align: right;">0.3529295</td>
+<td style="text-align: right;">0.3142389</td>
+<td style="text-align: right;">0.3328316</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">35</td>
-<td style="text-align: right;">0.3025122</td>
-<td style="text-align: right;">0.3906691</td>
-<td style="text-align: right;">0.3068187</td>
+<td style="text-align: right;">0.3675679</td>
+<td style="text-align: right;">0.2596316</td>
+<td style="text-align: right;">0.3728005</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">36</td>
-<td style="text-align: right;">0.4013054</td>
-<td style="text-align: right;">0.2963346</td>
-<td style="text-align: right;">0.3023600</td>
+<td style="text-align: right;">0.4021137</td>
+<td style="text-align: right;">0.2949173</td>
+<td style="text-align: right;">0.3029690</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">37</td>
-<td style="text-align: right;">0.3197456</td>
-<td style="text-align: right;">0.2524251</td>
-<td style="text-align: right;">0.4278293</td>
+<td style="text-align: right;">0.3269203</td>
+<td style="text-align: right;">0.2356503</td>
+<td style="text-align: right;">0.4374294</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>The default value alpha=1 has been set </code></pre>
 </div>
-<div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Report_files/figure-html/fuzzy-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Fuzzy.png" class="img-fluid figure-img"></p>
+<figcaption>Fuzzy Membership Certainty</figcaption>
 </figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Report_files/figure-html/fuzzy-2.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
 </div>
 <p>The graph of Fuzzy Membership Certainty shows that the majority of our observations are near ambiguous in there assigned groupings.</p>
 <p>Picks by median centrality, determines closest group and percentage it belongs in said group.</p>
@@ -2059,6 +2029,9 @@ window.Quarto = {
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">5. Results</h2>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>The default value alpha=1 has been set </code></pre>
+</div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Comparison of Clustering Methods</caption>
@@ -2114,9 +2087,9 @@ window.Quarto = {
 <td style="text-align: left;">Fuzzy Analysis</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">8.667</td>
-<td style="text-align: right;">16</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">-0.019</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.061</td>
 <td style="text-align: right;">NA</td>
 </tr>
 </tbody>

@@ -47,6 +47,8 @@ library(gt)
 library(factoextra)
 library(umap)
 library(moments)
+library(mclust)
+library(reshape2)
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -66,63 +68,11 @@ ingots <- pdftools::pdf_text(tmp)
 
 *Gaia Smith & Alice Thompson*
 
-## 1. Abstract
+## 1. Introduction
 
-General Background
+**1.1 Significance of this archaeological find and Gela**
 
-A shipwreck off the coast of Gela, Italy has been the source of a historical find of 40 orichalcum ingots. A scarce, fabled metal that has the modern equivalent of brass.
-
-sPECIFIC BACKGROUND
-
-Knowledge gap
-
-Large groupings and finds from one source are very hard to come by: lots of data in one place.
-
-Here we show...
-
-After performing a trilogy of cluster analyses, we show that were the clusters accurate were we able to determine a good fit?
-
-Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from the chemometric elemental analysis of 38 orichalcum ingots that were discovered in a 6th Century BC shipwreck off the coast Gela, Italy in 2015.
-
-Results
-
-Implications
-
-They had different origins. Can possibly be linked to geological locations by ore analysis, collected from different regions, etc.
-
-Why did they wait to do further testing that would provide more information on the composition and provide more accurate data?
-
-The groupings from the @Caponetti2017-fd study appears to have been manipulated without compensation of the . By taking the log at any point in this anylysis without standardisation would have resulted in multiple zero-values and artificially inflating
-
-Is the cluster analysis consistent with different distances and linkages?
-
-This is the largest sample of its kind however it is still not a large sample.
-
-For the analysis of our report we will be considering all the main components and trace element concentrations excluding the Cu/Zn ratio as...
-
-Why do we care about the problem and the results?
-
-Because it could lead to further impressive archaeological finds
-
-What is the scope of the work and what problem is this paper trying to solve?
-
-Determine whether or not any of the ingots could be grouped. The scope is mapping orichalcum origin.
-
-What was done to solve this problem?
-
-More destructive testing to determine trace elements.
-
-What implications does the answer imply?
-
-one of our hypotheses questions is whether our data follows a multivariate normal distribution. probably some hypotheses around the clusterings.
-
-------------------------------------------------------------------------
-
-## 2. Introduction
-
-**2.1 Significance of this archaeological find and Gela**
-
-The historic Gela, Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port [@Angelucci2026]. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled to and from Gela for centuries.
+The historic Gela, in Sicily Italy has been a treasure trove of archaeological finds for generations. This ancient city was strategically positioned at the crux of major maritime trade routes, which made it a populous and successful trading port [@Angelucci2026]. Consequently, ships looking to trade goods like pottery, metals, and grain have traveled, and sunk, around Gela for centuries.
 
 A shipwreck off the coast continues to provide significant archaeological finds to this day. This discovery dates back to 1988 [@nuttersworldGelaWreck], where it was first stumbled upon by divers near Bulala beach. We are exploring one of the most significant finds from this wreck; A veritable hoard of the fabled metal, Orichalcum.
 
@@ -140,13 +90,13 @@ For further testing, and the subject of this paper, @Caponetti2017-fd chose to t
 
 **2.4 Scope of This Multivariate Analysis**
 
-Aims/hypothesis/ish
-
 This multivariate analysis includes manipulations of the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical characteristics of the ingots or any correlation analysis of those variables.
 
 We have chosen to reuse data because the orichalcum ingot archaeological find near Gela, Italy is a literally one of a kind find, we do not have the resources or the belief that it would be ethical to conduct excessive destructive testing on artifacts that may never be found again. Therefore, we have used @Caponetti2017-sc ICP-OES and ICP-MS data of 38 orichalcum ingots.
 
-We will be excluding the Cu/Zn ratio variable as we chose to analyse the linkage of all elements between each other, not between Cu/Zn ratios and other elements
+Our goal is to create and present a comprehensive, comprehensible, reproducible, and replicable multivariate analysis of the data obtained from chemometric elemental analysis of 38 orichalcum ingots to determine if there is coherent clustering between samples that are consistent with different distances and linkages.
+
+We will be excluding the Cu/Zn ratio variable in the source table as we chose to analyse the linkage of all elements between each other, not between Cu/Zn ratios and other elements
 
 ## 3. EDA
 
@@ -157,6 +107,7 @@ We performed a simple summary of the data in table 1 and created a box plot to v
 ```{r extracting the table, echo=FALSE}
 #| fig-width: 10
 #| fig-height: 6
+#| label: raw-data
 
 ##  Extracting the table from the pdf: - tabulapdf package codes:
 ingots2 <- suppressMessages(extract_tables(url, pages=3))
@@ -220,6 +171,15 @@ knitr::kable(
   concentrations obtained by ICP-OES & ICP-MS techniques", 
   format = "pipe")
 
+```
+
+Using R, summary statistics (\@sum-stat) were created from table 1 and initial observations were made. We found that concentrations for each element varied greatly in range and skew, where skew in this case is distance between mean and median.
+
+```{r, Summary Statistics ,echo = FALSE}
+#| fig-width: 10
+#| fig-height: 6
+#| label: sum-stat
+
 Element_order <- colnames(as.data.frame(Ingots_F_no[, -1]))
 
 Ingots_sum <- Ingots_F_no[, -1] |>
@@ -252,8 +212,6 @@ knitr::kable(
   format = "pipe")
 
 ```
-
-Using R, summary statistics (table 2) were created from table 1 and initial observations were made. We found that concentrations for each element varied greatly in range and skew, where skew in this case is distance between mean and median.
 
 The elements Sb, As, Sn, Li, Sr, and Ba all show strong positive skews, numerous other elements show weaker skews. Cu and Zn are roughly symmetric. Ranges vary greatly with many magnitude differences between the 'percentage based' vs the 'ppm' elements (where percentage is \~10\^4 more then ppm of the same value assuming the 2 measurement techniques are equally accurate) and between trace element ranges (Rb having a minimum of 0.03ppm while Ni has a maximum of 683ppm), and between the different samples vs same element (I.e. Sr has a minimum of 0.08ppm and a maximum of 15.10ppm which is over 180 times move than the minimum) these characteristics hint that a data transformation may be appropriate to increase interpretability.
 
@@ -362,7 +320,7 @@ Ni (nickel) wen from widest to having an interquartile range smaller then the av
 
 ```{r, echo = FALSE}
 
-HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
+HZoriginal <- MVN::mvn(data = logIngots1, mvn_test = "hz")
 
 hz_table <- HZoriginal$multivariate_normality
 
@@ -470,7 +428,7 @@ What is after we have "cleaned" up the outliers our \|z\| \> 2.5 rule removes sa
 
 #HZ test on OG data, which also rejects null.
 
-HZoriginal <- mvn(data = Ingots_F_no, mvn_test = "hz")
+HZoriginal <- MVN::mvn(data = Ingots_F_no, mvn_test = "hz")
 cat("Henze_Zirkler Test Results:\n")
 print(HZoriginal$multivariate_normality)
 
@@ -484,7 +442,7 @@ print(HZoriginal$multivariate_normality)
 #  note         = "Accessed: 2026-9-15"
 #}
 
-HZ <- mvn(data = Ingots_clean, mvn_test = "hz")
+HZ <- MVN::mvn(data = Ingots_clean, mvn_test = "hz")
 
 cat("Henze_Zirkler Test Results:\n")
 print(HZ$multivariate_normality)
@@ -593,7 +551,7 @@ Due to the ambiguous clustering, we opted to perform more cluster analyses to de
 
 MANHATTAN NOT EUCLEDIAN.
 
-**3.3 Cluster Analysis**
+## 5. Linkage Analysis
 
 Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.
 
@@ -603,16 +561,21 @@ Something interesting top note is that for both cluster options they both cluste
 
 Cophenetic correlation coefficient 0.825 is pretty dang good. I'm going to remake this using ggplot, should be nicer.
 
-**3.4 Fuzzy Analysis**
+## 6. Cluster Analysis
 
-As the third and final method of clustering, we performed a Fuzzy analysis.
+##### **6.1 UMAP Projection**
 
-```{r fuzzy, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
+Given the low cophenetic correlation from the linkage analysis and the ambiguous silhouette width associated with the chosen k = 3 from the PAM analysis, we performed a UMAP projection to better visualise the clustering.
 
-#k-medoids for Fuzzy
+![UMAP](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/UMAP.png)
 
+The UMAP projection shows clear overlap groupings....
+
+**6.2 Fuzzy Analysis**
+
+As the fourth and final method of clustering, we performed a Fuzzy analysis.
+
+```{r, echo = FALSE}
 Fuzzy_k <- FKM.med(scaled, k = 3, m = 2)
 
 #silhouettes
@@ -622,61 +585,15 @@ knitr::kable(Fuzzy_k$U,
              caption = "Fuzzy K Silhouettes Clusterings",
              format = "pipe")
 
-Fuzzy_Sil <- SIL.F(scaled, Fuzzy_k$U)
-
-Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
-
-d <- dist(scaled)
-
-sil_each <- silhouette(Fuzzy_Clust, d)
-
-ggplot(LDA_K,
-       aes(k, avg_silhouette)) +
-  geom_line() +
-  geom_point(size = 3) +
-  theme_minimal() +
-  labs(
-    title = "Average Silhouette Width by Number of Clusters",
-    x = "Number of Clusters",
-    y = "Average Silhouette Width"
-    )
-
-certainty <- apply(Fuzzy_k$U, 1, max)
-
-ggplot(
-  data.frame(
-    Obs = 1:length(certainty),
-    Certainty = certainty,
-    Cluster = factor(Fuzzy_Clust)
-  ),
-  aes(Obs, Certainty, colour = Cluster)
-  ) +
-  geom_hline(
-    yintercept = 1/3,
-    linetype = "dashed",
-    colour = "red"
-  ) +
-  scale_colour_manual( values = c("#648FFF", "#DC267F", "#FFB000")
-  )+
-  labs(
-    caption = "Red dashed line indicates complete ambiguity (1/k)"
-    ) +
-  geom_point(size = 6) +
-  theme_minimal() +
-  labs(
-    title = "Fuzzy Membership Certainty",
-    y = "Maximum Membership"
-    )
-
-
 ```
+
+![Fuzzy Membership Certainty](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Fuzzy.png)
 
 The graph of Fuzzy Membership Certainty shows that the majority of our observations are near ambiguous in there assigned groupings.
 
 Picks by median centrality, determines closest group and percentage it belongs in said group.
 
 ## 5. Results
-
 
 ```{r, echo = FALSE}
 #creating tables to visually compare results from PAM, H cluster, UMAP, Fuzzy.
@@ -710,7 +627,9 @@ umap_clust <- PamMan$clustering
 
 # Fuzzy
 #Fuzzy_Clust
+Fuzzy_Sil <- SIL.F(scaled, Fuzzy_k$U)
 
+Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
 fuzzy_size <- table(Fuzzy_Clust)
 fuzzy_avg_sil <- mean(silhouette(Fuzzy_Clust, d)[, "sil_width"])
 fuzzy_clust <- Fuzzy_Clust
@@ -771,12 +690,7 @@ comp_table |>
 
 ```
 
-
 ![ARI Heat Map](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/ARI_heatmap.png)
-
-
-
-
 
 @Caponetti2017-fd determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at \~20mg.
 
