@@ -71,10 +71,6 @@ ingots <- pdftools::pdf_text(tmp)
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/ingots all 3.jpg)
 
 
-##
-![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/ingots all 1.jpg)
-
-
 :::{.center}
 # 2. EDA
 :::
@@ -322,7 +318,7 @@ logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 
 ```
 
-![Notchboxnorm](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
 
 ## 2.4 Henze-Zirkler Test For Multivariate Normality 
 
@@ -477,7 +473,7 @@ print(HZ$multivariate_normality)
 # 3. LDA
 :::
 
-## 3.1 PAM
+## 3.1  PAM
 
 ```{r LDA, echo=FALSE}
 #| fig-width: 10
@@ -545,7 +541,7 @@ fviz_silhouette(pam)+
 ```
 
 
-## 3.1 PAM
+## 3.1  PAM
 ```{r pam, echo=FALSE}
 top_pam <- pam_sum_tab |>
   arrange(desc(Avg_Silhouette)) |>
@@ -559,10 +555,63 @@ knitr::kable(
 ```
 
 
-## 3.2 Cluster Analysis using Manhattan Distance
+## 3.2  Cluster Analysis using Manhattan Distance
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/dendrogram.png)
 
-## 3.3 Fuzzy Analysis
+
+## 3.2  Cluster Analysis using Manhattan Distance
+```{r UMAP, echo=FALSE}
+## Trying stuff - Note Gaia couldn't get this to work ALICE
+
+k <- umap(scaled)
+PamMan <- pam(scaled, k = 3, metric = "manhattan")
+
+UMAP_plot <- data.frame(
+  UMAP1 = k$layout[,1],
+  UMAP2 = k$layout[,2],
+  Cluster = factor(PamMan$cluster)
+  )
+
+ggplot(UMAP_plot,
+       aes(UMAP1, UMAP2, colour = Cluster)
+       ) +
+  geom_point(size = 5) +
+  stat_ellipse(level = 0.95) +
+  scale_colour_manual( values = c("#648FFF", "#DC267F", "#FFB000")
+                       )+
+  labs(
+    title = "UMAP Projection",
+    subtitle = "Manhattan Distance | PAM clustering | k = 3"
+    )
+
+```
+
+## 3.2  Cluster Analysis using Manhattan Distance
+```{r UMAP2, echo=FALSE}
+UMAP <- umap(scaled, metric = "manhattan")
+
+plotPamMan <- data.frame(
+  UMAP1 = UMAP$layout[,1],
+  UMAP2 = UMAP$layout[,2],
+  Cluster = factor(PamMan$cluster))
+
+ggplot(plotPamMan, 
+       aes(UMAP1, UMAP2, color = cluster, size = medoid)) +
+  geom_point(size = 5) +
+  theme_classic() +
+  labs(title = "UMAP Projection",
+       subtitle = "Manhattan Distance | PAM clustering | k = 3"
+       )
+          
+               
+```
+
+
+
+## 3.3  Fuzzy Analysis
+::::{.columns}
+
+:::{.column width="50%"}
 ```{r fuzzy, echo=FALSE}
 #| fig-width: 10
 #| fig-height: 6
@@ -574,10 +623,12 @@ Fuzzy_k <- FKM.med(scaled, k = 3, m = 2)
 #silhouettes
 
 #Table of Fuzzy_K$U:
-knitr::kable(Fuzzy_k$U,
+fuz1 <- suppressMessages(knitr::kable(Fuzzy_k$U[1:13,],
              caption = "Fuzzy K Silhouettes Clusterings",
              format = "pipe")%>%
-  kable_styling(font_size = 12)
+  kable_styling(font_size = 20))
+
+fuz1
 
 Fuzzy_Sil <- SIL.F(scaled, Fuzzy_k$U)
 
@@ -587,9 +638,23 @@ d <- dist(scaled)
 
 sil_each <- silhouette(Fuzzy_Clust, d)
 ```
+:::
+:::{.column width="50%"}
+```{r fu, echo=FALSE}
+#Table of Fuzzy_K$U:
+fuz2 <- suppressMessages(knitr::kable(Fuzzy_k$U[14:26,],
+             caption = "Fuzzy K Silhouettes Clusterings",
+             format = "pipe")%>%
+  kable_styling(font_size = 20))
 
-## 3.3 Fuzzy Analysis
-```{r fuz, echo=FALSE}
+fuz2
+
+```
+:::
+::::
+
+## 3.3  Fuzzy Analysis
+```{r fuz1, echo=FALSE}
 ggplot(LDA_K,
        aes(k, avg_silhouette)) +
   geom_line() +
@@ -602,7 +667,11 @@ ggplot(LDA_K,
     )
 
 certainty <- apply(Fuzzy_k$U, 1, max)
+```
 
+
+## 3.3  Fuzzy Analysis
+```{r fuz2, echo=FALSE}
 ggplot(
   data.frame(
     Obs = 1:length(certainty),
