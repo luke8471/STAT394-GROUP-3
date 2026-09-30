@@ -316,7 +316,7 @@ knitr::kable(
 ## 2.2  initial QQ-plots
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1d.png) 
 
-## 2.3 Perfroming Log Transformations
+## 2.3 Performing Log Transformations
 
 ```{r, echo = FALSE}
 #| fig-width: 10
@@ -345,7 +345,7 @@ $$
 \text{ The data follows a multivariate normal distribution},
 \\
 \mathcal{H}_1 :& 
-\text{ The data do not follow a multivariate normal distribution}.
+\text{ The data does not follow a multivariate normal distribution}.
 \end{aligned}
 $$
 :::
