@@ -500,19 +500,11 @@ Conducting the Henze Zirkler test for both the un-transformed data (p-value \<0.
 
 Many of the element to element correlations change in degree and direction between the raw data and log(x + 1)-transformed data correlation matrices. Because Pearson correlations are not robust to changes due to outliers/heavily skewed data, we believe the transformed data correlation plot is a more accurate plot to make interpretations from.
 
-Simple observations include a strong-positive correlation between Sb-As, Fe-Co, Ag-Bi, V-Cr, Cr-Rb, Cu-Bi, Cu-Ag, Sb-Cd, all of these pairs have an above 0.8 correlation value. Compared to the positive, strong-negative correlation can be found between Cd-Sn at \~-0.8 correlation value, with a multiple pairs having a somewhat strong-negative correlation in the negative 0.7 to -0.8 range. Interestingly the elements needed to create orichalchum/brass do not have strong correlations with one another,
-
-IDK IF YOU WANT THIS -\> If specific measured amounts of the metals were chosen when alloying them together into brass we would likely find stronger correlations, as discussed by shand et al, the ore to create orichalcum is likely natural purified ore??? and thus containing many natural variations in elemental composistion?? idk
+Simple observations include a strong-positive correlation between Sb-As, Fe-Co, Ag-Bi, V-Cr, Cr-Rb, Cu-Bi, Cu-Ag, Sb-Cd, all of these pairs have an above 0.8 correlation value. Compared to the positive, strong-negative correlation can be found between Cd-Sn at \~-0.8 correlation value, with a multiple pairs having a somewhat strong-negative correlation in the negative 0.7 to -0.8 range. Interestingly the elements needed to create orichalchum/brass do not have strong correlations with one another.
 
 This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
 
 Given the uncertainty about multivariate normality and the presence of negative values in our transformed data, a linear data analysis was chosen over a primary component analysis.
-
-REVIEW STUFF BELOW (PRE - SOME DATA CHANGED)
-
-Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr is also strongly positively association in the data with the outlying samples removes.. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
-
-The transformation didn't just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co. This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
 
 ## 4. LDA
 
