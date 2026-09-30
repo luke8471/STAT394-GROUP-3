@@ -350,13 +350,11 @@ logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 
 ```
 
-![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png)
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png)
 
-The QQ-plot of the log($\mathcal x$ + 1) showed improvement overall.
+The QQ-plot of the log($\mathcal x$ + 1) showed slight improvement overall. Multiple trace elements which had big upper skews now follow the theoretical line better with As, V, and Cr in particular following the theoretical line better.
 
-Multiple trace elements (which had big upper skew) bnetter jeFWOjwfc
-
-As, V, Cr looking much better
+There is still evidence of some elements not following assumptions of normality with Sr being the most prominent example, however, after the log($\mathcal x$ + 1) transformation and considering the small sample size of the data set and most elements roughly following the line. We concluded that the assumption of normality would need further testing to evaluate, but appears to hold.
 
 ![Notch Boxplot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
 
