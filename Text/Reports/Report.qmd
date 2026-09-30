@@ -458,7 +458,7 @@ Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 
 ```
 
-What is after we have "cleaned" up the outliers our \|z\| \> 2.5 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al. set aside as their G4 group. (PUT OTHER SAMPLES THAT WERE REMOVED)
+What is after we have "cleaned" up the outliers our \|z\| \> 2.5 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al. set aside as their G4 group. Samples 7, 13 ,14 ,17, 19, 21, 22, and 28 were also removed using the same cut off.
 
 {should probably explain why cutting out 11 samples will be good for the rest of our analysis, something along the line of outliers, terrible samples and low sample quality}.
 
