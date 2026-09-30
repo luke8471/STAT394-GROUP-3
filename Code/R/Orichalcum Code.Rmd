@@ -939,16 +939,64 @@ UMAP_plot <- data.frame(
   )
 
 ggplot(UMAP_plot,
-       aes(UMAP1, UMAP2, colour = Cluster)
-       ) +
-  geom_point(size = 5) +
-  stat_ellipse(level = 0.95) +
-  scale_colour_manual( values = c("#648FFF", "#DC267F", "#FFB000")
-                       )+
+       aes(
+         UMAP1,
+         UMAP2,
+         colour = Cluster,
+         fill = Cluster
+         )
+       ) + 
+  stat_ellipse(
+    geom = "polygon",
+    alpha = 0.50,
+    colour = NA,
+    level = 0.95
+    ) +
+  geom_point(
+    size = 5,
+    alpha = 0.8
+    ) + 
+  scale_colour_manual(
+    values = c(
+      "1" = "#648FFF",
+      "2" = "#DC267F",
+      "3" = "#FFB000"
+      ) 
+    ) +
+  scale_fill_manual(
+    values = c(
+      "1" = "grey60",
+      "2" = "grey60",
+      "3" = "grey60"
+      )
+    ) +
   labs(
     title = "UMAP Projection",
-    subtitle = "Manhattan Distance | PAM clustering | k = 3"
+    subtitle = "Manhattan Distance | PAM clustering | k = 3",
+    x = "UMAP1",
+    y = "UMAP2"
+    ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid = element_blank(),
+      plot.title = element_text(
+        size = 16,
+        face = "plain"
+      ),
+      plot.subtitle = element_text(
+        size = 10,
+        colour = "grey30"
+      ),
+      legend.title = element_text(face = "plain")
     )
+
+#ggsave(
+  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/UMAP.png",
+  #width = 10,
+  #height = 8,
+  #dpi = 600
+#)
+
 
 UMAP <- umap(scaled, metric = "manhattan")
 
@@ -961,7 +1009,8 @@ plotPamMan <- data.frame(
   )
 
 ggplot(plotPamMan, 
-       aes(UMAP1, UMAP2, color = cluster, size = medoid)) +
+       aes(UMAP1, UMAP2, color = cluster, size = medoid)
+       ) +
   geom_point(size = 5) +
   theme_classic() +
   labs(title = "UMAP Projection",
@@ -1071,12 +1120,32 @@ ggplot(
     caption = "Red dashed line indicates complete ambiguity (1/k)"
     ) +
   geom_point(size = 6) +
-  theme_minimal() +
+  theme_minimal(base_size = 14) +
   labs(
     title = "Fuzzy Membership Certainty",
+    subtitle = "PAM Clustering | Manhattan Distance | k = 3",
+    x = "Observations",
     y = "Maximum Membership"
-    )
+    ) +
+  theme(
+    panel.grid = element_blank(),
+    plot.title = element_text(
+      size = 16,
+      face = "plain"
+    ),
+    plot.subtitle = element_text(
+      size = 10,
+      colour = "grey30"
+    ),
+    legend.title = element_text(face = "plain")
+  )
 
+ggsave(
+"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/Fuzzy.png",
+width = 10,
+height = 8,
+dpi = 600
+)
 
 ```
 
@@ -1305,8 +1374,8 @@ ggplot(
 
 ggsave(
   "C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/ARI_heatmap.png",
-  width = 10,
-  height = 8,
+  width = 8,
+  height = 6,
   dpi = 600
   )
 
