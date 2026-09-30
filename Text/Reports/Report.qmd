@@ -483,11 +483,6 @@ scaled <- scale(ICN)
 
 sil_avg <- numeric(25)
 
-#for (k in 2:25) {
-  #PAM_fit <- pam(scaled, k)
-  #sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
-#}
-
 LDA_K <- data.frame(k = 2:26, avg_silhouette = sil_avg)
 
 pam_sum_tab <- data.frame()
@@ -510,12 +505,6 @@ for (k in 2:25) {
   )
 }
 
-#knitr::kable(
-  #pam_sum_tab,
-  #caption = "PAM clustering summary across candidate values of k.",
-  #align = "c"
-#)
-
 pam <- pam(Ingots_clean, k = 3)
 
 cluster <- pam$clustering
@@ -524,15 +513,6 @@ cluster <- pam$clustering
   #PAM_fit <- pam(scaled, k)
   #sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
 #}
-
-LDA_K1 <- data.frame(k = 2:26, avg_silhouette = sil_avg)
-
-#summary(pam)
-
-fviz_silhouette(pam)+
-  scale_fill_manual( values = c("#648FFF", "#DC267F", "#FFB000"))+
-  scale_colour_manual( values = c("gray30", "gray30", "gray30"))
-
 
 top_pam <- pam_sum_tab |>
   arrange(desc(Avg_Silhouette)) |>
