@@ -591,32 +591,6 @@ fuz2
 
 
 ## 3.3  Fuzzy Analysis
-
-```{r fuzzy2, echo=FALSE}
-sil_df <- data.frame(
-  obs = 1:nrow(sil_each), 
-  width = sil_each[, "sil_width"],
-  cluster = factor(sil_each[, "cluster"])
-  )
-
-ggplot(sil_df,
-       aes(x = reorder(obs, width),
-           y = width,
-           fill = cluster)) + 
-  geom_col() +
-  coord_flip() +
-  geom_hline(yintercept = mean(sil_df$width),
-             linetype = "dashed",
-             colour = "red") +
-  scale_fill_manual(values = c(
-    "#648FFF", "#DC267F", "#FFB000")) +
-  labs(title = "Silhouette Plot",
-       x = "Observation",
-       y = "Silhouette Width") +
-  theme_minimal()
-```
-
-## 3.3  Fuzzy Analysis
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Fuzzy.png)
 
 :::{.centre}
