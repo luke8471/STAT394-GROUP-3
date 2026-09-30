@@ -49,6 +49,7 @@ library(umap)
 library(moments)
 library(mclust)
 library(reshape2)
+library(ggrepel)
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -483,6 +484,11 @@ scaled <- scale(ICN)
 
 sil_avg <- numeric(25)
 
+#for (k in 2:25) {
+  #PAM_fit <- pam(scaled, k)
+  #sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
+#}
+
 LDA_K <- data.frame(k = 2:26, avg_silhouette = sil_avg)
 
 pam_sum_tab <- data.frame()
@@ -505,6 +511,12 @@ for (k in 2:25) {
   )
 }
 
+#knitr::kable(
+  #pam_sum_tab,
+  #caption = "PAM clustering summary across candidate values of k.",
+  #align = "c"
+#)
+
 pam <- pam(Ingots_clean, k = 3)
 
 cluster <- pam$clustering
@@ -513,6 +525,8 @@ cluster <- pam$clustering
   #PAM_fit <- pam(scaled, k)
   #sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
 #}
+
+LDA_K1 <- data.frame(k = 2:26, avg_silhouette = sil_avg)
 
 top_pam <- pam_sum_tab |>
   arrange(desc(Avg_Silhouette)) |>
@@ -527,19 +541,21 @@ knitr::kable(
 
 The silhouette value/metric is a measurement of the quality of a clustering. between -1 and 1. The data reports the optimal silhouette width as 5, with 0.6496032, indicating some. There are several other clustering values with a reported similar quality.
 
+![PAM Silhouette Plot](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/PAM.png)
+
 Due to the ambiguous clustering, we opted to perform more cluster analyses to determine if this was a good fit.
 
 MANHATTAN NOT EUCLEDIAN.
 
 ## 5. Linkage Analysis
 
-Hierarchical cluster using Manhattan Distance as a measure. Chosen because it is more robust to outliers then Eucledian.
+Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.
 
 ![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/dendrogram.png)
 
-Cophenetic correlation coefficient ranges between -1 to 1, with a value of 1 indicating a perfect fit between the clusters and the data. A value of 0.798 means that the clustering is a fairly good fit. CCC can be used to compare between clustering methods.
+Something interesting top note is that for both cluster options they both cluster sample's 15, 10, and 22 this could be because of ...
 
-We can see which sample pairs are more similar to one another, then to other sample pairs, for example samples 5 and 8 are more similar to one another then either is too the rest of the yellow cluster. We can also see for example that sample 32 is most similar to the grouping of samples 31, 3, 10, and 29 then to any of those samples individually.
+Cophenetic correlation coefficient 0.825 is pretty dang good. I'm going to remake this using ggplot, should be nicer.
 
 ## 6. Cluster Analysis
 
@@ -549,7 +565,7 @@ Given the low cophenetic correlation from the linkage analysis and the ambiguous
 
 ![UMAP](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/UMAP.png)
 
-The UMAP projection shows clear overlap groupings....
+The UMAP projection shows clear overlap groupings.
 
 **6.2 Fuzzy Analysis**
 

@@ -48,6 +48,7 @@ library(umap)
 library(moments)
 library(mclust)
 library(reshape2)
+library(ggrepel)
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -990,12 +991,12 @@ fviz_dend(
 
 #saving locally to move to repository
 
-ggsave(
-  file.path("LOCAL FILE PATH"),
-  width = 10,
-  height = 6,
-  dpi = 300
-)
+#ggsave(
+  #file.path("LOCAL FILE PATH"),
+  #width = 10,
+  #height = 6,
+  #dpi = 300
+#)
 
 ```
 
@@ -1012,6 +1013,8 @@ UMAP_plot <- data.frame(
   UMAP2 = k$layout[,2],
   Cluster = factor(PamMan$cluster)
   )
+
+UMAP_plot$Sample <- rownames(scaled)
 
 ggplot(UMAP_plot,
        aes(
@@ -1031,6 +1034,12 @@ ggplot(UMAP_plot,
     size = 5,
     alpha = 0.8
     ) + 
+  geom_text(
+    aes(label = Sample),
+    colour = "black",
+    size = 2.5,
+    fface = "bold"
+  ) +
   scale_colour_manual(
     values = c(
       "1" = "#648FFF",
@@ -1065,12 +1074,12 @@ ggplot(UMAP_plot,
       legend.title = element_text(face = "plain")
     )
 
-#ggsave(
-  #"C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/UMAP.png",
-  #width = 10,
-  #height = 8,
-  #dpi = 600
-#)
+ggsave(
+  "C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/UMAP.png",
+  width = 10,
+  height = 8,
+  dpi = 600
+)
 
 
 UMAP <- umap(scaled, metric = "manhattan")
