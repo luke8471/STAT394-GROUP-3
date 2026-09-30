@@ -587,11 +587,13 @@ knitr::kable(Fuzzy_k$U,
 
 ![Fuzzy Membership Certainty](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Fuzzy.png)
 
-The graph of Fuzzy Membership Certainty shows that the majority of our observations are near ambiguous in there assigned groupings.
+The graph of Fuzzy Membership Certainty shows that the majority of our observations are near ambiguous in there assigned groupings. We can see that unlike the previous methods that only have binary values for cluster participation, with a soft clustering method all of our samples are only weakly associated more with their assigned clusters then with other clusters. This aligns with our previous results that the dat
 
 Picks by median centrality, determines closest group and percentage it belongs in said group.
 
 ## 5. Results
+
+We aimed to provide a high level data analysis to provide a detailed, and logical, path to a linkage analysis.
 
 ```{r, echo = FALSE}
 #creating tables to visually compare results from PAM, H cluster, UMAP, Fuzzy.
@@ -723,18 +725,6 @@ For future analysis, combining the primary components as one factor and comparin
 Analysing only the trace elements
 
 Waiting for another hoarde of orichalcum to drop onto their lap
-
-Our study also has the same motivations. We aim to provide a high level data analysis to provide a detailed, and logical, path to a linkage analysis.
-
-Motivation, problem statement, approach, results, conclusions.
-
-What were the limitations of this study?
-
-What further research could be done? Different statistical analysis?
-
-When working with museum quality pieces, that need destructive analyses performed to
-
-We also took a preliminary look at the Copper (Cu), Zinc (Zn), Lead (Pb), and Tin (Sn) as they are the four alloying elements that are known to define orichalcum and historically have been the primary elemental components used to date and pinpoint origin of other orichalcum artifacts.
 
 ## 7. Refrences
 
