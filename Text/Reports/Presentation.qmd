@@ -517,9 +517,16 @@ print(HZ$multivariate_normality)
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/dendrogram.png)
 
 
-## 3.2  Cluster Analysis using Manhattan Distance
 ```{r UMAP, echo=FALSE}
 ## Trying stuff - Note Gaia couldn't get this to work ALICE
+ICN <- as.data.frame(Ingots_clean[,-1])
+
+ICN[] <- lapply(ICN, as.numeric)
+
+scaled <- scale(ICN)
+
+sil_avg <- numeric(25)
+
 
 k <- umap(scaled)
 PamMan <- pam(scaled, k = 3, metric = "manhattan")
@@ -530,17 +537,6 @@ UMAP_plot <- data.frame(
   Cluster = factor(PamMan$cluster)
   )
 
-ggplot(UMAP_plot,
-       aes(UMAP1, UMAP2, colour = Cluster)
-       ) +
-  geom_point(size = 5) +
-  stat_ellipse(level = 0.95) +
-  scale_colour_manual( values = c("#648FFF", "#DC267F", "#FFB000")
-                       )+
-  labs(
-    title = "UMAP Projection",
-    subtitle = "Manhattan Distance | PAM clustering | k = 3"
-    )
 
 ```
 
@@ -656,13 +652,17 @@ abline(h = 0, lty = 2)
 
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/ARI_heatmap.png)
 
-## 5. Discussion
+:::{.centre}
+# 5. Discussion
+:::
+
+##
 :::{.incremental}
-- @Caponetti2017-sc determined 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time. This was determined with the added variable of the physical form of the ingots.
+- comparing to the @Caponetti2017-sc study
 
-- What were the limitations of this study?
+- What were the limitations of this study
 
-- What further research could be done? Different statistical analysis?
+- What further research could be done? 
 
 :::
 ## 6. References
@@ -670,5 +670,5 @@ abline(h = 0, lty = 2)
 :::
 
 :::{.center}
-## 7. Any Questions
+# 7. Any Questions
 :::
