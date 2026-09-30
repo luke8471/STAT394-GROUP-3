@@ -1,5 +1,6 @@
 ---
-title: "It's just rocks and metal! ing-it"
+title: "It's just rocks and metal ... ing-it"
+
 author: "Gaia Smith and Alice Thompson"
 format:
   revealjs:
@@ -7,6 +8,21 @@ format:
     slide-number: TRUE
     theme: moon
     transition: slide
+    include-in-header:
+      text: |
+        <style>
+        .reveal .slides section div.center {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          min-height: 520px;
+        }
+        </style>
+bibliography: ../Common/CITATIONS.bib
+csl: ../Common/apa.csl
+nocite: |
+  @*
 editor: visual
 ---
 
@@ -40,7 +56,9 @@ library(dendextend)
 library(gt)
 library(knitr)
 library(kableExtra)
-
+library(gridExtra)
+library(umap)
+library(moments)
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -57,17 +75,23 @@ pdf <- httr::GET(url, write_disk(tmp, overwrite = TRUE))
 ingots <- pdftools::pdf_text(tmp)
 
 ```
-
-## 1. Introduction
-:::{.incremental}
-- What is orichalcum?
-
-- Summary of Collection Techniques
-
-- Scope of This Multivariate Analysis
+:::{.center}
+# 1. Introduction
 :::
 
-## 2.1  Analysing the raw data
+##
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/diving image.jpg)
+
+
+##
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/ingots all 3.jpg)
+
+
+:::{.center}
+# 2. EDA
+:::
+
+## 2.1  Analyzing the raw data
 
 ```{r extracting the table, echo=FALSE}
 
@@ -139,7 +163,41 @@ knitr::kable(
 
 ```
 
-## 2.1 Anaylysising the Raw data
+## 2.1  Analyzing the raw data
+```{r 2.1b, echo=FALSE}
+Element_order <- colnames(as.data.frame(Ingots_F_no[, -1]))
+
+Ingots_sum <- Ingots_F_no[, -1] |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Element",
+    values_to = "Concentration"
+  ) |>
+  mutate(
+    Element = factor(Element, levels = Element_order)
+  ) |>
+  group_by(Element) |>
+  summarise(
+    Mean = mean(Concentration, na.rm = TRUE),
+    SD = sd(Concentration, na.rm = TRUE),
+    Min = min(Concentration, na.rm = TRUE),
+    Q1 = quantile(Concentration, 0.25, na.rm = TRUE),
+    Median = median(Concentration, na.rm = TRUE),
+    Q3 = quantile(Concentration, 0.75, na.rm = TRUE),
+    Max = max(Concentration, na.rm = TRUE),
+    IQR = IQR(Concentration, na.rm = TRUE),
+    Kurtosis = kurtosis(Concentration, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+knitr::kable(
+  Ingots_sum, 
+  digits = 2,
+  caption = "Summary Statistics of Table 1", 
+  format = "pipe") %>%
+  kable_styling(font_size = 15, latex_options = "scale_down")
+```
+## 2.1  Analyzing the Raw data
 ```{r basic summary, echo=FALSE}
 #| fig-width: 10
 #| fig-height: 6
@@ -211,10 +269,7 @@ ggplot(
 
 ```
 
-
-
-
-## 2.1.1 Inconsistencies in Percentages
+## 2.1.1  Inconsistencies in Percentages
 ```{r echo = FALSE}
 main_com <- Ingots_Frame[c(1:5)]
 
@@ -249,60 +304,21 @@ knitr::kable(
 ```
 
 
-## 2.2 Intital Testing for Multivariate Normality 
-## 2.2 intial QQ-plots
-![QQ_all](/Users/smith/Documents/STAT394-GROUP-3/Figures/QQ_all.png)
+## 2.2  initial QQ-plots
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1a.png)
 
+## 2.2  initial QQ-plots
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1b.png)
 
-## 2.2 Henze-Zirkler Test For Multivariate Normality 
-:::{.center}
-$$
-\begin{aligned}
-\mathcal{H}_0 :& 
-\text{ The data follow a multivariate normal distribution},
-\\
-\mathcal{H}_1 :& 
-\text{ The data do not follow a multivariate normal distribution}.
-\end{aligned}
-$$
-:::
+## 2.2  initial QQ-plots
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1c.png) 
 
-## 2.3 Transformations
+## 2.2  initial QQ-plots
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1d.png) 
 
-## 2.3 QQ plot and Henze-Zirkler Test for Multivariate Normality
+## 2.3 Performing Log Transformations
 
-```{r, echo=FALSE}
-#| fig-width: 10
-#| fig-height: 6
-
-#log transform data
-
-logIngots <- log(as.matrix(Ingots_F_no[-1,-1]))
-#print(logIngots)
-
-knitr::kable(logIngots,
-             caption = "Log Transformed Data",
-             digits = 2,
-             format = "pipe")
-
-```
-
-```{r echo = FALSE}
-#taking the log.
-
-qqnorm(logIngots, col = "#648FFF", main = "Normal QQ-Plot for the log-Transformed Data",
-       sub = "All Elements")
-qqline(logIngots, col = "#DC267F")
-
-```
-
-The QQ-plot of the log transformed data roughly followed the theoretical line (in red), this is evidence that the normality assumption may hold. The tails are relatively long and flat, indicating that there may be some extreme outliers. There are several steps in the upper and lower tails, which alone is not necessarily a departure from normality, and may be explained by the zero values returned for some Sample's variables after the log transformation.
-
-The observed zero-values for (PUT SAMPLES NUMBERS IN HERE) in (TABLE) in variables(HERE), which while not a large quantity of the samples, still provided some concern as log(0) is undefined and can influence non-normality in multivariate data. The negative values are not an issue because we will be using metrics which are calculated from coordinate distances for clustering, and can handle negative values.
-
-We chose to combat the zero values by standardising the data set using log($\mathcal{x}$ + 1)}, where $\mathcal{x}$ is our data. This, coupled with a Henze-Zirkler test, established if there is preliminary evidence for multivariate normality.
-
-```{r echo = FALSE}
+```{r, echo = FALSE}
 #| fig-width: 10
 #| fig-height: 6
 
@@ -312,15 +328,32 @@ logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 
 #print(logIngots1)
 
-knitr::kable(logIngots1,
-             caption = "Log Transformed Data",
-             format = "pipe")
+#knitr::kable(logIngots1,
+             #caption = "Log(x + 1) Transformed Data",
+             #format = "pipe")
 
-#taking the log.
+```
 
-qqnorm(logIngots1, col = "#648FFF", main = "Normal QQ- Plot of the log-transformed data (all elements)")
-qqline(logIngots1, col = "#DC267F")
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
 
+## 2.4 Henze-Zirkler Test For Multivariate Normality 
+
+:::{.center}
+$$
+\begin{aligned}
+\mathcal{H}_0 :& 
+\text{ The data follows a multivariate normal distribution},
+\\
+\mathcal{H}_1 :& 
+\text{ The data does not follow a multivariate normal distribution}.
+\end{aligned}
+$$
+:::
+
+
+## 2.4 Henze-Zirkler Test For Multivariate Normality  
+:::{.center}
+```{r, echo = FALSE}
 
 HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
 
@@ -328,26 +361,16 @@ hz_table <- HZoriginal$multivariate_normality
 
 knitr::kable(
   hz_table,
-  digits = 4,
+  digits = 2,
   caption = "Henze-Zirkler Test For Multivariate Normality"
 )
 ```
+:::
 
-As you can see in table 2, our values are now all non-zero.
+## 2.5 Performing Mad Transformations
+::::{.columns}
 
-The normal QQ-plot looks less normal after standardisation, with the length of the tails being accentuated and continuing presence of stepped data.
-
-The Henze-Zirkler test stipulates
-
-
-This generated a p-value=0.069, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution. However, the QQ-plot shows enough \<flat tails, step, steep, etc\> that further testing is warranted before determining if multivariate normality is likely.
-
-Given the uncertainty of multivariate normality and the presence of outliers, further data manipulation by Medioid Absolute Deviation was determined to be the next best step towards multivariate analysis.
-
-## 2.3 MAD
-
-MAD was used because it is a robust, outlier-resistant, measure of variability. The log transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence.
-
+:::{.column width="50%"}
 ```{r transformations-mad, echo=FALSE}
 #| fig-width: 10
 #| fig-height: 6
@@ -360,22 +383,58 @@ mad <- apply(logIngots1[,-1], 2, mad)
 #print(median/mad)
 #mad
 
-med_mad_table <- data.frame(
-  Median = median,
-  Mad = mad,
-  Median_over_Mad = median/mad
-)
 
-knitr::kable(med_mad_table,
-             caption = "Median / MAD",
-             digits = 2,
-             format = "pipe")
+MAD_summary1 <- as.data.frame(logIngots1[1:11,]) |>
+  pivot_longer(
+    everything(),
+    names_to = "Element",
+    values_to = "Concentration"
+      ) |>
+  group_by(Element) |>
+  summarise(
+    Median = median(Concentration),
+    MAD = mad(Concentration),
+    Skewness = moments::skewness(Concentration),
+    Kurtosis = moments::kurtosis(Concentration),
+    .groups = "drop"
+  )
+
+knitr::kable(
+  MAD_summary1[1:11,],
+  caption = "Median Absolute Deviation Summary Table",
+  digits = 2,
+  format = "pipe")%>%
+  kable_styling(font_size = 20)
+```
+:::
+:::{.column width="50%"}
+```{r mad trans, echo=FALSE}
+MAD_summary2 <- as.data.frame(logIngots1[12:21,]) |>
+  pivot_longer(
+    everything(),
+    names_to = "Element",
+    values_to = "Concentration"
+      ) |>
+  group_by(Element) |>
+  summarise(
+    Median = median(Concentration),
+    MAD = mad(Concentration),
+    Skewness = moments::skewness(Concentration),
+    Kurtosis = moments::kurtosis(Concentration),
+    .groups = "drop"
+  )
+
+knitr::kable(
+  MAD_summary2[12:21,],
+  caption = "Median Absolute Deviation Summary Table",
+  digits = 2,
+  format = "pipe")%>%
+  kable_styling(font_size = 20)
 
 ```
+:::
+::::
 
-From {TABLE NUMBER} we observed some massive deviations, as expected.
-
-Next the robust Z score was used to identify outliers that were candidates for removal. For our cutoff, we went with @Leys2013-cr recommendation, who argued that the MAD is the most robust scale measure under contamination and recommend a median plus or minus 2.5 time MAD rule for outlier detection.
 
 ```{r outliers, echo=FALSE}
 #| fig-width: 10
@@ -389,137 +448,307 @@ outliers <- apply(abs(z) > 2.5, 1, any)
 
 #list(outliers)
 
+z_scores <- as.data.frame(scale(logIngots1[, ]))
+
 # View the rows flagged as outliers
 invisible(summary(logIngots1[outliers,]))
 
-#The QQ plot of the mad transformed data:
-
-qqnorm((z), col="#785EF0", main = "Normal QQ-Plot of 
-       MAD-Transformed data")
-qqline((z), col="red")
-
-num_cols <- sapply(logIngots1, is.numeric)
-z_scores <- as.data.frame(scale(logIngots1[, ]))
-
-#summary(z_scores)
-
-ol <- logIngots1[rowSums(abs(z_scores) > 4) > 0, ] #ALICE STUFF
-
-print(ol) # ALICE STUFF
-
 Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
-
-#summary(Ingots_clean)
-
-#New boxplot:
-
-df <- as.data.frame(Ingots_clean)
-
-Ingots_clean_long <- df[,-1] |>
-  pivot_longer(
-    cols = everything(),
-    names_to = "Elements",
-    values_to = "Concentrations")
-
-
-
-ggplot(Ingots_clean_long, aes(x= Elements, y= Concentrations)) +
-  geom_boxplot(notch = FALSE, fill ="#40B0A6") +
-  theme_minimal()+
-  labs(title = "Boxplot of MAD Transformation With Outliers Removed")
-
-
-#still getting negative values (even with elevated magnitude cutoff) in here so 
-#log transforming may not be appropriate.
-
-logIngotsClean <- invisible(log(as.matrix(Ingots_clean[-1,-1])))
-invisible(summary(logIngotsClean))
-
-#head(logIngotsClean)
-
-
-#making the dataframe numeric so it can be manipulated.
-
-num_vars <- sapply(Ingots_clean, is.numeric)
 
 ```
 
-The QQ plot shows very skewed data which we would expected...
+## 2.6  Henze-Zirkler Test for Multivariate Normality
 
-What is after we have "cleaned" up the outliers our \|z\| \> 3 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al. set aside as their G4 group.
+:::{.center style="font-size: 1.3em;"}
+```{R Henze Zirkler, echo=FALSE, warning=FALSE}
 
-{should probably explain why cutting out 11 samples will be good for the rest of our analysis, something along the line of outliers, terrible samples and low sample quality}.
-
-**2.4 Multivariate normal distribution**
-
-What tests did we use? Henze Zirkler
-
-Why did we use those tests?
-
-```{R Henze Zirkler, echo=FALSE, warning = FALSE}
-#| fig-width: 10
-#| fig-height: 6
-
-#HZ test on OG data, which also rejects null.
+#HZ test on OG data, which also rejects null:
 
 HZoriginal <- mvn(data = Ingots_F_no, mvn_test = "hz")
 cat("Henze_Zirkler Test Results:\n")
 print(HZoriginal$multivariate_normality)
 
-#Henze-Zirkler test on cleaned data?
-#Non-negative functional distance that measures between two distribution functions. If data
-#is MVN, the test statistic HZ is approximately lognormally distributed. It calculates mean,
-#variance, and smoothness parameter. Mean and variance are then log-normalised and p-value
-#is estimated.
-#@MISC{noauthor_undated-de,
-#  howpublished = "\url{https://www.rdocumentation.org/packages/MVN/versions/5.8/topics/hzTest}",
-#  note         = "Accessed: 2026-9-15"
-#}
-
+#HZ clean data:
 HZ <- mvn(data = Ingots_clean, mvn_test = "hz")
 
 cat("Henze_Zirkler Test Results:\n")
 print(HZ$multivariate_normality)
 ```
+:::
 
-Due to our Henze Zirkler test for both the un-transformed data (p-value \<0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a multivariate normal distribution.
 
-As our data isn't multivariate it isn't appropriate to perform a mahalanobis distance. {could potentially do need to research tho}
+## 2.7  Correlation plots before and after
 
-**2.5 Correlation plots before and after**
-
+:::{layout-ncol=2}
 ![Correlation matrix of Raw Data](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix.png)
 
-![Correlation matrix of log-Transformed Data](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix_log.png)
+![Correlation matrix of Transformed Data](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix_log.png)
+:::
 
-Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr is also strongly positively association in the data with the outlying samples removes.. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn't show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.
+:::{.center}
+# 3. LDA
+:::
 
-The transformation didn't just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co. This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.
-
-Given the uncertainty about multivariate normality, a linear data analysis was chosen over a primary component analysis.
-
-## 3.1 PAM
-
+## 3.1  PAM
 
 ```{r LDA, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
 
+#need to find optimal silhouette width
+ICN <- as.data.frame(Ingots_clean[,-1])
+
+ICN[] <- lapply(ICN, as.numeric)
+
+scaled <- scale(ICN)
+
+sil_avg <- numeric(25)
+
+#for (k in 2:25) {
+  #PAM_fit <- pam(scaled, k)
+  #sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
+#}
+
+LDA_K <- data.frame(k = 2:26, avg_silhouette = sil_avg)
+
+pam_sum_tab <- data.frame()
+
+for (k in 2:25) {
+  
+  PAM_fit <- cluster::pam(scaled, k)
+  
+  sizes <- table(PAM_fit$clustering)
+  
+  pam_sum_tab <- rbind(
+    pam_sum_tab,
+    data.frame(
+      k = k,
+      Avg_Silhouette = round(PAM_fit$silinfo$avg.width, 3),
+      Smallest_Cluster = min(sizes),
+      Largest_Cluster = max(sizes),
+      Cluster_Sizes = paste(sizes, collapse = ", ")
+    )
+  )
+}
+
+#knitr::kable(
+  #pam_sum_tab,
+  #caption = "PAM clustering summary across candidate values of k.",
+  #align = "c"
+#)
+
+pam <- pam(Ingots_clean, k = 3)
+
+cluster <- pam$clustering
+
+#for (k in 2:25) {
+  #PAM_fit <- pam(scaled, k)
+  #sil_avg[k - 1] <- PAM_fit$silinfo$avg.width
+#}
+
+LDA_K1 <- data.frame(k = 2:26, avg_silhouette = sil_avg)
+
+#summary(pam)
+
+fviz_silhouette(pam)+
+  scale_fill_manual( values = c("#648FFF", "#DC267F", "#FFB000"))+
+  scale_colour_manual( values = c("gray30", "gray30", "gray30"))
 
 ```
 
 
-## 3.2 Cluster Analysis
+## 3.1  PAM
+```{r pam, echo=FALSE}
+top_pam <- pam_sum_tab |>
+  arrange(desc(Avg_Silhouette)) |>
+  slice(1:5)
 
-```{r, echo=FALSE}
+knitr::kable(
+  top_pam,
+  caption = "Top five cluster choices ranked by average silhouette width.")%>%
+  kable_styling(font_size = 30)
 
 ```
 
-## 3.3 Fuzzy Analysis
+
+## 3.2  Cluster Analysis using Manhattan Distance
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/dendrogram.png)
 
 
-```{r fuzzy, echo=FALSE}
+## 3.2  Cluster Analysis using Manhattan Distance
+```{r UMAP, echo=FALSE}
+## Trying stuff - Note Gaia couldn't get this to work ALICE
+
+k <- umap(scaled)
+PamMan <- pam(scaled, k = 3, metric = "manhattan")
+
+UMAP_plot <- data.frame(
+  UMAP1 = k$layout[,1],
+  UMAP2 = k$layout[,2],
+  Cluster = factor(PamMan$cluster)
+  )
+
+ggplot(UMAP_plot,
+       aes(UMAP1, UMAP2, colour = Cluster)
+       ) +
+  geom_point(size = 5) +
+  stat_ellipse(level = 0.95) +
+  scale_colour_manual( values = c("#648FFF", "#DC267F", "#FFB000")
+                       )+
+  labs(
+    title = "UMAP Projection",
+    subtitle = "Manhattan Distance | PAM clustering | k = 3"
+    )
+
+```
+
+## 3.2  Cluster Analysis using Manhattan Distance
+```{r UMAP2, echo=FALSE}
+UMAP <- umap(scaled, metric = "manhattan")
+
+plotPamMan <- data.frame(
+  UMAP1 = UMAP$layout[,1],
+  UMAP2 = UMAP$layout[,2],
+  Cluster = factor(PamMan$cluster))
+
+ggplot(plotPamMan, 
+       aes(UMAP1, UMAP2, color = cluster, size = medoid)) +
+  geom_point(size = 5) +
+  theme_classic() +
+  labs(title = "UMAP Projection",
+       subtitle = "Manhattan Distance | PAM clustering | k = 3"
+       )
+          
+               
+```
 
 
 
+## 3.3  Fuzzy Analysis
+::::{.columns}
+
+:::{.column width="50%"}
+```{r fu1, echo=FALSE}
+#| fig-width: 10
+#| fig-height: 6
+
+#k-medoids for Fuzzy
+
+Fuzzy_k <- FKM.med(scaled, k = 3, m = 2)
+
+#silhouettes
+
+#Table of Fuzzy_K$U:
+fuz1 <- suppressMessages(knitr::kable(Fuzzy_k$U[1:13,],
+             caption = "Fuzzy K Silhouettes Clusterings",
+             format = "pipe")%>%
+  kable_styling(font_size = 20))
+
+fuz1
+
+Fuzzy_Sil <- SIL.F(scaled, Fuzzy_k$U)
+
+Fuzzy_Clust <- apply(Fuzzy_k$U, 1, which.max)
+
+d <- dist(scaled)
+
+sil_each <- silhouette(Fuzzy_Clust, d)
+```
+:::
+:::{.column width="50%"}
+```{r fu2, echo=FALSE}
+#Table of Fuzzy_K$U:
+fuz2 <- suppressMessages(knitr::kable(Fuzzy_k$U[14:26,],
+             caption = "Fuzzy K Silhouettes Clusterings",
+             format = "pipe")%>%
+  kable_styling(font_size = 20))
+
+fuz2
+
+```
+:::
+::::
+
+
+## 3.3  Fuzzy Analysis
+
+```{r fuzzy1, echo=FALSE}
+
+plot(sil_each,
+     col = my_col[sort(unique(Fuzzy_Clust))],
+     border = NA,
+     main = "Silhouette Plot")
+```
+
+## 3.3  Fuzzy Analysis
+
+```{r fuzzy2, echo=FALSE}
+sil_df <- data.frame(
+  obs = 1:nrow(sil_each), 
+  width = sil_each[, "sil_width"],
+  cluster = factor(sil_each[, "cluster"])
+  )
+
+ggplot(sil_df,
+       aes(x = reorder(obs, width),
+           y = width,
+           fill = cluster)) + 
+  geom_col() +
+  coord_flip() +
+  geom_hline(yintercept = mean(sil_df$width),
+             linetype = "dashed",
+             colour = "red") +
+  scale_fill_manual(values = c(
+    "#648FFF", "#DC267F", "#FFB000")) +
+  labs(title = "Silhouette Plot",
+       x = "Observation",
+       y = "Silhouette Width") +
+  theme_minimal()
+```
+
+## 3.3  Fuzzy Analysis
+```{r fuzzy3, echo=FALSE}
+plot(sil_each[, "sil_width"],
+     pch = 15,
+     col = my_col[Fuzzy_Clust],
+     xlab = "Observation",
+     ylab = "Silhouette Width",
+     main = "Per-Observation Silhouettes")
+abline(h = 0, lty = 2)
+
+```
+
+## 3.3  Fuzzy Analysis
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Avg width of cluster.png)
+
+## 3.3  Fuzzy Analysis
+```{r fuzzy5, echo=FALSE}
+certainty <- apply(Fuzzy_k$U, 1, max)
+
+ggplot(
+  data.frame(
+    Obs = 1:length(certainty),
+    Certainty = certainty,
+    Cluster = factor(Fuzzy_Clust)
+  ),
+  aes(Obs, Certainty, colour = Cluster)
+  ) +
+  geom_hline(
+    yintercept = 1/3,
+    linetype = "dashed",
+    colour = "red"
+  ) +
+  scale_colour_manual( values = c("#648FFF", "#DC267F", "#FFB000")
+  )+
+  labs(
+    caption = "Red dashed line indicates complete ambiguity (1/k)"
+    ) +
+  geom_point(size = 6) +
+  theme_minimal() +
+  labs(
+    title = "Fuzzy Membership Certainty",
+    y = "Maximum Membership"
+    )
 ```
 
 
@@ -536,14 +765,15 @@ Given the uncertainty about multivariate normality, a linear data analysis was c
 :::{.incremental}
 - @Caponetti2017-sc determined 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time. This was determined with the added variable of the physical form of the ingots.
 
-- Our results
-
 - What were the limitations of this study?
 
 - What further research could be done? Different statistical analysis?
 
 :::
 ## 6. References
-::: {#refs}
+:::{#refs style="font-size:0.7em;"}
 :::
+
+:::{.center}
 ## 7. Any Questions
+:::
