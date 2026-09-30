@@ -349,9 +349,6 @@ logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1d.png) 
 
 
-
-
-
 ## 2.4 Henze-Zirkler Test For Multivariate Normality 
 
 :::{.center}
@@ -505,7 +502,7 @@ print(HZ$multivariate_normality)
 :::
 
 :::{.center}
-# 3. LDA
+# 3. LDA & Cluster analysis
 :::
 
 ## 3.1  PAM - Linear analysis
@@ -592,16 +589,6 @@ fuz2
 
 ## 3.3  Fuzzy Analysis
 
-```{r fuzzy1, echo=FALSE}
-
-plot(sil_each,
-     col = my_col[sort(unique(Fuzzy_Clust))],
-     border = NA,
-     main = "Silhouette Plot")
-```
-
-## 3.3  Fuzzy Analysis
-
 ```{r fuzzy2, echo=FALSE}
 sil_df <- data.frame(
   obs = 1:nrow(sil_each), 
@@ -624,18 +611,6 @@ ggplot(sil_df,
        x = "Observation",
        y = "Silhouette Width") +
   theme_minimal()
-```
-
-## 3.3  Fuzzy Analysis
-```{r fuzzy3, echo=FALSE}
-plot(sil_each[, "sil_width"],
-     pch = 15,
-     col = my_col[Fuzzy_Clust],
-     xlab = "Observation",
-     ylab = "Silhouette Width",
-     main = "Per-Observation Silhouettes")
-abline(h = 0, lty = 2)
-
 ```
 
 ## 3.3  Fuzzy Analysis
