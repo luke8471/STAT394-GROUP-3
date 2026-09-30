@@ -842,6 +842,83 @@ fviz_silhouette(pam)+
   scale_fill_manual( values = c("#648FFF", "#DC267F", "#FFB000"))+
   scale_colour_manual( values = c("gray60", "gray60", "gray60"))
  
+#Rebuilding to match others graphics
+
+pam_fit <- pam(scaled, k = 3)
+d <- dist(scaled, method = "manhattan")
+pam_sil <- silhouette(pam_fit$clustering, d)
+sil_df <- as.data.frame(pam_sil)
+
+sil_df$Sample <- rownames(scaled)
+
+sil_df <- sil_df |>
+  dplyr::arrange(cluster, desc(sil_width)) |>
+  dplyr::mutate(
+    Observation = row_number()
+  )
+
+sil_df$cluster <- factor(sil_df$cluster)
+
+sil_avg <- mean(sil_df$sil_width)
+
+ggplot(sil_df,
+  aes(
+    x = Observation,
+    y = sil_width,
+    fill = cluster
+  )
+) +
+  geom_col(width = 0.8) +
+  geom_text(
+    aes(label = Sample),
+    angle = 0,
+    size = 4,
+    vjust = -0.3 
+  ) +
+  geom_hline(
+    yintercept = sil_avg,
+    colour = "red",
+    linetype = "dashed"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "#648FFF",
+      "#DC267F",
+      "#FFB000"
+    )
+  ) +
+  labs(
+    title = "PAM Cluster Silhouette Plot",
+    subtitle = paste(
+      "Average Silhouette Width =",
+      round(sil_avg, 3)
+      ),
+    x = "Observation",
+    y = "Silhouette Width",
+    fill = "Cluster"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    plot.title = element_text(
+      size = 16,
+      face = "plain"
+    ),
+    plot.subtitle = element_text(
+      size = 10,
+      colour = "grey30"
+    ),
+    legend.title = element_text(face = "plain")
+  )
+
+ggsave(
+  "C:/Users/Alice/Documents/STAT394-GROUP-3/Figures/PAM.png",
+  width = 8,
+  height = 6,
+  dpi = 600
+)
 
 pam_sum_tab |>
 gt() |>
@@ -897,8 +974,7 @@ fviz_dend(
   color_labels_by_k = FALSE
 ) +
   labs(
-    title = "Hierarchichal Cluster Dendrogram using 
-    Manhattan Distance",
+    title = "Hierarchichal Cluster Dendrogram",
     subtitle = paste(
       "Average Linkage | Manhattan Distance | CCC =",
       round(CC, 3)
@@ -914,13 +990,12 @@ fviz_dend(
 
 #saving locally to move to repository
 
-#ggsave(
-  #file.path("LOCAL FILE PATH"),
-  #p,
-  #width = 10,
-  #height = 6,
-  #dpi = 300
-#)
+ggsave(
+  file.path("LOCAL FILE PATH"),
+  width = 10,
+  height = 6,
+  dpi = 300
+)
 
 ```
 
