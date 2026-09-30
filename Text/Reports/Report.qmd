@@ -565,7 +565,9 @@ Given the low cophenetic correlation from the linkage analysis and the ambiguous
 
 ![UMAP](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/UMAP.png)
 
-The UMAP projection shows clear overlap groupings.
+The UMAP PAM projection shows clear overlap groupings.
+
+Interesting to note samples 16 and 15 are in different clusters but are close together on the coordinate space when compared to the dendrogram above. This makes intuitive sense as these two samples have a moderate degree of similarity to one another but both also are only moderately similar to their assigned clusters. On a UMAP projection, distance between points within a cluster can be seen as conveying the points similarity with each other however comparing far away points/clusters to each other can lead to issues due to the universal distance not being directly scaled. UMAP projections arn't ideal for making interpretations from but the visualisation of PAM clusters allows us to see that all 3 clusters are somewhat close to one another.
 
 **6.2 Fuzzy Analysis**
 
