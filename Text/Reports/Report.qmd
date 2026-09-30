@@ -140,11 +140,13 @@ To obtain material for further testing, a micro-well was drilled into each ingot
 
 **2.4 Scope of This Multivariate Analysis**
 
+Aims/hypothesis/ish
+
 This multivariate analysis includes manipulations of the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical characteristics of the ingots or any correlation analysis of those variables.
 
-We will be excluding the Cu/Zn ratio variable as we chose to analyse the linkage of all elements between each other, not between Cu/Zn ratios and other elements
+We have chosen to reuse data because the orichalcum ingot archaeological find near Gela, Italy is a literally one of a kind find, we do not have the resources or the belief that it would be ethical to conduct excessive destructive testing on artifacts that may never be found again. Therefore, we have used @Caponetti2017-sc ICP-OES and ICP-MS data of 38 orichalcum ingots.
 
-------------------------------------------------------------------------
+We will be excluding the Cu/Zn ratio variable as we chose to analyse the linkage of all elements between each other, not between Cu/Zn ratios and other elements
 
 ## 3. EDA
 
