@@ -506,11 +506,11 @@ print(HZ$multivariate_normality)
 :::
 
 ## 3.1  PAM - Linear analysis
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Avg width of cluster.png)
+
+## 3.1  PAM - Linear analysis
 
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/PAM.png)
-
-## 3.1  PAM 
-![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Avg width of cluster.png)
 
 
 ## 3.2  Cluster Analysis using Manhattan Distance
