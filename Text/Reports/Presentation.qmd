@@ -305,16 +305,16 @@ knitr::kable(
 
 
 ## 2.2  initial QQ-plots
-![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1a.png)
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all 1a.png)
 
 ## 2.2  initial QQ-plots
-![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1b.png)
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all 1b.png)
 
 ## 2.2  initial QQ-plots
-![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1c.png) 
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all 1c.png) 
 
 ## 2.2  initial QQ-plots
-![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1d.png) 
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all 1d.png) 
 
 ## 2.3 Performing Log Transformations
 
@@ -335,6 +335,22 @@ logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 ```
 
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
+
+## 2.3  log Transformed QQ-plots
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1a.png)
+
+## 2.3  log Transformed QQ-plots
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1b.png)
+
+## 2.3  log Transformed QQ-plots
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1c.png) 
+
+## 2.3  log Transformed QQ-plots
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1d.png) 
+
+
+
+
 
 ## 2.4 Henze-Zirkler Test For Multivariate Normality 
 
