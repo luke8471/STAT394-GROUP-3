@@ -1,5 +1,6 @@
 ---
 title: "It's just rocks and metal ... ing-it"
+
 author: "Gaia Smith and Alice Thompson"
 format:
   revealjs:
@@ -7,6 +8,9 @@ format:
     slide-number: TRUE
     theme: moon
     transition: slide
+bibliography: https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/Text/Common/CITATIONS.bib
+nocite: | 
+  @*
 editor: visual
 ---
 
@@ -749,14 +753,15 @@ ggplot(
 :::{.incremental}
 - @Caponetti2017-sc determined 3 distinct groupings of ingots, which provides evidence of a scarce and highly prized alloy being manufactured in one place at one time. This was determined with the added variable of the physical form of the ingots.
 
-- Our results
-
 - What were the limitations of this study?
 
 - What further research could be done? Different statistical analysis?
 
 :::
 ## 6. References
-::: {#refs}
+:::{#ref}
 :::
+
+:::{.center}
 ## 7. Any Questions
+:::
