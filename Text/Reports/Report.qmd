@@ -692,8 +692,6 @@ comp_table |>
 
 ![ARI Heat Map](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/ARI_heatmap.png)
 
-#### 
-
 @Caponetti2017-fd determined that the quantity of attained sample was attributed some to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at \~20mg.
 
 The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.
@@ -716,9 +714,15 @@ This analysis boils down to these simple limitations.
 
 </center>
 
-With so little data to compare it to and a sample group that is difficult, and arguably unethical, to re-sample destructively, it is likely that methods like XRF (portable, non-invasive) which are accurate reading within a certain range of the larger elements will continue to be implemented over the ICP-OE and ICP-MS chemometric techniques as the prevailing method of identifying similarities.
+With so little data to compare it to and a sample group that is difficult, and arguably unethical, to re-sample destructively, it is likely that methods like XRF (portable, non-invasive) which are accurate reading within a certain range of the larger elements will continue to be implemented over the ICP-OE and ICP-MS chemometric techniques as the prevailing method of identifying similarities between orichalcum finds.
 
 Their motivation was to create a starting point for giving insight into archaeometric study of the orichalcum ingots regarding their origin and manufacture technologies.
+
+After various cluster analysis we believe that \@Caponetti2017-f claim that elemental concentration could be a useful provenence estimator for orichalcum ingots has potential, however we were unable to find strong evidence for any particular groupings. This could be because of the low sample size combined with outlier removal. More sampling of orichalcum ingots could elucidate more of a correlation but more destructive testing on a archaeological find would need to have ethical consideration.
+
+\@Caponetti2017-fd determined that the quantity of attained sample was in practise unreliable and attributed some error generation to issues with consistent sample aquisition. Both samples S38 and S08 had respective quantities of 12.3mg and 16.0mg rather then the intended \~20mg.
+
+The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate. Analysis of other orichalcum finds could prove interesting although the rarity of the find would make it difficult.
 
 For future analysis, combining the primary components as one factor and comparing them just to the trace elements.
 
@@ -726,7 +730,7 @@ Analysing only the trace elements
 
 Waiting for another hoarde of orichalcum to drop onto their lap
 
-## 7. Refrences
+## 7. References
 
 ::: {#refs}
 :::
