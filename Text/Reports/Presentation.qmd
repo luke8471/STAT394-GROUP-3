@@ -612,7 +612,7 @@ ggplot(plotPamMan,
 ::::{.columns}
 
 :::{.column width="50%"}
-```{r fuzzy, echo=FALSE}
+```{r fu1, echo=FALSE}
 #| fig-width: 10
 #| fig-height: 6
 
@@ -640,7 +640,7 @@ sil_each <- silhouette(Fuzzy_Clust, d)
 ```
 :::
 :::{.column width="50%"}
-```{r fu, echo=FALSE}
+```{r fu2, echo=FALSE}
 #Table of Fuzzy_K$U:
 fuz2 <- suppressMessages(knitr::kable(Fuzzy_k$U[14:26,],
              caption = "Fuzzy K Silhouettes Clusterings",
@@ -653,25 +653,62 @@ fuz2
 :::
 ::::
 
-## 3.3  Fuzzy Analysis
-```{r fuz1, echo=FALSE}
-ggplot(LDA_K,
-       aes(k, avg_silhouette)) +
-  geom_line() +
-  geom_point(size = 3) +
-  theme_minimal() +
-  labs(
-    title = "Average Silhouette Width by Number of Clusters",
-    x = "Number of Clusters",
-    y = "Average Silhouette Width"
-    )
 
-certainty <- apply(Fuzzy_k$U, 1, max)
+## 3.3  Fuzzy Analysis
+
+```{r fuzzy1, echo=FALSE}
+
+plot(sil_each,
+     col = my_col[sort(unique(Fuzzy_Clust))],
+     border = NA,
+     main = "Silhouette Plot")
 ```
 
+## 3.3  Fuzzy Analysis
+
+```{r fuzzy2, echo=FALSE}
+sil_df <- data.frame(
+  obs = 1:nrow(sil_each), 
+  width = sil_each[, "sil_width"],
+  cluster = factor(sil_each[, "cluster"])
+  )
+
+ggplot(sil_df,
+       aes(x = reorder(obs, width),
+           y = width,
+           fill = cluster)) + 
+  geom_col() +
+  coord_flip() +
+  geom_hline(yintercept = mean(sil_df$width),
+             linetype = "dashed",
+             colour = "red") +
+  scale_fill_manual(values = c(
+    "#648FFF", "#DC267F", "#FFB000")) +
+  labs(title = "Silhouette Plot",
+       x = "Observation",
+       y = "Silhouette Width") +
+  theme_minimal()
+```
 
 ## 3.3  Fuzzy Analysis
-```{r fuz2, echo=FALSE}
+```{r fuzzy3, echo=FALSE}
+plot(sil_each[, "sil_width"],
+     pch = 15,
+     col = my_col[Fuzzy_Clust],
+     xlab = "Observation",
+     ylab = "Silhouette Width",
+     main = "Per-Observation Silhouettes")
+abline(h = 0, lty = 2)
+
+```
+
+## 3.3  Fuzzy Analysis
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Avg width of cluster.png)
+
+## 3.3  Fuzzy Analysis
+```{r fuzzy5, echo=FALSE}
+certainty <- apply(Fuzzy_k$U, 1, max)
+
 ggplot(
   data.frame(
     Obs = 1:length(certainty),
@@ -696,7 +733,6 @@ ggplot(
     title = "Fuzzy Membership Certainty",
     y = "Maximum Membership"
     )
-
 ```
 
 
