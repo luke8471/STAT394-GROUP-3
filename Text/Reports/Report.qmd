@@ -490,11 +490,7 @@ cat("Henze_Zirkler Test Results:\n")
 print(HZ$multivariate_normality)
 ```
 
-Due to our Henze Zirkler test for both the un-transformed data (p-value \<0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a multivariate normal distribution.
-
-Barely normal once outliers removed. Not normal before. Evidence for outlier removal helping normality.
-
-Lots of manipulation, still barely normal.
+Conducting the Henze Zirkler test for both the un-transformed data (p-value \<0.001) and the transformed data (p-value 0.055) we can reject the null hypotheses and conclude that the data is only not-normal when it is not-transformed and outliers remain. After log($\mathcal x$ + 1) transformation and outlier removal using MAD, we can no longer safely reject the null hypotheses and have weak evidence (due to the p-value being barely above the cut off) that the processed data can be assumed to be multivariate normal.
 
 **2.5 Correlation plots before and after**
 
