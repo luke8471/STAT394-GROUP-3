@@ -533,13 +533,13 @@ MANHATTAN NOT EUCLEDIAN.
 
 ## 5. Linkage Analysis
 
-Hierarchical cluster using Manhattan Distance as a measure. Because more robust to outliers then Eucledian etc.
+Hierarchical cluster using Manhattan Distance as a measure. Chosen because it is more robust to outliers then Eucledian.
 
 ![Dendrogram](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/dendrogram.png)
 
-Something interesting top note is that for both cluster options they both cluster sample's 15, 10, and 22 this could be because of ...
+Cophenetic correlation coefficient ranges between -1 to 1, with a value of 1 indicating a perfect fit between the clusters and the data. A value of 0.798 means that the clustering is a fairly good fit. CCC can be used to compare between clustering methods.
 
-Cophenetic correlation coefficient 0.825 is pretty dang good. I'm going to remake this using ggplot, should be nicer.
+We can see which sample pairs are more similar to one another, then to other sample pairs, for example samples 5 and 8 are more similar to one another then either is too the rest of the yellow cluster. We can also see for example that sample 32 is most similar to the grouping of samples 31, 3, 10, and 29 then to any of those samples individually.
 
 ## 6. Cluster Analysis
 
