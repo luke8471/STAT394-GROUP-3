@@ -173,7 +173,7 @@ knitr::kable(
   digits = 2,
   caption = "Summary Statistics of Table 1", 
   format = "pipe") %>%
-  kable_styling(font_size = 16, latex_options = "scale_down")
+  kable_styling(font_size = 15, latex_options = "scale_down")
 ```
 ## 2.1  Analyzing the Raw data
 ```{r basic summary, echo=FALSE}
@@ -282,10 +282,19 @@ knitr::kable(
 ```
 
 
-## 2.2  Initial Testing for Multivariate Normality 
 ## 2.2  initial QQ-plots
-![QQ_allnorm](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png)
-## 2.2 Perfroming Log Transformations
+![QQ_allnorm 1a](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1a.png)
+
+## 2.2  initial QQ-plots
+![QQ_allnorm 1b](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1b.png)
+
+## 2.2  initial QQ-plots
+![QQ_allnorm 1c](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1c.png) 
+
+## 2.2  initial QQ-plots
+![QQ_allnorm 1d](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm 1d.png) 
+
+## 2.3 Perfroming Log Transformations
 
 ```{r, echo = FALSE}
 #| fig-width: 10
@@ -305,22 +314,21 @@ logIngots1 <- log(as.matrix(Ingots_F_no[-1,-1] + 1))
 
 ![Notchboxnorm](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png)
 
-## 2.2 Henze-Zirkler Test For Multivariate Normality 
+## 2.4 Henze-Zirkler Test For Multivariate Normality 
 :::{.center}
 $$
 \begin{aligned}
 \mathcal{H}_0 :& 
-\text{ The data follow a multivariate normal distribution},
+\text{ The data follows a multivariate normal distribution},
 \\
 \mathcal{H}_1 :& 
-\text{ The data do not follow a multivariate normal distribution}.
+\text{ The data do not follows a multivariate normal distribution}.
 \end{aligned}
 $$
 :::
 
-Henze-Zirkler test established if there was preliminary evidence for multivariate normality.
 
-## 2.2 Henze-Zirkler Test For Multivariate Normality  
+## 2.4 Henze-Zirkler Test For Multivariate Normality  
 ```{r, echo = FALSE}
 
 HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
@@ -335,9 +343,9 @@ knitr::kable(
 ```
 
 
-## 2.3 Performing Mad Transformations
+## 2.5 Performing Mad Transformations
 
-## 2.3 QQ plot and Henze-Zirkler Test for Multivariate Normality
+## 2.5 QQ plot and Henze-Zirkler Test for Multivariate Normality
 
 
 ```{r echo = FALSE}
