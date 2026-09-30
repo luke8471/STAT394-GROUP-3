@@ -136,7 +136,7 @@ Orichalcum is defined as a copper alloy with zinc content as the principal compo
 
 In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer [@Caponetti2017-sc] was used. The subject paper includes that data and further investigates the composition of each ingot using more invasive and refined elemental analysis.
 
-To obtain material for further testing, a micro-well was drilled into each ingot and the extracted alloy was taken to determine trace elements using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots. (FLESH OUT AND EXPLAIN MORE, TOO VAGUE NOT EXPLAINING WHY)
+For further testing, and the subject of this paper, @Caponetti2017-fd chose to test elemental compositions using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots. ICP-OES was used to obtain measures for the primary elements above 1000 parts per million (PPM) while ICP-MS was used for the more difficult to measure trace elements below 1000 PPM. Both techniques are destructive and require the extractopm of \~0.2mg of the ingots by drilling a micro-well into each ingot to obtain material for testing.
 
 **2.4 Scope of This Multivariate Analysis**
 
