@@ -8,6 +8,17 @@ format:
     slide-number: TRUE
     theme: moon
     transition: slide
+    include-in-header:
+      text: |
+        <style>
+        .reveal .slides section div.center {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          min-height: 520px;
+        }
+        </style>
 bibliography: ../Common/CITATIONS.bib
 csl: ../Common/apa.csl
 nocite: |
@@ -334,13 +345,14 @@ $$
 \text{ The data follows a multivariate normal distribution},
 \\
 \mathcal{H}_1 :& 
-\text{ The data do not follows a multivariate normal distribution}.
+\text{ The data do not follow a multivariate normal distribution}.
 \end{aligned}
 $$
 :::
 
 
 ## 2.4 Henze-Zirkler Test For Multivariate Normality  
+:::{.center}
 ```{r, echo = FALSE}
 
 HZoriginal <- mvn(data = logIngots1, mvn_test = "hz")
@@ -353,6 +365,7 @@ knitr::kable(
   caption = "Henze-Zirkler Test For Multivariate Normality"
 )
 ```
+:::
 
 ## 2.5 Performing Mad Transformations
 ::::{.columns}
@@ -446,10 +459,8 @@ Ingots_clean <- logIngots1[rowSums(abs(z_scores) > 2.5) == 0, ]
 
 ## 2.6  Henze-Zirkler Test for Multivariate Normality
 
-:::{.center}
-```{R Henze Zirkler, echo=FALSE, warning = FALSE}
-#| fig-width: 10
-#| fig-height: 6
+:::{.center style="font-size: 1.3em;"}
+```{R Henze Zirkler, echo=FALSE, warning=FALSE}
 
 #HZ test on OG data, which also rejects null:
 
@@ -760,7 +771,7 @@ ggplot(
 
 :::
 ## 6. References
-:::{#refs}
+:::{#refs style="font-size:0.7em;"}
 :::
 
 :::{.center}

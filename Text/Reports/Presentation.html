@@ -151,6 +151,15 @@
 
   <link href="Presentation_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
+  <style>
+  .reveal .slides section div.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 520px;
+  }
+  </style>
 </head>
 <body class="quarto-dark">
   <div class="reveal">
@@ -1509,13 +1518,14 @@ Gaia Smith and Alice Thompson
 \text{ The data follows a multivariate normal distribution},
 \\
 \mathcal{H}_1 :&amp;
-\text{ The data do not follows a multivariate normal distribution}.
+\text{ The data do not follow a multivariate normal distribution}.
 \end{aligned}
 \]</span></p>
 </div>
 </section>
 <section id="henze-zirkler-test-for-multivariate-normality-1" class="slide level2">
 <h2>2.4 Henze-Zirkler Test For Multivariate Normality</h2>
+<div class="center">
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
@@ -1539,6 +1549,7 @@ Gaia Smith and Alice Thompson
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 </section>
@@ -1734,7 +1745,7 @@ Gaia Smith and Alice Thompson
 </section>
 <section id="henze-zirkler-test-for-multivariate-normality-2" class="slide level2">
 <h2>2.6 Henze-Zirkler Test for Multivariate Normality</h2>
-<div class="center">
+<div class="center" style="font-size: 1.3em;">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Henze_Zirkler Test Results:</code></pre>
@@ -1880,81 +1891,81 @@ Gaia Smith and Alice Thompson
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">0.5541528</td>
-<td style="text-align: right;">0.2554348</td>
-<td style="text-align: right;">0.1904125</td>
+<td style="text-align: right;">0.3808610</td>
+<td style="text-align: right;">0.2839108</td>
+<td style="text-align: right;">0.3352282</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">0.3146486</td>
-<td style="text-align: right;">0.3899714</td>
-<td style="text-align: right;">0.2953799</td>
+<td style="text-align: right;">0.3994904</td>
+<td style="text-align: right;">0.3025900</td>
+<td style="text-align: right;">0.2979197</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">5</td>
-<td style="text-align: right;">0.3939698</td>
-<td style="text-align: right;">0.3676257</td>
-<td style="text-align: right;">0.2384045</td>
+<td style="text-align: right;">0.3951292</td>
+<td style="text-align: right;">0.2562405</td>
+<td style="text-align: right;">0.3486303</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">6</td>
-<td style="text-align: right;">0.2685621</td>
-<td style="text-align: right;">0.4145471</td>
-<td style="text-align: right;">0.3168907</td>
+<td style="text-align: right;">0.3964214</td>
+<td style="text-align: right;">0.3030350</td>
+<td style="text-align: right;">0.3005436</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">8</td>
-<td style="text-align: right;">0.2919338</td>
-<td style="text-align: right;">0.4199415</td>
-<td style="text-align: right;">0.2881248</td>
+<td style="text-align: right;">0.3548860</td>
+<td style="text-align: right;">0.2434897</td>
+<td style="text-align: right;">0.4016243</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">9</td>
-<td style="text-align: right;">1.0000000</td>
-<td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.3448716</td>
+<td style="text-align: right;">0.2596851</td>
+<td style="text-align: right;">0.3954432</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10</td>
-<td style="text-align: right;">0.2947403</td>
-<td style="text-align: right;">0.4279199</td>
-<td style="text-align: right;">0.2773398</td>
+<td style="text-align: right;">0.3987019</td>
+<td style="text-align: right;">0.2584034</td>
+<td style="text-align: right;">0.3428947</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">11</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">12</td>
-<td style="text-align: right;">0.0844782</td>
-<td style="text-align: right;">0.5042484</td>
-<td style="text-align: right;">0.4112734</td>
+<td style="text-align: right;">0.4590163</td>
+<td style="text-align: right;">0.3743813</td>
+<td style="text-align: right;">0.1666023</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">15</td>
-<td style="text-align: right;">0.3331287</td>
-<td style="text-align: right;">0.3796804</td>
-<td style="text-align: right;">0.2871909</td>
+<td style="text-align: right;">0.4064680</td>
+<td style="text-align: right;">0.3074530</td>
+<td style="text-align: right;">0.2860789</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">16</td>
-<td style="text-align: right;">0.4552930</td>
-<td style="text-align: right;">0.3355934</td>
-<td style="text-align: right;">0.2091135</td>
+<td style="text-align: right;">0.3951507</td>
+<td style="text-align: right;">0.2462246</td>
+<td style="text-align: right;">0.3586247</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">18</td>
-<td style="text-align: right;">0.3837495</td>
-<td style="text-align: right;">0.2513374</td>
-<td style="text-align: right;">0.3649130</td>
+<td style="text-align: right;">0.2977457</td>
+<td style="text-align: right;">0.4322926</td>
+<td style="text-align: right;">0.2699617</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">20</td>
-<td style="text-align: right;">0.1145946</td>
-<td style="text-align: right;">0.4847200</td>
-<td style="text-align: right;">0.4006854</td>
+<td style="text-align: right;">0.4236822</td>
+<td style="text-align: right;">0.3502296</td>
+<td style="text-align: right;">0.2260882</td>
 </tr>
 </tbody>
 </table>
@@ -1979,81 +1990,81 @@ Gaia Smith and Alice Thompson
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">23</td>
-<td style="text-align: right;">0.1663034</td>
-<td style="text-align: right;">0.5149845</td>
-<td style="text-align: right;">0.3187120</td>
+<td style="text-align: right;">0.4050991</td>
+<td style="text-align: right;">0.2507065</td>
+<td style="text-align: right;">0.3441944</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">24</td>
-<td style="text-align: right;">0.1375287</td>
-<td style="text-align: right;">0.4531223</td>
-<td style="text-align: right;">0.4093490</td>
+<td style="text-align: right;">0.3767881</td>
+<td style="text-align: right;">0.3403890</td>
+<td style="text-align: right;">0.2828230</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">26</td>
-<td style="text-align: right;">0.1889055</td>
-<td style="text-align: right;">0.4705612</td>
-<td style="text-align: right;">0.3405333</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">27</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
 </tr>
+<tr class="even">
+<td style="text-align: left;">27</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
 <tr class="odd">
 <td style="text-align: left;">29</td>
-<td style="text-align: right;">0.2959838</td>
-<td style="text-align: right;">0.3998513</td>
-<td style="text-align: right;">0.3041648</td>
+<td style="text-align: right;">0.3759377</td>
+<td style="text-align: right;">0.2859738</td>
+<td style="text-align: right;">0.3380885</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">30</td>
-<td style="text-align: right;">0.4308230</td>
-<td style="text-align: right;">0.2901803</td>
-<td style="text-align: right;">0.2789967</td>
+<td style="text-align: right;">0.3446866</td>
+<td style="text-align: right;">0.3314023</td>
+<td style="text-align: right;">0.3239112</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">31</td>
-<td style="text-align: right;">0.3598202</td>
-<td style="text-align: right;">0.3328516</td>
-<td style="text-align: right;">0.3073282</td>
+<td style="text-align: right;">0.3267719</td>
+<td style="text-align: right;">0.3017146</td>
+<td style="text-align: right;">0.3715135</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">32</td>
-<td style="text-align: right;">0.4184905</td>
-<td style="text-align: right;">0.3373302</td>
-<td style="text-align: right;">0.2441793</td>
+<td style="text-align: right;">0.3975712</td>
+<td style="text-align: right;">0.2877853</td>
+<td style="text-align: right;">0.3146435</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">33</td>
-<td style="text-align: right;">0.3846634</td>
-<td style="text-align: right;">0.2834879</td>
-<td style="text-align: right;">0.3318487</td>
+<td style="text-align: right;">0.3103118</td>
+<td style="text-align: right;">0.3632485</td>
+<td style="text-align: right;">0.3264398</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">34</td>
-<td style="text-align: right;">0.3884584</td>
-<td style="text-align: right;">0.3147322</td>
-<td style="text-align: right;">0.2968094</td>
+<td style="text-align: right;">0.3529295</td>
+<td style="text-align: right;">0.3328316</td>
+<td style="text-align: right;">0.3142389</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">35</td>
-<td style="text-align: right;">0.1291733</td>
-<td style="text-align: right;">0.4323361</td>
-<td style="text-align: right;">0.4384906</td>
+<td style="text-align: right;">0.3675679</td>
+<td style="text-align: right;">0.3728005</td>
+<td style="text-align: right;">0.2596316</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">36</td>
-<td style="text-align: right;">0.1661016</td>
-<td style="text-align: right;">0.4755782</td>
-<td style="text-align: right;">0.3583202</td>
+<td style="text-align: right;">0.4021137</td>
+<td style="text-align: right;">0.3029690</td>
+<td style="text-align: right;">0.2949173</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">37</td>
-<td style="text-align: right;">0.1226379</td>
-<td style="text-align: right;">0.3752569</td>
-<td style="text-align: right;">0.5021052</td>
+<td style="text-align: right;">0.3269203</td>
+<td style="text-align: right;">0.4374294</td>
+<td style="text-align: right;">0.2356503</td>
 </tr>
 </tbody>
 </table>
@@ -2099,7 +2110,7 @@ Gaia Smith and Alice Thompson
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>6. References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" style="font-size:0.7em;" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-Angelucci2026" class="csl-entry" role="listitem">
 Angelucci, O. (2026). <em><span>T</span>he <span>S</span>unken <span>S</span>hip of <span>G</span>ela: <span>T</span>he <span>A</span>ncient <span>S</span>ecret of the <span>S</span>icilian <span>S</span>ea — medium.com</em>. <a href="https://medium.com/ash-and-devotion/the-sunken-ship-of-gela-the-ancient-secret-of-the-sicilian-sea-796f56d2dcc6" class="uri">https://medium.com/ash-and-devotion/the-sunken-ship-of-gela-the-ancient-secret-of-the-sicilian-sea-796f56d2dcc6</a>.
 </div>
