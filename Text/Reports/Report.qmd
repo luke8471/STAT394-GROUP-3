@@ -312,7 +312,7 @@ These samples have a mean of 104.4% with a range 93.17% to 113.71%. Where 33 of 
 
 **3.2 QQ-plots & Henze-Zirkler Test For Multivariate Normality**
 
-We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers and standardisation.
+We first created and visually assessed the QQ-normal plots of table 1 to see if data transformation would be appropriate to manage potential outliers and standardisation issues.
 
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all.png)
 
@@ -324,7 +324,7 @@ Cu roughly follows the normal QQ-line, indicating it may follow a normal distrib
 
 ##### Trace Elements
 
-Ag, Co, and Ni roughly follow the QQ-line indicating some evidence for normality. All other trace elements have blatant deviations from the normal line, particularly in the upper tail, likely due to previously discussed potential outliers. (LIL MORE HERE PLZ)
+Ag, Co, and Ni roughly follow the QQ-line indicating some evidence for normality. All other trace elements have blatant deviations from the normal line, particularly in the upper tail, likely due to previously discussed potential outliers. The relatively small sample size of 38, the tiny concentrations relative to the main elements, and the small amount of material taken/used for this material analysis technique are all 3 factors that could and likely would be influencing the data.
 
 #### Data Transformation
 
