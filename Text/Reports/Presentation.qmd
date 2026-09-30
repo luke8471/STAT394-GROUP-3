@@ -509,6 +509,9 @@ print(HZ$multivariate_normality)
 
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/PAM.png)
 
+## 3.1  PAM 
+![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Avg width of cluster.png)
+
 
 ## 3.2  Cluster Analysis using Manhattan Distance
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/dendrogram.png)
@@ -612,9 +615,6 @@ ggplot(sil_df,
        y = "Silhouette Width") +
   theme_minimal()
 ```
-
-## 3.3  Fuzzy Analysis
-![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Avg width of cluster.png)
 
 ## 3.3  Fuzzy Analysis
 ![](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/Fuzzy.png)
