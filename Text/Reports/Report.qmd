@@ -677,7 +677,106 @@ Picks by median centrality, determines closest group and percentage it belongs i
 
 ## 5. Results
 
-We are unable to make direct
+
+```{r, echo = FALSE}
+#creating tables to visually compare results from PAM, H cluster, UMAP, Fuzzy.
+
+# PAM
+
+k <- umap(scaled)
+PamMan <- pam(scaled, k = 3, metric = "manhattan")
+
+pam_fit <- pam(scaled, k = 3)
+pam_size <- table(pam_fit$clustering)
+pam_avg_sil <- pam_fit$silinfo$avg.width
+pam_clust <- pam_fit$clustering
+
+# Hierarchical
+
+d <- dist(scaled, method = "manhattan")
+HiMan <- hclust(d, method = "average")
+
+h_clust <- cutree(HiMan, k = 3)
+hclust_size <- table(h_clust)
+hclust_sil <- silhouette(h_clust, d)
+hclust_avg_sil <- mean(hclust_sil[, "sil_width"])
+
+#UMAP clustering
+#PamMan
+
+umap_size <- table(PamMan$clustering)
+umap_avg_sil <- PamMan$silinfo$avg.width
+umap_clust <- PamMan$clustering
+
+# Fuzzy
+#Fuzzy_Clust
+
+fuzzy_size <- table(Fuzzy_Clust)
+fuzzy_avg_sil <- mean(silhouette(Fuzzy_Clust, d)[, "sil_width"])
+fuzzy_clust <- Fuzzy_Clust
+
+# CCC
+
+CCC <- cor(d, cophenetic(HiMan))
+
+#Building table
+
+comp_table <- tibble::tibble(
+  Method = c(
+    "PAM",
+    "Hierarchical Clustering",
+    "UMAP + PAM",
+    "Fuzzy Analysis"
+    ),
+  Clusters = c(
+    3,3,3,3
+  ),
+  Mean_Size = c(
+    mean(pam_size),
+    mean(hclust_size),
+    mean(umap_size),
+    mean(fuzzy_size)
+  ),
+  Max_size = c(
+    max(pam_size),
+    max(hclust_size),
+    max(umap_size),
+    max(fuzzy_size)
+  ),
+  Min_size = c(
+    min(pam_size),
+    min(hclust_size),
+    min(umap_size),
+    min(fuzzy_size)  
+  ),
+  Avg.Silhouette = c(
+    pam_avg_sil,
+    hclust_avg_sil,
+    umap_avg_sil,
+    fuzzy_avg_sil
+  ),
+  CCC = c(
+    NA,
+    CCC,
+    NA,
+    NA
+  )
+)
+
+comp_table |>
+  knitr::kable(
+    digits = 3,
+    caption = "Comparison of Clustering Methods"
+    ) 
+
+```
+
+
+![ARI Heat Map](https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/ARI_heatmap.png)
+
+
+
+
 
 @Caponetti2017-fd determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at \~20mg.
 

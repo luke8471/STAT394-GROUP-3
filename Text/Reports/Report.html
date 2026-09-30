@@ -159,11 +159,12 @@ window.Quarto = {
 <p>Orichalcum is defined as a copper alloy with zinc content as the principal components. A widely varying quantity of lead and tin among other trace elements are expected. There is no consistent proportion to the amount of copper and zinc found, but the overall composition and relative amounts of principal elemental components can be used to deduce the rough date and origin of a sample. The modern day equivalent is brass.</p>
 <p><strong>2.3 Summary of Collection Techniques</strong></p>
 <p>In the initial analysis of the orichalcum ingots, X-Ray Fluorescence (XRF) spectroscopy via a portable spectrometer <span class="citation" data-cites="Caponetti2017-sc">(<a href="#ref-Caponetti2017-sc" role="doc-biblioref">Caponetti, Armetta, Martino, et al., 2017</a>)</span> was used. The subject paper includes that data and further investigates the composition of each ingot using more invasive and refined elemental analysis.</p>
-<p>To obtain material for further testing, a micro-well was drilled into each ingot and the extracted alloy was taken to determine trace elements using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots. (FLESH OUT AND EXPLAIN MORE, TOO VAGUE NOT EXPLAINING WHY)</p>
+<p>For further testing, and the subject of this paper, <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> chose to test elemental compositions using Inductively coupled plasma optical emission spectroscopy (ICP-OES) and Inductively coupled plasma optical emission spectroscopy (ICP-MS) of each of the 38 orichalcum ingots. ICP-OES was used to obtain measures for the primary elements above 1000 parts per million (PPM) while ICP-MS was used for the more difficult to measure trace elements below 1000 PPM. Both techniques are destructive and require the extraction of ~20mg of the ingots by drilling a micro-well into each ingot to obtain material for testing.</p>
 <p><strong>2.4 Scope of This Multivariate Analysis</strong></p>
+<p>Aims/hypothesis/ish</p>
 <p>This multivariate analysis includes manipulations of the data collected from the ICP-OES and ICP-MS chemometric analysis, it does not include the data about physical characteristics of the ingots or any correlation analysis of those variables.</p>
+<p>We have chosen to reuse data because the orichalcum ingot archaeological find near Gela, Italy is a literally one of a kind find, we do not have the resources or the belief that it would be ethical to conduct excessive destructive testing on artifacts that may never be found again. Therefore, we have used <span class="citation" data-cites="Caponetti2017-sc">Caponetti, Armetta, Martino, et al. (<a href="#ref-Caponetti2017-sc" role="doc-biblioref">2017</a>)</span> ICP-OES and ICP-MS data of 38 orichalcum ingots.</p>
 <p>We will be excluding the Cu/Zn ratio variable as we chose to analyse the linkage of all elements between each other, not between Cu/Zn ratios and other elements</p>
-<hr>
 </section>
 <section id="eda" class="level2">
 <h2 class="anchored" data-anchor-id="eda">3. EDA</h2>
@@ -1498,11 +1499,11 @@ window.Quarto = {
 </table>
 </div>
 </div>
-<p>Trace elements weren’t included for interpretability as the values are ^-4 smaller.</p>
-<p>These samples have a mean of 104.4\% with a range 93.17\% to 113.71\%. Where 33 of the 38 samples exceed 100\%. The most significant deviations are samples 8 and 38 (COMMENT ON THIS). <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> attribute this to be due to errors generated from the low quantity of available material for sampling for each observation.</p>
-<p>These samples have a mean of 104.4\% with a range 93.17\% to 113.71\%. Where 33 of the 38 samples exceed 100\%. The most significant deviations are samples 8 and 38 which have percentage totals of 112.44\% and 113.71\% respectively. <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> attribute this to be due to errors generated from the low quantity of available material for sampling for each observation. For example, only 12.3 mg of sample 38 were obtained compared to the ideal 20mg of material as described in their methods.</p>
+<p>Trace elements weren’t included for interpretability as the values are <span class="math inline">\(\times 10^{-4}\)</span> smaller.</p>
+<p>These samples have a mean of 104.4% with a range 93.17% to 113.71%. Where 33 of the 38 samples exceed 100%. The most significant deviations are samples 8 and 38 (COMMENT ON THIS). <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> attribute this to be due to errors generated from the low quantity of available material for sampling for each observation.</p>
+<p>These samples have a mean of 104.4% with a range 93.17% to 113.71%. Where 33 of the 38 samples exceed 100%. The most significant deviations are samples 8 and 38 which have percentage totals of 112.44% and 113.71% respectively. <span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> attribute this to be due to errors generated from the low quantity of available material for sampling for each observation. For example, only 12.3 mg of sample 38 were obtained compared to the ideal 20mg of material as described in their methods.</p>
 <p><strong>3.2 QQ-plots &amp; Henze-Zirkler Test For Multivariate Normality</strong></p>
-<p>We first compared the QQ-normal plots of table 1 and compared it to the log transformed table 1 to assess if log transformation would be appropriate to manage outliers and standardisation.</p>
+<p>We first created and visually assessed the QQ-normal plots of table 1 to see if data transformation would be appropriate to manage potential outliers and standardisation issues.</p>
 <p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_all.png" class="img-fluid"></p>
 <p>As this was before there was any scaling performed, we opted to display the elements individually to better display each elements influence.</p>
 <section id="primary-elements" class="level5">
@@ -1511,30 +1512,23 @@ window.Quarto = {
 </section>
 <section id="trace-elements" class="level5">
 <h5 class="anchored" data-anchor-id="trace-elements">Trace Elements</h5>
-<p>Ag, Co, and Ni roughly follow the QQ-line indicating some evidence for normality. All other trace elements have blatant deviations from the normal line, particularly in the upper tail, likely due to previously discussed potential outliers. (LIL MORE HERE PLZ)</p>
+<p>Ag, Co, and Ni roughly follow the QQ-line indicating some evidence for normality. All other trace elements have blatant deviations from the normal line, particularly in the upper tail, likely due to previously discussed potential outliers. The relatively small sample size of 38, the tiny concentrations relative to the main elements, and the small amount of material taken/used for this material analysis technique are all 3 factors that could and likely would be influencing the data.</p>
 </section>
 <section id="data-transformation" class="level4">
 <h4 class="anchored" data-anchor-id="data-transformation">Data Transformation</h4>
 <p>We tried a simple log transformation witch resulted in a few zero values which was of some concern, as log(0) is undefined and can influence towards non-normality in multivariate data, particularly in small datasets like this one. We also had negative values. These were not an issue because we later chose metrics which are calculated from coordinate distances for clustering which can handle negative values.</p>
 <p>Zero values were compensated for by instead transforming using log(<span class="math inline">\(\mathcal x\)</span> + 1), where <span class="math inline">\(\mathcal{x}\)</span> is our data.</p>
 <p>Henze-Zirkler test established if there was preliminary evidence for multivariate normality.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png" class="img-fluid figure-img"></p>
-<figcaption>Notch Boxplot</figcaption>
-</figure>
-</div>
-<p>The QQ-plot of the log(<span class="math inline">\(\mathcal x\)</span> + 1) showed improvement overall.</p>
-<p>Multiple trace elements (which had big upper skew) bnetter jeFWOjwfc</p>
-<p>As, V, Cr looking much better</p>
+<p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/QQ_allnorm.png" class="img-fluid"></p>
+<p>The QQ-plot of the log(<span class="math inline">\(\mathcal x\)</span> + 1) showed slight improvement overall. Multiple trace elements which had big upper skews now follow the theoretical line better with As, V, and Cr in particular following the theoretical line better.</p>
+<p>There is still evidence of some elements not following assumptions of normality with Sr being the most prominent example, however, after the log(<span class="math inline">\(\mathcal x\)</span> + 1) transformation and considering the small sample size of the data set and most elements roughly following the line. We concluded that the assumption of normality would need further testing to evaluate, but appears to hold.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/notchboxnorm.png" class="img-fluid figure-img"></p>
 <figcaption>Notch Boxplot</figcaption>
 </figure>
 </div>
-<p>Much more interpretable</p>
-<p>Sr still has many outliers</p>
+<p>Ni (nickel) wen from widest to having an interquartile range smaller then the average, while Sb (antimony) went from largest range to again becoming much closer to the average. Overall we can clearly see that the standardisation and log(<span class="math inline">\(\mathcal x\)</span> + 1) transformation have greatly added in the interpretability of our EDA graphs. We note that Sr appears to have 4 unusual values/outliers.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1573,7 +1567,7 @@ window.Quarto = {
 <p>This generated a p-value=0.069, suggesting that there is insufficient evidence to reject that the data follow a multivariate normal distribution. However, the QQ-plot shows many variables with evidence of non-normality and/or significant outliers that we decided further testing was warranted before determining if multivariate normality is an appropriate statistical assumption.</p>
 <p>Data manipulation by Median Absolute Deviation (MAD) was determined to be the next best step towards multivariate analysis.</p>
 <p><strong>3.3 MAD</strong></p>
-<p>MAD was used because it is a robust, outlier-resistant, measure of variability. The log(<span class="math inline">\(\mathcal x\)</span> +1) transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence.</p>
+<p>MAD was used because it is a robust, outlier-resistant, measure of variability. The log(<span class="math inline">\(\mathcal x\)</span> +1) transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence. Interpreting variation in the data using the standard deviation which is highly affected by unusually high/low values or outliers would be statistically unsound.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1743,7 +1737,7 @@ window.Quarto = {
 <p>Variance because MAD&gt;SD robustness</p>
 <p>Outliers MAD/median</p>
 <p>Next the robust Z score was used to identify outliers that were candidates for removal. For our cutoff, we went with <span class="citation" data-cites="Leys2013-cr">Leys et al. (<a href="#ref-Leys2013-cr" role="doc-biblioref">2013</a>)</span> recommendation, who argued that the MAD is the most robust scale measure under contamination and recommend a median plus or minus 2.5 time MAD rule for outlier detection.</p>
-<p>What is after we have “cleaned” up the outliers our |z| &gt; 2.5 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al.&nbsp;set aside as their G4 group. (PUT OTHER SAMPLES THAT WERE REMOVED)</p>
+<p>What is after we have “cleaned” up the outliers our |z| &gt; 2.5 rule removes samples 13, 25, and 38 which is exactly the sample ingots that Caponetti et al.&nbsp;set aside as their G4 group. Samples 7, 13 ,14 ,17, 19, 21, 22, and 28 were also removed using the same cut off.</p>
 <p>{should probably explain why cutting out 11 samples will be good for the rest of our analysis, something along the line of outliers, terrible samples and low sample quality}.</p>
 <p><strong>2.4 Multivariate normal distribution</strong></p>
 <div class="cell">
@@ -1762,9 +1756,7 @@ window.Quarto = {
 1 Henze-Zirkler         1   0.055 asymptotic ✓ Normal</code></pre>
 </div>
 </div>
-<p>Due to our Henze Zirkler test for both the un-transformed data (p-value &lt;0.001) and the transformed data (p-value 0.046) we can safety reject the null hypotheses and conclude that the data regardless if it is transformed or not does not follow a multivariate normal distribution.</p>
-<p>Barely normal once outliers removed. Not normal before. Evidence for outlier removal helping normality.</p>
-<p>Lots of manipulation, still barely normal.</p>
+<p>Conducting the Henze Zirkler test for both the un-transformed data (p-value &lt;0.001) and the transformed data (p-value 0.055) we can reject the null hypotheses and conclude that the data is only not-normal when it is not-transformed and outliers remain. After log(<span class="math inline">\(\mathcal x\)</span> + 1) transformation and outlier removal using MAD, we can no longer safely reject the null hypotheses and have weak evidence (due to the p-value being barely above the cut off) that the processed data can be assumed to be multivariate normal.</p>
 <p><strong>2.5 Correlation plots before and after</strong></p>
 <p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/correlation_matrix.png" class="img-fluid"></p>
 <div class="quarto-figure quarto-figure-center">
@@ -1774,13 +1766,9 @@ window.Quarto = {
 </figure>
 </div>
 <p>Many of the element to element correlations change in degree and direction between the raw data and log(x + 1)-transformed data correlation matrices. Because Pearson correlations are not robust to changes due to outliers/heavily skewed data, we believe the transformed data correlation plot is a more accurate plot to make interpretations from.</p>
-<p>Simple observations include a strong-positive correlation between Sb-As, Fe-Co, Ag-Bi, V-Cr, Cr-Rb, Cu-Bi, Cu-Ag, Sb-Cd, all of these pairs have an above 0.8 correlation value. Compared to the positive, strong-negative correlation can be found between Cd-Sn at ~-0.8 correlation value, with a multiple pairs having a somewhat strong-negative correlation in the negative 0.7 to -0.8 range. Interestingly the elements needed to create orichalchum/brass do not have strong correlations with one another,</p>
-<p>IDK IF YOU WANT THIS -&gt; If specific measured amounts of the metals were chosen when alloying them together into brass we would likely find stronger correlations, as discussed by shand et al, the ore to create orichalcum is likely natural purified ore??? and thus containing many natural variations in elemental composistion?? idk</p>
+<p>Simple observations include a strong-positive correlation between Sb-As, Fe-Co, Ag-Bi, V-Cr, Cr-Rb, Cu-Bi, Cu-Ag, Sb-Cd, all of these pairs have an above 0.8 correlation value. Compared to the positive, strong-negative correlation can be found between Cd-Sn at ~-0.8 correlation value, with a multiple pairs having a somewhat strong-negative correlation in the negative 0.7 to -0.8 range. Interestingly the elements needed to create orichalchum/brass do not have strong correlations with one another.</p>
 <p>This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.</p>
 <p>Given the uncertainty about multivariate normality and the presence of negative values in our transformed data, a linear data analysis was chosen over a primary component analysis.</p>
-<p>REVIEW STUFF BELOW (PRE - SOME DATA CHANGED)</p>
-<p>Seeing a lot more correlation in the data with the massive outliers removed. Correlation plot some things to highlight; is that the strong positive association between V and Cr is also strongly positively association in the data with the outlying samples removes.. The transformed data also clearly shows a strong positive association for Bi and Ag which the un-transformed data doesn’t show as significantly. the negative association between Zn and Te becomes more stronger in the transformed data.</p>
-<p>The transformation didn’t just strength some of the associations it also happened to reverse the sign for several of the relationships, Bi and Mn was one the raw data had a positive association but the transformed data turned it into a negative association similar with the relation ships between Sb and Sn as well as Rb and Te. It went the other direction (negative to positive) for As and Co.&nbsp;This is a positive sign that the robustness of the transformation, i.e removing some of the outliers demonstrates their influence on the raw data.</p>
 </section>
 </section>
 <section id="lda" class="level2">
@@ -1788,6 +1776,19 @@ window.Quarto = {
 <p><strong>4.1 PAM</strong></p>
 <p>We started by performing a PAM (Partitioning Around Medoids) analysis</p>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  cluster size ave.sil.width
+1       1    8          0.28
+2       2    5          0.17
+3       3   13          0.22</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Report_files/figure-html/LDA-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Top five cluster choices ranked by average silhouette width.</caption>
@@ -1877,45 +1878,45 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">0.3808610</td>
-<td style="text-align: right;">0.3352282</td>
-<td style="text-align: right;">0.2839108</td>
+<td style="text-align: right;">0.3830127</td>
+<td style="text-align: right;">0.3314725</td>
+<td style="text-align: right;">0.2855148</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">0.3994904</td>
-<td style="text-align: right;">0.2979197</td>
-<td style="text-align: right;">0.3025900</td>
+<td style="text-align: right;">0.4172427</td>
+<td style="text-align: right;">0.2667210</td>
+<td style="text-align: right;">0.3160363</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">5</td>
-<td style="text-align: right;">0.3951292</td>
-<td style="text-align: right;">0.3486303</td>
-<td style="text-align: right;">0.2562405</td>
+<td style="text-align: right;">0.4369832</td>
+<td style="text-align: right;">0.2796341</td>
+<td style="text-align: right;">0.2833827</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">6</td>
-<td style="text-align: right;">0.3964214</td>
-<td style="text-align: right;">0.3005436</td>
-<td style="text-align: right;">0.3030350</td>
+<td style="text-align: right;">0.3556217</td>
+<td style="text-align: right;">0.3725317</td>
+<td style="text-align: right;">0.2718466</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">8</td>
-<td style="text-align: right;">0.3548860</td>
-<td style="text-align: right;">0.4016243</td>
-<td style="text-align: right;">0.2434897</td>
+<td style="text-align: right;">0.4476196</td>
+<td style="text-align: right;">0.2452655</td>
+<td style="text-align: right;">0.3071149</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">9</td>
-<td style="text-align: right;">0.3448716</td>
-<td style="text-align: right;">0.3954432</td>
-<td style="text-align: right;">0.2596851</td>
+<td style="text-align: right;">0.3803899</td>
+<td style="text-align: right;">0.3331800</td>
+<td style="text-align: right;">0.2864301</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10</td>
-<td style="text-align: right;">0.3987019</td>
-<td style="text-align: right;">0.3428947</td>
-<td style="text-align: right;">0.2584034</td>
+<td style="text-align: right;">0.4337303</td>
+<td style="text-align: right;">0.2851640</td>
+<td style="text-align: right;">0.2811057</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">11</td>
@@ -1925,51 +1926,51 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">12</td>
-<td style="text-align: right;">0.4590163</td>
-<td style="text-align: right;">0.1666023</td>
-<td style="text-align: right;">0.3743813</td>
+<td style="text-align: right;">0.4114799</td>
+<td style="text-align: right;">0.2529103</td>
+<td style="text-align: right;">0.3356098</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">15</td>
-<td style="text-align: right;">0.4064680</td>
-<td style="text-align: right;">0.2860789</td>
-<td style="text-align: right;">0.3074530</td>
+<td style="text-align: right;">0.3714748</td>
+<td style="text-align: right;">0.3475411</td>
+<td style="text-align: right;">0.2809841</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">16</td>
-<td style="text-align: right;">0.3951507</td>
-<td style="text-align: right;">0.3586247</td>
-<td style="text-align: right;">0.2462246</td>
+<td style="text-align: right;">0.4279359</td>
+<td style="text-align: right;">0.3054105</td>
+<td style="text-align: right;">0.2666536</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">18</td>
-<td style="text-align: right;">0.2977457</td>
-<td style="text-align: right;">0.2699617</td>
-<td style="text-align: right;">0.4322926</td>
+<td style="text-align: right;">0.2980514</td>
+<td style="text-align: right;">0.2692122</td>
+<td style="text-align: right;">0.4327364</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">20</td>
-<td style="text-align: right;">0.4236822</td>
-<td style="text-align: right;">0.2260882</td>
-<td style="text-align: right;">0.3502296</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">23</td>
-<td style="text-align: right;">0.4050991</td>
-<td style="text-align: right;">0.3441944</td>
-<td style="text-align: right;">0.2507065</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">24</td>
-<td style="text-align: right;">0.3767881</td>
-<td style="text-align: right;">0.2828230</td>
-<td style="text-align: right;">0.3403890</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">26</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.0000000</td>
 <td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">0.4681284</td>
+<td style="text-align: right;">0.2421578</td>
+<td style="text-align: right;">0.2897138</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">24</td>
+<td style="text-align: right;">0.3019973</td>
+<td style="text-align: right;">0.4251794</td>
+<td style="text-align: right;">0.2728233</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">26</td>
+<td style="text-align: right;">0.4139329</td>
+<td style="text-align: right;">0.2865142</td>
+<td style="text-align: right;">0.2995528</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">27</td>
@@ -1979,57 +1980,57 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td style="text-align: left;">29</td>
-<td style="text-align: right;">0.3759377</td>
-<td style="text-align: right;">0.3380885</td>
-<td style="text-align: right;">0.2859738</td>
+<td style="text-align: right;">0.4075424</td>
+<td style="text-align: right;">0.2824422</td>
+<td style="text-align: right;">0.3100154</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">30</td>
-<td style="text-align: right;">0.3446866</td>
-<td style="text-align: right;">0.3239112</td>
-<td style="text-align: right;">0.3314023</td>
+<td style="text-align: right;">0.3299705</td>
+<td style="text-align: right;">0.3527762</td>
+<td style="text-align: right;">0.3172533</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">31</td>
-<td style="text-align: right;">0.3267719</td>
-<td style="text-align: right;">0.3715135</td>
-<td style="text-align: right;">0.3017146</td>
+<td style="text-align: right;">0.3598310</td>
+<td style="text-align: right;">0.3079303</td>
+<td style="text-align: right;">0.3322387</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">32</td>
-<td style="text-align: right;">0.3975712</td>
-<td style="text-align: right;">0.3146435</td>
-<td style="text-align: right;">0.2877853</td>
+<td style="text-align: right;">0.3967004</td>
+<td style="text-align: right;">0.3161447</td>
+<td style="text-align: right;">0.2871549</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">33</td>
-<td style="text-align: right;">0.3103118</td>
-<td style="text-align: right;">0.3264398</td>
-<td style="text-align: right;">0.3632485</td>
+<td style="text-align: right;">0.2964350</td>
+<td style="text-align: right;">0.3565606</td>
+<td style="text-align: right;">0.3470044</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">34</td>
-<td style="text-align: right;">0.3529295</td>
-<td style="text-align: right;">0.3142389</td>
-<td style="text-align: right;">0.3328316</td>
+<td style="text-align: right;">0.3204017</td>
+<td style="text-align: right;">0.3774423</td>
+<td style="text-align: right;">0.3021561</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">35</td>
-<td style="text-align: right;">0.3675679</td>
-<td style="text-align: right;">0.2596316</td>
-<td style="text-align: right;">0.3728005</td>
+<td style="text-align: right;">0.3025122</td>
+<td style="text-align: right;">0.3906691</td>
+<td style="text-align: right;">0.3068187</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">36</td>
-<td style="text-align: right;">0.4021137</td>
-<td style="text-align: right;">0.2949173</td>
-<td style="text-align: right;">0.3029690</td>
+<td style="text-align: right;">0.4013054</td>
+<td style="text-align: right;">0.2963346</td>
+<td style="text-align: right;">0.3023600</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">37</td>
-<td style="text-align: right;">0.3269203</td>
-<td style="text-align: right;">0.2356503</td>
-<td style="text-align: right;">0.4374294</td>
+<td style="text-align: right;">0.3197456</td>
+<td style="text-align: right;">0.2524251</td>
+<td style="text-align: right;">0.4278293</td>
 </tr>
 </tbody>
 </table>
@@ -2057,7 +2058,77 @@ window.Quarto = {
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">5. Results</h2>
-<p>We are unable to make direct</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Comparison of Clustering Methods</caption>
+<colgroup>
+<col style="width: 29%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: right;">Clusters</th>
+<th style="text-align: right;">Mean_Size</th>
+<th style="text-align: right;">Max_size</th>
+<th style="text-align: right;">Min_size</th>
+<th style="text-align: right;">Avg.Silhouette</th>
+<th style="text-align: right;">CCC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PAM</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">8.667</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.246</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hierarchical Clustering</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">8.667</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.312</td>
+<td style="text-align: right;">0.798</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">UMAP + PAM</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">8.667</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.296</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fuzzy Analysis</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">8.667</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-0.019</td>
+<td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://raw.githubusercontent.com/luke8471/STAT394-GROUP-3/main/Figures/ARI_heatmap.png" class="img-fluid figure-img"></p>
+<figcaption>ARI Heat Map</figcaption>
+</figure>
+</div>
 <p><span class="citation" data-cites="Caponetti2017-fd">Caponetti, Armetta, Brusca, et al. (<a href="#ref-Caponetti2017-fd" role="doc-biblioref">2017</a>)</span> determined that the quantity of sample was attributed to error generation. Both samples S38 and S08 had respective quantities 12.3mg and 16.0mg. The average amount of material sampled was reported at ~20mg.</p>
 <p>The original study only had access to 38/40 ingots as they were on loan to another institute. This is an extension of that analysis, increasing the sample size at this point of the data analysis would inflate the false positive rate.</p>
 </section>

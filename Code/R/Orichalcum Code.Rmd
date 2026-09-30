@@ -46,6 +46,8 @@ library(gt)
 library(factoextra)
 library(umap)
 library(moments)
+library(mclust)
+library(reshape2)
 
 my_col <- c("#648FFF", "#785EF0", "#DC267F", "#FE6100","#FFB000")
 
@@ -1194,9 +1196,6 @@ caption = "Cluster Assignment by Method"
 #ARI because ignores arbitrary clustering labels and measures similarity 
 #between groupings instead.
 
-
-library(mclust)
-library(reshape2)
 
 adjustedRandIndex(pam_clust, h_clust)
 
