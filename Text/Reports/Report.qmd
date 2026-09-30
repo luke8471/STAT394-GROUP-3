@@ -391,7 +391,7 @@ Data manipulation by Median Absolute Deviation (MAD) was determined to be the ne
 
 **3.3 MAD**
 
-MAD was used because it is a robust, outlier-resistant, measure of variability. The log($\mathcal x$ +1) transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence.
+MAD was used because it is a robust, outlier-resistant, measure of variability. The log($\mathcal x$ +1) transformation somewhat fixed the skew and pulled the outliers in, but did not eliminate their mathematical influence. Interpreting variation in the data using the standard deviation which is highly affected by unusually high/low values or outliers would be statistically unsound.
 
 ```{r transformations-mad, echo=FALSE}
 #| fig-width: 10
